@@ -1,0 +1,69 @@
+var method_name = "CorporateMeasures.comDataFieldFindall";
+
+var server_time = new Date(2019, 5-1, 16, 17, 55, 43);
+
+var execution_time = 0.086899;
+
+
+var ret = new Array();
+ret = new Array();
+ret[0] = new Object();
+ret[0].ToString = "pcf_pattype";
+ret[0]._ToString = "pcf_pattype";
+ret[0].Active = true;
+ret[0].CodeField = "pcf_pattype";
+ret[0].NameField = "";
+ret[0].Id = 3;
+ret[0].DataMapid = 1;
+ret[0].DataMap = new Object();
+ret[0].DataMap.ToString = "Lab Map";
+ret[0].DataMap._ToString = "Lab Map";
+ret[0].DataMap.Active = true;
+ret[0].DataMap.Code = "LABEX";
+ret[0].DataMap.Date = new Date(2015, 10-1, 4, 18, 2, 34);
+ret[0].DataMap.DateFormat = "";
+ret[0].DataMap.DateKey = "Trh_DateTime";
+ret[0].DataMap.Enabled = true;
+ret[0].DataMap.KeyField = "trd_recid";
+ret[0].DataMap.Name = "Lab Map";
+ret[0].DataMap.Remark = "";
+ret[0].DataMap.TimeFormat = "";
+ret[0].DataMap.TimeKey = "";
+ret[0].DataMap.Id = 1;
+ret[0].DataMap.Organizationid = 1;
+ret[0].DataMap.Organization = "";
+ret[0].DataMap.DataSets = new Array();
+ret[0].DataMap.DataMapValues = new Array();
+ret[0].DataMap.DataFields = new Array();
+ret[0].DataMap.Batches = new Array();
+ret[0].DataMap.GroupViews = new Array();
+ret[0].Groupid = 4;
+ret[0].Group = new Object();
+ret[0].Group.ToString = "Patient Type";
+ret[0].Group._ToString = "Patient Type";
+ret[0].Group.Active = true;
+ret[0].Group.Code = "PTY";
+ret[0].Group.Date = new Date(2015, 10-1, 4, 0, 0, 0);
+ret[0].Group.Name = "Patient Type";
+ret[0].Group.Order = 4;
+ret[0].Group.Id = 4;
+ret[0].Group.Organizationid = 1;
+ret[0].Group.Organization = "";
+ret[0].Group.Parentid = 0;
+ret[0].Group.Parent = "";
+ret[0].Group.ConditionFilters = new Array();
+ret[0].Group.Identities = new Array();
+ret[0].Group.DataFields = new Array();
+ret[0].Group.Roles = new Array();
+ret[0].Group.Enquiries = new Array();
+ret[0].Group.SubGroups = new Array();
+ret[0].Group.EnquiryConditions = new Array();
+ret[0].NameTransformationid = 0;
+ret[0].CodeTransformationid = 0;
+ret[0].Roleid = 0;
+ret[0].BaseGroupViewLinks = new Array();
+ret[0].PerformanceIdentities = new Array();
+ret[0].SubGroupViewLinks = new Array();
+
+
+ret.Count = 1;
