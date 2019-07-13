@@ -77,7 +77,7 @@ window.FrEMD = class {
     _loadEntityClasses() {
         var EntityClassJS = "script/EntityClass.js";
         if (typeof window.company !== 'undefined' && window.company && !window.company.Store) {
-            EntityClassJS = "/nammour.com/ems/script/EntityClass.js";
+            EntityClassJS = "/nammour.com/ems/" + EntityClassJS;
         }
         return $.when(window.sr._("EnterpriseManager.emsEntityAttributeFindall", null, {
             EntityClass: {
@@ -156,6 +156,36 @@ window.FrEMD = class {
         }), s => $.getScript(s)));
     }
 
+    toBase64(url, data, mime) {
+        mime = (mime || 'application/octet-stream');
+        var prefix = 'data:' + mime + ';base64,';
+        var _data = this._inject($.ajax({
+            url: url + '?' + Math.random(),
+            async: false
+        }).responseText, data);
+        //_data = 'this is a test';
+        return window.URL.createObjectURL(new Blob([_data]), {
+            type: mime
+        })
+        //return prefix + /*encodeURIComponent*/ atob();
+    }
+
+    toPDF(filename, pages) {
+        if (!pages || !pages.length) pages = [document.body];
+        var calls = $.map(pages, p => html2canvas(p, {
+            scale: 1
+        }));
+        let pdf = new jsPDF('p', 'mm', 'a4');
+        $.when(...calls).then((...arCanvas) => {
+            $.each(arCanvas, (i, c) => {
+                if (i) pdf.addPage();
+                pdf.addImage(c.toDataURL('image/png'), 'PNG', 0, 0, 200, 200);
+            });
+
+            pdf.save(filename);
+        });
+    }
+
     _defineLinks() {
         // later on we will do this through ems by storing libs in as an entity and loading linked entities
         this.hrefs = [];
@@ -180,10 +210,22 @@ window.FrEMD = class {
         });
         this.hrefs.push({
             lib: "EasyUI",
-            src: "https://www.jeasyui.com/easyui/jquery.easyui.min.js",
+            src: ["https://www.jeasyui.com/easyui/jquery.easyui.min.js" /*, "https://www.jeasyui.com/easyui/jquery.easyui.mobile.js"*/ ],
             css: ["https://www.jeasyui.com/easyui/themes/icon.css",
                 "https://www.jeasyui.com/easyui/themes/default/easyui.css"
             ],
+        });
+        this.hrefs.push({
+            lib: "knockout",
+            src: "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js",
+        });
+        this.hrefs.push({
+            lib: "js2PDF",
+            src: "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js",
+        });
+        this.hrefs.push({
+            lib: "html2canvas",
+            src: "https://html2canvas.hertzen.com/dist/html2canvas.min.js",
         });
         this.hrefs.push({
             lib: "SweetAlert",
@@ -281,6 +323,11 @@ window.FrEMD = class {
             css: "http://fancyjs.com/fancy/build/fancyform-min.css"
         });
         this.hrefs.push({
+            lib: 'nonoScroller',
+            src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery.nanoscroller/0.8.7/javascripts/jquery.nanoscroller.min.js',
+            css: 'https://cdnjs.cloudflare.com/ajax/libs/jquery.nanoscroller/0.8.7/css/nanoscroller.min.css',
+        });
+        this.hrefs.push({
             lib: "VueJS",
             src: "https://cdn.jsdelivr.net/npm/vue",
         });
@@ -297,6 +344,11 @@ window.FrEMD = class {
             type: "mobile",
             src: "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js",
             css: "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"
+        });
+        this.hrefs.push({
+            lib: "TwentyTwenty",
+            src: ["https://cdnjs.cloudflare.com/ajax/libs/mhayes-twentytwenty/1.0.0/js/jquery.event.move.min.js", "https://cdnjs.cloudflare.com/ajax/libs/mhayes-twentytwenty/1.0.0/js/jquery.twentytwenty.min.js"],
+            css: ["https://cdnjs.cloudflare.com/ajax/libs/mhayes-twentytwenty/1.0.0/css/twentytwenty.min.css", "https://cdnjs.cloudflare.com/ajax/libs/mhayes-twentytwenty/1.0.0/css/foundation.min.css"],
         });
         this.hrefs.push({
             lib: "MD5",
@@ -572,7 +624,7 @@ window.FrEMD = class {
     }
 
     _alert(msg, delay) {
-        if (noty) {
+        if (typeof(noty) !== "undefined") {
             noty({
                 text: msg,
                 type: 'success',
@@ -614,14 +666,15 @@ window.FrEMD = class {
     }
 
     end(fCallBack, data) {
-        //if(this.endCalled) return;
+        if (this.endCalled) return;
         this.endCalled = true;
         if (!data) data = window.page.data || {};
 
         data.page = this.allData.page;
         data.pages = this.allData.pages;
 
-        this.doCalls(() => {
+        return $.when(this.doCalls(), (fCallBack || (() => {}))(), window.sr.PostCache(1000)).always(() => {
+            //console.log("all calls done", this.allData.page);
             var sHTML = this._inject(this.allHTML, data);
 
             var oContent = $('body');
@@ -694,15 +747,13 @@ window.FrEMD = class {
             }
 
             if (company.OnPageLoad) {
-                company.OnPageLoad(data);
+                setTimeout(() => {
+                    //alert("Calling OnPageLoad");
+                    company.OnPageLoad(data);
+                }, 500);
             }
-
             this.endCalled = false;
-            if (fCallBack) {
-                fCallBack(data);
-            } else {
-                window.sr.PostCache(1000);
-            }
+
         });
     }
 
@@ -715,46 +766,42 @@ window.FrEMD = class {
         });
     }
 
-    doCalls(fCallBack) {
-        if (true) {
-            var arCalls = [];
-            this._calls.reverse();
-            $.each(this._calls, (_, c) => {
-                if (c.Name) {
-                    var args = [c.obj];
-                    if (c.args.length) args = args.concat(c.args);
-                    arCalls.push(window.sr._(c.Name, null, ...args));
-                } else {
-                    arCalls.push(window.sr._("emsFormValues", null, {
-                        EntityObject: (c.obj ? c.obj.toEntityObject(true) : null)
-                    }));
-                }
-            });
+    doCalls() {
+        var arCalls = [];
+        this._calls.reverse();
+        $.each(this._calls, (_, c) => {
+            if (c.Name) {
+                var args = [c.obj];
+                if (c.args.length) args = args.concat(c.args);
+                arCalls.push(window.sr._(c.Name, null, ...args));
+            } else {
+                arCalls.push(window.sr._("emsFormValues", null, {
+                    EntityObject: (c.obj ? c.obj.toEntityObject(true) : null)
+                }));
+            }
+        });
 
-            $.when(...arCalls).then((...ret) => {
-                $.each(ret, (i, r) => {
-                    if (r && r.length && r[0].Order) {
-                        r.sort((a, b) => {
-                            if (a.Order < b.Order) return -1;
-                            if (a.Order > b.Order) return 1;
-                            return 0;
-                        });
-                    }
-                    if (this._calls[i].Callback) this._calls[i].Callback(r);
-                })
-            }).then(() => {
-                this._calls = [];
-                if (fCallBack) fCallBack();
+        return $.when(...arCalls).then((...ret) => {
+            $.each(ret, (i, r) => {
+                if (r && r.length && r[0].Order) {
+                    r.sort((a, b) => {
+                        if (a.Order < b.Order) return -1;
+                        if (a.Order > b.Order) return 1;
+                        return 0;
+                    });
+                }
+                if (this._calls[i].Callback) this._calls[i].Callback(r);
             });
-            return;
-        }
+        }).then(() => {
+            this._calls = [];
+        });
     }
 
     _o(fCallBack, obj) {
         this.step();
 
         return window.sr._("emsFormValues", fCallBack, {
-            EntityObject: (obj ? obj.toEntityObject(true) : null)
+            EntityObject: ((obj && obj.toEntityObject) ? obj.toEntityObject(true) : null)
         });
     }
 
@@ -838,6 +885,7 @@ window.FrEMD = class {
     }
 
     RenderPage(page, data, options) {
+        console.log("RenderPage", page, data);
         for (var i = 0; i < this.pages.length; i++) {
             if (this.pages[i]._code == page._code && this.pages[i]._language && (this.pages[i]._language == (window.lang || company.Language || "en"))) {
                 console.log((window.lang || company.Language || "en"));
@@ -861,12 +909,11 @@ window.FrEMD = class {
             };
             this.allOptions = options;
 
-            window.sr.runScript(page.Script);
-
-            if (!page.Script) {
-                end();
-            }
-            return;
+            return $.when(window.sr.runScript(page.Script)).always(() => {
+                if (!page.Script) {
+                    return this.end();
+                }
+            });
         }
 
         return $.when(window.sr.Get("blocks" + this.m() + "/main.js" + this.randURL())).always(js => {
@@ -899,11 +946,8 @@ window.FrEMD = class {
                     };
                     this.allOptions = options;
 
-                    window.sr.runScript(ret.Script);
-
-                    if (this.endCalled) {
-                        this.end();
-                    }
+                    this.endCalled = false;
+                    return window.sr.runScript(ret.Script);
                 } else {
                     console.log("Page " + page._code + " not found in CMS, looking in EMS");
                     var eoPage = null;
@@ -952,12 +996,13 @@ window.FrEMD = class {
                                     page.Script = js;
                                     //window.sr.runScript(js);
                                 }
-                                if (!this.endCalled) {
-                                    return this.end();
-                                }
                             });
                         });
                     });
+                }
+            }).always(() => {
+                if (!this.endCalled && !page.Script) {
+                    return this.end();
                 }
             });
         });

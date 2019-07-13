@@ -7,6 +7,7 @@ window.DynaForm = class {
         this.grids = [];
         this.buttons = [];
         this.sTable = null;
+        this.bDebug = false;
 
         this.width = window.innerWidth * 0.8;
         this.height = window.innerHeight * 0.7;
@@ -129,11 +130,8 @@ window.DynaForm = class {
         window.DForm.sTable = sTable;
 
         var doLayout = () => {
-            end(function() {
-                window.DForm.bind();
-                window.sr.PostCache(1000);
-            }, {
-                form: window.DForm.render(sTable, sTable, fields, [{
+            return $.when(window._FrEMD.end(null, {
+                form: window.DForm.render(sTable, this.english(sTable), fields, [{
                     name: 'Reset',
                     onclick: function(o) {
                         window.DForm.busy(false);
@@ -143,10 +141,10 @@ window.DynaForm = class {
                 }, {
                     name: 'Save',
                     onclick: function(o) {
-                        if (company.library) {
-                            if (o[window.DForm.sTable] && o[window.DForm.sTable].Id) o.Id = o[window.DForm.sTable].Id;
-                            delete o[window.DForm.sTable];
+                        if (o[window.DForm.sTable] && o[window.DForm.sTable].Id) o.Id = o[window.DForm.sTable].Id;
+                        delete o[window.DForm.sTable];
 
+                        if (company.library) {
                             sr._(company.Code.toLowerCase() + "" + window.DForm.sTable + (o.Id ? "Update" : "Insert"), function(ret) {
                                 if (ret) {
                                     window.DForm.info(window.DForm.sTable + " Saved");
@@ -167,6 +165,8 @@ window.DynaForm = class {
                         }
                     }
                 }], bFixed)
+            })).then((o) => {
+                window.DForm.bind();
             });
         };
 
@@ -220,12 +220,17 @@ window.DynaForm = class {
                     });
                 }
 
-                doLayout();
+                return doLayout();
             }, company.library + "." + sTable);
         } else {
             // ems
-            for (var i = 0; i < window.EntityClasses.length; i++)
-                if (window.EntityClasses[i].Name.replace(' ', '_') == sTable) var ec = window.EntityClasses[i];
+            var ec = null;
+            $.each(window.EntityClasses, (_, c) => {
+                if (c.Name.replace(' ', '_') == sTable) {
+                    ec = c;
+                }
+            });
+
             fields.push({
                 group: "Main",
                 name: sTable,
@@ -237,8 +242,8 @@ window.DynaForm = class {
                     window.DForm.set(o);
                 }
             });
-            for (var i = 0; i < ec.EntityAttributes.length; i++) {
-                var ea = ec.EntityAttributes[i];
+
+            $.each(ec.EntityAttributes, (_, ea) => {
                 if (!ea.EntityType) {
                     var type = "string";
                     if (ea.IsBool) type = "bool";
@@ -261,13 +266,13 @@ window.DynaForm = class {
                         type: "select"
                     });
                 }
-            }
-            doLayout();
+            });
+            return doLayout();
         }
     }
 
     header(name, title, bFixed) {
-        title = title;
+        this.title = title || this.title;
         name = name || this.name;
 
         var ret = '';
@@ -326,8 +331,9 @@ window.DynaForm = class {
                 // no moment, use standard Date
                 total = (new Date().getTime() - this.busyStamp.getTime()) / 1000 / 3600;
             }
-            window._FrEMD._alert("Execution Time: " + total + " seconds.");
-            //alert(total);
+            if (this.bDebug) {
+                window._FrEMD._alert("Execution Time: " + total + " seconds.");
+            }
             delete this.busyStamp;
         } else {
             this.busyStamp = new Date();
@@ -340,16 +346,17 @@ window.DynaForm = class {
 
     clear() {
         var o = {};
-        for (var i = 0; i < this.elements.length; i++) {
-            switch (this.elements[i].type) {
+        $.each(this.elements, (_, e) => {
+            var name = (e.emsSource ? "_" : "") + e.name;
+            switch (e.type) {
                 case 'text':
                 case 'string':
                 case 'password':
-                    o[this.elements[i].name] = "";
+                    o[name] = "";
                     break;
                 case "DateTime":
                 case "datetime":
-                    o[this.elements[i].name] = "";
+                    o[name] = "";
                     break;
                 case "int":
                 case "number":
@@ -357,19 +364,19 @@ window.DynaForm = class {
                 case "long":
                 case "Long":
                 case "progress":
-                    o[this.elements[i].name] = 0;
+                    o[name] = 0;
                     break;
                 case "select":
-                    o[this.elements[i].name] = "";
+                    o[name] = "";
                     break;
                 case "bool":
-                    o[this.elements[i].name] = false;
+                    o[name] = false;
                     break;
                 default:
                     break;
             }
-        }
-        set(o);
+        });
+        this.set(o);
     }
 
     set(o, eName) {
@@ -575,7 +582,7 @@ window.DynaForm = class {
     }
 
     datetime(options) {
-        return '<input id="dtp' + options.name + '" class="easyui-datetimebox" required="' + (options.required ? 'true' : 'false') + '" value="' + options.value + '" style="width:' + this.cWidth(options) + 'px">';
+        return '<input id="dtp' + options.name + '" class="easyui-datetimebox" required="' + (options.required ? 'true' : 'false') + '" value="' + (options.value || "") + '" style="width:' + this.cWidth(options) + 'px">';
     }
 
     query(options) {
@@ -615,7 +622,7 @@ window.DynaForm = class {
     }
 
     label(options) {
-        return options.value;
+        return (options.value || "");
     }
 
     link(options) {
@@ -628,7 +635,7 @@ window.DynaForm = class {
     }
 
     text(options) {
-        return '<input id="txt' + options.name + '" class="easyui-textbox" multiline="' + (options.simple ? 'false' : 'true') + '" style="white-space: pre-wrap; width: ' + this.cWidth(options) + 'px;height: ' + this.cHeight(options) + 'px" required="' + (options.required ? 'true' : 'false') + '" value="' + options.value + '">';
+        return '<input id="txt' + options.name + '" class="easyui-textbox" multiline="' + (options.simple ? 'false' : 'true') + '" style="white-space: pre-wrap; width: ' + this.cWidth(options) + 'px;height: ' + this.cHeight(options) + 'px" required="' + (options.required ? 'true' : 'false') + '" value="' + (options.value || "") + '">';
     }
 
     password(options) {
@@ -643,7 +650,7 @@ window.DynaForm = class {
 
     progress(options) {
         if (!options.height) options.height = 20; // fix big progress
-        return '<div id="prg' + options.name + '" class="easyui-progressbar" data-options="value:' + options.value + '" style="width: ' + this.cWidth(options) + 'px;height: ' + this.cHeight(options) + 'px"></div>';
+        return '<div id="prg' + options.name + '" class="easyui-progressbar" data-options="value:' + (options.value || "0") + '" style="width: ' + this.cWidth(options) + 'px;height: ' + this.cHeight(options) + 'px"></div>';
     }
 
     flowchart(options) {
@@ -654,14 +661,28 @@ window.DynaForm = class {
         return '<div id="cht' + options.name + '" width="' + this.cWidth(options) + '" height="' + this.cHeight(options) + '"></div>';
     }
 
-    combo(options) {
+    tree(options) {
+        var ret = '<table id="tr' + options.name + '" width="' + this.cWidth(options) + '" height="' + this.cHeight(options) + '" class="easyui-treegrid" data-options="iconCls: \'icon-ok\', rownumbers: true, animate: true, collapsible: true, fitColumns: true"><thead><tr>';
+        $.each(options.columns, (_, c) => {
+            ret += '<th data-options="field:\'' + c.name + '\',width:180' + (c.formatter ? ",formatter: (" + JSON.stringify(c.formatter) : ")") + ':">' + (c.label || c.name) + '</th>';
+        });
+
+        ret += '</tr></thead></table>';
+    }
+
+    combotree(options) {
+        var ret = this.select(options, "input", "treegrid");
+        return ret;
+    }
+
+    combo(options, tag, type) {
         var textField = company.library ? '_ToString' : '_name';
 
         var pWidth = this.cWidth(options) * 2;
 
-        var tag = "select";
+        var tag = tag || "select";
 
-        var ret = '<' + tag + ' id="cmb' + options.name + '" class="easyui-combo' + (options.options ? 'box' : 'grid') + '" style="width:' + this.cWidth(options) + 'px" required="' + (options.required ? 'true' : 'false') + '" data-options="onChange:function(n,o){var s = $(\'#\' + this.id).combo' + (options.options ? 'box' : 'grid') + '(\'options\'); window.DForm.Selected(s, window.DForm.byName(\'' + options.name + '\'));}, rownumbers:true, pagination:true, panelWidth:' + pWidth + ', fitColumns: true, multiple: ' + (options.multiple || 'false') + ', idField: \'Id\', textField: \'' + textField + '\',frozenColumns: [[';
+        var ret = '<' + tag + ' id="cmb' + options.name + '" class="easyui-combo' + (type || (options.options ? 'box' : 'grid')) + '" style="width:' + this.cWidth(options) + 'px" required="' + (options.required ? 'true' : 'false') + '" data-options="onChange:function(n,o){var s = $(\'#\' + this.id).combo' + (options.options ? 'box' : 'grid') + '(\'options\'); window.DForm.Selected(s, window.DForm.byName(\'' + options.name + '\'));}, rownumbers:true, pagination: ' + (tag == "select" ? "true" : "false") + ', panelWidth:' + pWidth + ', fitColumns: true, multiple: ' + (options.multiple || 'false') + ', idField: \'Id\', textField: \'' + textField + '\',frozenColumns: [[';
         if (options.multiple) ret += "{field:'ck',checkbox:true},";
         ret += "{field:'Id',title:'ID',sortable: true},";
         ret += "{field:'" + textField + "',title:'" + options.name + "',width:120, sortable: true},";
@@ -680,32 +701,18 @@ window.DynaForm = class {
         return ret;
     }
 
-    select(options) {
-        var bFound = false;
-        for (var i = 0; i < this.selects.length; i++) {
-            if (this.selects[i].id == "cmb" + options.name) {
-                // found it
-                selects[i].options = options;
-                bFound = true;
-            }
+    select(options, tag, type) {
+        var s = $.grep(this.selects, x => x.id == "cmb" + options.name);
+        s = s.length ? s[0] : null;
+        if (!s && !options.avoid) {
+            s = {
+                id: "cmb" + options.name
+            };
+            this.selects.push(s);
         }
-        if (!bFound && !options.avoid) this.selects.push({
-            id: "cmb" + options.name,
-            options: options
-        }); // save the options
+        s.options = options;
 
-        if (false && options.options) {
-            // a static select
-            var ret = '<select id="cmb' + options.name + '" class="easyui-combobox" name="dept" style="width:' + this.cWidth(options) + 'px;">';
-            for (var i = 0; i < options.options.length; i++) {
-                ret += '<option value="' + options.options[i] + '">' + options.options[i] + '</option>';
-            }
-            ret += '</select>';
-            return ret;
-        } else {
-            // a dynamic select
-            return this.combo(options);
-        }
+        return this.combo(options, tag, type);
     }
 
     BoolChange(s, options) {
@@ -790,11 +797,11 @@ window.DynaForm = class {
         var o = window[name] ? new window[name]() : {
             Active: true,
         };
-        var o = (typeof filters !== "undefined" && filters && filters[name]) ? filters[name](o) : o;
-        var o = (s.options.source ? s.options.source(o, this.get()) : o);
+        o = (typeof filters !== "undefined" && filters && filters[name]) ? filters[name](o) : o;
+        o = (s.options.source ? s.options.source(o, this.get()) : o);
         o.Name = $("#" + s.id).combobox('getText');
         if (company.library) {
-            if (o == null) return;
+            if (o === null) return;
             sr._(company.Code.toLowerCase() + name + "Findall", function(ret) {
                 $("#" + s.id).combogrid('grid').datagrid('getPager').pagination('loaded');
                 for (var i = 0; i < ret.length; i++) ret[i].__OWNER = s;
@@ -803,13 +810,13 @@ window.DynaForm = class {
                     rows: ret
                 });
                 if (s.options.multiple) {
-                    for (var i = 0; i < ret.length; i++) {}
+                    $.each(ret, (_, r) => {});
                 }
                 window.sr.PostCache(1000);
             }, o, null, start, end);
         } else {
             // ems
-            _o(function(ret) {
+            window._FrEMD._o(function(ret) {
                 $("#" + s.id).combogrid('grid').datagrid('getPager').pagination('loaded');
                 for (var i = 0; i < ret.length; i++) ret[i].__OWNER = s;
                 $("#" + s.id).combogrid('grid').datagrid('loadData', {
@@ -821,39 +828,45 @@ window.DynaForm = class {
     }
 
     bind(obj) {
-        var objBind = (o) => {
-            o.combogrid({
-                onShowPanel: function() {
-                    window.DForm.fillData($("#" + this.id), 0, 10);
-                },
-                onClickRow: function(index, row) {
-                    var s = row.__OWNER;
-                    if (s && s.options.select) {
-                        s.options.select(row);
+        var objBind = (o, e) => {
+            if (e && e.type == "combotree") {
+                o.combotreegrid({
+
+                })
+            } else {
+                o.combogrid({
+                    onShowPanel: function() {
+                        window.DForm.fillData($("#" + this.id), 0, 10);
+                    },
+                    onClickRow: function(index, row) {
+                        var s = row.__OWNER;
+                        if (s && s.options.select) {
+                            s.options.select(row);
+                        }
                     }
+                });
+
+                var dg = o.combogrid('grid');
+                // dg.datagrid('enableFilter')
+                var state = dg.data('datagrid');
+                var opts = state.options;
+
+                var onBeforeLoad = opts.onBeforeLoad;
+                opts.onBeforeLoad = (param) => {
+                    state.allRows = null;
+                    return onBeforeLoad.call(this, param);
                 }
-            });
-
-            var dg = o.combogrid('grid');
-            // dg.datagrid('enableFilter')
-            var state = dg.data('datagrid');
-            var opts = state.options;
-
-            var onBeforeLoad = opts.onBeforeLoad;
-            opts.onBeforeLoad = (param) => {
-                state.allRows = null;
-                return onBeforeLoad.call(this, param);
+                var pager = dg.datagrid('getPager');
+                dg.datagrid('getPanel').panel({
+                    ID: i
+                });
+                pager.pagination({
+                    onSelectPage: function(pageNum, pageSize) {
+                        window.DForm.fillData($("#" + window.DForm.selects[$(this.parentNode).panel('options').ID].id), pageSize * (pageNum - 1), pageSize * pageNum);
+                    }
+                });
+                dg.datagrid('loadData', state.data);
             }
-            var pager = dg.datagrid('getPager');
-            dg.datagrid('getPanel').panel({
-                ID: i
-            });
-            pager.pagination({
-                onSelectPage: function(pageNum, pageSize) {
-                    window.DForm.fillData($("#" + window.DForm.selects[$(this.parentNode).panel('options').ID].id), pageSize * (pageNum - 1), pageSize * pageNum);
-                }
-            });
-            dg.datagrid('loadData', state.data);
         }
 
         if (obj) {
@@ -861,7 +874,7 @@ window.DynaForm = class {
         } else {
             for (var i = 0; i < this.selects.length; i++) {
                 if (this.selects[i].options.options) continue;
-                objBind($("#" + this.selects[i].id));
+                objBind($("#" + this.selects[i].id), this.selects[i]);
             }
         }
     }
@@ -1077,9 +1090,10 @@ window.DynaForm = class {
             if (sElements.length > 1) ret += '<div class="easyui-accordion" style="width:' + tWidth + 'px;height:' + tHeight + 'px;">';
 
             for (var s = 0; s < sElements.length; s++) {
-                ret += '<div title="' + sElements[s].key + '" data-options="iconCls:\'icon-help\'" style="padding:10px;">';
+                ret += '<div title="' + (sElements[s].key || "") + '" data-options="iconCls:\'icon-help\'" style="padding:10px;">';
                 for (var i = 0; i < sElements[s].values.length; i++) {
                     var e = sElements[s].values[i];
+                    e.value = e.value || sr.$_REQUEST(e.name);
                     ret += '<div class="fitem"><label>' + this.english(e.title || e.name) + ':</label>';
                     if (e.type && this[e.type]) ret += this[e.type](e);
                     ret += '</div>';

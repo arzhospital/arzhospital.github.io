@@ -54,9 +54,7 @@ function ServiceRouter() {
 		this.bLocal =
 			!this.Store && !(document.URL.indexOf('local=false') >= 0);
 
-		this.bCache =
-			document.URL.indexOf('cache=true') >
-			0; /*are we always caching?*/ /*|| this.bLocal;*/
+		this.bCache = this.$_REQUEST('cache');
 
 		if (!srURL) {
 			this.srURL = this.$_REQUEST('sr');
@@ -71,7 +69,6 @@ function ServiceRouter() {
 				} else {
 					this.srURL = '/method/ServiceRouter.ashx';
 				}
-				//this.srURL = "../cms/ServiceRouter.ashx";
 			}
 		} else {
 			this.srURL = srURL;
@@ -86,6 +83,9 @@ function ServiceRouter() {
 			this.srURL += '&gzip=' + this.$_REQUEST('gzip');
 		} else {
 			this.srURL += '&gzip=true';
+		}
+		if (this.bCache) {
+			this.srURL += '&cache=' + this.bCache;
 		}
 
 		this.systemName = systemName;
@@ -130,29 +130,34 @@ function ServiceRouter() {
 	};
 
 	this.groupBy = function(ar, field) {
-		if (!ar) return null;
+		if (!ar || !field) return null;
 
-		var fields = [];
+		fields = field.split('.');
+
+		var keys = [];
 		for (var i = 0; i < ar.length; i++) {
-			var fIndex = fields.length;
-			for (var j = 0; j < fields.length; j++) {
-				if (sr.Equals(fields[j].key, ar[i][field])) {
-					// found
-					fIndex = j;
-					fields[j].values.push(ar[i]);
-					break;
-				}
-			}
-			if (fIndex == fields.length) {
-				// not found
-				fields.push({
-					key: ar[i][field],
-					values: [ar[i]],
-				});
+			var key = null;
+			for (
+				var f = 0;
+				f < fields.length;
+				key = (key || ar[i])[fields[f++]]
+			);
+			try {
+				keys[
+					(() => {
+						for (var k = 0; k < keys.length; k++) {
+							if (this.Equals(keys[k].key, key)) {
+								return k;
+							}
+						}
+						return -1;
+					})()
+				].values.push(ar[i]);
+			} catch {
+				keys.push({ key: key, values: [ar[i]] });
 			}
 		}
-
-		return fields;
+		return keys;
 	};
 
 	this.compile = function(arModules) {
@@ -256,15 +261,6 @@ function ServiceRouter() {
 		} catch (e) {
 			this.ShowError('TAG SCRIPT: \n' + e.message + '\n' + s);
 		}
-
-		/*
-				// last resort, eval in global scope with setTimeout
-				setTimeout( "try{var s = '" + this.escapeString(s) + "';eval(s);}catch(e){this.ShowError(\"EVAL GLOBAL SCRIPT: \\n\" + e.message + \"\\n\" + s);}", 0 );
-				
-				// wait 1 second so that setTimeout executes ?????
-				var d = this.addSeconds(new Date(), 1);
-				while (new Date().getTime() < d.getTime());
-		*/
 	};
 
 	this.ShowObject = function(o, bIgnoreDebug) {
@@ -351,6 +347,7 @@ function ServiceRouter() {
 	this.arCache = new Array();
 
 	this.PostCache = function(index, fCallBack) {
+		return;
 		if (!this.bCache) return;
 
 		if (window.JQuery) {
@@ -866,30 +863,12 @@ function ServiceRouter() {
 	};
 
 	this.doHeadlessCall = function(fCallBack) {
-		// look into the restdb if we have a matching record, then insert it
-		var settings = {
-			async: true,
-			crossDomain: true,
-			url:
-				'https://arzbi-a5ec.restdb.io/rest/postdata' +
-				('?q=' +
-					JSON.stringify({
-						hashcode: this.ActiveRequest.hash,
-						pending: false,
-					})),
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json',
-				'x-apikey': '5c3b37a866292476821c9eef',
-				'cache-control': 'no-cache',
-			},
-			processData: false,
-		};
-
-		$.ajax(settings).done(function(response) {
+		if (!this.company.headlesSettings) return null;
+		var settings = this.company.headlesSettings();
+		$.ajax(settings).done(response => {
 			if (response.length) {
-				var data = window.sr.runScript(response[0].result);
-				window.sr.ActiveRequest = null;
+				var data = this.runScript(response[0].result);
+				this.ActiveRequest = null;
 				if (fCallBack != null) {
 					try {
 						fCallBack(data, _exception);
@@ -902,7 +881,7 @@ function ServiceRouter() {
 						);
 					}
 				}
-				(window.sr.fLoadingEnd ||
+				(this.fLoadingEnd ||
 					function() {
 						window.sr.resetCursor();
 					})();
@@ -910,18 +889,18 @@ function ServiceRouter() {
 			} else {
 				settings.method = 'POST';
 				settings.data = JSON.stringify({
-					hashcode: window.sr.ActiveRequest.hash,
-					url: window.sr.ActiveRequest.URL,
-					postData: window.sr.ActiveRequest.PostData,
+					hashcode: this.ActiveRequest.hash,
+					url: this.ActiveRequest.URL,
+					postData: this.ActiveRequest.PostData,
 					pending: true,
 				});
-				$.ajax(settings).done(function(response) {
-					window.sr.ActiveRequest = null;
+				$.ajax(settings).done(response => {
+					this.ActiveRequest = null;
 					if (fCallBack != null) {
 						try {
 							fCallBack(null, _exception);
 						} catch (e) {
-							window.sr.ShowError(
+							this.ShowError(
 								'Error in Callback:\n\n' +
 									fCallBack +
 									'\n\n' +
@@ -929,7 +908,7 @@ function ServiceRouter() {
 							);
 						}
 					}
-					(window.sr.fLoadingEnd ||
+					(this.fLoadingEnd ||
 						function() {
 							window.sr.resetCursor();
 						})();
@@ -973,7 +952,9 @@ function ServiceRouter() {
 			return false;
 		}
 
-		var hCode = this.hashCode(fun + postData);
+		var hCode = this.hashCode(
+			fun.substring(fun.indexOf('.') + 1) + postData
+		);
 		this.ActiveRequest = {
 			URL: this.srURL + '&name=' + fun,
 			PostData: postData,
@@ -1010,7 +991,6 @@ function ServiceRouter() {
 						window.sr.ShowDebug(_exception.Message);
 					}
 
-					console.log('so far', data);
 					if (data === null && _exception === null) {
 						return window.sr.doHeadlessCall(fCallBack);
 					} else {
@@ -1296,20 +1276,38 @@ function ServiceRouter() {
 			return;
 		}
 
+		var timeout = res.RunAfter - new Date();
+		if (timeout < 0) {
+			// negative timeout means that it was supposed to be run but did not for some reason (delay, failure, etc...)
+			timeout = 30000;
+		} else if (timeout > 5 * 60 * 1000) {
+			// more than we can wait, we return a reference to the result
+			console.log(
+				'We cannot wait ' +
+					Math.floor(timeout / 1000) +
+					' seconds. Returning result.'
+			);
+			window.resolve(res);
+			return;
+		}
+		console.log(
+			'Making the next call in ' +
+				Math.floor(timeout / 1000) +
+				' seconds.'
+		);
 		setTimeout(function() {
 			window.SR._('ContentManager.cmsMethodResultFind', ret => {}, {
 				Code: res.Code,
+				Id: res.Id,
 			});
-		}, 30000);
+		}, timeout);
 	};
 
 	this.Deferred = function() {
 		window.resolve =
 			window.resolve ||
 			function(r) {
-				window.deferred
-					? window.deferred.resolve(r)
-					: console.log('window.deferred is null');
+				window.deferred ? window.deferred.resolve(r) : null; //console.log('window.deferred is null');
 			};
 		if (typeof window.jQuery === 'undefined') return;
 		if (window.deferred && window.deferred.state() == 'pending') return;
@@ -1347,6 +1345,9 @@ function ServiceRouter() {
 			}
 			if (this.bAsync && this.bLocal) {
 				url += '&async=true';
+				if (this.runAfter) {
+					url += '&runafter=' + this.runAfter;
+				}
 				this.bAsync = false;
 			}
 

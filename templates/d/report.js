@@ -44,24 +44,22 @@ function ShowYear(section, year) {
         $("#tblResults-data-" + year).html(html);
 
 
-        window.sr.PostCache(1000, function() {
-            if (!window.sr.bLocal) return;
-            if (year >= moment().year()) {
-                year = 2014;
-                $.each(gviews, (i, s) => {
-                    if (s.Name == section) {
-                        $("#menu-" + (i + 1)).trigger("click");
-                        return;
-                    }
-                });
-                return;
-            }
-            $("#section-" + (year + 1)).trigger("click");
-        });
+        if (!window.sr.bLocal || !window.sr.bCache) return;
+        if (year >= moment().year()) {
+            year = 2014;
+            $.each(gviews, (i, s) => {
+                if (s.Name == section) {
+                    $("#menu-" + (i + 1)).trigger("click");
+                    return;
+                }
+            });
+            return;
+        }
+        $("#section-" + (year + 1)).trigger("click");
     });
 }
 
-window._FrEMD.end(function() {
+$.when(window._FrEMD.end()).then(() => {
     $("#tab-container").easytabs();
 
     ShowYear(page.data._section, 2014);
