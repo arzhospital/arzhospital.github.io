@@ -1047,7 +1047,6 @@ function ServiceRouter() {
 					hCode +
 					'.js?rand=' +
 					Math.random();
-				console.log(_theUrl);
 				if (!callBack) {
 					var data = null;
 					this.Get(_theUrl).always(function(responseText) {
@@ -1174,6 +1173,7 @@ function ServiceRouter() {
 						async: false,
 						processData: false,
 						complete: function(data) {
+							console.log('Data Here...');
 							if (data.statusText == 'OK') {
 								def.resolve(data.responseText);
 							} else {
