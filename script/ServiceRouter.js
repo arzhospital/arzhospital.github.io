@@ -919,7 +919,6 @@ function ServiceRouter() {
 	};
 
 	this._ = function(fun, callBack) {
-		console.log(fun);
 		if (this.s_ErrorMessages.length > 0) {
 			alert(
 				'The following errors were found in your data:\n' +
@@ -1048,6 +1047,7 @@ function ServiceRouter() {
 					hCode +
 					'.js?rand=' +
 					Math.random();
+				console.log(_theUrl);
 				if (!callBack) {
 					var data = null;
 					this.Get(_theUrl).always(function(responseText) {
