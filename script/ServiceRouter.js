@@ -1173,7 +1173,7 @@ function ServiceRouter() {
 						async: false,
 						processData: false,
 						complete: function(data) {
-							console.log('Data Here...');
+							console.log(data);
 							if (data.statusText == 'OK') {
 								def.resolve(data.responseText);
 							} else {
