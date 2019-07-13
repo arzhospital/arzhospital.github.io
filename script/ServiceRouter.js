@@ -1050,6 +1050,7 @@ function ServiceRouter() {
 				if (!callBack) {
 					var data = null;
 					this.Get(_theUrl).always(function(responseText) {
+						console.log(_theUrl, responseText);
 						data = fResponseText(responseText);
 						cacheCall(data);
 					});
@@ -1173,7 +1174,6 @@ function ServiceRouter() {
 						async: false,
 						processData: false,
 						complete: function(data) {
-							console.log(data);
 							if (data.statusText == 'OK') {
 								def.resolve(data.responseText);
 							} else {
