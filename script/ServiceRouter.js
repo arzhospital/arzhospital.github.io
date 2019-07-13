@@ -1047,6 +1047,7 @@ function ServiceRouter() {
 					hCode +
 					'.js?rand=' +
 					Math.random();
+				console.log(_theUrl);
 				if (!callBack) {
 					var data = null;
 					this.Get(_theUrl).always(function(responseText) {
