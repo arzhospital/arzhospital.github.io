@@ -88,6 +88,8 @@ window.FrEMD = class {
         }), window.sr.Get(EntityClassJS + "?rand=" + Math.random())).done((eas, html) => {
             this.step();
 
+            console.log(eas.length);
+
             var classes = window.sr.groupBy(eas, "EntityClass");
             var tClasses = window.sr.groupBy(eas, "EntityType");
             $.each(classes, (_, c) => {
