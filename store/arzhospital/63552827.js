@@ -1,0 +1,71 @@
+var method_name = "comDataFieldFindall";
+
+var server_time = new Date(2019, 7-1, 29, 15, 24, 13);
+
+var execution_time = 0.076608;
+
+
+var ret = new Array();
+ret = new Array();
+ret[0] = new Object();
+ret[0].ToString = "Mes_Code";
+ret[0]._ToString = "Mes_Code";
+ret[0].Active = true;
+ret[0].CodeField = "Mes_Code";
+ret[0].NameField = "Mes_Name";
+ret[0].Id = 203;
+ret[0].DataMapid = 17;
+ret[0].DataMap = new Object();
+ret[0].DataMap.ToString = "Consulations";
+ret[0].DataMap._ToString = "Consulations";
+ret[0].DataMap.Active = true;
+ret[0].DataMap.Code = "CONS";
+ret[0].DataMap.Date = new Date(2018, 5-1, 1, 13, 1, 20);
+ret[0].DataMap.DateFormat = "";
+ret[0].DataMap.DateKey = "StartDate";
+ret[0].DataMap.Enabled = true;
+ret[0].DataMap.EndedField = "";
+ret[0].DataMap.KeyField = "";
+ret[0].DataMap.Name = "Consulations";
+ret[0].DataMap.Remark = "";
+ret[0].DataMap.StartedField = "";
+ret[0].DataMap.TimeFormat = "";
+ret[0].DataMap.TimeKey = "";
+ret[0].DataMap.Id = 17;
+ret[0].DataMap.Organizationid = 1;
+ret[0].DataMap.Organization = "";
+ret[0].DataMap.DataSets = new Array();
+ret[0].DataMap.DataMapValues = new Array();
+ret[0].DataMap.DataFields = new Array();
+ret[0].DataMap.Batches = new Array();
+ret[0].DataMap.GroupViews = new Array();
+ret[0].Groupid = 16;
+ret[0].Group = new Object();
+ret[0].Group.ToString = "Medical Service";
+ret[0].Group._ToString = "Medical Service";
+ret[0].Group.Active = true;
+ret[0].Group.Code = "MESR";
+ret[0].Group.Date = new Date(0001, 1-1, 1, 0, 0, 0);
+ret[0].Group.Name = "Medical Service";
+ret[0].Group.Order = 16;
+ret[0].Group.Id = 16;
+ret[0].Group.Organizationid = 1;
+ret[0].Group.Organization = "";
+ret[0].Group.Parentid = 0;
+ret[0].Group.Parent = "";
+ret[0].Group.ConditionFilters = new Array();
+ret[0].Group.Identities = new Array();
+ret[0].Group.DataFields = new Array();
+ret[0].Group.Roles = new Array();
+ret[0].Group.Enquiries = new Array();
+ret[0].Group.SubGroups = new Array();
+ret[0].Group.EnquiryConditions = new Array();
+ret[0].NameTransformationid = 0;
+ret[0].CodeTransformationid = 0;
+ret[0].Roleid = 0;
+ret[0].BaseGroupViewLinks = new Array();
+ret[0].PerformanceIdentities = new Array();
+ret[0].SubGroupViewLinks = new Array();
+
+
+ret.Count = 1;
