@@ -15,3 +15,14 @@ window._FrEMD._c({
 }, ret => {
     gviews = ret;
 }, "CorporateMeasures.comGroupViewFindall");
+
+function DoLogin(username, password) {
+    $.when(new Employee().username(username, '=').password(password, '=').findAll()).then(ret => {
+        if (ret.length) {
+            window.me = ret[0];
+            window._FrEMD.RenderPage({
+                _code: 'index'
+            });
+        }
+    });
+}

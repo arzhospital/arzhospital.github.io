@@ -1,8 +1,8 @@
 var method_name = "comDataMapValueFindall";
 
-var server_time = new Date(2019, 7-1, 29, 15, 23, 39);
+var server_time = new Date(2019, 7-1, 30, 13, 4, 36);
 
-var execution_time = 0.080222;
+var execution_time = 0.072054;
 
 
 var ret = new Array();

@@ -1,8 +1,8 @@
 var method_name = "comDataFieldFindall";
 
-var server_time = new Date(2019, 7-1, 29, 15, 23, 56);
+var server_time = new Date(2019, 7-1, 30, 13, 4, 51);
 
-var execution_time = 0.063094;
+var execution_time = 0.07059;
 
 
 var ret = new Array();

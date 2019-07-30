@@ -1,8 +1,8 @@
 var method_name = "comGroupViewFind";
 
-var server_time = new Date(2019, 7-1, 29, 15, 23, 57);
+var server_time = new Date(2019, 7-1, 30, 13, 4, 52);
 
-var execution_time = 0.073023;
+var execution_time = 0.047934;
 
 ret = new Object();
 ret.ToString = "AVG(H) LOS by Division";

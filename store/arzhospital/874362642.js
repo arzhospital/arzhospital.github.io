@@ -1,8 +1,8 @@
 var method_name = "comGroupViewFind";
 
-var server_time = new Date(2019, 7-1, 29, 15, 17, 40);
+var server_time = new Date(2019, 7-1, 30, 12, 58, 49);
 
-var execution_time = 0.070312;
+var execution_time = 0.064842;
 
 ret = new Object();
 ret.ToString = "Employees by Department";

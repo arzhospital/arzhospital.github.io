@@ -1,8 +1,8 @@
 var method_name = "comGroupViewFind";
 
-var server_time = new Date(2019, 7-1, 29, 15, 18, 9);
+var server_time = new Date(2019, 7-1, 30, 12, 59, 17);
 
-var execution_time = 0.083873;
+var execution_time = 0.051648;
 
 ret = new Object();
 ret.ToString = "Admissions by Type";

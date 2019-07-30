@@ -1,8 +1,8 @@
 var method_name = "comIdentityFindall";
 
-var server_time = new Date(2019, 7-1, 29, 15, 25, 34);
+var server_time = new Date(2019, 7-1, 30, 13, 6, 22);
 
-var execution_time = 0.067517;
+var execution_time = 0.055385;
 
 
 var ret = new Array();

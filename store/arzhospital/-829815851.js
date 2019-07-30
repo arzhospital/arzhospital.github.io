@@ -1,8 +1,8 @@
 var method_name = "comGroupViewFind";
 
-var server_time = new Date(2019, 7-1, 29, 15, 22, 28);
+var server_time = new Date(2019, 7-1, 30, 13, 3, 27);
 
-var execution_time = 0.03367;
+var execution_time = 0.065057;
 
 ret = new Object();
 ret.ToString = "Outpatients by Attending";

@@ -1,8 +1,8 @@
 var method_name = "comGroupViewFind";
 
-var server_time = new Date(2019, 7-1, 29, 15, 28, 56);
+var server_time = new Date(2019, 7-1, 30, 13, 9, 47);
 
-var execution_time = 0.062008;
+var execution_time = 0.044929;
 
 ret = new Object();
 ret.ToString = "Operations Totals($1K) by Patient Type";

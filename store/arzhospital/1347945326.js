@@ -1,8 +1,8 @@
 var method_name = "comGroupViewFind";
 
-var server_time = new Date(2019, 7-1, 29, 15, 24, 13);
+var server_time = new Date(2019, 7-1, 30, 13, 5, 6);
 
-var execution_time = 0.081961;
+var execution_time = 0.052312;
 
 ret = new Object();
 ret.ToString = "Consulations by Division";

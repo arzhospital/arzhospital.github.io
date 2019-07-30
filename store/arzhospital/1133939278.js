@@ -1,8 +1,8 @@
 var method_name = "emsEntityAttributeFindall";
 
-var server_time = new Date(2019, 7-1, 29, 15, 15, 44);
+var server_time = new Date(2019, 7-1, 30, 12, 57, 36);
 
-var execution_time = 0.198056;
+var execution_time = 0.157012;
 
 
 var ret = new Array();

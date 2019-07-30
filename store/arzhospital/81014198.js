@@ -1,8 +1,8 @@
 var method_name = "comGroupViewFind";
 
-var server_time = new Date(2019, 7-1, 29, 15, 24, 49);
+var server_time = new Date(2019, 7-1, 30, 13, 5, 40);
 
-var execution_time = 0.069436;
+var execution_time = 0.06452;
 
 ret = new Object();
 ret.ToString = "Inpatients by Coverage";

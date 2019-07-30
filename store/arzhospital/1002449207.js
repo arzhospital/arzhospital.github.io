@@ -1,8 +1,8 @@
 var method_name = "comGroupViewFind";
 
-var server_time = new Date(2019, 7-1, 29, 15, 28, 32);
+var server_time = new Date(2019, 7-1, 30, 13, 9, 23);
 
-var execution_time = 0.066121;
+var execution_time = 0.050375;
 
 ret = new Object();
 ret.ToString = "Operations by Medical Acts";

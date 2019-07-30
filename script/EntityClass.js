@@ -19,8 +19,9 @@ function <%=c.Name.replace(' ', '_')%>(id) {
             Name: "<%=ea.Name%>",
             EntityClass: {
                 Id: <%=ea.EntityClass.Id%>
-            }
-        }
+            },
+        },
+        OPERATORS: {}
     });
     this.<%=ea.Name.replace(' ', '_')%> = function(v, co, id) {
         if (co) this._<%=ea.Name.replace(' ', '_')%>_coop = co;
@@ -53,6 +54,7 @@ function <%=c.Name.replace(' ', '_')%>(id) {
     }else{
 %>
             ev[attr + "Value"] = v;
+            if (co) ev.OPERATORS[attr + "Value"] = co;
             <% } %>
             this._<%=ea.Name.replace(' ', '_')%>_set = true;
 
@@ -186,8 +188,9 @@ for(var i=0; i<c.EntityAttributes.length; i++)
         var _THIS = [{
             EntityObject: this.toEntityObject(true)
         }];
+        var bTest = false;
         for (var i = 1; i <= depth; i++) {
-            _THIS.push({
+            if (!bTest) _THIS.push({
                 Active: true,
                 EntityObject: {
                     Active: true,
@@ -197,10 +200,10 @@ for(var i=0; i<c.EntityAttributes.length; i++)
         }
 
         <% $.each(c.TypedAttributes, (_, ta) => {%>
-        _THIS.push({
+        if (!bTest) _THIS.push({
             EntityObject: new <%=ta.EntityClass.Name.replace(' ', '_')%>().<%=ta.Name.replace(' ', '_')%>(this).toEntityObject(true)
         });
-        _THIS.push({
+        if (!bTest) _THIS.push({
             EntityObject: {
                 Active: true,
                 ValueEntities: [{
@@ -286,7 +289,7 @@ for(var i=0; i<c.EntityAttributes.length; i++)
 {
     var ea = c.EntityAttributes[i];
 %>
-            if (this._<%=ea.Name.replace(' ', '_')%>_set) ret.OPERATORS.<%=ea.Name.replace(' ', '_')%> = this._<%=ea.Name.replace(' ', '_')%>_coop;
+            //if (this._<%=ea.Name.replace(' ', '_')%>_set) ret.OPERATORS.<%=ea.Name.replace(' ', '_')%> = this._<%=ea.Name.replace(' ', '_')%>_coop;
             <% } %>
 
             ret.EntityClass = this.EntityClass;
@@ -307,9 +310,9 @@ for(var i=0; i<c.EntityAttributes.length; i++)
                     ret.EntityValues.push(this.EntityValue("<%=ea.Name%>"));
                 }
                 <%}%>
-		}else{
-		    ret.EntityValues = this.EntityValues;
-		}
+    		}else{
+    		    ret.EntityValues = this.EntityValues;
+    		}
 <%
 for(var i=0; i<c.TypedAttributes.length; i++)
 {

@@ -1,8 +1,8 @@
 var method_name = "comViewPartitionFindall";
 
-var server_time = new Date(2019, 7-1, 29, 15, 23, 57);
+var server_time = new Date(2019, 7-1, 30, 13, 4, 52);
 
-var execution_time = 0.07107;
+var execution_time = 0.071271;
 
 
 var ret = new Array();

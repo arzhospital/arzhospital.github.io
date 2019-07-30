@@ -1,8 +1,8 @@
 var method_name = "comAggregationFindall";
 
-var server_time = new Date(2019, 7-1, 29, 15, 25, 33);
+var server_time = new Date(2019, 7-1, 30, 13, 6, 22);
 
-var execution_time = 0.044455;
+var execution_time = 0.03502;
 
 
 var ret = new Array();

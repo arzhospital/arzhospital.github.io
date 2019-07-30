@@ -1,8 +1,8 @@
 var method_name = "comGroupViewFindall";
 
-var server_time = new Date(2019, 7-1, 29, 15, 29, 0);
+var server_time = new Date(2019, 7-1, 30, 13, 9, 51);
 
-var execution_time = 0.069668;
+var execution_time = 0.058442;
 
 
 var ret = new Array();
