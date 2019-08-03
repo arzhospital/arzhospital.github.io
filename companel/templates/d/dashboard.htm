@@ -1,0 +1,210 @@
+<ul class="nav nav-tabs" role="tablist">
+<% $.each(window.dasbhbaordEntries, (_, db) => {%>
+            <li class="nav-item"><a class="nav-link<%=(_?'':' active')%>" data-toggle="tab" href="#Dashboard<%=db.key.Id%>"><i class="zmdi zmdi-file-text"></i> <span><%=db.key.Name%></span></a></li>
+<% }); %>
+        </ul> 
+
+        <div class="tab-content">
+<% $.each(window.dasbhbaordEntries, (_, db) => {%>
+            <div role="tabpanel" class="tab-pane<%=(_?'':' active in')%>" id="Dashboard<%=db.key.Id%>">
+        
+                <div class="row clearfix">
+                <% $.each($.grep(db.values, v => v.Handler=="_dbNumber"), (_, v) => { %>
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <div class="info-box-4 hover-zoom-effect">
+                            <div class="icon"> <i class="zmdi zmdi-account col-blue"></i> </div>
+                            <div class="content">
+                                <div class="text"><%=v.GroupView.Name%></div>
+                                <div class="number"><%=v.Data[0].V0%></div>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+
+                <% $.each($.grep(db.values, v => v.Handler=="_dbNumberChart"), (_, v) => {
+                    var Points = $.map(v.Data, v => v.V0);
+                %>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="info-box-3 bg-blue">
+                            <div class="icon">
+                                <div class="icon"> <span class="chart chart-line"><%=Points.join()%></span> </div>
+                            </div>
+                            <div class="content">
+                                <div class="text"><%=v.GroupView.Name%></div>
+                                <div class="number"><%=(function(arr){return arr.reduce(function(a,b){return a + b;}, 0);})(Points)%></div>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+                </div>
+
+
+                <div class="row clearfix">
+                <% $.each($.grep(db.values, v => v.Handler=="_dbLineChart"), (_, v) => { %>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><%=v.GroupView.Name%></h2>
+                                <ul class="header-dropdown">
+                                    <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu float-right">
+                                            <li><a href="javascript:void(0);">${action}</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="body" id="_chart<%=v.Id%>">
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+                </div>
+
+                <div class="row clearfix">
+                <% $.each($.grep(db.values, v => v.Handler=="_dbSparkLines"), (_, v) => {
+                    var Points = $.map(v.Data, v => v.V0);
+                %>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="card">
+                            <div class="header">
+                                <h2><%=v.GroupView.Name%></h2>
+                                <ul class="header-dropdown">
+                                    <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu float-right">
+                                            <li><a href="javascript:void(0);">${action}</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="body">
+                                <div class="stats-report">
+                                    <div class="stat-item">
+                                        <h5>Total</h5>
+                                        <b class="col-indigo"><%=(function(arr){return arr.reduce(function(a,b){return a + b;}, 0);})(Points)%></b>
+                                    </div>
+                                    <div class="stat-item">
+                                        <h5>Average</h5>
+                                        <b class="col-indigo"><%=Math.floor((function(arr){return arr.reduce(function(a,b){return a + b;}, 0);})(Points)/Points.length)%></b>
+                                    </div>
+                                    <div class="stat-item">
+                                        <h5>Minimum</h5>
+                                        <b class="col-indigo"><%=Math.min(...Points)%></b>
+                                    </div>
+                                    <div class="stat-item">
+                                        <h5>Maximum</h5>
+                                        <b class="col-indigo"><%=Math.max(...Points)%></b>
+                                    </div>
+                                    <div class="sparkline" data-type="line" data-spot-Radius="3" data-highlight-Spot-Color="rgb(63, 81, 181)" data-highlight-Line-Color="#222" data-min-Spot-Color="rgb(233, 30, 99)" data-max-Spot-Color="rgb(63, 81, 181)" data-spot-Color="rgb(63, 81, 181, 0.7)" data-offset="90" data-width="100%" data-height="100px" data-line-Width="1" data-line-Color="rgb(63, 81, 181, 0.7)" data-fill-Color="rgba(63, 81, 181, 0.3)"> <%=Points.join()%> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+                
+                <% $.each($.grep(db.values, v => v.Handler=="_dbSparkBars"), (_, v) => {%>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="card">
+                            <div class="header">
+                                <h2><%=v.GroupView.Name%></h2>
+                                <ul class="header-dropdown">
+                                    <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu float-right">
+                                            <li><a href="javascript:void(0);">Action</a></li>
+                                            <li><a href="javascript:void(0);">Another action</a></li>
+                                            <li><a href="javascript:void(0);">Something else here</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Group</th>
+                                                <th>Performance</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                <%
+                    $.each($.grep(sr.groupBy(v.Data, "name"), g => {
+                        var points = $.map(g.values, _v => _v.V0);
+                        var max = Math.max(...points);
+                        var min = Math.min(...points);
+                        return min!=0 || max!=0;
+                    }), (_, g) => {
+                %>
+                                           <tr>
+                                               <td><%=g.key%></td>
+                                               <td>
+                                                   <span class="sparkbar"><%=$.map(g.values, _v => _v.V0).join()%></span>
+                                               </td>
+                                           </tr>
+                <%  }); %>
+                
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+                </div>
+
+                <div class="row clearfix">
+<% $.each($.grep(db.values, v => v.Handler=="_dbTable"), (_, v) => {
+    var Points = $.map(v.Data, v => v.V0);
+    var min = Math.min(...Points);
+    var max = Math.max(...Points);
+%>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><%=v.GroupView.Name%></h2>
+                                <ul class="header-dropdown">
+                                    <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu float-right">
+                                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
+                                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
+                                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Period</th>
+                                            <th>Value</th>
+                                            <th>Category</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+<%
+    $.each($.grep(new ReportSection(2014, company.Code)._pivot(v.Data, "YYYY"), n => {
+        return parseFloat(n.Aggregation) > 0;
+        }), (_, d) => {
+        p = (d.Aggregation-min)/(max-min);
+%>
+                                        <tr>
+                                            <td><%=d.Time%></td>
+                                            <td><%=d.Aggregation%></td>
+                                            <td><span class="label label-<%=['danger', 'warning', 'info', 'success'][Math.floor(3*p)]%>"><%=d.Dimension%></span></td>
+                                            <!--<td><span><%=Math.floor(p*100)%></span></td>-->
+                                        </tr>
+<%  }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<% }); %>
+                </div>
+        
+        
+            </div>
+<% }); %>
+        </div>
