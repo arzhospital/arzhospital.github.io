@@ -1,6 +1,6 @@
 function ShowYear(section, year) {
     var s = new ReportSection(year, company.Code);
-    $.when(s._run(section)).then((ret) => {
+    $.when(s._run(section, ['taken'])).then((ret) => {
         zingchart.render({
             id: "chtResults-" + year,
             data: s._asZingOptions(s._data(ret, 'bar', section)),

@@ -1,4 +1,4 @@
-function <%=c.Name.replace(' ', '_')%>(id) {
+function <%=c.Name.replace(/ /g, '_')%>(id) {
     this.EntityClass = {
         Id: <%=c.Id%>,
         Name: "<%=c.Name%>"
@@ -23,8 +23,8 @@ function <%=c.Name.replace(' ', '_')%>(id) {
         },
         OPERATORS: {}
     });
-    this.<%=ea.Name.replace(' ', '_')%> = function(v, co, id) {
-        if (co) this._<%=ea.Name.replace(' ', '_')%>_coop = co;
+    this.<%=ea.Name.replace(/ /g, '_')%> = function(v, co, id) {
+        if (co) this._<%=ea.Name.replace(/ /g, '_')%>_coop = co;
 
         var ev = this.EntityValue("<%=ea.Name%>");
 
@@ -45,7 +45,7 @@ function <%=c.Name.replace(' ', '_')%>(id) {
         var attr = "<%=attrN%>";
         if (arguments.length) {
             // a setter
-            this._<%=ea.Name.replace(' ', '_')%> = v;
+            this._<%=ea.Name.replace(/ /g, '_')%> = v;
             <%
     if(ea.EntityType){
 %>
@@ -56,25 +56,25 @@ function <%=c.Name.replace(' ', '_')%>(id) {
             ev[attr + "Value"] = v;
             if (co) ev.OPERATORS[attr + "Value"] = co;
             <% } %>
-            this._<%=ea.Name.replace(' ', '_')%>_set = true;
+            this._<%=ea.Name.replace(/ /g, '_')%>_set = true;
 
             // values were given, therefore a setter
             return this;
         } else {
-            return this._<%=ea.Name.replace(' ', '_')%>;
+            return this._<%=ea.Name.replace(/ /g, '_')%>;
         }
     }
 
-    this.clear_<%=ea.Name.replace(' ', '_')%> = function() {
-        this._<%=ea.Name.replace(' ', '_')%>_set = false;
-        this._<%=ea.Name.replace(' ', '_')%> = null;
-        this._<%=ea.Name.replace(' ', '_')%>_coop = null;
+    this.clear_<%=ea.Name.replace(/ /g, '_')%> = function() {
+        this._<%=ea.Name.replace(/ /g, '_')%>_set = false;
+        this._<%=ea.Name.replace(/ /g, '_')%> = null;
+        this._<%=ea.Name.replace(/ /g, '_')%>_coop = null;
         return this;
     }
 
-    this._<%=ea.Name.replace(' ', '_')%>_set = false;
-    this._<%=ea.Name.replace(' ', '_')%> = null;
-    this._<%=ea.Name.replace(' ', '_')%>_coop = "";
+    this._<%=ea.Name.replace(/ /g, '_')%>_set = false;
+    this._<%=ea.Name.replace(/ /g, '_')%> = null;
+    this._<%=ea.Name.replace(/ /g, '_')%>_coop = "";
 
     /** end: setters and getters for <%=ea.Name%> **/
     <% } %>
@@ -83,22 +83,22 @@ function <%=c.Name.replace(' ', '_')%>(id) {
 for(var i=0; i < c.TypedAttributes.length; i++)
 {
     var ta = c.TypedAttributes[i];
-	var taName = ta.EntityClass.Plural.replace(' ', '_');
+	var taName = ta.EntityClass.Plural.replace(/ /g, '_');
 %>
     /** start: setters and getters for <%=ta.Name%>_<%=taName%> **/
-    this._<%=ta.Name.replace(' ', '_')%>_<%=taName%> = new Array();
-    this._<%=ta.Name.replace(' ', '_')%>_<%=taName%>_set;
-    this.<%=ta.Name.replace(' ', '_')%>_<%=taName%> = function(v) {
+    this._<%=ta.Name.replace(/ /g, '_')%>_<%=taName%> = new Array();
+    this._<%=ta.Name.replace(/ /g, '_')%>_<%=taName%>_set;
+    this.<%=ta.Name.replace(/ /g, '_')%>_<%=taName%> = function(v) {
         this._<%=ta.Name.replace(" ", "_")%>_<%=taName%> = v;
         this._<%=ta.Name.replace(" ", "_")%>_<%=taName%>_set = true;
         return this;
     }
-    this.clear_<%=ta.Name.replace(' ', '_')%>_<%=taName%> = function() {
+    this.clear_<%=ta.Name.replace(/ /g, '_')%>_<%=taName%> = function() {
         this._<%=ta.Name.replace(" ", "_")%>_<%=taName%>_set = false;
         this._<%=ta.Name.replace(" ", "_")%>_<%=taName%> = new Array();
         return this;
     }
-    /** end: setters and getters for <%=ta.Name.replace(' ', '_')%>_<%=taName%> **/
+    /** end: setters and getters for <%=ta.Name.replace(/ /g, '_')%>_<%=taName%> **/
 
     <% } %>
 
@@ -134,7 +134,7 @@ for(var i=0; i < c.TypedAttributes.length; i++)
 
             if (!ev.ObjectValue) return null;
 
-            return new window[$.grep(window.EntityClasses, c => c.Id == ev.EntityAttribute.EntityTypeid)[0].Name.replace(' ', '_')](ev.ObjectValue.Id);
+            return new window[$.grep(window.EntityClasses, c => c.Id == ev.EntityAttribute.EntityTypeid)[0].Name.replace(/ /g, '_')](ev.ObjectValue.Id);
         });
     }
 
@@ -152,12 +152,12 @@ for(var i=0; i<c.EntityAttributes.length; i++)
     var ea = c.EntityAttributes[i];
 	if(!ea.EntityType) continue;
 %>
-    this.by<%=ea.EntityType.Name.replace(' ', '_')%> = function(ar) {
+    this.by<%=ea.EntityType.Name.replace(/ /g, '_')%> = function(ar) {
         var ret = [];
         for (var i = 0; i < ar.length; i++) {
             for (var j = 0; j < ret.length; j++) {
-                if (ar[i]["_<%=ea.Name.replace(' ', '_')%>]"] && ar[i]["_<%=ea.Name.replace(' ', '_')%>]"].Equals(ret[j])) {
-                    ret[j]._<%=ea.Name.replace(' ', '_')%>_<%=c.Plural.replace(' ', '_')%>.push(ar[i]);
+                if (ar[i]["_<%=ea.Name.replace(/ /g, '_')%>]"] && ar[i]["_<%=ea.Name.replace(/ /g, '_')%>]"].Equals(ret[j])) {
+                    ret[j]._<%=ea.Name.replace(/ /g, '_')%>_<%=c.Plural.replace(/ /g, '_')%>.push(ar[i]);
                 }
             }
         }
@@ -201,13 +201,13 @@ for(var i=0; i<c.EntityAttributes.length; i++)
 
         <% $.each(c.TypedAttributes, (_, ta) => {%>
         if (!bTest) _THIS.push({
-            EntityObject: new <%=ta.EntityClass.Name.replace(' ', '_')%>().<%=ta.Name.replace(' ', '_')%>(this).toEntityObject(true)
+            EntityObject: new <%=ta.EntityClass.Name.replace(/ /g, '_')%>().<%=ta.Name.replace(/ /g, '_')%>(this).toEntityObject(true)
         });
         if (!bTest) _THIS.push({
             EntityObject: {
                 Active: true,
                 ValueEntities: [{
-                    EntityObject: new <%=ta.EntityClass.Name.replace(' ', '_')%>().<%=ta.Name.replace(' ', '_')%>(this).toEntityObject(true)
+                    EntityObject: new <%=ta.EntityClass.Name.replace(/ /g, '_')%>().<%=ta.Name.replace(/ /g, '_')%>(this).toEntityObject(true)
                 }]
             }
         });
@@ -222,7 +222,7 @@ for(var i=0; i<c.EntityAttributes.length; i++)
                 //console.log(evg);
                 $.each(window.EntityClasses, (_, ec) => {
                     if (ec.Id == evg.key.EntityClassid) {
-                        var c = new window[ec.Name.replace(' ', '_')]();
+                        var c = new window[ec.Name.replace(/ /g, '_')]();
                         c.EntityValues = evg.values;
                         c.Id = evg.key.Id;
                         obj.push(c);
@@ -246,10 +246,10 @@ for(var i=0; i<c.EntityAttributes.length; i++)
                     if (ea.IsDate) attrN = "Date";
                     if (ea.EntityTypeid) {
                         var refO = $.grep(obj, o => o.Id == ev.ObjectValueid)[0];
-                        //console.log("r." + ea.Name.replace(' ', '_') + "()", refO);
-                        r[ea.Name.replace(' ', '_')]($.grep(obj, o => o.Id == ev.ObjectValueid)[0]);
+                        //console.log("r." + ea.Name.replace(/ /g, '_') + "()", refO);
+                        r[ea.Name.replace(/ /g, '_')]($.grep(obj, o => o.Id == ev.ObjectValueid)[0]);
                     } else {
-                        r[ea.Name.replace(' ', '_')](ev[attrN + "Value"]);
+                        r[ea.Name.replace(/ /g, '_')](ev[attrN + "Value"]);
                     }
                 });
             });
@@ -261,7 +261,7 @@ for(var i=0; i<c.EntityAttributes.length; i++)
 
             $.each(ret, (_, r) => {
                 <% $.each(c.TypedAttributes, (_, ta) => {%>
-                r.<%=ta.Name.replace(' ', '_')%>_<%=ta.EntityClass.Plural.replace(' ', '_')%>($.grep(obj, o => o.EntityClass.Id == <%=ta.EntityClass.Id%> && o._<%=ta.Name.replace(' ', '_')%> && o._<%=ta.Name.replace(' ', '_')%>.Id == r.Id));
+                r.<%=ta.Name.replace(/ /g, '_')%>_<%=ta.EntityClass.Plural.replace(/ /g, '_')%>($.grep(obj, o => o.EntityClass.Id == <%=ta.EntityClass.Id%> && o._<%=ta.Name.replace(/ /g, '_')%> && o._<%=ta.Name.replace(/ /g, '_')%>.Id == r.Id));
                 <% }); %>
             });
             //console.log(obj);
@@ -289,7 +289,7 @@ for(var i=0; i<c.EntityAttributes.length; i++)
 {
     var ea = c.EntityAttributes[i];
 %>
-            //if (this._<%=ea.Name.replace(' ', '_')%>_set) ret.OPERATORS.<%=ea.Name.replace(' ', '_')%> = this._<%=ea.Name.replace(' ', '_')%>_coop;
+            //if (this._<%=ea.Name.replace(/ /g, '_')%>_set) ret.OPERATORS.<%=ea.Name.replace(/ /g, '_')%> = this._<%=ea.Name.replace(/ /g, '_')%>_coop;
             <% } %>
 
             ret.EntityClass = this.EntityClass;
@@ -306,7 +306,7 @@ for(var i=0; i<c.EntityAttributes.length; i++)
 {
     var ea = c.EntityAttributes[i];
 %>
-                if (this._<%=ea.Name.replace(' ', '_')%>_set) {
+                if (this._<%=ea.Name.replace(/ /g, '_')%>_set) {
                     ret.EntityValues.push(this.EntityValue("<%=ea.Name%>"));
                 }
                 <%}%>

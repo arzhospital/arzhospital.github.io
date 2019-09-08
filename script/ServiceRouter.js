@@ -815,15 +815,14 @@ function ServiceRouter() {
 	};
 
 	this.coop = function(o, p) {
-		return o.OPERATORS && o.OPERATORS[p]
-			? " coop='" +
-					this.myReplace(
-						o.OPERATORS[p],
-						['<', '>'],
-						['&lt;', '&gt;']
-					) +
-					"'"
-			: '';
+		if (!o.OPERATORS || !o.OPERATORS[p]) {
+			return '';
+		}
+		return (
+			" coop='" +
+			this.myReplace(o.OPERATORS[p], ['<', '>'], ['&lt;', '&gt;']) +
+			"'"
+		);
 	};
 
 	this.getXmlHTTP = function() {

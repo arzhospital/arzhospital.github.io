@@ -9,7 +9,7 @@ var company = {
 
 /* for web version */
 if (window.location.href.indexOf("/nammour.com/") <= -1) {
-    company.Store = "store/" + company.Code + "/";
+    company.Store = "store/" + ('arzstatus' || company.Code) + "/";
 }
 
 /* for mobile version */

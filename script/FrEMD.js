@@ -69,7 +69,7 @@ window.FrEMD = class {
                         ko.applyBindings(window, window.frames[0].document.body);
                         window.title = window.frames[0].document.title; //??
                         window.document.body.style.visibility = 'visible';
-                    }, 100);
+                    }, 500);
                 }
             });
         });
@@ -202,18 +202,34 @@ window.FrEMD = class {
 
     toPDF(filename, pages) {
         if (!pages || !pages.length) pages = [document.body];
-        var calls = $.map(pages, p => html2canvas(p, {
-            scale: 1
-        }));
         let pdf = new jsPDF('p', 'mm', 'a4');
-        $.when(...calls).then((...arCanvas) => {
-            $.each(arCanvas, (i, c) => {
-                if (i) pdf.addPage();
-                pdf.addImage(c.toDataURL('image/png'), 'PNG', 0, 0, 200, 200);
-            });
 
+        if (false) {
+            $.each(pages, (i, p) => {
+                if (i) pdf.addPage();
+                pdf.html(p.innerHTML, 15, 15, {
+                    'width': 170,
+                    'elementHandlers': {
+                        '#editor': function(element, renderer) {
+                            return true;
+                        }
+                    }
+                });
+            });
             pdf.save(filename);
-        });
+        } else {
+            var calls = $.map(pages, p => html2canvas(p, {
+                scale: 1
+            }));
+            $.when(...calls).then((...arCanvas) => {
+                $.each(arCanvas, (i, c) => {
+                    if (i) pdf.addPage();
+                    pdf.addImage(c.toDataURL('image/png'), 'PNG', 0, 0, 200, 200);
+                });
+
+                pdf.save(filename);
+            });
+        }
     }
 
     _defineLinks() {
