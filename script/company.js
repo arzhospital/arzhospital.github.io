@@ -1,6 +1,6 @@
 var company = {
     Code: "arzhospital",
-    Required: ["NOTY", "Moment", "JQuery UI", "ZingChart", "printThis", "Underscore", "Tabulator"],
+    Required: ["NOTY", "Moment", "JQuery UI", "ZingChart", "printThis", "Underscore", "Tabulator", "JSZip"],
     Responsive: true,
     OnPageLoad: function(data) {},
     //GACode: 'UA-3880962-1',

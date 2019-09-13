@@ -44,16 +44,16 @@ function ShowYear(section, year) {
         $("#tblResults-data-" + year).html(html);
 
 
-        if (!window.sr.bLocal || !window.sr.bCache) return;
+        if (!window.sr.bLocal && window.sr.$_REQUEST("localStorage") != "cache") return;
         if (year >= moment().year()) {
             year = 2014;
-            $.each(gviews, (i, s) => {
-                if (s.Name == section) {
+            for (var i = 0; i < gviews.length - 1; i++) {
+                if (gviews[i].Name == section) {
                     $("#menu-" + (i + 1)).trigger("click");
                     return;
                 }
-            });
-            return;
+            }
+            return window.sr.downloadSRCache();
         }
         $("#section-" + (year + 1)).trigger("click");
     });

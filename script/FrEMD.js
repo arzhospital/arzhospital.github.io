@@ -204,32 +204,17 @@ window.FrEMD = class {
         if (!pages || !pages.length) pages = [document.body];
         let pdf = new jsPDF('p', 'mm', 'a4');
 
-        if (false) {
-            $.each(pages, (i, p) => {
+        var calls = $.map(pages, p => html2canvas(p, {
+            scale: 1
+        }));
+        $.when(...calls).then((...arCanvas) => {
+            $.each(arCanvas, (i, c) => {
                 if (i) pdf.addPage();
-                pdf.html(p.innerHTML, 15, 15, {
-                    'width': 170,
-                    'elementHandlers': {
-                        '#editor': function(element, renderer) {
-                            return true;
-                        }
-                    }
-                });
+                pdf.addImage(c.toDataURL('image/png'), 'PNG', 0, 0, 200, 200);
             });
-            pdf.save(filename);
-        } else {
-            var calls = $.map(pages, p => html2canvas(p, {
-                scale: 1
-            }));
-            $.when(...calls).then((...arCanvas) => {
-                $.each(arCanvas, (i, c) => {
-                    if (i) pdf.addPage();
-                    pdf.addImage(c.toDataURL('image/png'), 'PNG', 0, 0, 200, 200);
-                });
 
-                pdf.save(filename);
-            });
-        }
+            pdf.save(filename);
+        });
     }
 
     _defineLinks() {
@@ -277,6 +262,10 @@ window.FrEMD = class {
             lib: "SweetAlert",
             src: "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js",
             css: "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"
+        });
+        this.hrefs.push({
+            lib: "JSZip",
+            src: ["https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"],
         });
         this.hrefs.push({
             lib: "BabelJS",
@@ -719,7 +708,7 @@ window.FrEMD = class {
         data.page = this.allData.page;
         data.pages = this.allData.pages;
 
-        return $.when(this.doCalls(), (fCallBack || (() => {}))(), window.sr.PostCache(1000)).always(() => {
+        return $.when(this.doCalls(), (fCallBack || (() => {}))()).always(() => {
             //console.log("all calls done", this.allData.page);
             var sHTML = this._inject(this.allHTML, data);
 

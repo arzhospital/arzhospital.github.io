@@ -1,8 +1,8 @@
-var method_name = "comGroupViewFind";
+var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2019, 9-1, 8, 20, 22, 48);
+var server_time = new Date(2019, 9-1, 13, 5, 15, 41);
 
-var execution_time = 0.065696;
+var execution_time = 0.058654;
 
 ret = new Object();
 ret.ToString = "Outpatients by Referrals";
