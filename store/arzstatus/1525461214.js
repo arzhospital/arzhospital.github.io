@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFindall";
 
-var server_time = new Date(2019, 9-1, 13, 5, 11, 20);
+var server_time = new Date(2019, 9-1, 14, 13, 23, 20);
 
-var execution_time = 0.031516;
+var execution_time = 0.050449;
 
 
 var ret = new Array();
@@ -1039,54 +1039,6 @@ ret[20].DashboardEntries = new Array();
 ret[20].ViewPartitions = new Array();
 ret[20].SubGroupViewLinks = new Array();
 ret[20].BaseGroupViewLinks = new Array();
-ret[21] = new Object();
-ret[21].ToString = "Operations Totals$ by Surgeon";
-ret[21]._ToString = "Operations Totals$ by Surgeon";
-ret[21].Active = true;
-ret[21].Async = false;
-ret[21].Date = new Date(2019, 2-1, 13, 7, 11, 48);
-ret[21].Enabled = true;
-ret[21].FieldFormatter = "";
-ret[21].Name = "Operations Totals$ by Surgeon";
-ret[21].Order = 25;
-ret[21].PartitionField = "";
-ret[21].Remark = "";
-ret[21].Id = 25;
-ret[21].Categoryid = 3;
-ret[21].Category = new Object();
-ret[21].Category.ToString = "Financial Reports";
-ret[21].Category._ToString = "Financial Reports";
-ret[21].Category.Active = true;
-ret[21].Category.Date = new Date(0001, 1-1, 1, 0, 0, 0);
-ret[21].Category.Enabled = true;
-ret[21].Category.Name = "Financial Reports";
-ret[21].Category.Order = 3;
-ret[21].Category.Remark = "";
-ret[21].Category.Id = 3;
-ret[21].Category.Organizationid = 1;
-ret[21].Category.Organization = "";
-ret[21].Category.GroupViews = new Array();
-ret[21].Userid = 1;
-ret[21].User = new Object();
-ret[21].User.ToString = "Fadi";
-ret[21].User._ToString = "Fadi";
-ret[21].User.Active = true;
-ret[21].User.Admin = true;
-ret[21].User.FirstName = "Fadi";
-ret[21].User.LastName = "Nammour";
-ret[21].User.Password = "";
-ret[21].User.Username = "arzadmin";
-ret[21].User.Id = 1;
-ret[21].User.EnquiryExecutions = new Array();
-ret[21].User.GroupViews = new Array();
-ret[21].User.OwnedEnquiries = new Array();
-ret[21].User.Dashboards = new Array();
-ret[21].User.Batches = new Array();
-ret[21].DataMapid = 0;
-ret[21].DashboardEntries = new Array();
-ret[21].ViewPartitions = new Array();
-ret[21].SubGroupViewLinks = new Array();
-ret[21].BaseGroupViewLinks = new Array();
 
 
-ret.Count = 22;
+ret.Count = 21;

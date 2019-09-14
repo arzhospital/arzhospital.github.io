@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2019, 9-1, 13, 5, 14, 42);
+var server_time = new Date(2019, 9-1, 14, 13, 28, 48);
 
-var execution_time = 0.064112;
+var execution_time = 0.064055;
 
 ret = new Object();
 ret.ToString = "Inpatients by Attending";
