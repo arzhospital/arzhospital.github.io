@@ -1,0 +1,41 @@
+var method_name = "CorporateMeasures.comAggregationFindall";
+
+var server_time = new Date(2019, 9-1, 15, 1, 55, 20);
+
+var execution_time = 0.056766;
+
+
+var ret = new Array();
+ret = new Array();
+ret[0] = new Object();
+ret[0].ToString = "Count Of";
+ret[0]._ToString = "Count Of";
+ret[0].Active = true;
+ret[0].Code = "COUNT";
+ret[0].Date = new Date(2016, 6-1, 29, 15, 41, 59);
+ret[0].Enabled = true;
+ret[0].Name = "Count Of";
+ret[0].Order = 0;
+ret[0].Remark = "";
+ret[0].Id = 2;
+ret[0].Organizationid = 1;
+ret[0].Organization = new Object();
+ret[0].Organization.ToString = "Arz Hospital";
+ret[0].Organization._ToString = "Arz Hospital";
+ret[0].Organization.Active = true;
+ret[0].Organization.Code = "arzhospital";
+ret[0].Organization.Date = new Date(2015, 10-1, 4, 17, 15, 49);
+ret[0].Organization.Enabled = true;
+ret[0].Organization.Name = "Arz Hospital";
+ret[0].Organization.Order = 1;
+ret[0].Organization.Id = 1;
+ret[0].Organization.GroupViewCategories = new Array();
+ret[0].Organization.DataSources = new Array();
+ret[0].Organization.Measures = new Array();
+ret[0].Organization.DataMaps = new Array();
+ret[0].Organization.Aggregations = new Array();
+ret[0].Organization.Groups = new Array();
+ret[0].EnquiryConditions = new Array();
+
+
+ret.Count = 1;
