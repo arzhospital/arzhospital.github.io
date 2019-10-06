@@ -1203,11 +1203,9 @@ function ServiceRouter() {
 				var _exception = null;
 				try {
 					_ret = this.runSRScript(responseText);
+					_exception = _ret._exception;
 				} catch (e) {
 					_exception = e;
-				}
-				if (_ret._exception) {
-					_exception = _ret._exception;
 				}
 
 				if (_ret.server_time)
