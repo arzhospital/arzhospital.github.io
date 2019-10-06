@@ -35,19 +35,38 @@ window.FrEMD = class {
         return $.get("blocks" + this.m() + "/header.htm" + this.randURL(), (html) => {
             console.log("header loaded");
             this.headerHTML = html;
-        }).always(() => {
+        }).then(() => {
             this.step();
             return $.get("blocks" + this.m() + "/footer.htm" + this.randURL(), (html) => {
                 console.log("footer loaded");
                 this.footerHTML = html;
-            }).always(() => {
+            }).then(() => {
                 this.step();
                 return $.get("blocks" + this.m() + "/content.htm" + this.randURL(), (html) => {
                     console.log("content loaded");
                     this.contentHTML = html;
-                }).always(() => {
+                }).then(() => {
                     this.step();
                     window.lang = this.hash.lang || company.Language || 'en';
+
+                    if (company.GACode) {
+                        // google analytics
+                        console.log("including google analytics");
+                        (function(i, s, o, g, r, a, m) {
+                            i['GoogleAnalyticsObject'] = r;
+                            i[r] = i[r] || function() {
+                                (i[r].q = i[r].q || []).push(arguments);
+                            }, i[r].l = 1 * new Date();
+                            a = s.createElement(o),
+                                m = s.getElementsByTagName(o)[0];
+                            a.async = 1;
+                            a.src = g;
+                            m.parentNode.insertBefore(a, m);
+                        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+                        ga('create', company.GACode, 'auto');
+                        // pageview is done dynamically at the end of the page serving
+                    }
+
                     return this.RenderPage({
                         _code: (this.hash.page || 'index')
                     });
@@ -80,11 +99,11 @@ window.FrEMD = class {
             window._FrEMD = this;
             this.fromHash();
 
-            $.when(this.require("Company")).always(() => {
-                $.when(this.require("ServiceRouter")).always(() => {
+            $.when(this.require("Company")).then(() => {
+                $.when(this.require("ServiceRouter")).then(() => {
                     this._initServiceRouter();
-                    $.when(...$.map(company.Required, l => this.require(l))).always(() => {
-                        $.when(this._loadEntityClasses()).always(() => {
+                    $.when(...$.map(company.Required, l => this.require(l))).then(() => {
+                        $.when(this._loadEntityClasses()).then(() => {
                             console.log("Done Loading");
                             def.resolve(null);
                         });
@@ -100,47 +119,39 @@ window.FrEMD = class {
         });
     }
 
-    _loadEntityClasses() {
+    async _loadEntityClasses() {
         var EntityClassJS = "script/EntityClass.js";
         if (typeof window.company !== 'undefined' && window.company && !window.company.Store) {
             EntityClassJS = "/nammour.com/ems/" + EntityClassJS;
         }
-        return $.when(window.sr._("EnterpriseManager.emsEntityAttributeFindall", null, {
+        let eas = await window.sr._("EnterpriseManager.emsEntityAttributeFindall", null, {
             EntityClass: {
                 Company: {
                     Code: company.Code
                 }
             }
-        }), window.sr.Get(EntityClassJS + "?rand=" + Math.random())).done((eas, html) => {
-            this.step();
-
-            var classes = window.sr.groupBy(eas, "EntityClass");
-            var tClasses = window.sr.groupBy(eas, "EntityType");
-            $.each(classes, (_, c) => {
-                c.key.EntityAttributes = c.values;
-                var tas = tClasses.find(tc => tc.key && c.key && tc.key.Id === c.key.Id);
-                c.key.TypedAttributes = tas ? tas.values : [];
-            });
-            window.EntityClasses = classes.map(a => a.key);
-
-            this.step();
-            var code = "";
-            for (var i = 0; i < window.EntityClasses.length; i++) {
-                if (typeof EJS !== 'undefined') {
-                    code += new EJS({
-                        text: html
-                    }).render({
-                        c: window.EntityClasses[i]
-                    });
-                } else if (typeof _ === 'function' && typeof _.template !== 'undefined') {
-                    code += _.template(html)({
-                        c: window.EntityClasses[i]
-                    });
-                }
-            }
-
-            return window.sr.runScript(code);
         });
+        let html = await $.get(EntityClassJS + "?rand=" + Math.random());
+        this.step();
+
+        var classes = window.sr.groupBy(eas, "EntityClass");
+        var tClasses = window.sr.groupBy(eas, "EntityType");
+        $.each(classes, (_, c) => {
+            c.key.EntityAttributes = c.values;
+            var tas = tClasses.find(tc => tc.key && c.key && tc.key.Id === c.key.Id);
+            c.key.TypedAttributes = tas ? tas.values : [];
+        });
+        window.EntityClasses = classes.map(a => a.key);
+
+        this.step();
+        var code = "";
+        for (var i = 0; i < window.EntityClasses.length; i++) {
+            code += this._inject(html, {
+                c: window.EntityClasses[i]
+            });
+        }
+
+        return window.sr.runScript(code);
     }
 
     _initServiceRouter() {
@@ -174,7 +185,6 @@ window.FrEMD = class {
     }
 
     require(libName) {
-        console.log("require[" + libName + "]");
         var _hrefs = $.grep(this.hrefs, l => l.lib === libName && this._include(l));
         var calls = [];
         $.each(_hrefs, (_, n) => {
@@ -183,7 +193,10 @@ window.FrEMD = class {
             var _srcs = Array.isArray(n.src) ? n.src : [n.src];
             $.each(_srcs, (_, s) => calls.push($.getScript(s)));
         });
-        return $.when(...calls);
+        return $.when(...calls).then(() => {
+            console.log("require[" + libName + "]");
+            return true;
+        });
     }
 
     toBase64(url, data, mime) {
@@ -262,6 +275,10 @@ window.FrEMD = class {
             lib: "SweetAlert",
             src: "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js",
             css: "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"
+        });
+        this.hrefs.push({
+            lib: "PouchDB",
+            src: "https://cdnjs.cloudflare.com/ajax/libs/pouchdb/7.1.1/pouchdb.min.js",
         });
         this.hrefs.push({
             lib: "JSZip",
@@ -700,7 +717,7 @@ window.FrEMD = class {
         }
     }
 
-    end(fCallBack, data) {
+    async end(fCallBack, data) {
         if (this.endCalled) return;
         this.endCalled = true;
         if (!data) data = window.page.data || {};
@@ -708,88 +725,72 @@ window.FrEMD = class {
         data.page = this.allData.page;
         data.pages = this.allData.pages;
 
-        return $.when(this.doCalls(), (fCallBack || (() => {}))()).always(() => {
-            //console.log("all calls done", this.allData.page);
-            var sHTML = this._inject(this.allHTML, data);
+        await this.doCalls();
+        if (fCallBack) {
+            await fCallBack();
+        }
+        //console.log("all calls done", this.allData.page);
+        var sHTML = this._inject(this.allHTML, data);
 
-            var oContent = $('body');
-            if (!this.isMobile()) {
-                oContent.html(sHTML);
+        var oContent = $('body');
+        if (!this.isMobile()) {
+            oContent.html(sHTML);
 
-                //oContent.hide();
-                //oContent.fadeIn(1000);
-                document.title = company.Name;
+            //oContent.hide();
+            //oContent.fadeIn(1000);
+            document.title = company.Name;
+        } else {
+            var oPage = $(sHTML);
+            oPage.appendTo($.mobile.pageContainer);
+
+            var old = true;
+            this.allOptions = this.allOptions || {};
+            if (old) {
+                this.allOptions.dataUrl = this.allData.page._code;
+                if ($.mobile) $.mobile.activePage.remove();
+                if ($.mobile) $.mobile.changePage(oPage, this.allOptions);
             } else {
-                var oPage = $(sHTML);
-                oPage.appendTo($.mobile.pageContainer);
+                $("document").pagecontainer("getActivePage").remove();
+                oPage.enhanceWithin();
+                $(":mobile-pagecontainer").pagecontainer("change", '#' + data.page._code, this.allOptions);
+                console.log("showed");
+            }
+        }
 
-                var old = true;
-                this.allOptions = this.allOptions || {};
-                if (old) {
-                    this.allOptions.dataUrl = this.allData.page._code;
-                    if ($.mobile) $.mobile.activePage.remove();
-                    if ($.mobile) $.mobile.changePage(oPage, this.allOptions);
-                } else {
-                    $("document").pagecontainer("getActivePage").remove();
-                    oPage.enhanceWithin();
-                    $(":mobile-pagecontainer").pagecontainer("change", '#' + data.page._code, this.allOptions);
-                    console.log("showed");
+        if (company.css) {
+            if (this.isMobile() && company.css.mobile) {
+                for (var i = 0; i < company.css.mobile.length; i++) {
+                    $("<link/>", {
+                        rel: "stylesheet",
+                        type: "text/css",
+                        href: company.css.mobile[i]
+                    }).appendTo("head");
+                }
+            } else if (!this.isMobile() && company.css.desktop) {
+                for (var i = 0; i < company.css.desktop.length; i++) {
+                    $("<link/>", {
+                        rel: "stylesheet",
+                        type: "text/css",
+                        href: company.css.desktop[i]
+                    }).appendTo("head");
                 }
             }
-
-            if (company.css) {
-                if (this.isMobile() && company.css.mobile) {
-                    for (var i = 0; i < company.css.mobile.length; i++) {
-                        $("<link/>", {
-                            rel: "stylesheet",
-                            type: "text/css",
-                            href: company.css.mobile[i]
-                        }).appendTo("head");
-                    }
-                } else if (!this.isMobile() && company.css.desktop) {
-                    for (var i = 0; i < company.css.desktop.length; i++) {
-                        $("<link/>", {
-                            rel: "stylesheet",
-                            type: "text/css",
-                            href: company.css.desktop[i]
-                        }).appendTo("head");
-                    }
-                }
+        }
+        if (company.js) {
+            if (this.isMobile() && company.js.mobile) {
+                for (var i = 0; i < company.js.mobile.length; i++) $.getScript(company.js.mobile[i]);
+            } else if (!this.isMobile() && company.js.desktop) {
+                for (var i = 0; i < company.js.desktop.length; i++) $.getScript(company.js.desktop[i]);
             }
-            if (company.js) {
-                if (this.isMobile() && company.js.mobile) {
-                    for (var i = 0; i < company.js.mobile.length; i++) $.getScript(company.js.mobile[i]);
-                } else if (!this.isMobile() && company.js.desktop) {
-                    for (var i = 0; i < company.js.desktop.length; i++) $.getScript(company.js.desktop[i]);
-                }
-            }
+        }
 
-            if (company.GACode) {
-                // google analytics
-                (function(i, s, o, g, r, a, m) {
-                    i['GoogleAnalyticsObject'] = r;
-                    i[r] = i[r] || function() {
-                        (i[r].q = i[r].q || []).push(arguments)
-                    }, i[r].l = 1 * new Date();
-                    a = s.createElement(o),
-                        m = s.getElementsByTagName(o)[0];
-                    a.async = 1;
-                    a.src = g;
-                    m.parentNode.insertBefore(a, m)
-                })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-                ga('create', company.GACode, 'auto');
-                ga('send', 'pageview');
-            }
-
-            if (company.OnPageLoad) {
-                setTimeout(() => {
-                    //alert("Calling OnPageLoad");
-                    company.OnPageLoad(data);
-                }, 500);
-            }
-            this.endCalled = false;
-
-        });
+        if (company.OnPageLoad) {
+            setTimeout(() => {
+                //alert("Calling OnPageLoad");
+                company.OnPageLoad(data);
+            }, 500);
+        }
+        this.endCalled = false;
     }
 
     _c(obj, fCallBack, sMethod, ...arRest) {
@@ -801,9 +802,9 @@ window.FrEMD = class {
         });
     }
 
-    doCalls() {
-        var arCalls = [];
+    async doCalls() {
         this._calls.reverse();
+        var arCalls = [];
         $.each(this._calls, (_, c) => {
             if (c.Name) {
                 var args = [c.obj];
@@ -907,19 +908,22 @@ window.FrEMD = class {
     }
 
     preCompile(page) {
-        if (typeof Babel === "undefined") return null;
+        if (typeof Babel === "undefined") return page;
 
-        if (typeof React !== "undefined") return $.when(window.sr.Get("templates" + this.m() + "/" + page._code + ".jsx" + this.randURL())).always(jsx => {
-            if (jsx === null || jsx === "") return;
+        if (typeof React !== "undefined") return $.when(window.sr.Get("templates" + this.m() + "/" + page._code + ".jsx" + this.randURL())).then(jsx => {
+            if (jsx === null || jsx === "") page;
             var res = Babel.transform(jsx, {
                 presets: ['es2015', "react"]
             });
             return $.when(window.sr._("ContentManager.cmsSaveFileBody", null,
-                window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "/templates" + this.m() + "/" + page._code + ".js", res.code));
+                window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) +
+                "/templates" + this.m() + "/" + page._code + ".js", res.code)).then(() => {
+                return page;
+            });
         });
     }
 
-    RenderPage(page, data, options) {
+    async RenderPage(page, data, options) {
         console.log("RenderPage", page, data);
         for (var i = 0; i < this.pages.length; i++) {
             if (this.pages[i]._code == page._code && this.pages[i]._language && (this.pages[i]._language == (window.lang || company.Language || "en"))) {
@@ -944,102 +948,123 @@ window.FrEMD = class {
             };
             this.allOptions = options;
 
-            return $.when(window.sr.runScript(page.Script)).always(() => {
-                if (!page.Script) {
-                    return this.end();
-                }
+            await window.sr.runScript(page.Script);
+            if (!page.Script) {
+                let e = await this.end();
+                return e;
+            }
+        }
+
+        try {
+            let js = await $.ajax({
+                type: 'GET',
+                url: "blocks" + this.m() + "/main.js" + this.randURL(),
+                dataType: "text",
+            });
+            await sr.runScript("(async () => {" + js + "})();");
+            console.log("Main script found.");
+        } catch (ex) {}
+        this.step();
+
+        //this.RenderPageCMS(page, data, options, (page, options) => {
+        if (!CMS_ROOT) return fFail(page, options);
+
+        let ret = null;
+        if (CMS_ROOT) {
+            ret = await window.sr._("ContentManager.cmsHTMLPageFind", null, {
+                Page: page._code.indexOf('/') >= 0 ? page._code : (CMS_ROOT + page._code)
             });
         }
 
-        return $.when(window.sr.Get("blocks" + this.m() + "/main.js" + this.randURL())).always(js => {
-            this.step();
+        if (ret) {
+            // store to avoid redundant loading
+            ret._code = page._code;
 
-            if (js) {
-                console.log("Main script found.");
-                // $.ajax runs the script
-                //window.sr.runScript(js);
+            console.log("Page " + page._code + " found in CMS, serving...");
+
+            this.allHTML = (ret.Body ? ret.Body : this.contentHTML);
+            this.allHTML = this.headerHTML + this.allHTML + this.footerHTML;
+            this.allData = {
+                settings: this.settings,
+                page: ret,
+                pages: this.pages
+            };
+            this.allOptions = options;
+
+            this.endCalled = false;
+            let _ret = await window.sr.runScript(ret.Script);
+            return _ret.ret;
+        } else {
+            console.log("Page " + page._code + " not found in CMS, looking in EMS");
+            var eoPage = null;
+            try {
+                eoPage = new Page().code(page._code, "=");
+                if (eoPage.language) eoPage.language(window.lang || company.Language || "en", "=");
+            } catch (e) {
+                console.log("EMS does not have a Page class, failing on purpose: " + e.message);
             }
 
-            //this.RenderPageCMS(page, data, options, (page, options) => {
-            if (!CMS_ROOT) return fFail(page, options);
-
-            return $.when(CMS_ROOT ? window.sr._("ContentManager.cmsHTMLPageFind", null, {
-                Page: page._code.indexOf('/') >= 0 ? page._code : (CMS_ROOT + page._code)
-            }) : null).always(ret => {
-                if (ret) {
-                    // store to avoid redundant loading
-                    ret._code = page._code;
-
-                    console.log("Page " + page._code + " found in CMS, serving...");
-
-                    this.allHTML = (ret.Body ? ret.Body : this.contentHTML);
-                    this.allHTML = this.headerHTML + this.allHTML + this.footerHTML;
-                    this.allData = {
-                        settings: this.settings,
-                        page: ret,
-                        pages: this.pages
-                    };
-                    this.allOptions = options;
-
-                    this.endCalled = false;
-                    return window.sr.runScript(ret.Script);
-                } else {
-                    console.log("Page " + page._code + " not found in CMS, looking in EMS");
-                    var eoPage = null;
-                    try {
-                        eoPage = new Page().code(page._code, "=");
-                        if (eoPage.language) eoPage.language(window.lang || company.Language || "en", "=");
-                    } catch (e) {
-                        console.log("EMS does not have a Page class, failing on purpose: " + e.message);
-                    }
-                    return $.when(window.sr._("EnterpriseManager.emsFormValues", null, {
-                        EntityObject: (eoPage ? eoPage.toEntityObject(true) : null)
-                    })).always(ret => {
-                        if (ret && ret.length) {
-                            console.log("Page " + page._code + " found in EMS, trying templates");
-                            page = ret[0];
-                        } else {
-                            console.log("Page " + page._code + " not found in EMS, so going local");
-                        }
-
-                        return $.when(this.preCompile(page)).always(() => {
-                            return $.when(window.sr.Get("templates" + this.m() + "/" + page._code + ".htm" + this.randURL()),
-                                window.sr.Get("templates" + this.m() + "/" + page._code + ".js" + this.randURL())
-                            ).always((content, js) => {
-                                this.step();
-                                if (content) {
-                                    console.log("Page " + page._code + " html template found");
-                                    page.Body = content;
-                                } else {
-                                    console.log("Page " + page._code + " has no html template");
-                                    page.Body = this.contentHTML || page._content || "<!--" + ("Page " + page._code + " does not exist") + "-->";
-                                }
-
-                                // only cache pages that come from EMS
-                                if (page.toEntityObject) this.pages.push(page);
-
-                                this.allHTML = this.headerHTML + page.Body + this.footerHTML;
-                                this.allData = {
-                                    settings: this.settings,
-                                    page: page,
-                                    pages: this.pages
-                                };
-                                this.allOptions = options;
-
-                                if (js) {
-                                    console.log("Page " + page._code + " script is retrieved");
-                                    page.Script = js;
-                                    //window.sr.runScript(js);
-                                }
-                            });
-                        });
-                    });
-                }
-            }).always(() => {
-                if (!this.endCalled && !page.Script) {
-                    return this.end();
-                }
+            let ret = await window.sr._("EnterpriseManager.emsFormValues", null, {
+                EntityObject: (eoPage ? eoPage.toEntityObject(true) : null)
             });
-        });
+            if (ret && ret.length) {
+                console.log("Page " + page._code + " found in EMS, trying templates");
+                page = ret[0];
+            } else {
+                console.log("Page " + page._code + " not found in EMS, so going local");
+            }
+
+            page = await this.preCompile(page);
+
+            try {
+                let data = await $.ajax({
+                    url: "templates" + this.m() + "/" + page._code + ".htm" + this.randURL()
+                });
+                console.log("Page " + page._code + " html template found");
+                page.Body = data;
+            } catch (ex) {
+                console.log("Page " + page._code + " has no html template");
+                page.Body = this.contentHTML || page._content || "<!--" + ("Page " + page._code + " does not exist") + "-->";
+            }
+
+            try {
+                let js = await $.ajax({
+                    url: "templates" + this.m() + "/" + page._code + ".js" + this.randURL(),
+                    dataType: "text",
+                });
+                page.Script = sr.runScript("(async () => {" + js + "});");;
+                console.log("Page " + page._code + " script is retrieved");
+                //window.sr.runScript(js);
+            } catch (ex) {}
+
+            //console.log("GOT DATA");
+            this.step();
+
+            // only cache pages that come from EMS
+            if (page.toEntityObject) this.pages.push(page);
+
+            this.allHTML = this.headerHTML + page.Body + this.footerHTML;
+            this.allData = {
+                settings: this.settings,
+                page: page,
+                pages: this.pages
+            };
+            this.allOptions = options;
+        }
+        //console.log("THE END");
+        if (!this.endCalled && !page.Script) {
+            await this.end();
+        } else {
+            await page.Script();
+        }
+
+        if (typeof(ga) !== "undefined") {
+            ga('send', {
+                hitType: 'pageview',
+                page: '/' + page._code + '.dynamic',
+                title: page._title
+            });
+            console.log("Sent GA hit for page: " + page._code);
+        }
     }
 };

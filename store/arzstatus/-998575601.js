@@ -1,0 +1,11 @@
+{
+    "URL": "/method/ServiceRouter.ashx?srversion=1&gzip=true&name=CorporateMeasures.comGroupViewFind",
+    "Date": "2019-10-06T08:44:54.481Z",
+    "CallBack": null,
+    "Company": {
+        "Code": "arzhospital"
+    },
+    "TextResponse": "var method_name = \"CorporateMeasures.comGroupViewFind\";\r\n\r\nvar server_time = new Date(2019, 10-1, 6, 11, 45, 55);\r\n\r\nvar execution_time = 0.030321;\r\n\r\nret = new Object();\r\nret.ToString = \"AVG(H) LOS by Division\";\r\nret._ToString = \"AVG(H) LOS by Division\";\r\nret.Active = true;\r\nret.Async = false;\r\nret.Date = new Date(2018, 10-1, 23, 22, 8, 47);\r\nret.Enabled = true;\r\nret.FieldFormatter = \"(1.0/60)*{0}\";\r\nret.Name = \"AVG(H) LOS by Division\";\r\nret.Order = 14;\r\nret.PartitionField = \"\";\r\nret.Remark = \"\";\r\nret.Id = 14;\r\nret.Categoryid = 2;\r\nret.Category = new Object();\r\nret.Category.ToString = \"Administrative Reports\";\r\nret.Category._ToString = \"Administrative Reports\";\r\nret.Category.Active = true;\r\nret.Category.Date = new Date(0001, 1-1, 1, 0, 0, 0);\r\nret.Category.Enabled = true;\r\nret.Category.Name = \"Administrative Reports\";\r\nret.Category.Order = 2;\r\nret.Category.Remark = \"\";\r\nret.Category.Id = 2;\r\nret.Category.Organizationid = 1;\r\nret.Category.Organization = \"\";\r\nret.Category.GroupViews = new Array();\r\nret.Userid = 1;\r\nret.User = new Object();\r\nret.User.ToString = \"Fadi\";\r\nret.User._ToString = \"Fadi\";\r\nret.User.Active = true;\r\nret.User.Admin = true;\r\nret.User.FirstName = \"Fadi\";\r\nret.User.LastName = \"Nammour\";\r\nret.User.Password = \"\";\r\nret.User.Username = \"arzadmin\";\r\nret.User.Id = 1;\r\nret.User.EnquiryExecutions = new Array();\r\nret.User.GroupViews = new Array();\r\nret.User.OwnedEnquiries = new Array();\r\nret.User.Dashboards = new Array();\r\nret.User.Batches = new Array();\r\nret.DataMapid = 0;\r\nret.DashboardEntries = new Array();\r\nret.ViewPartitions = new Array();\r\nret.SubGroupViewLinks = new Array();\r\nret.BaseGroupViewLinks = new Array();\r\n",
+    "hash": -998575601,
+    "Expires": "2019-10-06T09:44:54.728Z"
+}

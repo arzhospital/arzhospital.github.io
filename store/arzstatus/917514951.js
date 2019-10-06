@@ -1,73 +1,11 @@
-var method_name = "CorporateMeasures.comDataFieldFindall";
-
-var server_time = new Date(2019, 9-1, 14, 13, 26, 59);
-
-var execution_time = 0.03112;
-
-
-var ret = new Array();
-ret = new Array();
-ret[0] = new Object();
-ret[0].ToString = "Dep_Code";
-ret[0]._ToString = "Dep_Code";
-ret[0].Active = true;
-ret[0].CodeField = "Dep_Code";
-ret[0].Many = false;
-ret[0].NameField = "Dep_Desc";
-ret[0].Primary = false;
-ret[0].Id = 188;
-ret[0].DataMapid = 14;
-ret[0].DataMap = new Object();
-ret[0].DataMap.ToString = "Status - Employees";
-ret[0].DataMap._ToString = "Status - Employees";
-ret[0].DataMap.Active = true;
-ret[0].DataMap.Code = "MSR-EMPS";
-ret[0].DataMap.Date = new Date(2018, 3-1, 18, 19, 11, 4);
-ret[0].DataMap.DateFormat = "";
-ret[0].DataMap.DateKey = "Emp_DsTamp";
-ret[0].DataMap.Enabled = true;
-ret[0].DataMap.EndedField = "EndDate";
-ret[0].DataMap.KeyField = "";
-ret[0].DataMap.Name = "Status - Employees";
-ret[0].DataMap.Remark = "";
-ret[0].DataMap.StartedField = "StartDate";
-ret[0].DataMap.TimeFormat = "";
-ret[0].DataMap.TimeKey = "";
-ret[0].DataMap.Id = 14;
-ret[0].DataMap.Organizationid = 1;
-ret[0].DataMap.Organization = "";
-ret[0].DataMap.DataSets = new Array();
-ret[0].DataMap.DataMapValues = new Array();
-ret[0].DataMap.DataFields = new Array();
-ret[0].DataMap.Batches = new Array();
-ret[0].DataMap.GroupViews = new Array();
-ret[0].Groupid = 23;
-ret[0].Group = new Object();
-ret[0].Group.ToString = "Department";
-ret[0].Group._ToString = "Department";
-ret[0].Group.Active = true;
-ret[0].Group.Code = "DEP";
-ret[0].Group.Date = new Date(2016, 9-1, 28, 21, 14, 42);
-ret[0].Group.Name = "Department";
-ret[0].Group.Order = 0;
-ret[0].Group.Id = 23;
-ret[0].Group.Organizationid = 1;
-ret[0].Group.Organization = "";
-ret[0].Group.Parentid = 0;
-ret[0].Group.Parent = "";
-ret[0].Group.ConditionFilters = new Array();
-ret[0].Group.Identities = new Array();
-ret[0].Group.DataFields = new Array();
-ret[0].Group.Roles = new Array();
-ret[0].Group.Enquiries = new Array();
-ret[0].Group.SubGroups = new Array();
-ret[0].Group.EnquiryConditions = new Array();
-ret[0].NameTransformationid = 0;
-ret[0].CodeTransformationid = 0;
-ret[0].Roleid = 0;
-ret[0].BaseGroupViewLinks = new Array();
-ret[0].PerformanceIdentities = new Array();
-ret[0].SubGroupViewLinks = new Array();
-
-
-ret.Count = 1;
+{
+    "URL": "/method/ServiceRouter.ashx?srversion=1&gzip=true&name=CorporateMeasures.comDataFieldFindall",
+    "Date": "2019-10-06T08:38:24.844Z",
+    "CallBack": null,
+    "Company": {
+        "Code": "arzhospital"
+    },
+    "TextResponse": "var method_name = \"CorporateMeasures.comDataFieldFindall\";\r\n\r\nvar server_time = new Date(2019, 10-1, 6, 11, 39, 25);\r\n\r\nvar execution_time = 0.027047;\r\n\r\n\r\nvar ret = new Array();\r\nret = new Array();\r\nret[0] = new Object();\r\nret[0].ToString = \"Dep_Code\";\r\nret[0]._ToString = \"Dep_Code\";\r\nret[0].Active = true;\r\nret[0].CodeField = \"Dep_Code\";\r\nret[0].Many = false;\r\nret[0].NameField = \"Dep_Desc\";\r\nret[0].Primary = false;\r\nret[0].Id = 188;\r\nret[0].DataMapid = 14;\r\nret[0].DataMap = new Object();\r\nret[0].DataMap.ToString = \"Status - Employees\";\r\nret[0].DataMap._ToString = \"Status - Employees\";\r\nret[0].DataMap.Active = true;\r\nret[0].DataMap.Code = \"MSR-EMPS\";\r\nret[0].DataMap.Date = new Date(2018, 3-1, 18, 19, 11, 4);\r\nret[0].DataMap.DateFormat = \"\";\r\nret[0].DataMap.DateKey = \"Emp_DsTamp\";\r\nret[0].DataMap.Enabled = true;\r\nret[0].DataMap.EndedField = \"EndDate\";\r\nret[0].DataMap.KeyField = \"\";\r\nret[0].DataMap.Name = \"Status - Employees\";\r\nret[0].DataMap.Remark = \"\";\r\nret[0].DataMap.StartedField = \"StartDate\";\r\nret[0].DataMap.TimeFormat = \"\";\r\nret[0].DataMap.TimeKey = \"\";\r\nret[0].DataMap.Id = 14;\r\nret[0].DataMap.Organizationid = 1;\r\nret[0].DataMap.Organization = \"\";\r\nret[0].DataMap.DataSets = new Array();\r\nret[0].DataMap.DataMapValues = new Array();\r\nret[0].DataMap.DataFields = new Array();\r\nret[0].DataMap.Batches = new Array();\r\nret[0].DataMap.GroupViews = new Array();\r\nret[0].Groupid = 23;\r\nret[0].Group = new Object();\r\nret[0].Group.ToString = \"Department\";\r\nret[0].Group._ToString = \"Department\";\r\nret[0].Group.Active = true;\r\nret[0].Group.Code = \"DEP\";\r\nret[0].Group.Date = new Date(2016, 9-1, 28, 21, 14, 42);\r\nret[0].Group.Name = \"Department\";\r\nret[0].Group.Order = 0;\r\nret[0].Group.Id = 23;\r\nret[0].Group.Organizationid = 1;\r\nret[0].Group.Organization = \"\";\r\nret[0].Group.Parentid = 0;\r\nret[0].Group.Parent = \"\";\r\nret[0].Group.ConditionFilters = new Array();\r\nret[0].Group.Identities = new Array();\r\nret[0].Group.DataFields = new Array();\r\nret[0].Group.Roles = new Array();\r\nret[0].Group.Enquiries = new Array();\r\nret[0].Group.SubGroups = new Array();\r\nret[0].Group.EnquiryConditions = new Array();\r\nret[0].NameTransformationid = 0;\r\nret[0].CodeTransformationid = 0;\r\nret[0].Roleid = 0;\r\nret[0].BaseGroupViewLinks = new Array();\r\nret[0].PerformanceIdentities = new Array();\r\nret[0].SubGroupViewLinks = new Array();\r\n\n\nret.Count = 1;",
+    "hash": 917514951,
+    "Expires": "2019-10-06T09:38:25.077Z"
+}

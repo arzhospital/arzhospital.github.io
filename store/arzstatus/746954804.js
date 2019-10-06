@@ -1,88 +1,11 @@
-var method_name = "CorporateMeasures.comDataFieldFindall";
-
-var server_time = new Date(2019, 9-1, 15, 1, 51, 37);
-
-var execution_time = 0.068553;
-
-
-var ret = new Array();
-ret = new Array();
-ret[0] = new Object();
-ret[0].ToString = "Cov_Code";
-ret[0]._ToString = "Cov_Code";
-ret[0].Active = true;
-ret[0].CodeField = "Cov_Code";
-ret[0].Many = false;
-ret[0].NameField = "Cov_Name";
-ret[0].Primary = false;
-ret[0].Id = 194;
-ret[0].DataMapid = 15;
-ret[0].DataMap = new Object();
-ret[0].DataMap.ToString = "Status - Admissions";
-ret[0].DataMap._ToString = "Status - Admissions";
-ret[0].DataMap.Active = true;
-ret[0].DataMap.Code = "MSR-ADMS";
-ret[0].DataMap.Date = new Date(2018, 3-1, 18, 19, 11, 4);
-ret[0].DataMap.DateFormat = "";
-ret[0].DataMap.DateKey = "StartDate";
-ret[0].DataMap.Enabled = true;
-ret[0].DataMap.EndedField = "";
-ret[0].DataMap.KeyField = "";
-ret[0].DataMap.Name = "Status - Admissions";
-ret[0].DataMap.Remark = "";
-ret[0].DataMap.StartedField = "";
-ret[0].DataMap.TimeFormat = "";
-ret[0].DataMap.TimeKey = "";
-ret[0].DataMap.Id = 15;
-ret[0].DataMap.Organizationid = 1;
-ret[0].DataMap.Organization = "";
-ret[0].DataMap.DataSets = new Array();
-ret[0].DataMap.DataMapValues = new Array();
-ret[0].DataMap.DataFields = new Array();
-ret[0].DataMap.Batches = new Array();
-ret[0].DataMap.GroupViews = new Array();
-ret[0].Groupid = 24;
-ret[0].Group = new Object();
-ret[0].Group.ToString = "Coverage";
-ret[0].Group._ToString = "Coverage";
-ret[0].Group.Active = true;
-ret[0].Group.Code = "COV";
-ret[0].Group.Date = new Date(2016, 9-1, 28, 21, 17, 25);
-ret[0].Group.Name = "Coverage";
-ret[0].Group.Order = 0;
-ret[0].Group.Id = 24;
-ret[0].Group.Organizationid = 1;
-ret[0].Group.Organization = "";
-ret[0].Group.Parentid = 0;
-ret[0].Group.Parent = "";
-ret[0].Group.ConditionFilters = new Array();
-ret[0].Group.Identities = new Array();
-ret[0].Group.DataFields = new Array();
-ret[0].Group.Roles = new Array();
-ret[0].Group.Enquiries = new Array();
-ret[0].Group.SubGroups = new Array();
-ret[0].Group.EnquiryConditions = new Array();
-ret[0].NameTransformationid = 0;
-ret[0].CodeTransformationid = 0;
-ret[0].Roleid = 6;
-ret[0].Role = new Object();
-ret[0].Role.ToString = "First Coverage";
-ret[0].Role._ToString = "First Coverage";
-ret[0].Role.Active = true;
-ret[0].Role.Code = "COV1";
-ret[0].Role.Date = new Date(2016, 9-1, 28, 21, 18, 36);
-ret[0].Role.Enabled = true;
-ret[0].Role.Name = "First Coverage";
-ret[0].Role.Order = 0;
-ret[0].Role.Remark = "";
-ret[0].Role.Id = 6;
-ret[0].Role.Groupid = 24;
-ret[0].Role.Group = "";
-ret[0].Role.DataFields = new Array();
-ret[0].Role.PerformanceIdentities = new Array();
-ret[0].BaseGroupViewLinks = new Array();
-ret[0].PerformanceIdentities = new Array();
-ret[0].SubGroupViewLinks = new Array();
-
-
-ret.Count = 1;
+{
+    "URL": "/method/ServiceRouter.ashx?srversion=1&gzip=true&name=CorporateMeasures.comDataFieldFindall",
+    "Date": "2019-10-06T08:46:03.813Z",
+    "CallBack": null,
+    "Company": {
+        "Code": "arzhospital"
+    },
+    "TextResponse": "var method_name = \"CorporateMeasures.comDataFieldFindall\";\r\n\r\nvar server_time = new Date(2019, 10-1, 6, 11, 47, 4);\r\n\r\nvar execution_time = 0.024617;\r\n\r\n\r\nvar ret = new Array();\r\nret = new Array();\r\nret[0] = new Object();\r\nret[0].ToString = \"Cov_Code\";\r\nret[0]._ToString = \"Cov_Code\";\r\nret[0].Active = true;\r\nret[0].CodeField = \"Cov_Code\";\r\nret[0].Many = false;\r\nret[0].NameField = \"Cov_Name\";\r\nret[0].Primary = false;\r\nret[0].Id = 194;\r\nret[0].DataMapid = 15;\r\nret[0].DataMap = new Object();\r\nret[0].DataMap.ToString = \"Status - Admissions\";\r\nret[0].DataMap._ToString = \"Status - Admissions\";\r\nret[0].DataMap.Active = true;\r\nret[0].DataMap.Code = \"MSR-ADMS\";\r\nret[0].DataMap.Date = new Date(2018, 3-1, 18, 19, 11, 4);\r\nret[0].DataMap.DateFormat = \"\";\r\nret[0].DataMap.DateKey = \"StartDate\";\r\nret[0].DataMap.Enabled = true;\r\nret[0].DataMap.EndedField = \"\";\r\nret[0].DataMap.KeyField = \"\";\r\nret[0].DataMap.Name = \"Status - Admissions\";\r\nret[0].DataMap.Remark = \"\";\r\nret[0].DataMap.StartedField = \"\";\r\nret[0].DataMap.TimeFormat = \"\";\r\nret[0].DataMap.TimeKey = \"\";\r\nret[0].DataMap.Id = 15;\r\nret[0].DataMap.Organizationid = 1;\r\nret[0].DataMap.Organization = \"\";\r\nret[0].DataMap.DataSets = new Array();\r\nret[0].DataMap.DataMapValues = new Array();\r\nret[0].DataMap.DataFields = new Array();\r\nret[0].DataMap.Batches = new Array();\r\nret[0].DataMap.GroupViews = new Array();\r\nret[0].Groupid = 24;\r\nret[0].Group = new Object();\r\nret[0].Group.ToString = \"Coverage\";\r\nret[0].Group._ToString = \"Coverage\";\r\nret[0].Group.Active = true;\r\nret[0].Group.Code = \"COV\";\r\nret[0].Group.Date = new Date(2016, 9-1, 28, 21, 17, 25);\r\nret[0].Group.Name = \"Coverage\";\r\nret[0].Group.Order = 0;\r\nret[0].Group.Id = 24;\r\nret[0].Group.Organizationid = 1;\r\nret[0].Group.Organization = \"\";\r\nret[0].Group.Parentid = 0;\r\nret[0].Group.Parent = \"\";\r\nret[0].Group.ConditionFilters = new Array();\r\nret[0].Group.Identities = new Array();\r\nret[0].Group.DataFields = new Array();\r\nret[0].Group.Roles = new Array();\r\nret[0].Group.Enquiries = new Array();\r\nret[0].Group.SubGroups = new Array();\r\nret[0].Group.EnquiryConditions = new Array();\r\nret[0].NameTransformationid = 0;\r\nret[0].CodeTransformationid = 0;\r\nret[0].Roleid = 6;\r\nret[0].Role = new Object();\r\nret[0].Role.ToString = \"First Coverage\";\r\nret[0].Role._ToString = \"First Coverage\";\r\nret[0].Role.Active = true;\r\nret[0].Role.Code = \"COV1\";\r\nret[0].Role.Date = new Date(2016, 9-1, 28, 21, 18, 36);\r\nret[0].Role.Enabled = true;\r\nret[0].Role.Name = \"First Coverage\";\r\nret[0].Role.Order = 0;\r\nret[0].Role.Remark = \"\";\r\nret[0].Role.Id = 6;\r\nret[0].Role.Groupid = 24;\r\nret[0].Role.Group = \"\";\r\nret[0].Role.DataFields = new Array();\r\nret[0].Role.PerformanceIdentities = new Array();\r\nret[0].BaseGroupViewLinks = new Array();\r\nret[0].PerformanceIdentities = new Array();\r\nret[0].SubGroupViewLinks = new Array();\r\n\n\nret.Count = 1;",
+    "hash": 746954804,
+    "Expires": "2019-10-06T09:46:03.992Z"
+}

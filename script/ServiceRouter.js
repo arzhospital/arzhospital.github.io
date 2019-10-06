@@ -9,7 +9,7 @@ function ServiceRouter() {
 	var bCache;
 	var bLocal;
 	var bAsync;
-	var bLocalStorage;
+	var bCacheResult;
 	var bShowErrors;
 	var nMaxURLLength;
 	var preProcessHTML;
@@ -21,26 +21,6 @@ function ServiceRouter() {
 	var timeDifference = 0; // this is the time difference between client and server, updated with every call (in ticks)
 
 	var s_ErrorMessages;
-
-	this.$_REQUEST = function(key) {
-		key = key.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-		var regexS = '[\\?&]' + key + '=([^&#]*)';
-		var regex = new RegExp(regexS);
-		var results = regex.exec(window.location.href);
-		var ret = '';
-		if (results == null) {
-			ret = '';
-		} else {
-			ret = results[1];
-		}
-
-		if (ret)
-			ret = ret
-				.replace(/%22/g, '"')
-				.replace(/%27/g, "'")
-				.replace(/%20/g, ' ');
-		return ret;
-	};
 
 	this.init = function(
 		srURL,
@@ -56,7 +36,7 @@ function ServiceRouter() {
 			!this.Store && !(document.URL.indexOf('local=false') >= 0);
 
 		this.bCache = this.$_REQUEST('cache');
-		this.bLocalStorage = this.bLocal && this.$_REQUEST('localStorage');
+		this.bCacheResult = this.bLocal && this.$_REQUEST('cacheResult');
 
 		if (!srURL) {
 			this.srURL = this.$_REQUEST('sr');
@@ -129,6 +109,19 @@ function ServiceRouter() {
 		this.s_ErrorMessages = '';
 
 		return this;
+	};
+
+	this.$_REQUEST = function(key, url) {
+		url = url || window.location.href;
+		try {
+			return new URL(url).searchParams.get(key);
+		} catch (ex) {
+			var regex = new RegExp('[\\?|&]' + key + '=([^&#]*)');
+			var results = regex.exec('?' + url.split('?')[1]);
+			return results === null
+				? ''
+				: decodeURIComponent(results[1].replace(/\+/g, ' '));
+		}
 	};
 
 	this.groupBy = function(ar, field) {
@@ -208,7 +201,6 @@ function ServiceRouter() {
 
 	this.runScript = function(s) {
 		if (!s) return null;
-
 		try {
 			if (window._content && window._content.eval) {
 				var output = window._content.eval(s);
@@ -346,54 +338,110 @@ function ServiceRouter() {
 		return this.addMSeconds(new Date(), -this.timeDifference);
 	};
 
+	this.runSRScript = function(s) {
+		return this.runScript(
+			'(() => { var ret = null; ' +
+				s +
+				' window.method_name = method_name; window.server_time = server_time; window._exception = _exception; window.execution_time = execution_time; return {_exception: _exception, method_name: method_name, server_time: server_time, execution_time: execution_time, ret: ret};})();'
+		);
+	};
+
+	this.processResult = async function(res) {
+		if (!res || !res.Code || !res.StoredMethod) {
+			return res;
+		}
+
+		// for sure a method result from an async call
+		if (res.Result) {
+			// we got a result
+			try {
+				return this.processResponse(4, null, res.Result, null);
+			} catch (e) {
+				return res.Result;
+			}
+		}
+
+		var timeout = res.RunAfter - res.Date;
+		if (timeout <= 0) {
+			// negative timeout means that it was supposed to be run but did not for some reason (delay, failure, etc...)
+			// same date as runafter means that we are using the immediate async execution. i.e. there is no need for the runner thread task
+			timeout = 30000;
+		} else if (timeout > 5 * 60 * 1000) {
+			// more than we can wait, we return a reference to the result
+			console.log(
+				'We cannot wait ' +
+					Math.floor(timeout / 1000) +
+					' seconds. Returning result.'
+			);
+			return res;
+		}
+		console.log(
+			'Making the next call in ' +
+				Math.floor(timeout / 1000) +
+				' seconds.'
+		);
+		await new Promise(resolve => setTimeout(resolve, timeout));
+		let ret = await this._('ContentManager.cmsMethodResultFind', null, {
+			Code: res.Code,
+			Id: res.Id,
+		});
+		return ret;
+	};
+
 	this.processResponse = function(readyState, callBack, responseText, url) {
 		if ([4, 44].indexOf(readyState) == -1) return;
 
-		var sMethodName = url.substring(
+		var sMethodName = this.$_REQUEST('name', url);
+		/*url.substring(
 			url.indexOf('name=') + 5,
 			url.indexOf('&', url.indexOf('name=') + 5)
-		);
+		);*/
 
 		try {
-			if (readyState == 4) this.localResult(null, null, responseText);
-			this.ActiveRequest = null;
+			if (readyState == 4) {
+				let res = (async () => {
+					return await this.cacheResult(null, responseText);
+				})();
+			}
 
+			this.ActiveRequest = null;
 			ret = null;
 			server_time = null;
 			_exception = null;
 			this.ShowDebug('Response From Server:\n' + responseText);
 			var bScriptError = false;
+			var _ret = null;
 			try {
-				this.runScript(responseText);
+				_ret = this.runSRScript(responseText);
 			} catch (e) {
 				bScriptError = true;
 			}
 
-			if (server_time)
+			if (_ret.server_time)
 				this.timeDifference =
-					new Date().getTime() - server_time.getTime();
+					new Date().getTime() - _ret.server_time.getTime();
 
-			if (_exception) {
+			if (_ret._exception) {
 				this.ShowDebug(_exception.Message);
 			}
 
 			if (callBack != null) {
 				var callRet = null;
 				try {
-					callRet = callBack(ret, _exception);
+					callRet = callBack(_ret.ret, _ret._exception);
 				} catch (e) {
 					this.ShowError(
 						'Error in Callback:\n\n' + callBack + '\n\n' + e.message
 					);
 				}
 				if (
-					typeof method_name !== 'undefined' &&
+					typeof _ret.method_name !== 'undefined' &&
 					typeof sMethodName !== 'undefined' &&
-					sMethodName != method_name
+					sMethodName != _ret.method_name
 				) {
 					this.ShowError(
 						'Mismatch in Method between server and client:\nServer Method Name: ' +
-							method_name +
+							_ret.method_name +
 							'\nClient Method Name: ' +
 							sMethodName
 					);
@@ -402,10 +450,13 @@ function ServiceRouter() {
 					function() {
 						window.sr.resetCursor();
 					})();
-				return callRet || ret || (bScriptError ? responseText : null);
+
+				return (
+					callRet || _ret.ret || (bScriptError ? responseText : null)
+				);
 			} else {
 				this.resetCursor();
-				return ret || (bScriptError ? responseText : null);
+				return _ret.ret || (bScriptError ? responseText : null);
 			}
 		} catch (e) {
 			this.resetCursor();
@@ -764,19 +815,6 @@ function ServiceRouter() {
 		return (window.xmlHTTP = x);
 	};
 
-	//this.__ = function(fun, callBack, args) {};
-
-	this.promise = function(data, callBack) {
-		this.Deferred();
-
-		if (callBack) {
-			callBack(data);
-		}
-		window.resolve(data);
-
-		return window.deferred ? window.deferred.promise() : false;
-	};
-
 	this.doHeadlessCall = function(fCallBack) {
 		if (!this.company.headlesSettings) return null;
 		var settings = this.company.headlesSettings();
@@ -804,7 +842,7 @@ function ServiceRouter() {
 			} else {
 				settings.method = 'POST';
 				settings.data = JSON.stringify({
-					hashcode: this.ActiveRequest.hash,
+					key: this.ActiveRequest.hash,
 					url: this.ActiveRequest.URL,
 					postData: this.ActiveRequest.PostData,
 					pending: true,
@@ -844,60 +882,223 @@ function ServiceRouter() {
 				(typeof r.Expires === 'undefined' ||
 					new Date(r.Expires) > new Date())
 		);
-		console.log(cache.length);
 		$.each(cache, (_, r) => {
 			zip.file(r.hash + '.js', r.TextResponse);
 		});
+		console.log(cache.length);
 
-		zip.generateAsync({ type: 'blob' }).then(function(content) {
-			//location.href = 'data:application/zip;base64,' + content;
-			saveAs(content, filename || 'srCache.zip');
-		});
+		if (false)
+			zip.generateAsync({ type: 'blob' }).then(function(content) {
+				//location.href = 'data:application/zip;base64,' + content;
+				saveAs(content, filename || 'srCache.zip');
+			});
 	};
 
-	this.localResult = function(data, request, textresponse) {
-		if (!this.bLocalStorage) return;
+	this.cacheResult = async function(request, textresponse) {
+		if (!this.bCacheResult) return;
 		request = request || this.ActiveRequest;
+
 		if (!request) {
-			return null;
+			return;
 		}
+
+		var sMethod = this.$_REQUEST('name', request.URL);
+		sMethod = sMethod.substring(sMethod.lastIndexOf('.') + 1);
 		try {
-			var srCache = localStorage.getItem('srCache');
-			if (srCache == null) {
-				srCache = { Requests: [] };
-			} else {
-				srCache = JSON.parse(srCache);
-			}
-			var requests = $.grep(
-				srCache.Requests,
-				r =>
-					typeof r.Expires === 'undefined' ||
-					new Date(r.Expires) > new Date()
-			);
-			var bChanged = requests.length != srCache.Requests.length;
-
-			srCache.Requests = requests;
-
-			var item = srCache.Requests.find(
-				r =>
+			var _usable = r => {
+				var item =
+					r &&
 					r.hash == request.hash &&
 					r.URL == request.URL &&
-					r.TextResponse
-			);
+					r.TextResponse &&
+					(typeof r.Expires === 'undefined' ||
+						new Date(r.Expires) > new Date())
+						? r
+						: null;
+				if (textresponse) {
+					item = item || request;
+					item.TextResponse = textresponse;
+					item.Expires = new Date(
+						new Date().getTime() +
+							parseFloat(
+								this.$_REQUEST('nCacheExpireHours') || 1
+							) *
+								60 *
+								60 *
+								1000
+					);
+				}
 
-			if (data || textresponse) {
-				if (!item) srCache.Requests.push(request);
-				item = item || request;
-				//item.Response = data || item.Response;
-				item.TextResponse = textresponse || item.TextResponse;
-				localStorage.setItem('srCache', JSON.stringify(srCache));
-			} else if (bChanged) {
-				localStorage.setItem('srCache', JSON.stringify(srCache));
+				return item;
+			};
+
+			if (
+				this.bCacheResult == 'kvstore' &&
+				typeof window.company.restiodbSettings !== 'undefined'
+			) {
+				var ajax = (key, value, id) => {
+					var ret = company.restiodbSettings();
+					ret.url += 'kvstore';
+					if (value) {
+						if (id) {
+							// update record
+							ret.url += '/' + id;
+							ret.method = 'PUT';
+						} else {
+							// new record
+							ret.method = 'POST';
+						}
+						ret.data = JSON.stringify({
+							key: key,
+							value: JSON.stringify(value, null, 4),
+						});
+					} else {
+						if (id) {
+							// delete record
+							ret.url += '/' + id;
+							ret.method = 'DELETE';
+						} else {
+							ret.method = 'GET';
+							ret.url += '?q={"key":' + key + '}';
+						}
+					}
+					console.log('method', ret.method);
+					return ret;
+				};
+				let record = await $.ajax(ajax(request.hash));
+				r =
+					record && record.length
+						? JSON.parse(record[0].value)
+						: null;
+				var item = _usable(r);
+
+				if (!item) {
+					if (r) {
+						await $.ajax(ajax(request.hash, null, record[0]._id));
+					}
+					return null;
+				}
+
+				if (!r || item.Expires > r.Expires) {
+					await $.ajax(
+						ajax(item.hash, item, r ? record[0]._id : null)
+					);
+					return item;
+				}
+
+				return item;
+			} else if (this.bCacheResult == 'sr') {
+				if (request.URL.indexOf('cmsMethodResult') >= 0) return null;
+				var ajax = (key, value, id) => {
+					var method = 'Find';
+					var ret = {
+						url:
+							'/method/a.ashx?name=ContentManager.cmsMethodResult',
+						processData: false,
+						type: 'POST',
+					};
+					if (value) {
+						if (id) {
+							// update record
+							method = 'Update';
+						} else {
+							// new record
+							method = 'Insert';
+						}
+						ret.beforeSend = request => {
+							request.setRequestHeader(
+								'Content-Type',
+								'multipart/form-data; boundary=--------------'
+							);
+						};
+					} else {
+						ret.type = 'GET';
+						if (id) {
+							// delete record
+							method = 'Delete';
+						} else {
+							// get record
+							method = 'Find';
+						}
+						method +=
+							'&p0={Code}' +
+							(company ? company.Code + '-' : '') +
+							key +
+							'{/Code}';
+					}
+					ret.url += method;
+					if (ret.type != 'GET') {
+						delete item.PostData;
+						var p0 = {
+							Code: (company ? company.Code + '-' : '') + key,
+							Completed: new Date(),
+							Date: new Date(),
+							Result: JSON.stringify(item, null, 4),
+							StoredMethod: {
+								Name: sMethod,
+							},
+						};
+						if (id) {
+							p0.Id = id;
+						}
+						ret.data =
+							'POSTDATA=\r\n' /*+ "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\r\n"*/ +
+							this.param([p0]);
+					}
+					return ret;
+				};
+
+				record = this.runScript(
+					'(() => { var ret = null; ' +
+						(await $.ajax(ajax(request.hash))) +
+						'return ret;})();'
+				);
+				r = record ? JSON.parse(record.Result) : null;
+				var item = _usable(r);
+
+				if (!item) {
+					if (r) {
+						await $.ajax(ajax(request.hash, null, record.Id));
+					}
+					return null;
+				}
+
+				if (!r || item.Expires > r.Expires) {
+					await $.ajax(
+						ajax(item.hash, item, r && record ? record.Id : null)
+					);
+					return item;
+				}
+
+				return item;
+			} else if (this.bCacheResult == 'local') {
+				var srCache = localStorage.getItem('srCache');
+				if (srCache == null) {
+					srCache = { Requests: {} };
+				} else {
+					srCache = JSON.parse(srCache);
+				}
+
+				var r = srCache.Requests[request.hash];
+				var item = _usable(r);
+
+				if (!item) {
+					delete srCache.Requests[request.hash];
+					localStorage.setItem('srCache', JSON.stringify(srCache));
+					return null;
+				}
+
+				if (!r || item.Expires > r.Expires) {
+					srCache.Requests[item.hash] = item;
+					localStorage.setItem('srCache', JSON.stringify(srCache));
+					return item;
+				}
+
+				return item;
 			}
-			return item;
 		} catch (ex) {
-			//console.log(ex);
-			return null;
+			console.log(ex);
+			throw ex;
 		}
 	};
 
@@ -930,7 +1131,7 @@ function ServiceRouter() {
 			fun = fun.substring(1);
 		}
 
-		if (this.ActiveRequest) {
+		if (callBack && this.ActiveRequest) {
 			this.ShowObject(this.ActiveRequest);
 			return false;
 		}
@@ -956,12 +1157,6 @@ function ServiceRouter() {
 					? { Code: company.Code }
 					: null,
 			TextResponse: null,
-			Expires: new Date(
-				new Date().getTime() +
-					parseInt(this.$_REQUEST('nStorageExpireHours') || 1) *
-						60 *
-						60000
-			),
 			hash: hCode,
 		};
 
@@ -1023,17 +1218,16 @@ function ServiceRouter() {
 					}
 				};
 
-				var request = this.localResult();
-				if (request) {
-					var res = fResponseText(request.TextResponse, callBack);
-					if (!callBack) {
-						return new $.Deferred(function(def) {
-							def.resolve(res);
-						}).promise();
-					} else {
-						return;
+				$.when(this.cacheResult()).then(request => {
+					if (request) {
+						var res = fResponseText(request.TextResponse, callBack);
+						if (!callBack) {
+							return this.promise(res);
+						} else {
+							return;
+						}
 					}
-				}
+				});
 
 				var _theUrl =
 					(this.Store ||
@@ -1049,9 +1243,7 @@ function ServiceRouter() {
 					this.Get(_theUrl).always(function(responseText) {
 						data = fResponseText(responseText);
 					});
-					return new $.Deferred(function(def) {
-						def.resolve(data);
-					}).promise();
+					return this.promise(data);
 				} else {
 					this.Get(_theUrl, function(responseText) {
 						var data = fResponseText(responseText, callBack);
@@ -1062,11 +1254,163 @@ function ServiceRouter() {
 				return false;
 			}
 		} else {
-			return this.sendXML(
-				this.srURL + '&name=' + fun,
-				postData,
-				callBack
-			);
+			return (async () => {
+				return await this.sendXML(
+					this.srURL + '&name=' + fun,
+					postData,
+					callBack
+				);
+			})();
+		}
+	};
+
+	this.promise = function(data, callBack) {
+		if (!callBack || {}.toString.call(callBack) !== '[object Function]') {
+			return data;
+		}
+
+		var p = $.Deferred();
+
+		setTimeout(async () => {
+			try {
+				let d = await callBack(data);
+				p.resolve(d);
+			} catch (ex) {
+				try {
+					p.resolve(callBack(data));
+				} catch (_ex) {
+					console.log('promise exception', _ex);
+				}
+			}
+		}, 500);
+
+		return p ? p.promise() : data;
+	};
+
+	this.sendXML = async function(url, postData, callBack) {
+		if (!window.SR) window.SR = this;
+
+		url += '&rand=' + Math.random();
+
+		if (this.bDebug) {
+			url += '&DEBUG=true';
+		}
+		if (this.bAsync && this.bLocal) {
+			url += '&async=true';
+			if (this.runAfter) {
+				url += '&runafter=' + this.runAfter;
+			}
+			this.bAsync = false;
+		}
+
+		if (window.jQuery) {
+			let request = await this.cacheResult(null, null, callBack);
+			if (request) {
+				let result = (async () =>
+					this.processResponse(
+						44,
+						callBack,
+						request.TextResponse,
+						url
+					))();
+				return this.processResult(result);
+			} else {
+				// jquery call
+				var ajax = {};
+				if (this.bPost || postData.length > nMaxURLLength) {
+					ajax.url = url;
+					ajax.type = 'POST';
+					ajax.beforeSend = request => {
+						request.setRequestHeader(
+							'Content-Type',
+							'multipart/form-data; boundary=--------------'
+						);
+					};
+					ajax.data =
+						'POSTDATA=\r\n' /*+ "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\r\n"*/ +
+						postData;
+				} else {
+					ajax.url = url + '&POSTCODE=' + this.toHex(postData);
+					ajax.type = 'GET';
+				}
+				return (async () => {
+					let ret = await $.ajax(ajax);
+					ret = await this.processResponse(4, callBack, ret, url);
+					return await this.processResult(ret);
+				})();
+			}
+		} else {
+			var xmlHTTP = this.getXmlHTTP();
+			if (!xmlHTTP) return false;
+			if (callBack != null) {
+				window.xmlHTTP.onreadystatechange = function() {
+					if (window.xmlHTTP.readyState == 4) {
+						if ($.when) {
+							$.when(
+								window.SR.processResponse(
+									window.xmlHTTP.readyState,
+									callBack,
+									window.xmlHTTP.responseText,
+									url
+								)
+							).then(result => window.SR.processResult(result));
+						} else {
+							window.SR.processResult(
+								window.SR.processResponse(
+									window.xmlHTTP.readyState,
+									callBack,
+									window.xmlHTTP.responseText,
+									url
+								)
+							);
+						}
+					}
+				};
+			}
+
+			if (this.bPost || postData.length > nMaxURLLength) {
+				window.xmlHTTP.open('POST', url, callBack != null);
+				window.xmlHTTP.setRequestHeader(
+					'Content-Type',
+					'multipart/form-data; boundary=--------------'
+				); // fool cross-domain checking in chrome
+				window.xmlHTTP.send(
+					'POSTDATA=\r\n' /*+ "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\r\n"*/ +
+						postData
+				);
+			} else {
+				xmlHTTP.open(
+					'GET',
+					url + '&POSTCODE=' + this.toHex(postData),
+					callBack != null
+				);
+				xmlHTTP.send(null);
+			}
+
+			if (callBack == null && xmlHTTP.readyState == 4) {
+				var _url = url + '&POSTCODE=' + this.toHex(postData);
+				if ($.when) {
+					return $.when(
+						this.processResponse(
+							xmlHTTP.readyState,
+							callBack,
+							xmlHTTP.responseText,
+							_url
+						)
+					).then(result => {
+						return this.processResult(result);
+					});
+				} else {
+					this.processResult(
+						this.processResponse(
+							xmlHTTP.readyState,
+							callBack,
+							xmlHTTP.responseText,
+							_url
+						)
+					);
+				}
+			}
 		}
 	};
 
@@ -1161,16 +1505,15 @@ function ServiceRouter() {
 			if (!window.jQuery) {
 				// no jquery
 			} else {
-				return $.Deferred(function(def) {
+				return this.promise(
+					null,
 					$.ajax({
 						type: 'GET',
 						url: url,
 						async: false,
 						processData: false,
-						success: data => def.resolve(data),
-						error: err => def.resolve(null),
-					});
-				}).promise();
+					})
+				);
 			}
 		} else {
 			// synchronous mode
@@ -1240,159 +1583,6 @@ function ServiceRouter() {
 			hash |= 0; // Convert to 32bit integer
 		}
 		return hash;
-	};
-
-	this.processResult = function(res, url) {
-		if (!res || !res.Code || !res.StoredMethod) {
-			window.resolve(res);
-			return;
-		}
-
-		// for sure a method result from an async call
-		if (res.Result) {
-			// we got a result
-			try {
-				this.runScript(res.Result);
-				window.resolve(ret);
-			} catch (e) {
-				window.resolve(res.Result);
-			}
-
-			return;
-		}
-
-		var timeout = res.RunAfter - new Date();
-		if (timeout < 0) {
-			// negative timeout means that it was supposed to be run but did not for some reason (delay, failure, etc...)
-			timeout = 30000;
-		} else if (timeout > 5 * 60 * 1000) {
-			// more than we can wait, we return a reference to the result
-			console.log(
-				'We cannot wait ' +
-					Math.floor(timeout / 1000) +
-					' seconds. Returning result.'
-			);
-			window.resolve(res);
-			return;
-		}
-		console.log(
-			'Making the next call in ' +
-				Math.floor(timeout / 1000) +
-				' seconds.'
-		);
-		setTimeout(function() {
-			window.SR._('ContentManager.cmsMethodResultFind', ret => {}, {
-				Code: res.Code,
-				Id: res.Id,
-			});
-		}, timeout);
-	};
-
-	this.Deferred = function() {
-		window.resolve =
-			window.resolve ||
-			function(r) {
-				window.deferred ? window.deferred.resolve(r) : null; //console.log('window.deferred is null');
-			};
-		if (typeof window.jQuery === 'undefined') return;
-		if (window.deferred && window.deferred.state() == 'pending') return;
-		window.deferred = $.Deferred();
-	};
-
-	this.sendXML = function(url, postData, callBack) {
-		this.Deferred();
-
-		if (!window.SR) window.SR = this;
-
-		var xmlHTTP = this.getXmlHTTP();
-
-		if (xmlHTTP) {
-			if (callBack != null) {
-				window.xmlHTTP.onreadystatechange = function() {
-					if (window.xmlHTTP.readyState == 4) {
-						window.SR.processResult(
-							window.SR.processResponse(
-								window.xmlHTTP.readyState,
-								callBack,
-								window.xmlHTTP.responseText,
-								url
-							),
-							url
-						);
-					}
-				};
-			}
-
-			url += '&rand=' + Math.random();
-
-			if (this.bDebug) {
-				url += '&DEBUG=true';
-			}
-			if (this.bAsync && this.bLocal) {
-				url += '&async=true';
-				if (this.runAfter) {
-					url += '&runafter=' + this.runAfter;
-				}
-				this.bAsync = false;
-			}
-
-			var request = this.localResult();
-			if (request) {
-				this.processResult(
-					this.processResponse(
-						44,
-						callBack,
-						request.TextResponse,
-						url
-					),
-					url
-				);
-				return !callBack && window.deferred
-					? window.deferred.promise()
-					: true;
-			}
-
-			if (this.bPost || postData.length > nMaxURLLength) {
-				window.xmlHTTP.open('POST', url, callBack != null);
-				window.xmlHTTP.setRequestHeader(
-					'Content-Type',
-					'multipart/form-data; boundary=--------------'
-				); // fool cross-domain checking in chrome
-				window.xmlHTTP.send(
-					'POSTDATA=\r\n' /*+ "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\r\n"*/ +
-						postData
-				);
-			} else {
-				xmlHTTP.open(
-					'GET',
-					url + '&POSTCODE=' + this.toHex(postData),
-					callBack != null
-				);
-				xmlHTTP.send(null);
-			}
-
-			if (callBack == null) {
-				if (xmlHTTP.readyState == 4) {
-					var _url = url + '&POSTCODE=' + this.toHex(postData);
-					this.processResult(
-						this.processResponse(
-							xmlHTTP.readyState,
-							callBack,
-							xmlHTTP.responseText,
-							_url
-						),
-						_url
-					);
-				}
-			}
-
-			return !callBack && window.deferred
-				? window.deferred.promise()
-				: true;
-		} else
-			return !callBack && window.deferred
-				? window.deferred.promise()
-				: false;
 	};
 
 	this.toHex = function(s) {
@@ -1694,15 +1884,6 @@ function ServiceRouter() {
 		return false;
 	};
 	/** Object Comparison **/
-
-	function $_REQUEST(name) {
-		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
-			results = regex.exec(location.search);
-		return results === null
-			? ''
-			: decodeURIComponent(results[1].replace(/\+/g, ' '));
-	}
 
 	this.serialize = function(_obj) {
 		try {

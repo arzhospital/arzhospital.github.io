@@ -1,0 +1,11 @@
+{
+    "URL": "/method/ServiceRouter.ashx?srversion=1&gzip=true&name=CorporateMeasures.comGroupViewFind",
+    "Date": "2019-10-06T08:51:35.236Z",
+    "CallBack": null,
+    "Company": {
+        "Code": "arzhospital"
+    },
+    "TextResponse": "var method_name = \"CorporateMeasures.comGroupViewFind\";\r\n\r\nvar server_time = new Date(2019, 10-1, 6, 11, 52, 35);\r\n\r\nvar execution_time = 0.045094;\r\n\r\nret = new Object();\r\nret.ToString = \"Operations Totals$ by Surgeon\";\r\nret._ToString = \"Operations Totals$ by Surgeon\";\r\nret.Active = true;\r\nret.Async = false;\r\nret.Date = new Date(2019, 2-1, 13, 7, 11, 48);\r\nret.Enabled = true;\r\nret.FieldFormatter = \"\";\r\nret.Name = \"Operations Totals$ by Surgeon\";\r\nret.Order = 25;\r\nret.PartitionField = \"\";\r\nret.Remark = \"\";\r\nret.Id = 25;\r\nret.Categoryid = 3;\r\nret.Category = new Object();\r\nret.Category.ToString = \"Financial Reports\";\r\nret.Category._ToString = \"Financial Reports\";\r\nret.Category.Active = true;\r\nret.Category.Date = new Date(0001, 1-1, 1, 0, 0, 0);\r\nret.Category.Enabled = true;\r\nret.Category.Name = \"Financial Reports\";\r\nret.Category.Order = 3;\r\nret.Category.Remark = \"\";\r\nret.Category.Id = 3;\r\nret.Category.Organizationid = 1;\r\nret.Category.Organization = \"\";\r\nret.Category.GroupViews = new Array();\r\nret.Userid = 1;\r\nret.User = new Object();\r\nret.User.ToString = \"Fadi\";\r\nret.User._ToString = \"Fadi\";\r\nret.User.Active = true;\r\nret.User.Admin = true;\r\nret.User.FirstName = \"Fadi\";\r\nret.User.LastName = \"Nammour\";\r\nret.User.Password = \"\";\r\nret.User.Username = \"arzadmin\";\r\nret.User.Id = 1;\r\nret.User.EnquiryExecutions = new Array();\r\nret.User.GroupViews = new Array();\r\nret.User.OwnedEnquiries = new Array();\r\nret.User.Dashboards = new Array();\r\nret.User.Batches = new Array();\r\nret.DataMapid = 0;\r\nret.DashboardEntries = new Array();\r\nret.ViewPartitions = new Array();\r\nret.SubGroupViewLinks = new Array();\r\nret.BaseGroupViewLinks = new Array();\r\n",
+    "hash": 276539765,
+    "Expires": "2019-10-06T09:51:35.561Z"
+}

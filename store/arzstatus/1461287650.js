@@ -1,88 +1,11 @@
-var method_name = "CorporateMeasures.comDataFieldFindall";
-
-var server_time = new Date(2019, 9-1, 14, 13, 30, 57);
-
-var execution_time = 0.06363;
-
-
-var ret = new Array();
-ret = new Array();
-ret[0] = new Object();
-ret[0].ToString = "TrDocCode";
-ret[0]._ToString = "TrDocCode";
-ret[0].Active = true;
-ret[0].CodeField = "TrDocCode";
-ret[0].Many = false;
-ret[0].NameField = "TrDocName";
-ret[0].Primary = false;
-ret[0].Id = 191;
-ret[0].DataMapid = 15;
-ret[0].DataMap = new Object();
-ret[0].DataMap.ToString = "Status - Admissions";
-ret[0].DataMap._ToString = "Status - Admissions";
-ret[0].DataMap.Active = true;
-ret[0].DataMap.Code = "MSR-ADMS";
-ret[0].DataMap.Date = new Date(2018, 3-1, 18, 19, 11, 4);
-ret[0].DataMap.DateFormat = "";
-ret[0].DataMap.DateKey = "StartDate";
-ret[0].DataMap.Enabled = true;
-ret[0].DataMap.EndedField = "";
-ret[0].DataMap.KeyField = "";
-ret[0].DataMap.Name = "Status - Admissions";
-ret[0].DataMap.Remark = "";
-ret[0].DataMap.StartedField = "";
-ret[0].DataMap.TimeFormat = "";
-ret[0].DataMap.TimeKey = "";
-ret[0].DataMap.Id = 15;
-ret[0].DataMap.Organizationid = 1;
-ret[0].DataMap.Organization = "";
-ret[0].DataMap.DataSets = new Array();
-ret[0].DataMap.DataMapValues = new Array();
-ret[0].DataMap.DataFields = new Array();
-ret[0].DataMap.Batches = new Array();
-ret[0].DataMap.GroupViews = new Array();
-ret[0].Groupid = 2;
-ret[0].Group = new Object();
-ret[0].Group.ToString = "Doctor";
-ret[0].Group._ToString = "Doctor";
-ret[0].Group.Active = true;
-ret[0].Group.Code = "DOC";
-ret[0].Group.Date = new Date(2015, 10-1, 4, 0, 0, 0);
-ret[0].Group.Name = "Doctor";
-ret[0].Group.Order = 2;
-ret[0].Group.Id = 2;
-ret[0].Group.Organizationid = 1;
-ret[0].Group.Organization = "";
-ret[0].Group.Parentid = 0;
-ret[0].Group.Parent = "";
-ret[0].Group.ConditionFilters = new Array();
-ret[0].Group.Identities = new Array();
-ret[0].Group.DataFields = new Array();
-ret[0].Group.Roles = new Array();
-ret[0].Group.Enquiries = new Array();
-ret[0].Group.SubGroups = new Array();
-ret[0].Group.EnquiryConditions = new Array();
-ret[0].NameTransformationid = 0;
-ret[0].CodeTransformationid = 0;
-ret[0].Roleid = 3;
-ret[0].Role = new Object();
-ret[0].Role.ToString = "Treating";
-ret[0].Role._ToString = "Treating";
-ret[0].Role.Active = true;
-ret[0].Role.Code = "TRTDC";
-ret[0].Role.Date = new Date(0001, 1-1, 1, 0, 0, 0);
-ret[0].Role.Enabled = true;
-ret[0].Role.Name = "Treating";
-ret[0].Role.Order = 0;
-ret[0].Role.Remark = "";
-ret[0].Role.Id = 3;
-ret[0].Role.Groupid = 2;
-ret[0].Role.Group = "";
-ret[0].Role.DataFields = new Array();
-ret[0].Role.PerformanceIdentities = new Array();
-ret[0].BaseGroupViewLinks = new Array();
-ret[0].PerformanceIdentities = new Array();
-ret[0].SubGroupViewLinks = new Array();
-
-
-ret.Count = 1;
+{
+    "URL": "/method/ServiceRouter.ashx?srversion=1&gzip=true&name=CorporateMeasures.comDataFieldFindall",
+    "Date": "2019-10-06T08:42:40.305Z",
+    "CallBack": null,
+    "Company": {
+        "Code": "arzhospital"
+    },
+    "TextResponse": "var method_name = \"CorporateMeasures.comDataFieldFindall\";\r\n\r\nvar server_time = new Date(2019, 10-1, 6, 11, 43, 40);\r\n\r\nvar execution_time = 0.039157;\r\n\r\n\r\nvar ret = new Array();\r\nret = new Array();\r\nret[0] = new Object();\r\nret[0].ToString = \"TrDocCode\";\r\nret[0]._ToString = \"TrDocCode\";\r\nret[0].Active = true;\r\nret[0].CodeField = \"TrDocCode\";\r\nret[0].Many = false;\r\nret[0].NameField = \"TrDocName\";\r\nret[0].Primary = false;\r\nret[0].Id = 191;\r\nret[0].DataMapid = 15;\r\nret[0].DataMap = new Object();\r\nret[0].DataMap.ToString = \"Status - Admissions\";\r\nret[0].DataMap._ToString = \"Status - Admissions\";\r\nret[0].DataMap.Active = true;\r\nret[0].DataMap.Code = \"MSR-ADMS\";\r\nret[0].DataMap.Date = new Date(2018, 3-1, 18, 19, 11, 4);\r\nret[0].DataMap.DateFormat = \"\";\r\nret[0].DataMap.DateKey = \"StartDate\";\r\nret[0].DataMap.Enabled = true;\r\nret[0].DataMap.EndedField = \"\";\r\nret[0].DataMap.KeyField = \"\";\r\nret[0].DataMap.Name = \"Status - Admissions\";\r\nret[0].DataMap.Remark = \"\";\r\nret[0].DataMap.StartedField = \"\";\r\nret[0].DataMap.TimeFormat = \"\";\r\nret[0].DataMap.TimeKey = \"\";\r\nret[0].DataMap.Id = 15;\r\nret[0].DataMap.Organizationid = 1;\r\nret[0].DataMap.Organization = \"\";\r\nret[0].DataMap.DataSets = new Array();\r\nret[0].DataMap.DataMapValues = new Array();\r\nret[0].DataMap.DataFields = new Array();\r\nret[0].DataMap.Batches = new Array();\r\nret[0].DataMap.GroupViews = new Array();\r\nret[0].Groupid = 2;\r\nret[0].Group = new Object();\r\nret[0].Group.ToString = \"Doctor\";\r\nret[0].Group._ToString = \"Doctor\";\r\nret[0].Group.Active = true;\r\nret[0].Group.Code = \"DOC\";\r\nret[0].Group.Date = new Date(2015, 10-1, 4, 0, 0, 0);\r\nret[0].Group.Name = \"Doctor\";\r\nret[0].Group.Order = 2;\r\nret[0].Group.Id = 2;\r\nret[0].Group.Organizationid = 1;\r\nret[0].Group.Organization = \"\";\r\nret[0].Group.Parentid = 0;\r\nret[0].Group.Parent = \"\";\r\nret[0].Group.ConditionFilters = new Array();\r\nret[0].Group.Identities = new Array();\r\nret[0].Group.DataFields = new Array();\r\nret[0].Group.Roles = new Array();\r\nret[0].Group.Enquiries = new Array();\r\nret[0].Group.SubGroups = new Array();\r\nret[0].Group.EnquiryConditions = new Array();\r\nret[0].NameTransformationid = 0;\r\nret[0].CodeTransformationid = 0;\r\nret[0].Roleid = 3;\r\nret[0].Role = new Object();\r\nret[0].Role.ToString = \"Treating\";\r\nret[0].Role._ToString = \"Treating\";\r\nret[0].Role.Active = true;\r\nret[0].Role.Code = \"TRTDC\";\r\nret[0].Role.Date = new Date(0001, 1-1, 1, 0, 0, 0);\r\nret[0].Role.Enabled = true;\r\nret[0].Role.Name = \"Treating\";\r\nret[0].Role.Order = 0;\r\nret[0].Role.Remark = \"\";\r\nret[0].Role.Id = 3;\r\nret[0].Role.Groupid = 2;\r\nret[0].Role.Group = \"\";\r\nret[0].Role.DataFields = new Array();\r\nret[0].Role.PerformanceIdentities = new Array();\r\nret[0].BaseGroupViewLinks = new Array();\r\nret[0].PerformanceIdentities = new Array();\r\nret[0].SubGroupViewLinks = new Array();\r\n\n\nret.Count = 1;",
+    "hash": 1461287650,
+    "Expires": "2019-10-06T09:42:40.510Z"
+}

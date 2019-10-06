@@ -3,8 +3,26 @@ var company = {
     Required: ["NOTY", "Moment", "JQuery UI", "ZingChart", "printThis", "Underscore", "Tabulator", "JSZip"],
     Responsive: true,
     OnPageLoad: function(data) {},
-    //GACode: 'UA-3880962-1',
-    Name: "Arz Hospital"
+    GACode: 'UA-148842067-1',
+    Name: "Arz Hospital",
+    restiodbSettings: () => {
+        return {
+            //"async": true,
+            //"crossDomain": true,
+            "url": "https://headless-d8aa.restdb.io/rest/",
+            "headers": {
+                "content-type": "application/json",
+                "x-apikey": "5d9051021ce70f6379855129",
+                "cache-control": "no-cache"
+            },
+            "processData": false,
+        };
+    },
+    headlesSettings: () => {
+        var ret = company.restiodbSettings();
+        ret.url += "postdata";
+        return ret;
+    },
 };
 
 /* for web version */

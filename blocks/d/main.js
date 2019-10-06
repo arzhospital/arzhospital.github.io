@@ -1,28 +1,32 @@
-var gviews = [];
-window._FrEMD._c({
-    Page: "Hosted/COM/ReportSection"
-}, ret => {
+if (true || typeof ReportSection === "undefined") {
+    let ret = await sr._("ContentManager.cmsHTMLPageFindall", null, {
+        Page: "Hosted/COM/ReportSection"
+    });
     sr.runScript(ret[0].Script);
-}, "ContentManager.cmsHTMLPageFindall");
-window._FrEMD._c({
-    Enabled: true,
-    User: {
-        Active: true,
-        UserOrganizations: [{
-            Code: company.Code
-        }]
-    }
-}, ret => {
-    gviews = ret;
-}, "CorporateMeasures.comGroupViewFindall");
+    console.log("Loaded ReportSection");
+}
 
-function DoLogin(username, password) {
-    $.when(new Employee().username(username, '=').password(password, '=').findAll()).then(ret => {
-        if (ret.length) {
-            window.me = ret[0];
-            window._FrEMD.RenderPage({
-                _code: 'index'
-            });
+if (true || typeof gviews === "undefined") {
+    let gviews = await sr._("CorporateMeasures.comGroupViewFindall", null, {
+        Enabled: true,
+        User: {
+            Active: true,
+            UserOrganizations: [{
+                Code: company.Code
+            }]
         }
     });
+    window.gviews = gviews;
+    console.log("Loaded gviews", gviews.length);
 }
+
+window.DoLogin = async (username, password) => {
+    let ret = await new Employee().username(username, '=').password(password, '=').findAll();
+
+    if (ret.length) {
+        window.me = ret[0];
+        window._FrEMD.RenderPage({
+            _code: 'index'
+        });
+    }
+};

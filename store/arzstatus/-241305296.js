@@ -1,12 +1,11 @@
-var method_name = "CorporateMeasures.comAggregationFindall";
-
-var server_time = new Date(2019, 9-1, 14, 13, 29, 49);
-
-var execution_time = 0.054904;
-
-
-var ret = new Array();
-ret = new Array();
-
-
-ret.Count = 0;
+{
+    "URL": "/method/ServiceRouter.ashx?srversion=1&gzip=true&name=CorporateMeasures.comAggregationFindall",
+    "Date": "2019-10-06T08:41:30.746Z",
+    "CallBack": null,
+    "Company": {
+        "Code": "arzhospital"
+    },
+    "TextResponse": "var method_name = \"CorporateMeasures.comAggregationFindall\";\r\n\r\nvar server_time = new Date(2019, 10-1, 6, 11, 42, 31);\r\n\r\nvar execution_time = 0.021455;\r\n\r\n\r\nvar ret = new Array();\r\nret = new Array();\r\n\n\nret.Count = 0;",
+    "hash": -241305296,
+    "Expires": "2019-10-06T09:41:30.963Z"
+}

@@ -1,73 +1,11 @@
-var method_name = "CorporateMeasures.comDataFieldFindall";
-
-var server_time = new Date(2019, 9-1, 15, 1, 52, 24);
-
-var execution_time = 0.062285;
-
-
-var ret = new Array();
-ret = new Array();
-ret[0] = new Object();
-ret[0].ToString = "pcf_pattype";
-ret[0]._ToString = "pcf_pattype";
-ret[0].Active = true;
-ret[0].CodeField = "pcf_pattype";
-ret[0].Many = false;
-ret[0].NameField = "";
-ret[0].Primary = false;
-ret[0].Id = 3;
-ret[0].DataMapid = 1;
-ret[0].DataMap = new Object();
-ret[0].DataMap.ToString = "Lab Map";
-ret[0].DataMap._ToString = "Lab Map";
-ret[0].DataMap.Active = true;
-ret[0].DataMap.Code = "LABEX";
-ret[0].DataMap.Date = new Date(2015, 10-1, 4, 18, 2, 34);
-ret[0].DataMap.DateFormat = "";
-ret[0].DataMap.DateKey = "Trh_DateTime";
-ret[0].DataMap.Enabled = true;
-ret[0].DataMap.EndedField = "";
-ret[0].DataMap.KeyField = "trd_recid";
-ret[0].DataMap.Name = "Lab Map";
-ret[0].DataMap.Remark = "";
-ret[0].DataMap.StartedField = "";
-ret[0].DataMap.TimeFormat = "";
-ret[0].DataMap.TimeKey = "";
-ret[0].DataMap.Id = 1;
-ret[0].DataMap.Organizationid = 1;
-ret[0].DataMap.Organization = "";
-ret[0].DataMap.DataSets = new Array();
-ret[0].DataMap.DataMapValues = new Array();
-ret[0].DataMap.DataFields = new Array();
-ret[0].DataMap.Batches = new Array();
-ret[0].DataMap.GroupViews = new Array();
-ret[0].Groupid = 4;
-ret[0].Group = new Object();
-ret[0].Group.ToString = "Patient Type";
-ret[0].Group._ToString = "Patient Type";
-ret[0].Group.Active = true;
-ret[0].Group.Code = "PTY";
-ret[0].Group.Date = new Date(2015, 10-1, 4, 0, 0, 0);
-ret[0].Group.Name = "Patient Type";
-ret[0].Group.Order = 4;
-ret[0].Group.Id = 4;
-ret[0].Group.Organizationid = 1;
-ret[0].Group.Organization = "";
-ret[0].Group.Parentid = 0;
-ret[0].Group.Parent = "";
-ret[0].Group.ConditionFilters = new Array();
-ret[0].Group.Identities = new Array();
-ret[0].Group.DataFields = new Array();
-ret[0].Group.Roles = new Array();
-ret[0].Group.Enquiries = new Array();
-ret[0].Group.SubGroups = new Array();
-ret[0].Group.EnquiryConditions = new Array();
-ret[0].NameTransformationid = 0;
-ret[0].CodeTransformationid = 0;
-ret[0].Roleid = 0;
-ret[0].BaseGroupViewLinks = new Array();
-ret[0].PerformanceIdentities = new Array();
-ret[0].SubGroupViewLinks = new Array();
-
-
-ret.Count = 1;
+{
+    "URL": "/method/ServiceRouter.ashx?srversion=1&gzip=true&name=CorporateMeasures.comDataFieldFindall",
+    "Date": "2019-10-06T08:46:48.885Z",
+    "CallBack": null,
+    "Company": {
+        "Code": "arzhospital"
+    },
+    "TextResponse": "var method_name = \"CorporateMeasures.comDataFieldFindall\";\r\n\r\nvar server_time = new Date(2019, 10-1, 6, 11, 47, 49);\r\n\r\nvar execution_time = 0.028692;\r\n\r\n\r\nvar ret = new Array();\r\nret = new Array();\r\nret[0] = new Object();\r\nret[0].ToString = \"pcf_pattype\";\r\nret[0]._ToString = \"pcf_pattype\";\r\nret[0].Active = true;\r\nret[0].CodeField = \"pcf_pattype\";\r\nret[0].Many = false;\r\nret[0].NameField = \"\";\r\nret[0].Primary = false;\r\nret[0].Id = 3;\r\nret[0].DataMapid = 1;\r\nret[0].DataMap = new Object();\r\nret[0].DataMap.ToString = \"Lab Map\";\r\nret[0].DataMap._ToString = \"Lab Map\";\r\nret[0].DataMap.Active = true;\r\nret[0].DataMap.Code = \"LABEX\";\r\nret[0].DataMap.Date = new Date(2015, 10-1, 4, 18, 2, 34);\r\nret[0].DataMap.DateFormat = \"\";\r\nret[0].DataMap.DateKey = \"Trh_DateTime\";\r\nret[0].DataMap.Enabled = true;\r\nret[0].DataMap.EndedField = \"\";\r\nret[0].DataMap.KeyField = \"trd_recid\";\r\nret[0].DataMap.Name = \"Lab Map\";\r\nret[0].DataMap.Remark = \"\";\r\nret[0].DataMap.StartedField = \"\";\r\nret[0].DataMap.TimeFormat = \"\";\r\nret[0].DataMap.TimeKey = \"\";\r\nret[0].DataMap.Id = 1;\r\nret[0].DataMap.Organizationid = 1;\r\nret[0].DataMap.Organization = \"\";\r\nret[0].DataMap.DataSets = new Array();\r\nret[0].DataMap.DataMapValues = new Array();\r\nret[0].DataMap.DataFields = new Array();\r\nret[0].DataMap.Batches = new Array();\r\nret[0].DataMap.GroupViews = new Array();\r\nret[0].Groupid = 4;\r\nret[0].Group = new Object();\r\nret[0].Group.ToString = \"Patient Type\";\r\nret[0].Group._ToString = \"Patient Type\";\r\nret[0].Group.Active = true;\r\nret[0].Group.Code = \"PTY\";\r\nret[0].Group.Date = new Date(2015, 10-1, 4, 0, 0, 0);\r\nret[0].Group.Name = \"Patient Type\";\r\nret[0].Group.Order = 4;\r\nret[0].Group.Id = 4;\r\nret[0].Group.Organizationid = 1;\r\nret[0].Group.Organization = \"\";\r\nret[0].Group.Parentid = 0;\r\nret[0].Group.Parent = \"\";\r\nret[0].Group.ConditionFilters = new Array();\r\nret[0].Group.Identities = new Array();\r\nret[0].Group.DataFields = new Array();\r\nret[0].Group.Roles = new Array();\r\nret[0].Group.Enquiries = new Array();\r\nret[0].Group.SubGroups = new Array();\r\nret[0].Group.EnquiryConditions = new Array();\r\nret[0].NameTransformationid = 0;\r\nret[0].CodeTransformationid = 0;\r\nret[0].Roleid = 0;\r\nret[0].BaseGroupViewLinks = new Array();\r\nret[0].PerformanceIdentities = new Array();\r\nret[0].SubGroupViewLinks = new Array();\r\n\n\nret.Count = 1;",
+    "hash": 776308934,
+    "Expires": "2019-10-06T09:46:49.075Z"
+}

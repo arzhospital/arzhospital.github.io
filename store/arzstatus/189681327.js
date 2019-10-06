@@ -1,12 +1,11 @@
-var method_name = "CorporateMeasures.comDataMapValueFindall";
-
-var server_time = new Date(2019, 9-1, 14, 13, 26, 16);
-
-var execution_time = 0.05484;
-
-
-var ret = new Array();
-ret = new Array();
-
-
-ret.Count = 0;
+{
+    "URL": "/method/ServiceRouter.ashx?srversion=1&gzip=true&name=CorporateMeasures.comDataMapValueFindall",
+    "Date": "2019-10-06T08:37:22.384Z",
+    "CallBack": null,
+    "Company": {
+        "Code": "arzhospital"
+    },
+    "TextResponse": "var method_name = \"CorporateMeasures.comDataMapValueFindall\";\r\n\r\nvar server_time = new Date(2019, 10-1, 6, 11, 38, 22);\r\n\r\nvar execution_time = 0.048133;\r\n\r\n\r\nvar ret = new Array();\r\nret = new Array();\r\n\n\nret.Count = 0;",
+    "hash": 189681327,
+    "Expires": "2019-10-06T09:37:22.678Z"
+}

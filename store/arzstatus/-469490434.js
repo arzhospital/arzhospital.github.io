@@ -1,12 +1,11 @@
-var method_name = "CorporateMeasures.comDataFieldFindall";
-
-var server_time = new Date(2019, 9-1, 14, 13, 30, 57);
-
-var execution_time = 0.043028;
-
-
-var ret = new Array();
-ret = new Array();
-
-
-ret.Count = 0;
+{
+    "URL": "/method/ServiceRouter.ashx?srversion=1&gzip=true&name=CorporateMeasures.comDataFieldFindall",
+    "Date": "2019-10-06T08:42:40.438Z",
+    "CallBack": null,
+    "Company": {
+        "Code": "arzhospital"
+    },
+    "TextResponse": "var method_name = \"CorporateMeasures.comDataFieldFindall\";\r\n\r\nvar server_time = new Date(2019, 10-1, 6, 11, 43, 40);\r\n\r\nvar execution_time = 0.022404;\r\n\r\n\r\nvar ret = new Array();\r\nret = new Array();\r\n\n\nret.Count = 0;",
+    "hash": -469490434,
+    "Expires": "2019-10-06T09:42:40.610Z"
+}

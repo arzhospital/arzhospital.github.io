@@ -1,54 +1,11 @@
-var method_name = "CorporateMeasures.comGroupViewFind";
-
-var server_time = new Date(2019, 9-1, 14, 13, 26, 59);
-
-var execution_time = 0.060345;
-
-ret = new Object();
-ret.ToString = "Employees by Department";
-ret._ToString = "Employees by Department";
-ret.Active = true;
-ret.Async = false;
-ret.Date = new Date(2018, 10-1, 23, 22, 8, 47);
-ret.Enabled = true;
-ret.FieldFormatter = "";
-ret.Name = "Employees by Department";
-ret.Order = 5;
-ret.PartitionField = "started,ended";
-ret.Remark = "";
-ret.Id = 5;
-ret.Categoryid = 1;
-ret.Category = new Object();
-ret.Category.ToString = "Operational Reports";
-ret.Category._ToString = "Operational Reports";
-ret.Category.Active = true;
-ret.Category.Date = new Date(0001, 1-1, 1, 0, 0, 0);
-ret.Category.Enabled = true;
-ret.Category.Name = "Operational Reports";
-ret.Category.Order = 1;
-ret.Category.Remark = "";
-ret.Category.Id = 1;
-ret.Category.Organizationid = 1;
-ret.Category.Organization = "";
-ret.Category.GroupViews = new Array();
-ret.Userid = 1;
-ret.User = new Object();
-ret.User.ToString = "Fadi";
-ret.User._ToString = "Fadi";
-ret.User.Active = true;
-ret.User.Admin = true;
-ret.User.FirstName = "Fadi";
-ret.User.LastName = "Nammour";
-ret.User.Password = "";
-ret.User.Username = "arzadmin";
-ret.User.Id = 1;
-ret.User.EnquiryExecutions = new Array();
-ret.User.GroupViews = new Array();
-ret.User.OwnedEnquiries = new Array();
-ret.User.Dashboards = new Array();
-ret.User.Batches = new Array();
-ret.DataMapid = 0;
-ret.DashboardEntries = new Array();
-ret.ViewPartitions = new Array();
-ret.SubGroupViewLinks = new Array();
-ret.BaseGroupViewLinks = new Array();
+{
+    "URL": "/method/ServiceRouter.ashx?srversion=1&gzip=true&name=CorporateMeasures.comGroupViewFind",
+    "Date": "2019-10-06T08:38:24.503Z",
+    "CallBack": null,
+    "Company": {
+        "Code": "arzhospital"
+    },
+    "TextResponse": "var method_name = \"CorporateMeasures.comGroupViewFind\";\r\n\r\nvar server_time = new Date(2019, 10-1, 6, 11, 39, 25);\r\n\r\nvar execution_time = 0.032513;\r\n\r\nret = new Object();\r\nret.ToString = \"Employees by Department\";\r\nret._ToString = \"Employees by Department\";\r\nret.Active = true;\r\nret.Async = false;\r\nret.Date = new Date(2018, 10-1, 23, 22, 8, 47);\r\nret.Enabled = true;\r\nret.FieldFormatter = \"\";\r\nret.Name = \"Employees by Department\";\r\nret.Order = 5;\r\nret.PartitionField = \"started,ended\";\r\nret.Remark = \"\";\r\nret.Id = 5;\r\nret.Categoryid = 1;\r\nret.Category = new Object();\r\nret.Category.ToString = \"Operational Reports\";\r\nret.Category._ToString = \"Operational Reports\";\r\nret.Category.Active = true;\r\nret.Category.Date = new Date(0001, 1-1, 1, 0, 0, 0);\r\nret.Category.Enabled = true;\r\nret.Category.Name = \"Operational Reports\";\r\nret.Category.Order = 1;\r\nret.Category.Remark = \"\";\r\nret.Category.Id = 1;\r\nret.Category.Organizationid = 1;\r\nret.Category.Organization = \"\";\r\nret.Category.GroupViews = new Array();\r\nret.Userid = 1;\r\nret.User = new Object();\r\nret.User.ToString = \"Fadi\";\r\nret.User._ToString = \"Fadi\";\r\nret.User.Active = true;\r\nret.User.Admin = true;\r\nret.User.FirstName = \"Fadi\";\r\nret.User.LastName = \"Nammour\";\r\nret.User.Password = \"\";\r\nret.User.Username = \"arzadmin\";\r\nret.User.Id = 1;\r\nret.User.EnquiryExecutions = new Array();\r\nret.User.GroupViews = new Array();\r\nret.User.OwnedEnquiries = new Array();\r\nret.User.Dashboards = new Array();\r\nret.User.Batches = new Array();\r\nret.DataMapid = 0;\r\nret.DashboardEntries = new Array();\r\nret.ViewPartitions = new Array();\r\nret.SubGroupViewLinks = new Array();\r\nret.BaseGroupViewLinks = new Array();\r\n",
+    "hash": 874362642,
+    "Expires": "2019-10-06T09:38:24.824Z"
+}
