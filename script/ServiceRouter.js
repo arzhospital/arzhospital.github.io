@@ -1204,19 +1204,15 @@ function ServiceRouter() {
 				try {
 					_ret = this.runSRScript(responseText);
 					_exception = _ret._exception;
+					if (_ret.server_time) {
+						this.timeDifference =
+							new Date().getTime() - _ret.server_time.getTime();
+					}
 				} catch (e) {
 					_exception = e;
 				}
 
-				if (_ret.server_time)
-					this.timeDifference =
-						new Date().getTime() - _ret.server_time.getTime();
-
-				if (_ret._exception) {
-					this.ShowDebug(_exception.Message);
-				}
-
-				if (_ret === null && _exception === null) {
+				if (!_ret && !_exception) {
 					return htis.doHeadlessCall(fCallBack);
 				} else {
 					this.ActiveRequest = null;
