@@ -1213,19 +1213,19 @@ function ServiceRouter() {
 				}
 
 				if (!_ret && !_exception) {
-					return await this.doHeadlessCall(fCallBack);
+					return await this.doHeadlessCall(callBack);
 				} else {
 					this.ActiveRequest = null;
-					if (fCallBack != null) {
+					if (callBack != null) {
 						try {
-							fCallBack(
+							callBack(
 								_ret.ret || (_exception ? responseText : null),
 								_exception
 							);
 						} catch (e) {
 							this.ShowError(
 								'Error in Callback:\n\n' +
-									fCallBack +
+									callBack +
 									'\n\n' +
 									e.message
 							);
