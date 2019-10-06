@@ -871,27 +871,35 @@ function ServiceRouter() {
 		});
 	};
 
-	this.downloadSRCache = function(code, filename) {
+	this.downloadSRCache = async function(code, filename) {
 		var zip = new JSZip();
-		var cache = $.grep(
-			JSON.parse(localStorage.getItem('srCache')).Requests,
-			r =>
-				r.Company &&
-				r.Company.Code == company.Code &&
-				r.TextResponse &&
-				(typeof r.Expires === 'undefined' ||
-					new Date(r.Expires) > new Date())
-		);
+		var cache =
+			false &&
+			$.grep(
+				JSON.parse(localStorage.getItem('srCache')).Requests,
+				r =>
+					r.Company &&
+					r.Company.Code == company.Code &&
+					r.TextResponse &&
+					(typeof r.Expires === 'undefined' ||
+						new Date(r.Expires) > new Date())
+			);
+
+		cache = await this._('ContentManager.cmsMethodResultFindall', null, {
+			Code: company.Code + '-',
+		});
 		$.each(cache, (_, r) => {
-			zip.file(r.hash + '.js', r.TextResponse);
+			zip.file(
+				r.Code.replace(company.Code + '-', '') + '.js',
+				r.TextResponse || r.Result
+			);
 		});
 		console.log(cache.length);
 
-		if (false)
-			zip.generateAsync({ type: 'blob' }).then(function(content) {
-				//location.href = 'data:application/zip;base64,' + content;
-				saveAs(content, filename || 'srCache.zip');
-			});
+		zip.generateAsync({ type: 'blob' }).then(function(content) {
+			//location.href = 'data:application/zip;base64,' + content;
+			saveAs(content, filename || 'srCache.zip');
+		});
 	};
 
 	this.cacheResult = async function(request, textresponse) {
@@ -1102,7 +1110,7 @@ function ServiceRouter() {
 		}
 	};
 
-	this._ = function(fun, callBack) {
+	this._ = async function(fun, callBack) {
 		if (this.s_ErrorMessages.length > 0) {
 			alert(
 				'The following errors were found in your data:\n' +
@@ -1163,72 +1171,7 @@ function ServiceRouter() {
 		if (!this.bLocal) {
 			// live
 			try {
-				var fResponseText = function(responseText, fCallBack) {
-					ret = null;
-					server_time = null;
-					_exception = null;
-
-					window.sr.ShowDebug(
-						'Response From Server:\n' + responseText
-					);
-
-					var data = null;
-					try {
-						data = window.sr.runScript(responseText);
-					} catch (e) {
-						_exception = e;
-					}
-
-					if (server_time)
-						window.sr.timeDifference =
-							new Date().getTime() - server_time.getTime();
-
-					if (_exception) {
-						window.sr.ShowDebug(_exception.Message);
-					}
-
-					if (data === null && _exception === null) {
-						return window.sr.doHeadlessCall(fCallBack);
-					} else {
-						window.sr.ActiveRequest = null;
-						if (fCallBack != null) {
-							try {
-								fCallBack(
-									ret ||
-										data ||
-										(_exception ? responseText : null),
-									_exception
-								);
-							} catch (e) {
-								window.sr.ShowError(
-									'Error in Callback:\n\n' +
-										fCallBack +
-										'\n\n' +
-										e.message
-								);
-							}
-						}
-						(window.sr.fLoadingEnd ||
-							function() {
-								window.sr.resetCursor();
-							})();
-						return (
-							ret || data || (_exception ? responseText : null)
-						);
-					}
-				};
-
-				$.when(this.cacheResult()).then(request => {
-					if (request) {
-						var res = fResponseText(request.TextResponse, callBack);
-						if (!callBack) {
-							return this.promise(res);
-						} else {
-							return;
-						}
-					}
-				});
-
+				let request = await this.cacheResult();
 				var _theUrl =
 					(this.Store ||
 						'/store/' +
@@ -1238,19 +1181,73 @@ function ServiceRouter() {
 					hCode +
 					'.js?rand=' +
 					Math.random();
-				if (!callBack) {
-					var data = null;
-					this.Get(_theUrl).always(function(responseText) {
-						data = fResponseText(responseText);
-					});
-					return this.promise(data);
+				let responseText = null;
+				try {
+					responseText = await $.get(_theUrl);
+				} catch (e) {}
+
+				if (request) {
+					responseText = request.TextResponse;
+				}
+
+				if (!responseText) {
+					console.log(
+						'Live Mode, no response text for ' +
+							this.ActiveRequest.hash +
+							' - ' +
+							this.$_REQUEST('name', this.ActiveRequest.URL)
+					);
+					return null;
+				}
+
+				this.ShowDebug('Response From Server:\n' + responseText);
+
+				var _ret = null;
+				var _exception = null;
+				try {
+					_ret = this.runSRScript(responseText);
+				} catch (e) {
+					_exception = e;
+				}
+				if (_ret._exception) {
+					_exception = _ret._exception;
+				}
+
+				if (_ret.server_time)
+					this.timeDifference =
+						new Date().getTime() - _ret.server_time.getTime();
+
+				if (_ret._exception) {
+					this.ShowDebug(_exception.Message);
+				}
+
+				if (_ret === null && _exception === null) {
+					return htis.doHeadlessCall(fCallBack);
 				} else {
-					this.Get(_theUrl, function(responseText) {
-						var data = fResponseText(responseText, callBack);
-					});
+					this.ActiveRequest = null;
+					if (fCallBack != null) {
+						try {
+							fCallBack(
+								_ret.ret || (_exception ? responseText : null),
+								_exception
+							);
+						} catch (e) {
+							this.ShowError(
+								'Error in Callback:\n\n' +
+									fCallBack +
+									'\n\n' +
+									e.message
+							);
+						}
+					}
+					(window.sr.fLoadingEnd ||
+						(() => {
+							this.resetCursor();
+						}))();
+					return ret || (_exception ? responseText : null);
 				}
 			} catch (e) {
-				console.log(e.message);
+				console.log(e);
 				return false;
 			}
 		} else {
