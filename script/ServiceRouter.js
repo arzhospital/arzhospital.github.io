@@ -1181,11 +1181,15 @@ function ServiceRouter() {
 					'.js?rand=' +
 					Math.random();
 				let request = await this.cacheResult();
-				let responseText = request
-					? request.ResponseText
-					: await $.get(_theUrl);
-
-				if (responseText) {
+				var responseText = null;
+				if (!request) {
+					try {
+						responseText = await $.get(_theUrl);
+					} catch (ex) {}
+				} else {
+					responseText = request.TextResponse;
+				}
+				if (!responseText) {
 					console.log(
 						'Live Mode, no response text for ' +
 							this.ActiveRequest.hash +
