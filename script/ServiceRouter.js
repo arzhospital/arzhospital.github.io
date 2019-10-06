@@ -1235,7 +1235,7 @@ function ServiceRouter() {
 						(() => {
 							this.resetCursor();
 						}))();
-					return ret || (_exception ? responseText : null);
+					return _ret.ret || (_exception ? responseText : null);
 				}
 			} catch (e) {
 				console.log(e);
