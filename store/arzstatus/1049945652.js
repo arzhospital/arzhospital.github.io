@@ -1,11 +1,52 @@
-{
-    "URL": "/method/ServiceRouter.ashx?srversion=1&gzip=true&name=CorporateMeasures.comDataMapValueFindall",
-    "Date": "2019-10-06T08:51:09.295Z",
-    "CallBack": null,
-    "Company": {
-        "Code": "arzhospital"
-    },
-    "TextResponse": "var method_name = \"CorporateMeasures.comDataMapValueFindall\";\r\n\r\nvar server_time = new Date(2019, 10-1, 6, 11, 52, 9);\r\n\r\nvar execution_time = 0.021189;\r\n\r\n\r\nvar ret = new Array();\r\nret = new Array();\r\nret[0] = new Object();\r\nret[0].ToString = \"Total Room $\";\r\nret[0]._ToString = \"Total Room $\";\r\nret[0].Active = true;\r\nret[0].Code = \"TotalBONCC\";\r\nret[0].Date = new Date(0001, 1-1, 1, 0, 0, 0);\r\nret[0].Enabled = true;\r\nret[0].Name = \"Total Room $\";\r\nret[0].Order = 0;\r\nret[0].Remark = \"\";\r\nret[0].Id = 36;\r\nret[0].Measureid = 0;\r\nret[0].Transformationid = 0;\r\nret[0].DataMapid = 18;\r\nret[0].DataMap = new Object();\r\nret[0].DataMap.ToString = \"Operations Map\";\r\nret[0].DataMap._ToString = \"Operations Map\";\r\nret[0].DataMap.Active = true;\r\nret[0].DataMap.Code = \"OPREX\";\r\nret[0].DataMap.Date = new Date(0001, 1-1, 1, 0, 0, 0);\r\nret[0].DataMap.DateFormat = \"\";\r\nret[0].DataMap.DateKey = \"Trh_DateTime\";\r\nret[0].DataMap.Enabled = true;\r\nret[0].DataMap.EndedField = \"\";\r\nret[0].DataMap.KeyField = \"Trd_Recid\";\r\nret[0].DataMap.Name = \"Operations Map\";\r\nret[0].DataMap.Remark = \"\";\r\nret[0].DataMap.StartedField = \"\";\r\nret[0].DataMap.TimeFormat = \"\";\r\nret[0].DataMap.TimeKey = \"\";\r\nret[0].DataMap.Id = 18;\r\nret[0].DataMap.Organizationid = 1;\r\nret[0].DataMap.Organization = \"\";\r\nret[0].DataMap.DataSets = new Array();\r\nret[0].DataMap.DataMapValues = new Array();\r\nret[0].DataMap.DataFields = new Array();\r\nret[0].DataMap.Batches = new Array();\r\nret[0].DataMap.GroupViews = new Array();\r\nret[0].EnquiryConditions = new Array();\r\nret[0].PerformanceValues = new Array();\r\n\n\nret.Count = 1;",
-    "hash": 1049945652,
-    "Expires": "2019-10-06T09:51:09.497Z"
-}
+var method_name = "CorporateMeasures.comDataMapValueFindall";
+
+var server_time = new Date(2019, 10-1, 6, 11, 52, 9);
+
+var execution_time = 0.021189;
+
+
+var ret = new Array();
+ret = new Array();
+ret[0] = new Object();
+ret[0].ToString = "Total Room $";
+ret[0]._ToString = "Total Room $";
+ret[0].Active = true;
+ret[0].Code = "TotalBONCC";
+ret[0].Date = new Date(0001, 1-1, 1, 0, 0, 0);
+ret[0].Enabled = true;
+ret[0].Name = "Total Room $";
+ret[0].Order = 0;
+ret[0].Remark = "";
+ret[0].Id = 36;
+ret[0].Measureid = 0;
+ret[0].Transformationid = 0;
+ret[0].DataMapid = 18;
+ret[0].DataMap = new Object();
+ret[0].DataMap.ToString = "Operations Map";
+ret[0].DataMap._ToString = "Operations Map";
+ret[0].DataMap.Active = true;
+ret[0].DataMap.Code = "OPREX";
+ret[0].DataMap.Date = new Date(0001, 1-1, 1, 0, 0, 0);
+ret[0].DataMap.DateFormat = "";
+ret[0].DataMap.DateKey = "Trh_DateTime";
+ret[0].DataMap.Enabled = true;
+ret[0].DataMap.EndedField = "";
+ret[0].DataMap.KeyField = "Trd_Recid";
+ret[0].DataMap.Name = "Operations Map";
+ret[0].DataMap.Remark = "";
+ret[0].DataMap.StartedField = "";
+ret[0].DataMap.TimeFormat = "";
+ret[0].DataMap.TimeKey = "";
+ret[0].DataMap.Id = 18;
+ret[0].DataMap.Organizationid = 1;
+ret[0].DataMap.Organization = "";
+ret[0].DataMap.DataSets = new Array();
+ret[0].DataMap.DataMapValues = new Array();
+ret[0].DataMap.DataFields = new Array();
+ret[0].DataMap.Batches = new Array();
+ret[0].DataMap.GroupViews = new Array();
+ret[0].EnquiryConditions = new Array();
+ret[0].PerformanceValues = new Array();
+
+
+ret.Count = 1;
