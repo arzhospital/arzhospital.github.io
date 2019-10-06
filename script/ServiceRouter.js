@@ -342,7 +342,7 @@ function ServiceRouter() {
 		return this.runScript(
 			'(() => { var ret = null; ' +
 				s +
-				' window.method_name = method_name; window.server_time = server_time; window._exception = _exception; window.execution_time = execution_time; return {_exception: _exception, method_name: method_name, server_time: server_time, execution_time: execution_time, ret: ret};})();'
+				' window.method_name = method_name; window.server_time = server_time; window._exception = typeof(_exception)==="undefined"?null:_exception; window.execution_time = execution_time; return {_exception: _exception, method_name: method_name, server_time: server_time, execution_time: execution_time, ret: ret};})();'
 		);
 	};
 
@@ -873,25 +873,17 @@ function ServiceRouter() {
 
 	this.downloadSRCache = async function(code, filename) {
 		var zip = new JSZip();
-		var cache =
-			false &&
-			$.grep(
-				JSON.parse(localStorage.getItem('srCache')).Requests,
-				r =>
-					r.Company &&
-					r.Company.Code == company.Code &&
-					r.TextResponse &&
-					(typeof r.Expires === 'undefined' ||
-						new Date(r.Expires) > new Date())
-			);
-
-		cache = await this._('ContentManager.cmsMethodResultFindall', null, {
-			Code: company.Code + '-',
-		});
+		let cache = await this._(
+			'ContentManager.cmsMethodResultFindall',
+			null,
+			{
+				Code: company.Code + '-',
+			}
+		);
 		$.each(cache, (_, r) => {
 			zip.file(
 				r.Code.replace(company.Code + '-', '') + '.js',
-				r.TextResponse || r.Result
+				JSON.parse(r.Result).TextResponse
 			);
 		});
 		console.log(cache.length);
