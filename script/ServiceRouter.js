@@ -1235,7 +1235,10 @@ function ServiceRouter() {
 						(() => {
 							this.resetCursor();
 						}))();
-					return _ret.ret || (_exception ? responseText : null);
+					return (
+						(_ret ? _ret.ret : null) ||
+						(_exception ? responseText : null)
+					);
 				}
 			} catch (e) {
 				console.log(e);
