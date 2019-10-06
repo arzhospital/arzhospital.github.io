@@ -1213,7 +1213,7 @@ function ServiceRouter() {
 				}
 
 				if (!_ret && !_exception) {
-					return htis.doHeadlessCall(fCallBack);
+					return await this.doHeadlessCall(fCallBack);
 				} else {
 					this.ActiveRequest = null;
 					if (fCallBack != null) {
