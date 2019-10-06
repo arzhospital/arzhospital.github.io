@@ -1171,7 +1171,6 @@ function ServiceRouter() {
 		if (!this.bLocal) {
 			// live
 			try {
-				let request = await this.cacheResult();
 				var _theUrl =
 					(this.Store ||
 						'/store/' +
@@ -1181,16 +1180,12 @@ function ServiceRouter() {
 					hCode +
 					'.js?rand=' +
 					Math.random();
-				let responseText = null;
-				try {
-					responseText = await $.get(_theUrl);
-				} catch (e) {}
+				let request = await this.cacheResult();
+				let responseText = request
+					? request.ResponseText
+					: await $.get(_theUrl);
 
-				if (request) {
-					responseText = request.TextResponse;
-				}
-
-				if (!responseText) {
+				if (responseText) {
 					console.log(
 						'Live Mode, no response text for ' +
 							this.ActiveRequest.hash +
@@ -1199,8 +1194,6 @@ function ServiceRouter() {
 					);
 					return null;
 				}
-
-				this.ShowDebug('Response From Server:\n' + responseText);
 
 				var _ret = null;
 				var _exception = null;
