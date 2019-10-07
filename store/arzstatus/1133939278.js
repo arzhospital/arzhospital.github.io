@@ -1,8 +1,8 @@
 var method_name = "EnterpriseManager.emsEntityAttributeFindall";
 
-var server_time = new Date(2019, 10-1, 6, 11, 37, 48);
+var server_time = new Date(2019, 10-1, 7, 7, 57, 6);
 
-var execution_time = 0.099413;
+var execution_time = 0.145874;
 
 
 var ret = new Array();
