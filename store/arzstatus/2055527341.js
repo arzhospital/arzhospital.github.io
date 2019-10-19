@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comViewPartitionFindall";
 
-var server_time = new Date(2019, 10-1, 7, 7, 57, 41);
+var server_time = new Date(2019, 10-1, 19, 9, 26, 9);
 
-var execution_time = 0.041483;
+var execution_time = 0.019456;
 
 
 var ret = new Array();

@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2019, 10-1, 7, 8, 4, 34);
+var server_time = new Date(2019, 10-1, 19, 9, 33, 37);
 
-var execution_time = 0.061014;
+var execution_time = 0.021503;
 
 ret = new Object();
 ret.ToString = "AVG(H) LOS by Division";

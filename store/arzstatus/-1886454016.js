@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comAggregationFindall";
 
-var server_time = new Date(2019, 10-1, 7, 8, 3, 47);
+var server_time = new Date(2019, 10-1, 19, 9, 32, 45);
 
-var execution_time = 0.024964;
+var execution_time = 0.028757;
 
 
 var ret = new Array();

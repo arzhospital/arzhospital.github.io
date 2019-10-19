@@ -22,22 +22,7 @@ function ServiceRouter() {
 
 	var s_ErrorMessages;
 
-	this.init = function(
-		srURL,
-		systemName,
-		bPost,
-		bDebug,
-		bShowErrors,
-		preProcessHTML
-	) {
-		if (!bDebug && document.URL.indexOf('debug=true') > 0) bDebug = true;
-
-		this.bLocal =
-			!this.Store && !(document.URL.indexOf('local=false') >= 0);
-
-		this.bCache = this.$_REQUEST('cache');
-		this.bCacheResult = this.bLocal && this.$_REQUEST('cacheResult');
-
+	this.buildURL = function(srURL) {
 		if (!srURL) {
 			this.srURL = this.$_REQUEST('sr');
 			if (!this.srURL) {
@@ -55,11 +40,6 @@ function ServiceRouter() {
 		} else {
 			this.srURL = srURL;
 		}
-		this.ShowDebug('this.srURL=' + this.srURL);
-
-		this.CRNL = '\n';
-		this.nMaxURLLength = 100;
-
 		this.srURL += '?srversion=1';
 		if (this.$_REQUEST('gzip')) {
 			this.srURL += '&gzip=' + this.$_REQUEST('gzip');
@@ -69,38 +49,53 @@ function ServiceRouter() {
 		if (this.bCache) {
 			this.srURL += '&cache=' + this.bCache;
 		}
+		if (!this.$_REQUEST('rand', this.srURL)) {
+			this.srURL += '&rand=' + Math.random();
+		}
+
+		if (this.bDebug) {
+			this.srURL += '&DEBUG=true';
+		}
+
+		if (
+			this.bAsync &&
+			this.bLocal &&
+			!this.$_REQUEST('async', this.srURL)
+		) {
+			this.srURL += '&async=true';
+			if (this.runAfter) {
+				this.srURL += '&runafter=' + this.runAfter;
+			}
+			this.bAsync = false;
+		}
+
+		this.ShowDebug('this.srURL=' + this.srURL);
+
+		return this.srURL;
+	};
+
+	this.init = function(
+		srURL,
+		systemName,
+		bPost,
+		bDebug,
+		bShowErrors,
+		preProcessHTML
+	) {
+		if (!bDebug && document.URL.indexOf('debug=true') > 0) bDebug = true;
+
+		this.bLocal =
+			!this.Store && !(document.URL.indexOf('local=false') >= 0);
+
+		this.bCache = this.$_REQUEST('cache');
+		this.bCacheResult = this.$_REQUEST('cacheResult');
+
+		this.srURL = this.buildURL(srURL);
+
+		this.CRNL = '\n';
+		this.nMaxURLLength = 100;
 
 		this.systemName = systemName;
-
-		this.preProcessHTML = function(html) {
-			if (!html) return html;
-
-			try {
-				var ret = '';
-				var parts = html.split('$$');
-				for (var i = 0; i < parts.length; i++) {
-					if (i % 2 == 0) {
-						ret += parts[i];
-						continue;
-					}
-					try {
-						var oValue = this.runScript(parts[i]);
-						if (oValue) {
-							ret += oValue;
-						} else {
-							ret += '';
-						}
-					} catch (e) {
-						ret += '';
-					}
-				}
-
-				if (preProcessHTML != null) ret = preProcessHTML(ret);
-				return ret;
-			} catch (e) {
-				return '';
-			}
-		};
 
 		this.bPost = bPost;
 		this.bDebug = bDebug;
@@ -111,17 +106,50 @@ function ServiceRouter() {
 		return this;
 	};
 
+	this.preProcessHTML = function(html) {
+		if (!html) return html;
+
+		try {
+			var ret = '';
+			var parts = html.split('$$');
+			for (var i = 0; i < parts.length; i++) {
+				if (i % 2 == 0) {
+					ret += parts[i];
+					continue;
+				}
+				try {
+					var oValue = this.runScript(parts[i]);
+					if (oValue) {
+						ret += oValue;
+					} else {
+						ret += '';
+					}
+				} catch (e) {
+					ret += '';
+				}
+			}
+
+			if (preProcessHTML != null) ret = preProcessHTML(ret);
+			return ret;
+		} catch (e) {
+			return '';
+		}
+	};
+
 	this.$_REQUEST = function(key, url) {
 		url = url || window.location.href;
+		var ret = null;
 		try {
-			return new URL(url).searchParams.get(key);
+			ret = new URL(url).searchParams.get(key);
 		} catch (ex) {
 			var regex = new RegExp('[\\?|&]' + key + '=([^&#]*)');
 			var results = regex.exec('?' + url.split('?')[1]);
-			return results === null
-				? ''
-				: decodeURIComponent(results[1].replace(/\+/g, ' '));
+			ret =
+				results === null
+					? ''
+					: decodeURIComponent(results[1].replace(/\+/g, ' '));
 		}
+		return ret === null ? '' : ret;
 	};
 
 	this.groupBy = function(ar, field) {
@@ -317,12 +345,7 @@ function ServiceRouter() {
 			this.CRNL;
 		for (var i = 0; i < args.length; i++) {
 			var xml = this._toXML(args[i]);
-			if (false && typeof LZString != 'undefined') {
-				xml = LZString.compressToUTF16(xml);
-				ret += '<p' + i + " compression='lz-string'>" + xml;
-			} else {
-				ret += '<p' + i + '>' + this.CRNL + xml + '' + this.CRNL;
-			}
+			ret += '<p' + i + '>' + this.CRNL + xml + '' + this.CRNL;
 			ret += '</p' + i + '>' + this.CRNL;
 		}
 		ret += '</p>' + this.CRNL;
@@ -348,17 +371,22 @@ function ServiceRouter() {
 
 	this.processResult = async function(res) {
 		if (!res || !res.Code || !res.StoredMethod) {
+			this.ActiveRequest = null;
 			return res;
 		}
 
 		// for sure a method result from an async call
 		if (res.Result) {
 			// we got a result
+			var __ret = null;
+			console.log('processResult', 'Result Received');
 			try {
-				return this.processResponse(4, null, res.Result, null);
+				__ret = this.processResponse(4, null, res.Result, null);
 			} catch (e) {
-				return res.Result;
+				__ret = res.Result;
 			}
+			this.ActiveRequest = null;
+			return __ret;
 		}
 
 		var timeout = res.RunAfter - res.Date;
@@ -381,21 +409,41 @@ function ServiceRouter() {
 				' seconds.'
 		);
 		await new Promise(resolve => setTimeout(resolve, timeout));
-		let ret = await this._('ContentManager.cmsMethodResultFind', null, {
-			Code: res.Code,
-			Id: res.Id,
-		});
-		return ret;
+		try {
+			var ret = this.runSRScript(
+				await $.ajax({
+					url:
+						'/method/a.ashx?name=ContentManager.cmsMethodResultFind&p0={Code}' +
+						res.Code +
+						'{/Code}{Id}' +
+						res.Id +
+						'{/Id}&rand=' +
+						Math.random(),
+				})
+			);
+
+			ret = await this.processResult(
+				this.processResponse(
+					4,
+					null,
+					ret.ret.Result,
+					this.ActiveRequest.URL
+				)
+			);
+			return ret;
+		} catch (ex) {
+			console.log('processResult', ex);
+			return await this._('ContentManager.cmsMethodResultFind', null, {
+				Code: res.Code,
+				Id: res.Id,
+			});
+		}
 	};
 
 	this.processResponse = function(readyState, callBack, responseText, url) {
 		if ([4, 44].indexOf(readyState) == -1) return;
 
 		var sMethodName = this.$_REQUEST('name', url);
-		/*url.substring(
-			url.indexOf('name=') + 5,
-			url.indexOf('&', url.indexOf('name=') + 5)
-		);*/
 
 		try {
 			if (readyState == 4) {
@@ -404,7 +452,6 @@ function ServiceRouter() {
 				})();
 			}
 
-			this.ActiveRequest = null;
 			ret = null;
 			server_time = null;
 			_exception = null;
@@ -815,62 +862,6 @@ function ServiceRouter() {
 		return (window.xmlHTTP = x);
 	};
 
-	this.doHeadlessCall = function(fCallBack) {
-		if (!this.company.headlesSettings) return null;
-		var settings = this.company.headlesSettings();
-		$.ajax(settings).done(response => {
-			if (response.length) {
-				var data = this.runScript(response[0].result);
-				this.ActiveRequest = null;
-				if (fCallBack != null) {
-					try {
-						fCallBack(data, _exception);
-					} catch (e) {
-						window.sr.ShowError(
-							'Error in Callback:\n\n' +
-								fCallBack +
-								'\n\n' +
-								e.message
-						);
-					}
-				}
-				(this.fLoadingEnd ||
-					function() {
-						window.sr.resetCursor();
-					})();
-				return data;
-			} else {
-				settings.method = 'POST';
-				settings.data = JSON.stringify({
-					key: this.ActiveRequest.hash,
-					url: this.ActiveRequest.URL,
-					postData: this.ActiveRequest.PostData,
-					pending: true,
-				});
-				$.ajax(settings).done(response => {
-					this.ActiveRequest = null;
-					if (fCallBack != null) {
-						try {
-							fCallBack(null, _exception);
-						} catch (e) {
-							this.ShowError(
-								'Error in Callback:\n\n' +
-									fCallBack +
-									'\n\n' +
-									e.message
-							);
-						}
-					}
-					(this.fLoadingEnd ||
-						function() {
-							window.sr.resetCursor();
-						})();
-					return null;
-				});
-			}
-		});
-	};
-
 	this.downloadSRCache = async function(code, filename) {
 		var zip = new JSZip();
 		let cache = await this._(
@@ -881,10 +872,7 @@ function ServiceRouter() {
 			}
 		);
 		$.each(cache, (_, r) => {
-			zip.file(
-				r.Code.replace(company.Code + '-', '') + '.js',
-				JSON.parse(r.Result).TextResponse
-			);
+			zip.file(r.Code.replace(company.Code + '-', '') + '.js', r.Result);
 		});
 		console.log(cache.length);
 
@@ -900,6 +888,16 @@ function ServiceRouter() {
 
 		if (!request) {
 			return;
+		}
+
+		if (
+			textresponse &&
+			textresponse.indexOf('ret.Code = ') > -1 &&
+			textresponse.indexOf('ret.RunAfter = ') > -1 &&
+			textresponse.indexOf('ret.Result = ""') > -1
+		) {
+			console.log('textresponse contians incomplete method result');
+			return null;
 		}
 
 		var sMethod = this.$_REQUEST('name', request.URL);
@@ -988,7 +986,6 @@ function ServiceRouter() {
 
 				return item;
 			} else if (this.bCacheResult == 'sr') {
-				if (request.URL.indexOf('cmsMethodResult') >= 0) return null;
 				var ajax = (key, value, id) => {
 					var method = 'Find';
 					var ret = {
@@ -1032,8 +1029,10 @@ function ServiceRouter() {
 						var p0 = {
 							Code: (company ? company.Code + '-' : '') + key,
 							Completed: new Date(),
-							Date: new Date(),
-							Result: JSON.stringify(item, null, 4),
+							Date: this.ActiveRequest
+								? this.ActiveRequest.Date
+								: new Date(),
+							Result: item.TextResponse,
 							StoredMethod: {
 								Name: sMethod,
 							},
@@ -1048,17 +1047,21 @@ function ServiceRouter() {
 					return ret;
 				};
 
-				record = this.runScript(
-					'(() => { var ret = null; ' +
-						(await $.ajax(ajax(request.hash))) +
-						'return ret;})();'
-				);
-				r = record ? JSON.parse(record.Result) : null;
-				var item = _usable(r);
+				try {
+					record = this.runScript(
+						'(() => { var ret = null; ' +
+							(await $.ajax(ajax(request.hash))) +
+							'return ret;})();'
+					);
+					r = record ? JSON.parse(record.Result) : null;
+					var item = _usable(r);
+				} catch (ex) {}
 
 				if (!item) {
 					if (r) {
-						await $.ajax(ajax(request.hash, null, record.Id));
+						try {
+							await $.ajax(ajax(request.hash, null, record.Id));
+						} catch (ex) {}
 					}
 					return null;
 				}
@@ -1071,6 +1074,25 @@ function ServiceRouter() {
 				}
 
 				return item;
+			} else if (this.bCacheResult == 'github') {
+				if (request.URL.indexOf('cmsMethodResult') >= 0) return null;
+				let res = null;
+				try {
+					res = await $.ajax({
+						url:
+							'https://arzhospital.github.io/' +
+							company.Store +
+							'/' +
+							request.hash +
+							'.js',
+						dataType: 'jsonp',
+						processResult: false,
+					});
+					return { TextResponse: res };
+				} catch (ex) {
+					console.log('ERRORS:', ex);
+					return null;
+				}
 			} else if (this.bCacheResult == 'local') {
 				var srCache = localStorage.getItem('srCache');
 				if (srCache == null) {
@@ -1112,6 +1134,8 @@ function ServiceRouter() {
 			return null;
 		}
 
+		this.buildURL();
+
 		//var postData = "System.Collections.ArrayList ret = new System.Collections.ArrayList();"+this.CRNL;
 		(this.fLoadingStart ||
 			function() {
@@ -1132,8 +1156,8 @@ function ServiceRouter() {
 		}
 
 		if (callBack && this.ActiveRequest) {
-			this.ShowObject(this.ActiveRequest);
-			return false;
+			this.ActiveRequest = null;
+			//return false;
 		}
 
 		var hCode = this.hashCode(
@@ -1147,18 +1171,21 @@ function ServiceRouter() {
 			'</pid>-->' +
 			this.CRNL;
 
-		this.ActiveRequest = {
-			URL: this.srURL + '&name=' + fun,
-			PostData: postData,
-			Date: new Date(),
-			CallBack: callBack,
-			Company:
-				typeof company !== 'undefined' && company
-					? { Code: company.Code }
-					: null,
-			TextResponse: null,
-			hash: hCode,
-		};
+		if (fun.indexOf('cmsMethodResultFind') < 0) {
+			// avoid overwrite of async calls
+			this.ActiveRequest = {
+				URL: this.srURL + '&name=' + fun,
+				PostData: postData,
+				Date: new Date(),
+				CallBack: callBack,
+				Company:
+					typeof company !== 'undefined' && company
+						? { Code: company.Code }
+						: null,
+				TextResponse: null,
+				hash: hCode,
+			};
+		}
 
 		if (!this.bLocal) {
 			// live
@@ -1205,9 +1232,9 @@ function ServiceRouter() {
 				}
 
 				if (!_ret && !_exception) {
-					return await this.doHeadlessCall(callBack);
+					return await null; //this.doHeadlessCall(callBack);
 				} else {
-					this.ActiveRequest = null;
+					//this.ActiveRequest = null;
 					if (callBack != null) {
 						try {
 							callBack(
@@ -1273,30 +1300,16 @@ function ServiceRouter() {
 	this.sendXML = async function(url, postData, callBack) {
 		if (!window.SR) window.SR = this;
 
-		url += '&rand=' + Math.random();
-
-		if (this.bDebug) {
-			url += '&DEBUG=true';
-		}
-		if (this.bAsync && this.bLocal) {
-			url += '&async=true';
-			if (this.runAfter) {
-				url += '&runafter=' + this.runAfter;
-			}
-			this.bAsync = false;
-		}
-
 		if (window.jQuery) {
 			let request = await this.cacheResult(null, null, callBack);
 			if (request) {
-				let result = (async () =>
-					this.processResponse(
-						44,
-						callBack,
-						request.TextResponse,
-						url
-					))();
-				return this.processResult(result);
+				let result = await this.processResponse(
+					44,
+					callBack,
+					request.TextResponse,
+					url
+				);
+				return await this.processResult(result);
 			} else {
 				// jquery call
 				var ajax = {};
@@ -1318,8 +1331,10 @@ function ServiceRouter() {
 				}
 				return (async () => {
 					let ret = await $.ajax(ajax);
-					ret = await this.processResponse(4, callBack, ret, url);
-					return await this.processResult(ret);
+					ret = await this.processResult(
+						this.processResponse(4, callBack, ret, url)
+					);
+					return ret;
 				})();
 			}
 		} else {
