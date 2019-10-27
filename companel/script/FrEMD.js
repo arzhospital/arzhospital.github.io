@@ -31,6 +31,32 @@ window.FrEMD = class {
         this._defineLinks();
     }
 
+    async downloadSRCache(code, filename) {
+        code = code || company.Code
+        if (typeof(JSZip) === "undefined") {
+            await this.require("JSZip");
+        }
+
+        var zip = new JSZip();
+        let cache = await sr._(
+            'ContentManager.cmsMethodResultFindall',
+            null, {
+                Code: code + '-',
+            }
+        );
+        $.each(cache, (_, r) => {
+            zip.file(r.Code.replace(code + '-', '') + '.js', r.Result);
+        });
+        console.log(cache.length);
+
+        zip.generateAsync({
+            type: 'blob'
+        }).then(function(content) {
+            //location.href = 'data:application/zip;base64,' + content;
+            saveAs(content, filename || 'srCache.zip');
+        });
+    }
+
     _loadContent() {
         return $.get("blocks" + this.m() + "/header.htm" + this.randURL(), (html) => {
             console.log("header loaded");
@@ -396,6 +422,11 @@ window.FrEMD = class {
             type: "mobile",
             src: "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js",
             css: "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"
+        });
+        this.hrefs.push({
+            lib: "Juxtapose",
+            src: "https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js",
+            css: "https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css"
         });
         this.hrefs.push({
             lib: "TwentyTwenty",

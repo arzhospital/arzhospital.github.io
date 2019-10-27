@@ -857,26 +857,6 @@ function ServiceRouter() {
 		return (window.xmlHTTP = x);
 	};
 
-	this.downloadSRCache = async function(code, filename) {
-		var zip = new JSZip();
-		let cache = await this._(
-			'ContentManager.cmsMethodResultFindall',
-			null,
-			{
-				Code: company.Code + '-',
-			}
-		);
-		$.each(cache, (_, r) => {
-			zip.file(r.Code.replace(company.Code + '-', '') + '.js', r.Result);
-		});
-		console.log(cache.length);
-
-		zip.generateAsync({ type: 'blob' }).then(function(content) {
-			//location.href = 'data:application/zip;base64,' + content;
-			saveAs(content, filename || 'srCache.zip');
-		});
-	};
-
 	this.cacheResult = async function(request, textresponse) {
 		if (!this.bCacheResult) return;
 		request = request || this.ActiveRequest;

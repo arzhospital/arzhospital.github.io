@@ -1,6 +1,6 @@
 var company = {
     Code: "COM/panel",
-    Required: ["Underscore", "Moment", "ZingChart", "DataTables"],
+    Required: ["Underscore", "Moment", "ZingChart", "DataTables", "Juxtapose"],
     Responsive: true,
     Name: "Analytics Portal",
     library: "",

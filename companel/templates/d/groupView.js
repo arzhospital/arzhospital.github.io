@@ -14,7 +14,7 @@ window.__groupView = class {
             } catch (ex) {}
         }
         for (var i = 2014; i <= moment().year(); i++) {
-            console.log(i + ": " + imagedata["Year" + i].length);
+            //console.log(i + ": " + imagedata["Year" + i].length);
             new juxtapose.JXSlider('#Slider' + i + "To" + (i + 1),
                 [{
                         src: imagedata["Year" + i],
