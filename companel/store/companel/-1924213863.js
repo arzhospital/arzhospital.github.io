@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2019, 10-1, 26, 0, 16, 3);
+var server_time = new Date(2019, 10-1, 27, 9, 10, 6);
 
-var execution_time = 0.019371;
+var execution_time = 0.020779;
 
 ret = new Object();
 ret.ToString = "Admitters";
