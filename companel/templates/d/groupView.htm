@@ -19,7 +19,7 @@
                     <% for(var i=2014; i<=moment().year(); i++){%>
                         <li class="nav-item"><a class="nav-link<%=(_?'':' active')%>" data-toggle="tab" href="#tab<%=i%>" onclick="new __groupView().ShowReport(<%=i%>, '<%=window.page.data.record.Name%>', '<%=window.page.data.runFunc%>')"><i class="zmdi zmdi-file-text"></i> <span><%=i%></span></a></li>
                     <% } %>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#slider" onclick="new Main().FillSliders()"><i class="zmdi zmdi-file-text"></i> <span>Compare</span></a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#slider" onclick="new __groupView().FillSliders()"><i class="zmdi zmdi-file-text"></i> <span>Compare</span></a></li>
                     </ul> 
 
                     <div class="tab-content">
@@ -48,10 +48,9 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="body" id="Slider<%=i-1%>To<%=i%>">
-                                            <p class="lead"></p>
-                                            <img class="twentytwenty-container Year<%=i-1%>"></img>
-                                            <img class="twentytwenty-container Year<%=i%>"></img>
+                                        <div id="Slider<%=i-1%>To<%=i%>" style="width: 100%">
+                                            <img class="Year<%=i-1%>"></img>
+                                            <img class="Year<%=i%>"></img>
                                         </div>
                                     </div>
                                 </div>

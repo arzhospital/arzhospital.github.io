@@ -1,20 +1,38 @@
 window.__groupView = class {
 
-    FillSliders() {
+    async FillSliders() {
+        var imagedata = {};
         for (var i = 2014; i <= moment().year(); i++) {
             try {
-                zingchart.exec('chtResults-' + i, 'getimagedata', {
+                imagedata["Year" + i] = await new Promise(resolve => zingchart.exec('chtResults-' + i, 'getimagedata', {
                     format: 'png',
                     year: i,
-                    callback: function(imagedata) {
-                        //console.log(this.year + " " + imagedata.length);
-                        $(".Year" + this.year).attr('src', imagedata);
+                    callback: function(ret) {
+                        resolve(ret);
                     }
-                });
+                }));
             } catch (ex) {}
-
-            $("#Slider" + (i - 1) + "To" + i).twentytwenty();
-            $("#Slider" + (i - 1) + "To" + i).attr("width", (95 + Math.floor(Math.random() * Math.floor(5))) + "%");
+        }
+        for (var i = 2014; i <= moment().year(); i++) {
+            console.log(i + ": " + imagedata["Year" + i].length);
+            new juxtapose.JXSlider('#Slider' + i + "To" + (i + 1),
+                [{
+                        src: imagedata["Year" + i],
+                        label: i,
+                        credit: ''
+                    },
+                    {
+                        src: imagedata["Year" + (i + 1)],
+                        label: i + 1,
+                        credit: ""
+                    }
+                ], {
+                    animate: true,
+                    showLabels: true,
+                    showCredits: true,
+                    startingPosition: "50%",
+                    makeResponsive: true
+                });
         }
     }
 

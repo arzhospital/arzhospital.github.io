@@ -1,8 +1,8 @@
 var method_name = "ContentManager.cmsHTMLPageFind";
 
-var server_time = new Date(2019, 10-1, 26, 0, 15, 56);
+var server_time = new Date(2019, 10-1, 27, 9, 20, 40);
 
-var execution_time = 0.021161;
+var execution_time = 0.032786;
 
 ret = new Object();
 ret.ToString = "Report Section";
