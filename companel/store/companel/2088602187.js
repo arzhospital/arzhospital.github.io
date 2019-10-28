@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewLinkFindall";
 
-var server_time = new Date(2019, 10-1, 27, 9, 20, 39);
+var server_time = new Date(2019, 10-1, 28, 10, 46, 41);
 
-var execution_time = 0.059405;
+var execution_time = 0.024609;
 
 
 var ret = new Array();

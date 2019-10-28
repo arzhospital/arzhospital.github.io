@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comDataFieldFindall";
 
-var server_time = new Date(2019, 10-1, 27, 9, 10, 5);
+var server_time = new Date(2019, 10-1, 28, 10, 46, 47);
 
-var execution_time = 0.021824;
+var execution_time = 0.022182;
 
 
 var ret = new Array();

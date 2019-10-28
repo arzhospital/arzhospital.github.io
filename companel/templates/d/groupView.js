@@ -138,7 +138,42 @@ window.__groupView = class {
         });
     }
 
-    main() {
-        window._FrEMD.end();
+    async main() {
+        await window._FrEMD.end();
+
+        if (!window.sr.bLocal || window.sr.$_REQUEST("cacheResult") != "sr") return;
+        if (typeof window.___doCache === "undefined") {
+            window.___doCache = confirm('Generate Website Cache?');
+        }
+        if (!window.___doCache) return;
+
+        //console.log("Generating Cache for page: " + window.page.data.record.Name);
+
+        for (var i = 2014; i <= moment().year(); i++) {
+            await this.ShowReport(i, window.page.data.record.Name, window.page.data.runFunc);
+        }
+
+        var vs = [];
+        $.each(categories, (_, c) => {
+            vs = $.merge(vs, c.values);
+        });
+
+        $.each(vs, (i, v) => {
+            if (page.data.record.Name == v.Name) {
+                try {
+                    if (!vs[i + 1]) return true;
+                    window._FrEMD.RenderPage({
+                        _code: 'groupView'
+                    }, {
+                        runFunc: '_run',
+                        record: vs[i + 1]
+                    });
+                    return false;
+                } catch (ex) {
+                    console.log(ex);
+                    return true;
+                }
+            }
+        });
     }
-}
+};

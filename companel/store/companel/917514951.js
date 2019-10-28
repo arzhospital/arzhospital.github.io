@@ -1,0 +1,73 @@
+var method_name = "CorporateMeasures.comDataFieldFindall";
+
+var server_time = new Date(2019, 10-1, 28, 10, 47, 54);
+
+var execution_time = 0.023112;
+
+
+var ret = new Array();
+ret = new Array();
+ret[0] = new Object();
+ret[0].ToString = "Dep_Code";
+ret[0]._ToString = "Dep_Code";
+ret[0].Active = true;
+ret[0].CodeField = "Dep_Code";
+ret[0].Many = false;
+ret[0].NameField = "Dep_Desc";
+ret[0].Primary = false;
+ret[0].Id = 188;
+ret[0].DataMapid = 14;
+ret[0].DataMap = new Object();
+ret[0].DataMap.ToString = "Status - Employees";
+ret[0].DataMap._ToString = "Status - Employees";
+ret[0].DataMap.Active = true;
+ret[0].DataMap.Code = "MSR-EMPS";
+ret[0].DataMap.Date = new Date(2018, 3-1, 18, 19, 11, 4);
+ret[0].DataMap.DateFormat = "";
+ret[0].DataMap.DateKey = "Emp_DsTamp";
+ret[0].DataMap.Enabled = true;
+ret[0].DataMap.EndedField = "EndDate";
+ret[0].DataMap.KeyField = "";
+ret[0].DataMap.Name = "Status - Employees";
+ret[0].DataMap.Remark = "";
+ret[0].DataMap.StartedField = "StartDate";
+ret[0].DataMap.TimeFormat = "";
+ret[0].DataMap.TimeKey = "";
+ret[0].DataMap.Id = 14;
+ret[0].DataMap.Organizationid = 1;
+ret[0].DataMap.Organization = "";
+ret[0].DataMap.DataSets = new Array();
+ret[0].DataMap.DataMapValues = new Array();
+ret[0].DataMap.DataFields = new Array();
+ret[0].DataMap.Batches = new Array();
+ret[0].DataMap.GroupViews = new Array();
+ret[0].Groupid = 23;
+ret[0].Group = new Object();
+ret[0].Group.ToString = "Department";
+ret[0].Group._ToString = "Department";
+ret[0].Group.Active = true;
+ret[0].Group.Code = "DEP";
+ret[0].Group.Date = new Date(2016, 9-1, 28, 21, 14, 42);
+ret[0].Group.Name = "Department";
+ret[0].Group.Order = 0;
+ret[0].Group.Id = 23;
+ret[0].Group.Organizationid = 1;
+ret[0].Group.Organization = "";
+ret[0].Group.Parentid = 0;
+ret[0].Group.Parent = "";
+ret[0].Group.ConditionFilters = new Array();
+ret[0].Group.Identities = new Array();
+ret[0].Group.DataFields = new Array();
+ret[0].Group.Roles = new Array();
+ret[0].Group.Enquiries = new Array();
+ret[0].Group.SubGroups = new Array();
+ret[0].Group.EnquiryConditions = new Array();
+ret[0].NameTransformationid = 0;
+ret[0].CodeTransformationid = 0;
+ret[0].Roleid = 0;
+ret[0].BaseGroupViewLinks = new Array();
+ret[0].PerformanceIdentities = new Array();
+ret[0].SubGroupViewLinks = new Array();
+
+
+ret.Count = 1;
