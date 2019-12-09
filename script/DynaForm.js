@@ -314,7 +314,7 @@ window.DynaForm = class {
             }
         }
         if (sMissing) {
-            _error("Missing mandatory fields:<br/><ul>" + sMissing + "</ul>", 5000);
+            window._FrEMD._error("Missing mandatory fields:<br/><ul>" + sMissing + "</ul>", 5000);
             this.busy(false);
             return;
         }
@@ -348,33 +348,38 @@ window.DynaForm = class {
         var o = {};
         $.each(this.elements, (_, e) => {
             var name = (e.emsSource ? "_" : "") + e.name;
-            switch (e.type) {
-                case 'text':
-                case 'string':
-                case 'password':
-                    o[name] = "";
-                    break;
-                case "DateTime":
-                case "datetime":
-                    o[name] = "";
-                    break;
-                case "int":
-                case "number":
-                case "integer":
-                case "long":
-                case "Long":
-                case "progress":
-                    o[name] = 0;
-                    break;
-                case "select":
-                    o[name] = "";
-                    break;
-                case "bool":
-                    o[name] = false;
-                    break;
-                default:
-                    break;
-            }
+            try {
+                switch (e.type) {
+                    case 'text':
+                    case 'string':
+                    case 'password':
+                        o[name] = "";
+                        break;
+                    case "DateTime":
+                    case "datetime":
+                        o[name] = "";
+                        break;
+                    case "int":
+                    case "number":
+                    case "integer":
+                    case "long":
+                    case "Long":
+                    case "progress":
+                        o[name] = 0;
+                        break;
+                    case "select":
+                        o[name] = "";
+                        break;
+                    case "grid":
+                        o[name].data = [];
+                        break;
+                    case "bool":
+                        o[name] = false;
+                        break;
+                    default:
+                        break;
+                }
+            } catch (ex) {}
         });
         this.set(o);
     }
@@ -392,71 +397,84 @@ window.DynaForm = class {
             }
             oElement.emsSource = o;
 
-            switch (oElement.type) {
-                case 'text':
-                case 'string':
-                case 'password':
-                    if (att) {
-                        $("#txt" + oElement.name).textbox("setValue", o[att]);
-                    } else {
-                        $("#txt" + oElement.name).textbox("setValue", (o && o["EntityAttribute"]) ? "" : o);
-                    }
-                    break;
-                case "DateTime":
-                case "datetime":
-                    if (att) {
-                        $("#dtp" + oElement.name).datetimebox('setValue', (o[att] ? sr.toDateTime(o[att]) : ""));
-                    } else {
-                        $("#dtp" + oElement.name).datetimebox('setValue', (o && o["EntityAttribute"]) ? "" : (o ? sr.toDateTime(o) : ""));
-                    }
-                    break;
-                case "int":
-                case "integer":
-                case "number":
-                case "long":
-                case "Long":
-                    if (att) {
-                        $("#nud" + oElement.name).numberspinner('setValue', o[att]);
-                    } else {
-                        $("#nud" + oElement.name).numberspinner('setValue', (o && o["EntityAttribute"]) ? "" : o);
-                    }
-                    break;
-                case "bool":
-                    if (att) {
-                        $("#chk" + oElement.name).switchbutton((o[att] ? '' : 'un') + 'check');
-                    } else {
-                        $("#chk" + oElement.name).switchbutton((((o && o["EntityAttribute"]) ? "" : o) ? '' : 'un') + 'check');
-                    }
-                    break;
-                case "progress":
-                    var v = 0;
-                    if (att) {
-                        v = o[att];
-                    } else {
-                        v = (o && o["EntityAttribute"]) ? "" : o;
-                    }
-                    $("#prg" + oElement.name).progressbar('setValue', Math.round(v * 10) / 10);
-                    break;
-                case "select":
-                    if (att) {
-                        $("#cmb" + oElement.name).combogrid('setValue' + (oElement.multiple ? 's' : ''), (o[att] ? o[att] : ""));
-                    } else {
-                        var v = null;
-                        if (o === null) {} else if (o.constructor === Array) {} else if (!o.EntityAttribute) {
-                            v = o || {
-                                Id: o.Id,
-                                _ToString: o._ToString,
-                                toString: function() {
-                                    return this._ToString;
-                                }
-                            };
+            try {
+                switch (oElement.type) {
+                    case 'text':
+                    case 'string':
+                    case 'password':
+                        if (att) {
+                            $("#txt" + oElement.name).textbox("setValue", o[att]);
+                        } else {
+                            $("#txt" + oElement.name).textbox("setValue", (o && o["EntityAttribute"]) ? "" : o);
                         }
-                        $("#cmb" + oElement.name).combogrid('setValue' + (oElement.multiple ? 's' : ''), v);
-                    }
-                    break;
-                default:
-                    break;
-            }
+                        break;
+                    case "DateTime":
+                    case "datetime":
+                        if (att) {
+                            $("#dtp" + oElement.name).datetimebox('setValue', (o[att] ? sr.toDateTime(o[att]) : ""));
+                        } else {
+                            $("#dtp" + oElement.name).datetimebox('setValue', (o && o["EntityAttribute"]) ? "" : (o ? sr.toDateTime(o) : ""));
+                        }
+                        break;
+                    case "int":
+                    case "integer":
+                    case "number":
+                    case "long":
+                    case "Long":
+                        if (att) {
+                            $("#nud" + oElement.name).numberspinner('setValue', o[att]);
+                        } else {
+                            $("#nud" + oElement.name).numberspinner('setValue', (o && o["EntityAttribute"]) ? "" : o);
+                        }
+                        break;
+                    case "bool":
+                        if (att) {
+                            $("#chk" + oElement.name).switchbutton((o[att] ? '' : 'un') + 'check');
+                        } else {
+                            $("#chk" + oElement.name).switchbutton((((o && o["EntityAttribute"]) ? "" : o) ? '' : 'un') + 'check');
+                        }
+                        break;
+                    case "progress":
+                        var v = 0;
+                        if (att) {
+                            v = o[att];
+                        } else {
+                            v = (o && o["EntityAttribute"]) ? "" : o;
+                        }
+                        $("#prg" + oElement.name).progressbar('setValue', Math.round(v * 10) / 10);
+                        break;
+                    case "grid":
+                        if (att) {
+                            $("#grd" + oElement.name).datagrid({
+                                data: o[att]
+                            });
+                        } else {
+                            $("#grd" + oElement.name).datagrid({
+                                data: (o && o["EntityAttribute"]) ? "" : o
+                            });
+                        }
+                        break;
+                    case "select":
+                        if (att) {
+                            $("#cmb" + oElement.name).combogrid('setValue' + (oElement.multiple ? 's' : ''), (o[att] ? o[att] : ""));
+                        } else {
+                            var v = null;
+                            if (o === null) {} else if (o.constructor === Array) {} else if (!o.EntityAttribute) {
+                                v = o || {
+                                    Id: o.Id,
+                                    _ToString: o._ToString,
+                                    toString: function() {
+                                        return this._ToString;
+                                    }
+                                };
+                            }
+                            $("#cmb" + oElement.name).combogrid('setValue' + (oElement.multiple ? 's' : ''), v);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            } catch (ex) {}
         } else {
             for (var i = 0; i < this.elements.length; i++) {
                 var att = (company.library ? "" : "_") + this.elements[i].name;
@@ -525,6 +543,9 @@ window.DynaForm = class {
                     v = parseFloat($("#nud" + this.elements[i].name).val());
                     if (isNaN(v)) v = 0;
                     cn = $("#nud" + this.elements[i].name);
+                    break;
+                case "grid":
+                    v = $("#grd" + this.elements[i].name).datagrid('getData');
                     break;
                 case "select":
                     if (this.elements[i].options) {
@@ -675,6 +696,23 @@ window.DynaForm = class {
         return ret;
     }
 
+    grid(options, tag, type) {
+        var pWidth = this.cWidth(options) * 2;
+
+        var ret = '<table name="grd' + options.name + '" id="grd' + options.name + '" class="easyui-datagrid" style="width:' + this.cWidth(options) + 'px" required="' + (options.required ? 'true' : 'false') + '" data-options="onChange:function(n,o){var s = $(\'#\' + this.id).datagrid(\'options\'); window.DForm.Selected(s, window.DForm.byName(\'' + options.name + '\'));}, rownumbers:true, pagination: true, panelWidth:' + pWidth + ', fitColumns: true, columns: [[';
+        $.each(options.columns, (__, o) => {
+            ret += "{field:'" + (o.field || o) + "',title:'" + (o.title || this.english((o.field || o))) + "',align:'right', sortable: true},";
+        });
+        ret += ']]" ';
+        if (options.data) {
+            ret += ", data: '" + JSON.stringify(options.data) + "'";
+        }
+        ret += '>';
+        ret += '</table>';
+
+        return ret;
+    }
+
     combo(options, tag, type) {
         var textField = company.library ? '_ToString' : '_name';
 
@@ -812,7 +850,7 @@ window.DynaForm = class {
                 if (s.options.multiple) {
                     $.each(ret, (_, r) => {});
                 }
-                window.sr.PostCache(1000);
+                //window.sr.PostCache(1000);
             }, o, null, start, end);
         } else {
             // ems

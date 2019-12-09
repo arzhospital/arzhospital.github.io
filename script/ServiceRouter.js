@@ -379,7 +379,6 @@ function ServiceRouter() {
 		if (res.Result) {
 			// we got a result
 			var __ret = null;
-			console.log('processResult', 'Result Received');
 			try {
 				__ret = this.processResponse(4, null, res.Result, null);
 			} catch (e) {
@@ -408,28 +407,24 @@ function ServiceRouter() {
 				Math.floor(timeout / 1000) +
 				' seconds.'
 		);
-		await new Promise(resolve => setTimeout(resolve, timeout));
-		try {
-			var ret = this.runSRScript(
-				await $.ajax({
-					url:
-						'/method/a.ashx?name=ContentManager.cmsMethodResultFind&p0={Code}' +
-						res.Code +
-						'{/Code}{Id}' +
-						res.Id +
-						'{/Id}&rand=' +
-						Math.random(),
-				})
-			);
 
-			ret = await this.processResult(
-				this.processResponse(
-					4,
-					null,
-					ret.ret.Result,
-					this.ActiveRequest.URL
-				)
-			);
+		await new Promise(resolve => setTimeout(resolve, timeout));
+		if (!this.ActiveRequest) {
+			console.log('No ActiveRequest, exiting...');
+			return null;
+		}
+		try {
+			let ret = await $.ajax({
+				url:
+					'/method/a.ashx?name=ContentManager.cmsMethodResultFind&p0={Code}' +
+					res.Code +
+					'{/Code}{Id}' +
+					res.Id +
+					'{/Id}&rand=' +
+					Math.random(),
+			});
+			ret = this.processResponse(4, null, ret, this.ActiveRequest.URL);
+			ret = await this.processResult(ret);
 			return ret;
 		} catch (ex) {
 			console.log('processResult', ex);
@@ -860,26 +855,6 @@ function ServiceRouter() {
 		}
 
 		return (window.xmlHTTP = x);
-	};
-
-	this.downloadSRCache = async function(code, filename) {
-		var zip = new JSZip();
-		let cache = await this._(
-			'ContentManager.cmsMethodResultFindall',
-			null,
-			{
-				Code: company.Code + '-',
-			}
-		);
-		$.each(cache, (_, r) => {
-			zip.file(r.Code.replace(company.Code + '-', '') + '.js', r.Result);
-		});
-		console.log(cache.length);
-
-		zip.generateAsync({ type: 'blob' }).then(function(content) {
-			//location.href = 'data:application/zip;base64,' + content;
-			saveAs(content, filename || 'srCache.zip');
-		});
 	};
 
 	this.cacheResult = async function(request, textresponse) {

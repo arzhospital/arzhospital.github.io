@@ -31,6 +31,32 @@ window.FrEMD = class {
         this._defineLinks();
     }
 
+    async downloadSRCache(code, filename) {
+        code = code || company.Code
+        if (typeof(JSZip) === "undefined") {
+            await this.require("JSZip");
+        }
+
+        var zip = new JSZip();
+        let cache = await sr._(
+            'ContentManager.cmsMethodResultFindall',
+            null, {
+                Code: code + '-',
+            }
+        );
+        $.each(cache, (_, r) => {
+            zip.file(r.Code.replace(code + '-', '') + '.js', r.Result);
+        });
+        console.log(cache.length);
+
+        zip.generateAsync({
+            type: 'blob'
+        }).then(function(content) {
+            //location.href = 'data:application/zip;base64,' + content;
+            saveAs(content, filename || 'srCache.zip');
+        });
+    }
+
     _loadContent() {
         return $.get("blocks" + this.m() + "/header.htm" + this.randURL(), (html) => {
             console.log("header loaded");
@@ -396,6 +422,11 @@ window.FrEMD = class {
             type: "mobile",
             src: "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js",
             css: "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"
+        });
+        this.hrefs.push({
+            lib: "Juxtapose",
+            src: "https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js",
+            css: "https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css"
         });
         this.hrefs.push({
             lib: "TwentyTwenty",
@@ -961,7 +992,7 @@ window.FrEMD = class {
                 url: "blocks" + this.m() + "/main.js" + this.randURL(),
                 dataType: "text",
             });
-            await sr.runScript("(async () => {" + js + "})();");
+            await this.runScript(js)();
             console.log("Main script found.");
         } catch (ex) {}
         this.step();
@@ -992,8 +1023,7 @@ window.FrEMD = class {
             this.allOptions = options;
 
             this.endCalled = false;
-            let _ret = await window.sr.runScript(ret.Script);
-            return _ret.ret;
+            page.Script = this.runScript(ret.Script);
         } else {
             console.log("Page " + page._code + " not found in CMS, looking in EMS");
             var eoPage = null;
@@ -1032,7 +1062,7 @@ window.FrEMD = class {
                     url: "templates" + this.m() + "/" + page._code + ".js" + this.randURL(),
                     dataType: "text",
                 });
-                page.Script = sr.runScript("(async () => {" + js + "});");;
+                page.Script = this.runScript(js);
                 console.log("Page " + page._code + " script is retrieved");
                 //window.sr.runScript(js);
             } catch (ex) {}
@@ -1055,7 +1085,12 @@ window.FrEMD = class {
         if (!this.endCalled && !page.Script) {
             await this.end();
         } else {
-            await page.Script();
+            try {
+                await new page.Script().main();
+            } catch (ex) {
+                console.log(ex);
+                await page.Script();
+            }
         }
 
         if (typeof(ga) !== "undefined") {
@@ -1065,6 +1100,15 @@ window.FrEMD = class {
                 title: page._title
             });
             console.log("Sent GA hit for page: " + page._code);
+        }
+    }
+
+    runScript(js) {
+        if (js.indexOf("class {") >= 0) {
+            // a class definition, do not enclose it in a function
+            return sr.runScript(js);
+        } else {
+            return sr.runScript("(async () => {" + js + "});");
         }
     }
 };

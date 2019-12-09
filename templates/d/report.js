@@ -52,6 +52,11 @@ window.ShowYear = async (section, year) => {
 
 
     if (!window.sr.bLocal || window.sr.$_REQUEST("cacheResult") != "sr") return;
+    if (typeof window.___doCache === "undefined") {
+        window.___doCache = confirm('Generate Website Cache?');
+    }
+    if (!window.___doCache) return;
+
     if (year >= moment().year()) {
         year = 2014;
         for (var i = 0; i < gviews.length - 1; i++) {
