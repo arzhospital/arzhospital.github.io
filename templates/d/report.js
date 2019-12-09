@@ -15,41 +15,46 @@ window.ShowYear = async (section, year) => {
         width: '100%'
     });
 
-    var tdata = s._pivot(ret, "MMM/YY");
-    var columns = [];
-    for (var p in tdata[0]) {
-        columns.push({
-            title: p,
-            field: p,
-            width: 200
-        });
-    }
-    $("#tblResults-" + year).tabulator({
-        height: "311px",
-        columns: columns,
-    });
-    tdata = $.grep(tdata, (n, i) => {
-        return parseFloat(n.Aggregation) > 0;
-    });
-    $("#tblResults-" + year).tabulator("setData", tdata);
+    zingchart.exec("chtResults-" + year, "toggledimension");
 
-    var html = "";
-    $.each(tdata, (i, v) => {
-        if (i == 0) {
-            html += "<thead><tr class='w3-light-grey'>";
-            for (var p in v) {
-                html += "<th>" + p + "</th>";
+    /*
+        var tdata = s._pivot(ret, "MMM/YY");
+        var columns = [];
+        for (var p in tdata[0]) {
+            columns.push({
+                title: p,
+                field: p,
+                width: 200
+            });
+        }
+        try {
+            $("#tblResults-" + year).tabulator({
+                height: "311px",
+                columns: columns,
+            });
+            tdata = $.grep(tdata, (n, i) => {
+                return parseFloat(n.Aggregation) > 0;
+            });
+            $("#tblResults-" + year).tabulator("setData", tdata);
+        } catch (ex) {}
+
+        var html = "";
+        $.each(tdata, (i, v) => {
+            if (i == 0) {
+                html += "<thead><tr class='w3-light-grey'>";
+                for (var p in v) {
+                    html += "<th>" + p + "</th>";
+                }
+                html += "</tr></thead>";
             }
-            html += "</tr></thead>";
-        }
-        html += "<tr>";
-        for (var p in v) {
-            html += "<td>" + v[p] + "</td>";
-        }
-        html += "</tr>";
-    });
-    $("#tblResults-data-" + year).html(html);
-
+            html += "<tr>";
+            for (var p in v) {
+                html += "<td>" + v[p] + "</td>";
+            }
+            html += "</tr>";
+        });
+        $("#tblResults-data-" + year).html(html);
+    */
 
     if (!window.sr.bLocal || window.sr.$_REQUEST("cacheResult") != "sr") return;
     if (typeof window.___doCache === "undefined") {
@@ -65,7 +70,7 @@ window.ShowYear = async (section, year) => {
                 return;
             }
         }
-        return window.sr.downloadSRCache();
+        return window._FrEMD.downloadSRCache();
     }
     $("#section-" + (year + 1)).trigger("click");
 }
