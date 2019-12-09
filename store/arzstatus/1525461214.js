@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFindall";
 
-var server_time = new Date(2019, 12-1, 9, 19, 30, 19);
+var server_time = new Date(2019, 12-1, 9, 20, 18, 11);
 
-var execution_time = 0.230518;
+var execution_time = 0.17783;
 
 
 var ret = new Array();
@@ -851,7 +851,7 @@ ret[17] = new Object();
 ret[17].ToString = "Lab Exams by Patient Type";
 ret[17]._ToString = "Lab Exams by Patient Type";
 ret[17].Active = true;
-ret[17].Async = true;
+ret[17].Async = false;
 ret[17].Date = new Date(2018, 10-1, 23, 22, 8, 47);
 ret[17].Enabled = true;
 ret[17].FieldFormatter = "";

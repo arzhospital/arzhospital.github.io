@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2019, 12-1, 9, 19, 47, 47);
+var server_time = new Date(2019, 12-1, 9, 20, 35, 12);
 
-var execution_time = 0.078086;
+var execution_time = 0.092228;
 
 ret = new Object();
 ret.ToString = "Operations by Patient Type";
