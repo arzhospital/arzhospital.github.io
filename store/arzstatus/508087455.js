@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2019, 12-1, 9, 11, 54, 43);
+var server_time = new Date(2019, 12-1, 9, 19, 32, 55);
 
-var execution_time = 0.026733;
+var execution_time = 0.046671;
 
 ret = new Object();
 ret.ToString = "Admissions by Type";

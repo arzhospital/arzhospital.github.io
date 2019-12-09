@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2019, 12-1, 9, 12, 9, 22);
+var server_time = new Date(2019, 12-1, 9, 19, 49, 29);
 
-var execution_time = 0.03722;
+var execution_time = 0.067721;
 
 ret = new Object();
 ret.ToString = "Operations Totals$ by Surgeon";

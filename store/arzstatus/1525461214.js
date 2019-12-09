@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFindall";
 
-var server_time = new Date(2019, 12-1, 9, 11, 52, 33);
+var server_time = new Date(2019, 12-1, 9, 19, 30, 19);
 
-var execution_time = 0.086025;
+var execution_time = 0.230518;
 
 
 var ret = new Array();

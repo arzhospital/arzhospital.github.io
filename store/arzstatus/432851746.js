@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2019, 12-1, 9, 11, 53, 11);
+var server_time = new Date(2019, 12-1, 9, 19, 31, 3);
 
-var execution_time = 0.024877;
+var execution_time = 0.039335;
 
 ret = new Object();
 ret.ToString = "Physicians by Category";

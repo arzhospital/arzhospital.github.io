@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2019, 12-1, 9, 12, 2, 20);
+var server_time = new Date(2019, 12-1, 9, 19, 41, 18);
 
-var execution_time = 0.064187;
+var execution_time = 0.055479;
 
 ret = new Object();
 ret.ToString = "Consulations by Division";

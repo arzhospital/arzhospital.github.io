@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2019, 12-1, 9, 11, 53, 25);
+var server_time = new Date(2019, 12-1, 9, 19, 31, 22);
 
-var execution_time = 0.02581;
+var execution_time = 0.090512;
 
 ret = new Object();
 ret.ToString = "Employees by Job Type";

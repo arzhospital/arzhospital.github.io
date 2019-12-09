@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comIdentityFindall";
 
-var server_time = new Date(2019, 12-1, 9, 12, 1, 7);
+var server_time = new Date(2019, 12-1, 9, 19, 39, 48);
 
-var execution_time = 0.054414;
+var execution_time = 0.051881;
 
 
 var ret = new Array();
