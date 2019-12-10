@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comDataMapValueFindall";
 
-var server_time = new Date(2019, 12-1, 9, 20, 37, 10);
+var server_time = new Date(2019, 12-1, 10, 4, 19, 30);
 
-var execution_time = 0.183708;
+var execution_time = 0.156829;
 
 
 var ret = new Array();
