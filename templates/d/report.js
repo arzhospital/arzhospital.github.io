@@ -1,60 +1,21 @@
 window.ShowYear = async (section, year) => {
-    var s = new ReportSection(year, company.Code);
-    let ret = await s._run(section, ['taken']);
-    typeof(ga) !== "undefined" ? ga('send', {
-        hitType: 'event',
-        eventCategory: 'CorporateMeasures',
-        eventAction: 'ReportSection',
-        eventLabel: company.Code + "/" + section + "/" + year
-    }): null;
+    let s = new ReportSection(year, company.Code);
 
     zingchart.render({
         id: "chtResults-" + year,
-        data: s._asZingOptions(s._data(ret, 'bar', section)),
+        data: s._asZingOptions(s._data(await s._run(window.gviews.find(g => g.Name == section), ['taken']), 'bar', section)),
         height: '600',
         width: '100%'
     });
 
     zingchart.exec("chtResults-" + year, "toggledimension");
 
-    /*
-        var tdata = s._pivot(ret, "MMM/YY");
-        var columns = [];
-        for (var p in tdata[0]) {
-            columns.push({
-                title: p,
-                field: p,
-                width: 200
-            });
-        }
-        try {
-            $("#tblResults-" + year).tabulator({
-                height: "311px",
-                columns: columns,
-            });
-            tdata = $.grep(tdata, (n, i) => {
-                return parseFloat(n.Aggregation) > 0;
-            });
-            $("#tblResults-" + year).tabulator("setData", tdata);
-        } catch (ex) {}
-
-        var html = "";
-        $.each(tdata, (i, v) => {
-            if (i == 0) {
-                html += "<thead><tr class='w3-light-grey'>";
-                for (var p in v) {
-                    html += "<th>" + p + "</th>";
-                }
-                html += "</tr></thead>";
-            }
-            html += "<tr>";
-            for (var p in v) {
-                html += "<td>" + v[p] + "</td>";
-            }
-            html += "</tr>";
-        });
-        $("#tblResults-data-" + year).html(html);
-    */
+    typeof(ga) !== "undefined" ? ga('send', {
+        hitType: 'event',
+        eventCategory: 'CorporateMeasures',
+        eventAction: 'ReportSection',
+        eventLabel: company.Code + "/" + section + "/" + year
+    }): null;
 
     if (!window.sr.bLocal || window.sr.$_REQUEST("cacheResult") != "sr") return;
     if (typeof window.___doCache === "undefined") {
@@ -75,7 +36,19 @@ window.ShowYear = async (section, year) => {
     $("#section-" + (year + 1)).trigger("click");
 }
 
+for (var i = 0; i < gviews.length; i++) {
+    if (gviews[i].Name != page.data._section) continue;
+
+    if (!gviews[i].KeyFields || !gviews[i].KeyFields.length) {
+        // make it depth=2
+        //console.log("Finding gview " + gviews[i].Name + " with depth=2");
+        gviews[i] = await window.sr._("CorporateMeasures.comGroupViewFind", null, {
+            Id: gviews[i].Id
+        }, null, 2);
+    }
+}
+
 await window._FrEMD.end();
 
-await ShowYear(page.data._section, 2014);
 $("#tab-container").easytabs();
+await ShowYear(page.data._section, 2014);

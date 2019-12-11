@@ -1,4 +1,4 @@
-if (true || typeof ReportSection === "undefined") {
+if (typeof ReportSection === "undefined") {
     let ret = await sr._("ContentManager.cmsHTMLPageFindall", null, {
         Page: "Hosted/COM/ReportSection"
     });
@@ -6,7 +6,7 @@ if (true || typeof ReportSection === "undefined") {
     console.log("Loaded ReportSection");
 }
 
-if (true || typeof gviews === "undefined") {
+if (typeof gviews === "undefined") {
     let gviews = await sr._("CorporateMeasures.comGroupViewFindall", null, {
         Enabled: true,
         User: {
