@@ -201,23 +201,16 @@ function ServiceRouter() {
 		});
 	};
 
-	this.import = function(arModules) {
-		var calls = [];
-		$.each(arModules, (i, m) =>
-			calls.push(
-				sr._('ContentManager.cmsHTMLPageFindall', null, {
-					Page: m,
-				})
-			)
-		);
-		return $.when(...calls).then((...arRet) => {
-			var _ret = [];
-			$.map(arRet, p => {
-				_ret.push(p[0]);
-				sr.runScript(p[0].Script);
+	this.import = async function(arModules) {
+		var ret = [];
+		for (var i = 0; i < arModules.length; i++) {
+			let p = await this._('ContentManager.cmsHTMLPageFind', null, {
+				Page: arModules[i],
 			});
-			return _ret;
-		});
+			ret.push(p);
+			await this.runScript(p.Script);
+		}
+		return ret;
 	};
 
 	this.getObject = function(s) {
@@ -488,10 +481,12 @@ function ServiceRouter() {
 							sMethodName
 					);
 				}
-				(this.fLoadingEnd ||
+				(
+					this.fLoadingEnd ||
 					function() {
 						window.sr.resetCursor();
-					})();
+					}
+				)();
 
 				return (
 					callRet || _ret.ret || (bScriptError ? responseText : null)
@@ -1112,10 +1107,12 @@ function ServiceRouter() {
 		this.buildURL();
 
 		//var postData = "System.Collections.ArrayList ret = new System.Collections.ArrayList();"+this.CRNL;
-		(this.fLoadingStart ||
+		(
+			this.fLoadingStart ||
 			function() {
 				document.body.style.cursor = 'wait';
-			})();
+			}
+		)();
 
 		var args = Array();
 		for (var i = 2; i < arguments.length; i++) {
@@ -1225,10 +1222,12 @@ function ServiceRouter() {
 							);
 						}
 					}
-					(window.sr.fLoadingEnd ||
+					(
+						window.sr.fLoadingEnd ||
 						(() => {
 							this.resetCursor();
-						}))();
+						})
+					)();
 					return (
 						(_ret ? _ret.ret : null) ||
 						(_exception ? responseText : null)

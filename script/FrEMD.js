@@ -102,9 +102,22 @@ window.FrEMD = class {
         });
     }
 
-    initDOM() {
+    async initDOM() {
         window.document.body.style.visibility = 'hidden';
-        return $.when(this.preInit()).then(() => {
+        await this.preInit();
+        await ((company && company.OnPageLoad) ? company.OnPageLoad : async () => {})();
+        if (frames[0].reRender) {
+            frames[0].reRender();
+        }
+        if (typeof(ko) !== "undefined") {
+            setTimeout(() => {
+                ko.applyBindings(window, window.frames[0].document.body);
+                window.title = window.frames[0].document.title; //??
+                window.document.body.style.visibility = 'visible';
+            }, 500);
+        }
+
+        if (false) return $.when(this.preInit()).then(() => {
             $.when(((company && company.OnPageLoad) ? company.OnPageLoad : () => {})()).then(() => {
                 if (frames[0].reRender) {
                     frames[0].reRender();
@@ -120,11 +133,20 @@ window.FrEMD = class {
         });
     }
 
-    preInit() {
-        return $.Deferred(def => {
-            window._FrEMD = this;
-            this.fromHash();
+    async preInit() {
+        window._FrEMD = this;
+        this.fromHash();
+        await this.require("Company");
+        await this.require("ServiceRouter");
+        await this._initServiceRouter();
+        $.each(company.Required, async (_, l) => {
+            await this.require(l);
+        });
+        await this._loadEntityClasses();
+        console.log("Done Loading");
+        return;
 
+        if (false) return $.Deferred(def => {
             $.when(this.require("Company")).then(() => {
                 $.when(this.require("ServiceRouter")).then(() => {
                     this._initServiceRouter();
@@ -139,8 +161,11 @@ window.FrEMD = class {
         }).promise();
     }
 
-    init() {
-        $.when(this.preInit()).then(() => {
+    async init() {
+        await this.preInit();
+        return await this._loadContent();
+
+        if (false) $.when(this.preInit()).then(() => {
             return this._loadContent();
         });
     }
@@ -170,14 +195,15 @@ window.FrEMD = class {
         window.EntityClasses = classes.map(a => a.key);
 
         this.step();
-        var code = "";
         for (var i = 0; i < window.EntityClasses.length; i++) {
-            code += this._inject(html, {
+            var code = this._inject(html, {
                 c: window.EntityClasses[i]
             });
-        }
+            //console.log(code);
+            code += "window." + window.EntityClasses[i].Name.replace(/ /g, '_') + " = " + window.EntityClasses[i].Name.replace(/ /g, '_') + ";";
 
-        return window.sr.runScript(code);
+            window.sr.runScript(code);
+        }
     }
 
     _initServiceRouter() {
@@ -210,15 +236,25 @@ window.FrEMD = class {
         }).appendTo("head");
     }
 
-    require(libName) {
+    async require(libName) {
         var _hrefs = $.grep(this.hrefs, l => l.lib === libName && this._include(l));
+
         var calls = [];
-        $.each(_hrefs, (_, n) => {
+        $.each(_hrefs, async (_, n) => {
             var _css = Array.isArray(n.css) ? n.css : [n.css];
-            $.each(_css, (_, c) => calls.push(this._css(c)));
+            $.each(_css, (_, c) => {
+                //this._css(c);
+                calls.push(this._css(c));
+            });
             var _srcs = Array.isArray(n.src) ? n.src : [n.src];
-            $.each(_srcs, (_, s) => calls.push($.getScript(s)));
+            $.each(_srcs, async (_, s) => {
+                //await $.getScript(s);
+
+                calls.push($.getScript(s));
+            });
         });
+        //console.log("require[" + libName + "]");
+        //return true;
         return $.when(...calls).then(() => {
             console.log("require[" + libName + "]");
             return true;
@@ -328,6 +364,10 @@ window.FrEMD = class {
             lib: "Ionic",
             src: "https://cdnjs.cloudflare.com/ajax/libs/ionic/1.3.2/js/ionic.min.js",
             css: "https://cdnjs.cloudflare.com/ajax/libs/ionic/1.3.2/css/ionic.min.css"
+        });
+        this.hrefs.push({
+            lib: "uuid",
+            src: "https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js",
         });
         this.hrefs.push({
             lib: "WebIX",

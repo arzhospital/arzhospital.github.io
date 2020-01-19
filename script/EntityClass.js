@@ -1,32 +1,76 @@
-function <%=c.Name.replace(/ /g, '_')%>(id) {
-    this.EntityClass = {
-        Id: <%=c.Id%>,
-        Name: "<%=c.Name%>"
-    };
+class <%=c.Name.replace(/ /g, '_')%> {
+    constructor(id) {
+        this.EntityClass = {
+            Id: <%=c.Id%>,
+            Name: "<%=c.Name%>",
+        };
 
-    this.EntityValues = [];
-    this.ValueEntities = [];
+        this.EntityValues = [];
+        this.ValueEntities = [];
 
-    this.Date = null;
-    this.Id = id;
+        this.Date = null;
+        this.Id = id;
 
-    <% for(var i=0; i<c.EntityAttributes.length; i++){
-        var ea = c.EntityAttributes[i]; %>
-    /** start: setters and getters for <%=ea.Name%> **/
-    this.EntityValues.push({
-        EntityAttribute: {
-            Id: <%=ea.Id%>,
-            Name: "<%=ea.Name%>",
-            EntityClass: {
-                Id: <%=ea.EntityClass.Id%>
+        <% for(var i=0; i<c.EntityAttributes.length; i++){ var ea = c.EntityAttributes[i]; %>
+        /** start: setters and getters for <%=ea.Name%> **/
+        this.EntityValues.push({
+            EntityAttribute: {
+                Id: <%=ea.Id%>,
+                Name: "<%=ea.Name%>",
+                EntityClass: {
+                    Id: <%=ea.EntityClass.Id%>
+                },
             },
-        },
-        OPERATORS: {}
-    });
-    this.<%=ea.Name.replace(/ /g, '_')%> = function(v, co, id) {
+            OPERATORS: {}
+        });
+        this.clear_<%=ea.Name.replace(/ /g, '_')%>();
+        <% } %>
+
+
+        <% for(var i=0; i < c.TypedAttributes.length; i++){var ta = c.TypedAttributes[i];%>
+        this.clear_<%=ta.Name.replace(/ /g, '_')%>_<%=ta.EntityClass.Plural.replace(/ /g, '_')%>()
+        <% } %>
+    }
+
+    _revert(bSource) {
+        if (bSource) {
+            // revert from source data
+        } else {
+            // use EntityValues and ValueEntities to revert the attribute values
+            $.each(this.EntityValues, (_, ev) => {
+                var ea = ev.EntityAttribute;
+                try {
+                    var attrN = "";
+                    if (ea.IsBool) attrN = "Bool";
+                    if (ea.IsInt) attrN = "Int";
+                    if (ea.IsLong) attrN = "Long";
+                    if (ea.IsFloat) attrN = "Float";
+                    if (ea.IsString) attrN = "String";
+                    if (ea.IsText) attrN = "Text";
+                    if (ea.IsDate) attrN = "Date";
+                    if (ea.IsImage) attrN = "Image";
+                    if (ea.EntityType) attrN = "Object";
+                    this["_" + ea.Name.replace(/ /g, '_')] = ev[attrN + "Value"];
+                } catch (ex) {
+                    return true;
+                }
+                this["_" + ea.Name.replace(/ /g, '_') + "_set"] = true;
+            });
+
+            $.each($.grep(this.ValueEntities, ve => ve.ObjectValue), (_, ve) => {
+                var ea = ve.EntityAttribute;
+                this["_" + ea.Name.replace(/ /g, '_')] = ve.ObjectValue;
+                this["_" + ea.Name.replace(/ /g, '_') + "_set"] = true;
+            });
+        }
+    }
+
+    <% for(var i=0; i<c.EntityAttributes.length; i++){ var ea = c.EntityAttributes[i]; %>
+    <%=ea.Name.replace(/ /g, '_')%>(v, co, id) {
         if (co) this._<%=ea.Name.replace(/ /g, '_')%>_coop = co;
 
         var ev = this.EntityValue("<%=ea.Name%>");
+        if (!ev) return this;
 
         if (id) ev.Id = id;
 
@@ -65,16 +109,12 @@ function <%=c.Name.replace(/ /g, '_')%>(id) {
         }
     }
 
-    this.clear_<%=ea.Name.replace(/ /g, '_')%> = function() {
+    clear_<%=ea.Name.replace(/ /g, '_')%>() {
         this._<%=ea.Name.replace(/ /g, '_')%>_set = false;
         this._<%=ea.Name.replace(/ /g, '_')%> = null;
         this._<%=ea.Name.replace(/ /g, '_')%>_coop = null;
         return this;
     }
-
-    this._<%=ea.Name.replace(/ /g, '_')%>_set = false;
-    this._<%=ea.Name.replace(/ /g, '_')%> = null;
-    this._<%=ea.Name.replace(/ /g, '_')%>_coop = "";
 
     /** end: setters and getters for <%=ea.Name%> **/
     <% } %>
@@ -86,14 +126,12 @@ for(var i=0; i < c.TypedAttributes.length; i++)
 	var taName = ta.EntityClass.Plural.replace(/ /g, '_');
 %>
     /** start: setters and getters for <%=ta.Name%>_<%=taName%> **/
-    this._<%=ta.Name.replace(/ /g, '_')%>_<%=taName%> = new Array();
-    this._<%=ta.Name.replace(/ /g, '_')%>_<%=taName%>_set;
-    this.<%=ta.Name.replace(/ /g, '_')%>_<%=taName%> = function(v) {
+    <%=ta.Name.replace(/ /g, '_')%>_<%=taName%>(v) {
         this._<%=ta.Name.replace(" ", "_")%>_<%=taName%> = v;
         this._<%=ta.Name.replace(" ", "_")%>_<%=taName%>_set = true;
         return this;
     }
-    this.clear_<%=ta.Name.replace(/ /g, '_')%>_<%=taName%> = function() {
+    clear_<%=ta.Name.replace(/ /g, '_')%>_<%=taName%>() {
         this._<%=ta.Name.replace(" ", "_")%>_<%=taName%>_set = false;
         this._<%=ta.Name.replace(" ", "_")%>_<%=taName%> = new Array();
         return this;
@@ -102,8 +140,8 @@ for(var i=0; i < c.TypedAttributes.length; i++)
 
     <% } %>
 
-    this.get = async function(name) {
-        if (!id) return null;
+    async get(name) {
+        if (!this.Id) return null;
         var t = null;
         $.each(name.split('.'), (_, f) => {
             t = {
@@ -112,7 +150,7 @@ for(var i=0; i < c.TypedAttributes.length; i++)
                     ValueEntities: [t]
                 } : {
                     Active: true,
-                    Id: id
+                    Id: this.Id
                 },
                 EntityAttribute: {
                     Name: f,
@@ -138,7 +176,7 @@ for(var i=0; i < c.TypedAttributes.length; i++)
         });
     }
 
-    this.Equals = function(obj) {
+    Equals(obj) {
         try {
             return this.Id == obj.Id && this.EntityClass.Id == obj.EntityClass.Id;
         } catch (e) {
@@ -152,7 +190,7 @@ for(var i=0; i<c.EntityAttributes.length; i++)
     var ea = c.EntityAttributes[i];
 	if(!ea.EntityType) continue;
 %>
-    this.by<%=ea.EntityType.Name.replace(/ /g, '_')%> = function(ar) {
+    by<%=ea.EntityType.Name.replace(/ /g, '_')%>(ar) {
         var ret = [];
         for (var i = 0; i < ar.length; i++) {
             for (var j = 0; j < ret.length; j++) {
@@ -165,7 +203,7 @@ for(var i=0; i<c.EntityAttributes.length; i++)
     }
     <% } %>
 
-    this.toString = function() {
+    toString() {
         <%
 var _name = null;
 for(var i=0; i<c.EntityAttributes.length; i++)
@@ -179,18 +217,21 @@ for(var i=0; i<c.EntityAttributes.length; i++)
         return this._<%=_name.Name.replace(" ", "_")%>;
     }
 
-    this.EntityValue = function(aName) {
-        for (var i = 0; i < this.EntityValues.length; i++)
-            if (this.EntityValues[i].EntityAttribute.Name == aName) return this.EntityValues[i];
+    EntityValue(aName) {
+        return $.merge($.merge([], this.EntityValues), this.ValueEntities).find(ev => ev.EntityAttribute.Name == aName);
     }
 
-    this.findAll = async function(depth = 1) {
+    async find(depth = 1) {
+        let ret = await this.findAll(depth);
+        return ret[0];
+    }
+
+    async findAllValues(depth = 1) {
         var _THIS = [{
             EntityObject: this.toEntityObject(true)
         }];
-        var bTest = false;
         for (var i = 1; i <= depth; i++) {
-            if (!bTest) _THIS.push({
+            _THIS.push({
                 Active: true,
                 EntityObject: {
                     Active: true,
@@ -200,10 +241,10 @@ for(var i=0; i<c.EntityAttributes.length; i++)
         }
 
         <% $.each(c.TypedAttributes, (_, ta) => {%>
-        if (!bTest) _THIS.push({
+        _THIS.push({
             EntityObject: new <%=ta.EntityClass.Name.replace(/ /g, '_')%>().<%=ta.Name.replace(/ /g, '_')%>(this).toEntityObject(true)
         });
-        if (!bTest) _THIS.push({
+        _THIS.push({
             EntityObject: {
                 Active: true,
                 ValueEntities: [{
@@ -213,72 +254,101 @@ for(var i=0; i<c.EntityAttributes.length; i++)
         });
         <% }); %>
 
-        return $.when(sr._("EnterpriseManager.emsEntityValueFindall", null, {
+        //console.log(_THIS);
+
+        let evs = await sr._("EnterpriseManager.emsEntityValueFindall", null, {
             THIS: _THIS
-        })).then(evs => {
-            //console.log(evs.length);
-            var obj = [];
-            $.each(sr.groupBy(evs, "EntityObject"), (_, evg) => {
-                //console.log(evg);
-                $.each(window.EntityClasses, (_, ec) => {
-                    if (ec.Id == evg.key.EntityClassid) {
-                        var c = new window[ec.Name.replace(/ /g, '_')]();
-                        c.EntityValues = evg.values;
-                        c.Id = evg.key.Id;
-                        obj.push(c);
-                    }
-                });
+        }, null, null, null, null, null, null, 0);
+
+        $.each(evs, (_, ev) => {
+            $.each(window.EntityClasses, (_, c) => {
+                ev.EntityAttribute = $.merge($.merge([], c.EntityAttributes), c.TypedAttributes).find(ea => ea.Id == ev.EntityAttribute.Id) || ev.EntityAttribute;
             });
-
-            $.each(obj, (_, r) => {
-                r.ValueEntities = $.grep(evs, ev => ev.EntityObject.Id == r.Id && ev.ObjectValue);
-                $.each(r.EntityValues, (_, ev) => {
-                    var ea = ev.EntityAttribute;
-                    //console.log(ev);
-                    var attrN = "";
-                    if (ea.IsBool) attrN = "Bool";
-                    if (ea.IsInt) attrN = "Int";
-                    if (ea.IsLong) attrN = "Long";
-                    if (ea.IsFloat) attrN = "Float";
-                    if (ea.IsImage) attrN = "Image";
-                    if (ea.IsString) attrN = "String";
-                    if (ea.IsText) attrN = "Text";
-                    if (ea.IsDate) attrN = "Date";
-                    if (ea.EntityTypeid) {
-                        var refO = $.grep(obj, o => o.Id == ev.ObjectValueid)[0];
-                        //console.log("r." + ea.Name.replace(/ /g, '_') + "()", refO);
-                        r[ea.Name.replace(/ /g, '_')]($.grep(obj, o => o.Id == ev.ObjectValueid)[0]);
-                    } else {
-                        r[ea.Name.replace(/ /g, '_')](ev[attrN + "Value"]);
-                    }
-                });
-            });
-
-            var ret = $.grep(obj, o => o.EntityClass.Id == this.EntityClass.Id); // we might pick also the references that are of the same class
-            //console.log(ret.length);
-
-            //console.log(obj);
-
-            $.each(ret, (_, r) => {
-                <% $.each(c.TypedAttributes, (_, ta) => {%>
-                r.<%=ta.Name.replace(/ /g, '_')%>_<%=ta.EntityClass.Plural.replace(/ /g, '_')%>($.grep(obj, o => o.EntityClass.Id == <%=ta.EntityClass.Id%> && o._<%=ta.Name.replace(/ /g, '_')%> && o._<%=ta.Name.replace(/ /g, '_')%>.Id == r.Id));
-                <% }); %>
-            });
-            //console.log(obj);
-
-            return ret;
+            ev.EntityObject.EntityClass = ev.EntityAttribute.EntityClass;
         });
+
+        return evs;
     }
 
-    this.insert = function() {
+    async findAll(depth = 1) {
+        let evs = await this.findAllValues(depth);
+
+        var obj = [];
+        $.each(sr.groupBy(evs, "EntityObject"), (_, evg) => {
+            //console.log(evg);
+            obj = $.merge(obj, $.map($.grep(window.EntityClasses, c => c.Id == evg.key.EntityClass.Id), ec => {
+                var c = new window[ec.Name.replace(/ /g, '_')]();
+                c.EntityValues = $.grep(evg.values, ev => !ev.ObjectValue);
+                c.ValueEntities = $.grep(evg.values, ev => ev.ObjectValue);
+                c.EntityClass = ec;
+                c.Id = evg.key.Id;
+                c._revert();
+                return c;
+            }));
+        });
+
+        $.each($.grep(evs, ev => ev.ObjectValue), (_, ev) => {
+            ev.ObjectValue = obj.find(o => o.Id == ev.ObjectValue.Id);
+        });
+        $.each($.grep(evs, ev => ev.EntityObject), (_, ev) => {
+            ev.EntityObject = obj.find(o => o.Id == ev.EntityObject.Id);
+        });
+        $.each(obj, (_, o) => o._revert());
+
+        // fix the many-to-many fields
+        var ret = $.grep(obj, o => o.EntityClass.Id == this.EntityClass.Id); // we might pick also the references that are of the same class
+        $.each(obj, (_, r) => {
+            $.each(r.EntityClass.TypedAttributes, (_, ta) => {
+                var f = ta.Name.replace(/ /g, '_') + '_' + ta.EntityClass.Plural.replace(/ /g, '_');
+                //console.log("r[" + f + "]", ta);
+                var _obj = $.grep(obj, o => o.EntityClass.Id == ta.EntityClass.Id && o[ta.Name.replace(/ /g, '_')] && o['_' + ta.Name.replace(/ /g, '_')] && o['_' + ta.Name.replace(/ /g, '_')].Id == r.Id);
+                r[f](_obj);
+            });
+        });
+
+        if (false) $.each(obj, (_, r) => {
+            r.ValueEntities = $.grep(evs, ev => ev.EntityObject.Id == r.Id && ev.ObjectValue);
+            $.each(r.EntityValues, (_, ev) => {
+                let _c = window.EntityClasses.find(c => c.Id == this.EntityClass.Id);
+                let ea = /*ev.EntityAttribute*/ $.merge($.merge([], _c.EntityAttributes), _c.TypedAttributes).find(a => a.Id == ev.EntityAttribute.Id);
+                //console.log(ev);
+                var attrN = "";
+                if (ea.IsBool) attrN = "Bool";
+                if (ea.IsInt) attrN = "Int";
+                if (ea.IsLong) attrN = "Long";
+                if (ea.IsFloat) attrN = "Float";
+                if (ea.IsImage) attrN = "Image";
+                if (ea.IsString) attrN = "String";
+                if (ea.IsText) attrN = "Text";
+                if (ea.IsDate) attrN = "Date";
+                if (ea.EntityTypeid) {
+                    var refO = $.grep(obj, o => o.Id == ev.ObjectValueid)[0];
+                    //console.log("r." + ea.Name.replace(/ /g, '_') + "()", refO);
+                    r[ea.Name.replace(/ /g, '_')]($.grep(obj, o => o.Id == ev.ObjectValueid)[0]);
+                } else {
+                    r[ea.Name.replace(/ /g, '_')](ev[attrN + "Value"]);
+                }
+            });
+        });
+
+        if (false) $.each(ret, (_, r) => {
+            <% $.each(c.TypedAttributes, (_, ta) => {%>
+            r.<%=ta.Name.replace(/ /g, '_')%>_<%=ta.EntityClass.Plural.replace(/ /g, '_')%>($.grep(obj, o => o.EntityClass.Id == <%=ta.EntityClass.Id%> && o._<%=ta.Name.replace(/ /g, '_')%> && o._<%=ta.Name.replace(/ /g, '_')%>.Id == r.Id));
+            <% }); %>
+        });
+
+        return ret;
+    }
+
+    async insert() {
         return sr._("EnterpriseManager.emsEntityObjectInsert", null, this.toEntityObject());
     }
 
-    this.update = function() {
+    async update() {
         return sr._("EnterpriseManager.emsEntityObjectUpdate", null, this.toEntityObject());
     }
 
-    this.toEntityObject = function(bQuery) {
+    toEntityObject(bQuery) {
             var ret = new Object();
             if (this.Date) ret.Date = this.Date;
             if (this.Id) ret.Id = this.Id;

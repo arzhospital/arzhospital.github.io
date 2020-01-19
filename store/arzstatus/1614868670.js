@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2019, 12-1, 11, 18, 39, 50);
+var server_time = new Date(2020, 1-1, 19, 17, 14, 48);
 
-var execution_time = 0.051778;
+var execution_time = 0.071973;
 
 ret = new Object();
 ret.ToString = "Employees by Department";

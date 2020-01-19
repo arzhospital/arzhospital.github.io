@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2019, 12-1, 11, 18, 50, 48);
+var server_time = new Date(2020, 1-1, 19, 17, 27, 47);
 
-var execution_time = 0.059072;
+var execution_time = 0.052844;
 
 ret = new Object();
 ret.ToString = "Operations by Medical Acts";

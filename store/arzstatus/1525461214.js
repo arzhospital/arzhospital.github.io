@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFindall";
 
-var server_time = new Date(2019, 12-1, 11, 18, 38, 46);
+var server_time = new Date(2020, 1-1, 19, 17, 13, 11);
 
-var execution_time = 0.088956;
+var execution_time = 0.053853;
 
 
 var ret = new Array();
@@ -1284,6 +1284,5 @@ ret[21].ViewPartitions = new Array();
 ret[21].SubGroupViewLinks = new Array();
 ret[21].Aggregations = new Array();
 ret[21].BaseGroupViewLinks = new Array();
-
 
 ret.Count = 22;

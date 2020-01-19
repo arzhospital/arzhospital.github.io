@@ -870,7 +870,7 @@ window.DynaForm = class {
             if (e && e.type == "combotree") {
                 o.combotreegrid({
 
-                })
+                });
             } else {
                 o.combogrid({
                     onShowPanel: function() {
