@@ -2,7 +2,9 @@ var company = {
     Code: "arzhospital",
     Required: ["NOTY", "Moment", "JQuery UI", "ZingChart", "printThis", "Underscore", "Tabulator", "JSZip"],
     Responsive: true,
-    OnPageLoad: function(data) {},
+    OnPageLoad: async (data) => {
+        $('#tab-container').easytabs();
+    },
     GACode: 'UA-148842067-1',
     Name: "Arz Hospital",
     restiodbSettings: () => {

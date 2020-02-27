@@ -1,4 +1,5 @@
 window.FrEMD = class {
+    //export default class FrEMD {
     constructor() {
         this.settings = null;
         this.bDebug = false;
@@ -31,9 +32,93 @@ window.FrEMD = class {
         this._defineLinks();
     }
 
+    validURL(str) {
+        var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+        return !!pattern.test(str);
+    }
+
+    async import(module, bAsync) {
+        if (Array.isArray(module)) {
+            for (var m of module) {
+                await this.import(m, bAsync);
+            }
+            return;
+        }
+
+        try {
+            await import(module);
+            return;
+        } catch (ex) {}
+
+        var js = null;
+        try {
+            js = await this.preCompile({
+                _code: module
+            }) || await $.ajax({
+                url: "templates" + this.m() + "/" + module + ".js" + this.randURL(),
+                dataType: "text",
+            });
+        } catch (ex) {}
+        if (!js) {
+            js = await sr._("ContentManager.cmsHTMLPageFind", null, {
+                Page: module.indexOf('/') >= 0 ? module : (CMS_ROOT + module)
+            });
+            if (js) js = js.Script;
+        }
+        if (!js) return null;
+        return await this.runScript(js, bAsync);
+    }
+
+    async require(libName) {
+        var _hrefs = $.grep(this.hrefs, l => l.lib === libName && this._include(l));
+
+        var calls = [];
+        for await (const n of _hrefs) {
+            for (const c of Array.isArray(n.css) ? n.css : [n.css]) {
+                this._css(c);
+                //calls.push(this._css(c));
+            }
+            for await (const s of Array.isArray(n.src) ? n.src : [n.src]) {
+                try {
+                    if (n.module) {
+                        await import(s);
+                    } else {
+                        await $.ajax({
+                            url: s,
+                            dataType: "script",
+                            cache: n.cache
+                        });
+                    }
+                } catch (ex) {}
+            }
+        }
+        console.log("require[" + libName + "]");
+    }
+
+    async preInit() {
+        window._FrEMD = this;
+        this.fromHash();
+
+        await this.require("Company");
+        await this.require("ServiceRouter");
+        if (company.OnBeforeRequire) await company.OnBeforeRequire();
+
+        this._initServiceRouter();
+        for await (const l of company.Required) {
+            await this.require(l);
+        }
+        await this._loadEntityClasses();
+        console.log("Done Loading");
+    }
+
     async downloadSRCache(code, filename) {
         code = code || company.Code
-        if (typeof(JSZip) === "undefined") {
+        if (typeof (JSZip) === "undefined") {
             await this.require("JSZip");
         }
 
@@ -51,123 +136,97 @@ window.FrEMD = class {
 
         zip.generateAsync({
             type: 'blob'
-        }).then(function(content) {
+        }).then(function (content) {
             //location.href = 'data:application/zip;base64,' + content;
             saveAs(content, filename || 'srCache.zip');
         });
     }
 
-    _loadContent() {
-        return $.get("blocks" + this.m() + "/header.htm" + this.randURL(), (html) => {
-            console.log("header loaded");
-            this.headerHTML = html;
-        }).then(() => {
-            this.step();
-            return $.get("blocks" + this.m() + "/footer.htm" + this.randURL(), (html) => {
-                console.log("footer loaded");
-                this.footerHTML = html;
-            }).then(() => {
-                this.step();
-                return $.get("blocks" + this.m() + "/content.htm" + this.randURL(), (html) => {
-                    console.log("content loaded");
-                    this.contentHTML = html;
-                }).then(() => {
-                    this.step();
-                    window.lang = this.hash.lang || company.Language || 'en';
-
-                    if (company.GACode) {
-                        // google analytics
-                        console.log("including google analytics");
-                        (function(i, s, o, g, r, a, m) {
-                            i['GoogleAnalyticsObject'] = r;
-                            i[r] = i[r] || function() {
-                                (i[r].q = i[r].q || []).push(arguments);
-                            }, i[r].l = 1 * new Date();
-                            a = s.createElement(o),
-                                m = s.getElementsByTagName(o)[0];
-                            a.async = 1;
-                            a.src = g;
-                            m.parentNode.insertBefore(a, m);
-                        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-                        ga('create', company.GACode, 'auto');
-                        // pageview is done dynamically at the end of the page serving
-                    }
-
-                    return this.RenderPage({
-                        _code: (this.hash.page || 'index')
-                    });
-                    //setURL("page=" + (this.hash['page'] || 'index'));
-                });
+    async _getBlock(block) {
+        var html = null;
+        var js = null;
+        try {
+            html = await $.get("blocks" + this.m() + "/" + block + ".htm" + this.randURL());
+        } catch (ex) {
+            //console.log(ex);
+        }
+        try {
+            js = await this.preCompile({
+                _code: block
+            }, "blocks") || await $.ajax({
+                url: "blocks" + this.m() + "/" + block + ".js" + this.randURL(),
+                dataType: "text",
             });
+            if (js) {
+                js = await this.runScript(js);
+            }
+        } catch (ex) {
+            console.log(ex);
+        }
+
+        if (js && !html && typeof (React) !== "undefined" && window[block + "Component"]) {
+            html = "<" + block + "Component/>";
+        }
+
+        this.step();
+        console.log(block + " loaded");
+        return html || "";
+    }
+
+    async _loadContent() {
+        this.mainHTML = await this._getBlock("main");
+        this.headerHTML = await this._getBlock("header");
+        this.footerHTML = await this._getBlock("footer");
+        this.contentHTML = await this._getBlock("content");
+
+        window.lang = this.hash.lang || company.Language || 'en';
+
+        if (company.GACode) {
+            // google analytics
+            console.log("including google analytics");
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments);
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m);
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', company.GACode, 'auto');
+        }
+
+        return this.RenderPage({
+            _code: (this.hash.page || 'index')
         });
     }
 
     async initDOM() {
         window.document.body.style.visibility = 'hidden';
         await this.preInit();
-        await ((company && company.OnPageLoad) ? company.OnPageLoad : async () => {})();
+        try {
+            await ((company && company.OnPageLoad) ? company.OnPageLoad : async () => {})();
+        } catch (ex) {
+            console.log("FrEMD.initDOM.OnPageLoad", ex);
+        }
+
         if (frames[0].reRender) {
             frames[0].reRender();
         }
-        if (typeof(ko) !== "undefined") {
+        if (typeof (ko) !== "undefined") {
             setTimeout(() => {
                 ko.applyBindings(window, window.frames[0].document.body);
                 window.title = window.frames[0].document.title; //??
                 window.document.body.style.visibility = 'visible';
             }, 500);
         }
-
-        if (false) return $.when(this.preInit()).then(() => {
-            $.when(((company && company.OnPageLoad) ? company.OnPageLoad : () => {})()).then(() => {
-                if (frames[0].reRender) {
-                    frames[0].reRender();
-                }
-                if (typeof(ko) !== "undefined") {
-                    setTimeout(() => {
-                        ko.applyBindings(window, window.frames[0].document.body);
-                        window.title = window.frames[0].document.title; //??
-                        window.document.body.style.visibility = 'visible';
-                    }, 500);
-                }
-            });
-        });
-    }
-
-    async preInit() {
-        window._FrEMD = this;
-        this.fromHash();
-        await this.require("Company");
-        await this.require("ServiceRouter");
-        await this._initServiceRouter();
-        $.each(company.Required, async (_, l) => {
-            await this.require(l);
-        });
-        await this._loadEntityClasses();
-        console.log("Done Loading");
-        return;
-
-        if (false) return $.Deferred(def => {
-            $.when(this.require("Company")).then(() => {
-                $.when(this.require("ServiceRouter")).then(() => {
-                    this._initServiceRouter();
-                    $.when(...$.map(company.Required, l => this.require(l))).then(() => {
-                        $.when(this._loadEntityClasses()).then(() => {
-                            console.log("Done Loading");
-                            def.resolve(null);
-                        });
-                    });
-                });
-            });
-        }).promise();
     }
 
     async init() {
         await this.preInit();
         return await this._loadContent();
-
-        if (false) $.when(this.preInit()).then(() => {
-            return this._loadContent();
-        });
     }
 
     async _loadEntityClasses() {
@@ -236,31 +295,6 @@ window.FrEMD = class {
         }).appendTo("head");
     }
 
-    async require(libName) {
-        var _hrefs = $.grep(this.hrefs, l => l.lib === libName && this._include(l));
-
-        var calls = [];
-        $.each(_hrefs, async (_, n) => {
-            var _css = Array.isArray(n.css) ? n.css : [n.css];
-            $.each(_css, (_, c) => {
-                //this._css(c);
-                calls.push(this._css(c));
-            });
-            var _srcs = Array.isArray(n.src) ? n.src : [n.src];
-            $.each(_srcs, async (_, s) => {
-                //await $.getScript(s);
-
-                calls.push($.getScript(s));
-            });
-        });
-        //console.log("require[" + libName + "]");
-        //return true;
-        return $.when(...calls).then(() => {
-            console.log("require[" + libName + "]");
-            return true;
-        });
-    }
-
     toBase64(url, data, mime) {
         mime = (mime || 'application/octet-stream');
         var prefix = 'data:' + mime + ';base64,';
@@ -320,6 +354,17 @@ window.FrEMD = class {
             css: ["https://www.jeasyui.com/easyui/themes/icon.css",
                 "https://www.jeasyui.com/easyui/themes/default/easyui.css"
             ],
+            cache: true,
+        });
+        this.hrefs.push({
+            lib: "SemanticUI",
+            src: "https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js",
+            css: "https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css",
+        });
+        this.hrefs.push({
+            lib: "MaterialUI",
+            src: "https://unpkg.com/@material-ui/core@latest/umd/material-ui.development.js",
+            module: true,
         });
         this.hrefs.push({
             lib: "knockout",
@@ -393,20 +438,32 @@ window.FrEMD = class {
         this.hrefs.push({
             lib: "LZ-String",
             src: "https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js",
+            cache: true,
         });
         this.hrefs.push({
             lib: "JQuery Form",
             src: "https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js",
         });
         this.hrefs.push({
+            lib: "Sencha",
+            src: 'https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/ext-all.js',
+            cache: true,
+        });
+        this.hrefs.push({
             lib: "XLSX",
             src: [
                 "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.12.3/xlsx.full.min.js",
             ],
+            cache: true,
         });
         this.hrefs.push({
             lib: "ZingChart",
             src: "https://cdnjs.cloudflare.com/ajax/libs/zingchart/2.8.5/zingchart.min.js",
+            cache: true,
+        });
+        this.hrefs.push({
+            lib: "PlantUML",
+            src: "https://cdn.rawgit.com/jmnote/plantuml-encoder/d133f316/dist/plantuml-encoder.min.js",
         });
         this.hrefs.push({
             lib: "DynaTable",
@@ -424,6 +481,7 @@ window.FrEMD = class {
         this.hrefs.push({
             lib: "Underscore",
             src: "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js",
+            cache: true,
         });
         this.hrefs.push({
             lib: "AccordionMenu",
@@ -447,11 +505,13 @@ window.FrEMD = class {
         });
         this.hrefs.push({
             lib: "VueJS",
-            src: "https://cdn.jsdelivr.net/npm/vue",
+            src: "https://cdn.jsdelivr.net/npm/vue/dist/vue.js",
+            cache: true,
         });
         this.hrefs.push({
             lib: "Moment",
-            src: "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"
+            src: "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js",
+            cache: true,
         });
         this.hrefs.push({
             lib: "HTML2Canvas",
@@ -484,7 +544,8 @@ window.FrEMD = class {
         });
         this.hrefs.push({
             lib: "PapaCSV",
-            src: "https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.3.7/papaparse.min.js"
+            src: "https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.3.7/papaparse.min.js",
+            cache: true,
         });
         this.hrefs.push({
             lib: "JQ Transform",
@@ -495,6 +556,19 @@ window.FrEMD = class {
             lib: "Boostrap Select",
             src: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js",
             css: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/css/bootstrap-select.min.css"
+        });
+        this.hrefs.push({
+            lib: "Prettier",
+            src: ["https://prettier.io/lib/standalone.js", "https://prettier.io/lib/parser-babylon.js"],
+        });
+        this.hrefs.push({
+            lib: "ACEEditor",
+            src: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/ace.js"
+        });
+        this.hrefs.push({
+            lib: "Beautifier",
+            src: "https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.2/beautifier.min.js",
+            cache: true,
         });
         this.hrefs.push({
             lib: "prettyCheckable",
@@ -508,16 +582,15 @@ window.FrEMD = class {
             css: "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
         });
         this.hrefs.push({
-            lib: "ACEEditor",
-            src: ["https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/ace.js",
-                "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/ext-beautify.js"
-            ]
-        })
+            lib: "Dojo",
+            src: "https://ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js",
+        });
         this.hrefs.push({
             lib: "ReactJS",
             src: ["https://unpkg.com/react@16/umd/react.development.js",
-                "https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+                "https://unpkg.com/react-dom@16/umd/react-dom.development.js",
             ],
+            cache: true,
         });
         this.hrefs.push({
             lib: "EasyUI Mobile",
@@ -565,7 +638,7 @@ window.FrEMD = class {
         });
         this.hrefs.push({
             lib: "ACE",
-            src: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js"
+            src: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.7/ace.js"
         });
         this.hrefs.push({
             lib: "doT",
@@ -582,6 +655,7 @@ window.FrEMD = class {
         this.hrefs.push({
             lib: "XML2JSON",
             src: "https://cdnjs.cloudflare.com/ajax/libs/x2js/1.2.0/xml2json.min.js",
+            cache: true,
         });
         this.hrefs.push({
             lib: "JQuery NivoSlider",
@@ -591,6 +665,7 @@ window.FrEMD = class {
             lib: "NOTY",
             src: "https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.8/packaged/jquery.noty.packaged.min.js",
             css: "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css",
+            cache: true,
         });
         this.hrefs.push({
             lib: "JQuery Easing",
@@ -734,7 +809,7 @@ window.FrEMD = class {
     }
 
     _error(msg, delay) {
-        if (noty) {
+        if (typeof (noty) !== "undefined") {
             noty({
                 text: msg,
                 type: 'error',
@@ -747,7 +822,7 @@ window.FrEMD = class {
     }
 
     _alert(msg, delay) {
-        if (typeof(noty) !== "undefined") {
+        if (typeof (noty) !== "undefined") {
             noty({
                 text: msg,
                 type: 'success',
@@ -800,10 +875,10 @@ window.FrEMD = class {
         if (fCallBack) {
             await fCallBack();
         }
-        //console.log("all calls done", this.allData.page);
         var sHTML = this._inject(this.allHTML, data);
 
         var oContent = $('body');
+
         if (!this.isMobile()) {
             oContent.html(sHTML);
 
@@ -855,11 +930,34 @@ window.FrEMD = class {
             }
         }
 
+        if (typeof (ReactDOM) !== "undefined") {
+            if (typeof (MainComponent) !== "undefined") {
+                var e = document.getElementById('mainComponent');
+                if (!e) {
+                    e = document.createElement('div');
+                    e.setAttribute("id", "mainComponent");
+                    document.body.appendChild(e);
+                }
+                ReactDOM.render(React.createElement(MainComponent, null), e);
+            } else {
+                ReactDOM.render(React.createElement(FormComponent, null), document.getElementById('formComponent'));
+            }
+        }
+
         if (company.OnPageLoad) {
-            setTimeout(() => {
-                //alert("Calling OnPageLoad");
-                company.OnPageLoad(data);
-            }, 500);
+
+            //setTimeout(async () => {
+            if (window.DForm) {
+                window.DForm.init();
+                window.DForm.parse();
+            }
+            try {
+                await company.OnPageLoad(data);
+            } catch (ex) {
+                console.log("FrEMD.end.OnPageLoad", ex);
+            }
+            console.log("Page Loaded: " + page._code);
+            //}, 500);
         }
         this.endCalled = false;
     }
@@ -978,20 +1076,34 @@ window.FrEMD = class {
         });
     }
 
-    preCompile(page) {
-        if (typeof Babel === "undefined") return page;
+    async preCompile(page, location) {
+        if (typeof Babel === "undefined") return null;
 
-        if (typeof React !== "undefined") return $.when(window.sr.Get("templates" + this.m() + "/" + page._code + ".jsx" + this.randURL())).then(jsx => {
-            if (jsx === null || jsx === "") page;
-            var res = Babel.transform(jsx, {
-                presets: ['es2015', "react"]
-            });
-            return $.when(window.sr._("ContentManager.cmsSaveFileBody", null,
+        if (typeof React !== "undefined") {
+            let jsx = null;
+            try {
+                jsx = await $.get((location || "templates") + this.m() + "/" + (page._code || page) + ".jsx" + this.randURL());
+            } catch (ex) {}
+            if (jsx === null || jsx === "") {
+                return null;
+            }
+            var res = null;
+            try {
+                res = await Babel.transform(jsx, {
+                    presets: ['es2015', "react"]
+                });
+            } catch (ex) {
+                console.log("Babel", ex);
+                return null;
+            }
+
+            false && await window.sr._("ContentManager.cmsSaveFileBody", null,
                 window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) +
-                "/templates" + this.m() + "/" + page._code + ".js", res.code)).then(() => {
-                return page;
-            });
-        });
+                "/" + (location || "templates") + this.m() + "/" + (page._code || page) + ".js", res.code);
+
+            //page.Script = res.code;
+            return res.code;
+        }
     }
 
     async RenderPage(page, data, options) {
@@ -1019,25 +1131,13 @@ window.FrEMD = class {
             };
             this.allOptions = options;
 
-            await window.sr.runScript(page.Script);
+            await this.runScript(page.Script);
             if (!page.Script) {
                 let e = await this.end();
                 return e;
             }
         }
 
-        try {
-            let js = await $.ajax({
-                type: 'GET',
-                url: "blocks" + this.m() + "/main.js" + this.randURL(),
-                dataType: "text",
-            });
-            await this.runScript(js)();
-            console.log("Main script found.");
-        } catch (ex) {}
-        this.step();
-
-        //this.RenderPageCMS(page, data, options, (page, options) => {
         if (!CMS_ROOT) return fFail(page, options);
 
         let ret = null;
@@ -1053,8 +1153,7 @@ window.FrEMD = class {
 
             console.log("Page " + page._code + " found in CMS, serving...");
 
-            this.allHTML = (ret.Body ? ret.Body : this.contentHTML);
-            this.allHTML = this.headerHTML + this.allHTML + this.footerHTML;
+            this.allHTML = this.headerHTML + (this.contentHTML || ret.Body) + this.footerHTML;
             this.allData = {
                 settings: this.settings,
                 page: ret,
@@ -1063,7 +1162,8 @@ window.FrEMD = class {
             this.allOptions = options;
 
             this.endCalled = false;
-            page.Script = this.runScript(ret.Script);
+            page._body = page.Body = page.Body || page._body || ret.Body;
+            page.Script = await this.runScript(ret.Script);
         } else {
             console.log("Page " + page._code + " not found in CMS, looking in EMS");
             var eoPage = null;
@@ -1084,8 +1184,6 @@ window.FrEMD = class {
                 console.log("Page " + page._code + " not found in EMS, so going local");
             }
 
-            page = await this.preCompile(page);
-
             try {
                 let data = await $.ajax({
                     url: "templates" + this.m() + "/" + page._code + ".htm" + this.randURL()
@@ -1094,18 +1192,27 @@ window.FrEMD = class {
                 page.Body = data;
             } catch (ex) {
                 console.log("Page " + page._code + " has no html template");
-                page.Body = this.contentHTML || page._content || "<!--" + ("Page " + page._code + " does not exist") + "-->";
+                if (!page.Body && typeof (React) !== "undefined" && typeof (MainComponent) === "undefined") {
+                    page.Body = "<div id='formComponent'/>";
+                } else {
+                    page.Body = page._content || "<!--" + ("Page " + page._code + " does not exist") + "-->";
+                }
             }
 
             try {
-                let js = await $.ajax({
+                let js = await this.preCompile(page) || await $.ajax({
                     url: "templates" + this.m() + "/" + page._code + ".js" + this.randURL(),
                     dataType: "text",
                 });
-                page.Script = this.runScript(js);
+                if (js) {
+                    //console.log(js);
+                    page.Script = await this.runScript(js);
+                }
                 console.log("Page " + page._code + " script is retrieved");
                 //window.sr.runScript(js);
-            } catch (ex) {}
+            } catch (ex) {
+                console.log(ex);
+            }
 
             //console.log("GOT DATA");
             this.step();
@@ -1113,7 +1220,7 @@ window.FrEMD = class {
             // only cache pages that come from EMS
             if (page.toEntityObject) this.pages.push(page);
 
-            this.allHTML = this.headerHTML + page.Body + this.footerHTML;
+            this.allHTML = this.headerHTML + (this.contentHTML || page.Body || page._body) + this.footerHTML;
             this.allData = {
                 settings: this.settings,
                 page: page,
@@ -1121,19 +1228,29 @@ window.FrEMD = class {
             };
             this.allOptions = options;
         }
-        //console.log("THE END");
-        if (!this.endCalled && !page.Script) {
-            await this.end();
-        } else {
+
+        //console.log("page Body", page._body || page.Body);
+        if (typeof (page.Script) === "function" && typeof (page.Script.constructor) === "function") {
             try {
-                await new page.Script().main();
+                var obj = new page.Script();
+                if (obj && obj.main) obj.main();
+                console.log("Calling page.Scirpt.main()");
             } catch (ex) {
                 console.log(ex);
-                await page.Script();
             }
         }
 
-        if (typeof(ga) !== "undefined") {
+        if (!this.endCalled) {
+            await this.end();
+        } else {
+            try {
+                await page.Script();
+            } catch (_ex) {
+                //console.log(_ex);
+            }
+        }
+
+        if (typeof (ga) !== "undefined") {
             ga('send', {
                 hitType: 'pageview',
                 page: '/' + page._code + '.dynamic',
@@ -1143,12 +1260,14 @@ window.FrEMD = class {
         }
     }
 
-    runScript(js) {
-        if (js.indexOf("class {") >= 0) {
+    async runScript(js, bAsync) {
+        if (typeof (js) !== "string") return js;
+
+        if (js.indexOf('class ') >= 0 && !bAsync) {
             // a class definition, do not enclose it in a function
-            return sr.runScript(js);
+            return await sr.runScript(js);
         } else {
-            return sr.runScript("(async () => {" + js + "});");
+            return await sr.runScript("(async () => {" + js + "\n})();");
         }
     }
 };

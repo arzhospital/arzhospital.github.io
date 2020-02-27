@@ -13,6 +13,10 @@ window.DynaForm = class {
         this.height = window.innerHeight * 0.7;
     }
 
+    parse() {
+        $.parser.parse();
+    }
+
     init() {
         $.extend($.fn.datagrid.defaults.editors, {
             datetime: {
@@ -81,6 +85,27 @@ window.DynaForm = class {
                 },
                 resize: function(target, width) {
                     $(target)._outerWidth(width);
+                }
+            },
+            code: {
+                init: function(container, options) {
+                    var editor = ace.edit(target);
+                    editor.setTheme("ace/theme/monokai");
+                    editor.session.setMode("ace/mode/" + (options.language || "javascript"));
+                },
+                destroy: function(target) {
+                    editor.destroy();
+                    $editor = $(target);
+                    $editor.remove();
+                },
+                getValue: function(target) {
+                    return ace.edit(target).getValue();
+                },
+                setValue: function(target, value) {
+                    ace.edit(target).setValue(value);
+                },
+                resize: function(target, width) {
+                    //$(target)._outerWidth(width);
                 }
             }
         });
@@ -300,17 +325,17 @@ window.DynaForm = class {
         oElement.links[index].onClick(this.get());
     }
 
-    doClick(bIndex) {
+    async doClick(bIndex) {
         var button = this.buttons[bIndex];
 
-        if (!button.onclick) return;
+        if (!button || !button.onclick) return;
 
         this.busy(true);
         var o = this.get();
         var sMissing = "";
-        for (var i = 0; i < this.elements.length; i++) {
-            if (this.elements[i].required && !o[this.elements[i].name]) {
-                sMissing += "<li>" + (this.elements[i].label || this.elements[i].name) + "</li>";
+        for (const e of this.elements) {
+            if (e.required && !o[e.name]) {
+                sMissing += "<li>" + (e.label || e.name) + "</li>";
             }
         }
         if (sMissing) {
@@ -319,7 +344,7 @@ window.DynaForm = class {
             return;
         }
 
-        button.onclick(o);
+        await button.onclick(o);
     }
 
     busy(bBusy) {
@@ -602,6 +627,28 @@ window.DynaForm = class {
         return this.text(options);
     }
 
+    code(options) {
+        return `
+<style type="text/css" media="screen">
+    #editor { 
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+</style>
+<div id="cod${options.name}" style="width:${this.cWidth(options)}px">
+${options.value}
+<div>
+<script>
+    var editor = ace.edit("cod${options.name}");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/javascript");
+</script>
+        `;
+    }
+
     datetime(options) {
         return '<input id="dtp' + options.name + '" class="easyui-datetimebox" required="' + (options.required ? 'true' : 'false') + '" value="' + (options.value || "") + '" style="width:' + this.cWidth(options) + 'px">';
     }
@@ -656,7 +703,7 @@ window.DynaForm = class {
     }
 
     text(options) {
-        return '<input id="txt' + options.name + '" class="easyui-textbox" multiline="' + (options.simple ? 'false' : 'true') + '" style="white-space: pre-wrap; width: ' + this.cWidth(options) + 'px;height: ' + this.cHeight(options) + 'px" required="' + (options.required ? 'true' : 'false') + '" value="' + (options.value || "") + '">';
+        return '<input id="txt' + options.name + '" class="easyui-' + (options.editor || "textbox") + '" multiline="' + (options.simple ? 'false' : 'true') + '" style="white-space: pre-wrap; width: ' + this.cWidth(options) + 'px;height: ' + this.cHeight(options) + 'px" required="' + (options.required ? 'true' : 'false') + '" value="' + (options.value || "") + '">';
     }
 
     password(options) {
@@ -905,6 +952,7 @@ window.DynaForm = class {
                 });
                 dg.datagrid('loadData', state.data);
             }
+
         }
 
         if (obj) {

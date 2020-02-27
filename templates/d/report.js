@@ -1,6 +1,8 @@
 window.ShowYear = async (section, year) => {
     let s = new ReportSection(year, company.Code);
 
+    $("#chtResults-" + year).html("Fetching " + section + " for " + year + "...");
+
     zingchart.render({
         id: "chtResults-" + year,
         data: s._asZingOptions(s._data(await s._run(window.gviews.find(g => g.Name == section), ['taken']), 'bar', section)),
@@ -8,9 +10,10 @@ window.ShowYear = async (section, year) => {
         width: '100%'
     });
 
+    $("#chtResults-" + year).html("");
     zingchart.exec("chtResults-" + year, "toggledimension");
 
-    typeof(ga) !== "undefined" ? ga('send', {
+    typeof (ga) !== "undefined" ? ga('send', {
         hitType: 'event',
         eventCategory: 'CorporateMeasures',
         eventAction: 'ReportSection',
@@ -49,6 +52,4 @@ for (var i = 0; i < gviews.length; i++) {
 }
 
 await window._FrEMD.end();
-
-$("#tab-container").easytabs();
-await ShowYear(page.data._section, 2014);
+ShowYear(page.data._section, 2014);
