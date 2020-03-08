@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2020, 2-1, 27, 9, 42, 55);
+var server_time = new Date(2020, 3-1, 8, 22, 26, 1);
 
-var execution_time = 0.064942;
+var execution_time = 0.110835;
 
 ret = new Object();
 ret.ToString = "Outpatients by Coverage";

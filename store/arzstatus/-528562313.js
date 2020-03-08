@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2020, 2-1, 27, 9, 40, 24);
+var server_time = new Date(2020, 3-1, 8, 21, 26, 51);
 
-var execution_time = 0.151375;
+var execution_time = 0.137684;
 
 ret = new Object();
 ret.ToString = "Inpatients by Department";

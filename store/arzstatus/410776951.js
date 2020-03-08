@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewAggregation";
 
-var server_time = new Date(2020, 2-1, 27, 9, 32, 58);
+var server_time = new Date(2020, 3-1, 8, 20, 9, 52);
 
-var execution_time = 4.766072;
+var execution_time = 4.556338;
 
 
 

@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2020, 2-1, 27, 9, 43, 44);
+var server_time = new Date(2020, 3-1, 8, 22, 41, 6);
 
-var execution_time = 0.112651;
+var execution_time = 0.096386;
 
 ret = new Object();
 ret.ToString = "Lab Exams by Patient Type";
