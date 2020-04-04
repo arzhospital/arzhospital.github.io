@@ -27,11 +27,15 @@ function ServiceRouter() {
 			this.srURL = this.$_REQUEST('sr');
 			if (!this.srURL) {
 				if (
-					document.URL.indexOf(':10080/nammour.com/') > 0 ||
-					document.URL.indexOf('192.168.33.1/nammour.com/') > 0
+					document.URL &&
+					(document.URL.indexOf(':10080/nammour.com/') > 0 ||
+						document.URL.indexOf('192.168.33.1/nammour.com/') > 0)
 				) {
 					this.srURL = '../cms/ServiceRouterProxy.php';
-				} else if (document.URL.indexOf(':8888/nammour.com/') > 0) {
+				} else if (
+					document.URL &&
+					document.URL.indexOf(':8888/nammour.com/') > 0
+				) {
 					this.srURL = '../../method/ServiceRouter.ashx';
 				} else {
 					this.srURL = '/method/ServiceRouter.ashx';
@@ -82,10 +86,18 @@ function ServiceRouter() {
 		bShowErrors,
 		preProcessHTML
 	) {
-		if (!bDebug && document.URL.indexOf('debug=true') > 0) bDebug = true;
+		if (typeof document === 'undefined') {
+			document = {};
+			window = {};
+		}
+		if (!bDebug && document.URL && document.URL.indexOf('debug=true') > 0)
+			bDebug = true;
 
 		this.bLocal =
-			!this.Store && !(document.URL.indexOf('local=false') >= 0);
+			!this.Store &&
+			document.URL &&
+			!(document.URL.indexOf('local=false') >= 0);
+		if (!document.URL) this.bLocal = true;
 
 		this.bCache = this.$_REQUEST('cache');
 		this.bCacheResult = this.$_REQUEST('cacheResult');
@@ -137,7 +149,9 @@ function ServiceRouter() {
 	};
 
 	this.$_REQUEST = function(key, url) {
-		url = url || window.location.href;
+		url = url || (window.location && window.location.href);
+		if (!url) return null;
+
 		var ret = null;
 		try {
 			ret = new URL(url).searchParams.get(key);
@@ -177,7 +191,10 @@ function ServiceRouter() {
 					})()
 				].values.push(ar[i]);
 			} catch {
-				keys.push({ key: key, values: [ar[i]] });
+				keys.push({
+					key: key,
+					values: [ar[i]],
+				});
 			}
 		}
 		return keys;
@@ -346,6 +363,7 @@ function ServiceRouter() {
 	};
 
 	this.resetCursor = function() {
+		if (!document.body) return;
 		document.body.style.cursor = 'arrow';
 		document.body.style.cursor = '';
 	};
@@ -1058,7 +1076,9 @@ function ServiceRouter() {
 						dataType: 'jsonp',
 						processResult: false,
 					});
-					return { TextResponse: res };
+					return {
+						TextResponse: res,
+					};
 				} catch (ex) {
 					console.log('ERRORS:', ex);
 					return null;
@@ -1066,7 +1086,9 @@ function ServiceRouter() {
 			} else if (this.bCacheResult == 'local') {
 				var srCache = localStorage.getItem('srCache');
 				if (srCache == null) {
-					srCache = { Requests: {} };
+					srCache = {
+						Requests: {},
+					};
 				} else {
 					srCache = JSON.parse(srCache);
 				}
@@ -1110,7 +1132,7 @@ function ServiceRouter() {
 		(
 			this.fLoadingStart ||
 			function() {
-				document.body.style.cursor = 'wait';
+				if (document.body) document.body.style.cursor = 'wait';
 			}
 		)();
 
@@ -1152,7 +1174,9 @@ function ServiceRouter() {
 				CallBack: callBack,
 				Company:
 					typeof company !== 'undefined' && company
-						? { Code: company.Code }
+						? {
+								Code: company.Code,
+						  }
 						: null,
 				TextResponse: null,
 				hash: hCode,

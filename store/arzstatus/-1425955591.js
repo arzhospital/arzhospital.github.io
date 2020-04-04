@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2020, 3-1, 8, 21, 52, 21);
+var server_time = new Date(2020, 4-1, 4, 16, 51, 23);
 
-var execution_time = 0.10284;
+var execution_time = 0.122245;
 
 ret = new Object();
 ret.ToString = "Inpatients by Re-admission";
@@ -47,17 +47,17 @@ ret.Category.Organization.DataMaps = new Array();
 ret.Category.Organization.Aggregations = new Array();
 ret.Category.Organization.Groups = new Array();
 ret.Category.GroupViews = new Array();
-ret.Userid = 1;
+ret.Userid = 5;
 ret.User = new Object();
-ret.User.ToString = "Fadi";
-ret.User._ToString = "Fadi";
+ret.User.ToString = "Fawzi";
+ret.User._ToString = "Fawzi";
 ret.User.Active = true;
-ret.User.Admin = true;
-ret.User.FirstName = "Fadi";
-ret.User.LastName = "Nammour";
+ret.User.Admin = false;
+ret.User.FirstName = "Fawzi";
+ret.User.LastName = "Moutran";
 ret.User.Password = "";
-ret.User.Username = "arzadmin";
-ret.User.Id = 1;
+ret.User.Username = "arz";
+ret.User.Id = 5;
 ret.User.EnquiryExecutions = new Array();
 ret.User.GroupViews = new Array();
 ret.User.OwnedEnquiries = new Array();
@@ -110,7 +110,7 @@ ret.DashboardEntries[0].GroupView.Remark = "";
 ret.DashboardEntries[0].GroupView.Id = 13;
 ret.DashboardEntries[0].GroupView.Categoryid = 2;
 ret.DashboardEntries[0].GroupView.Category = "";
-ret.DashboardEntries[0].GroupView.Userid = 1;
+ret.DashboardEntries[0].GroupView.Userid = 5;
 ret.DashboardEntries[0].GroupView.User = "";
 ret.DashboardEntries[0].GroupView.DataMapid = 0;
 ret.DashboardEntries[0].GroupView.DataMap = "";

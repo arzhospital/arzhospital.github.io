@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2020, 3-1, 8, 21, 14, 23);
+var server_time = new Date(2020, 4-1, 4, 16, 13, 59);
 
-var execution_time = 0.074589;
+var execution_time = 0.106075;
 
 ret = new Object();
 ret.ToString = "Outpatients by Attending";
@@ -47,17 +47,17 @@ ret.Category.Organization.DataMaps = new Array();
 ret.Category.Organization.Aggregations = new Array();
 ret.Category.Organization.Groups = new Array();
 ret.Category.GroupViews = new Array();
-ret.Userid = 1;
+ret.Userid = 5;
 ret.User = new Object();
-ret.User.ToString = "Fadi";
-ret.User._ToString = "Fadi";
+ret.User.ToString = "Fawzi";
+ret.User._ToString = "Fawzi";
 ret.User.Active = true;
-ret.User.Admin = true;
-ret.User.FirstName = "Fadi";
-ret.User.LastName = "Nammour";
+ret.User.Admin = false;
+ret.User.FirstName = "Fawzi";
+ret.User.LastName = "Moutran";
 ret.User.Password = "";
-ret.User.Username = "arzadmin";
-ret.User.Id = 1;
+ret.User.Username = "arz";
+ret.User.Id = 5;
 ret.User.EnquiryExecutions = new Array();
 ret.User.GroupViews = new Array();
 ret.User.OwnedEnquiries = new Array();

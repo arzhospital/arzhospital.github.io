@@ -28,8 +28,6 @@ window.FrEMD = class {
 		this._calls = [];
 
 		this.endCalled = false;
-
-		this._defineLinks();
 	}
 
 	validURL(str) {
@@ -51,8 +49,7 @@ window.FrEMD = class {
 		}
 
 		try {
-			await import(module);
-			return;
+			return await import(module);
 		} catch (ex) {}
 
 		var js = null;
@@ -75,18 +72,16 @@ window.FrEMD = class {
 	}
 
 	async require(libName) {
-		var _hrefs = $.grep(this.hrefs, l => l.lib === libName && this._include(l));
-
-		var calls = [];
-		for await (const n of _hrefs) {
+		for await (const n of $.grep(this.hrefs, l => l.lib === libName && this._include(l))) {
 			for (const c of Array.isArray(n.css) ? n.css : [n.css]) {
 				this._css(c);
 				//calls.push(this._css(c));
 			}
+			var modules = [];
 			for await (const s of Array.isArray(n.src) ? n.src : [n.src]) {
 				try {
 					if (n.module) {
-						await import(s);
+						modules.push(await import(s));
 					} else {
 						await $.ajax({
 							url: s,
@@ -96,11 +91,19 @@ window.FrEMD = class {
 					}
 				} catch (ex) {}
 			}
+			if (n.load) {
+				try {
+					n.load(modules);
+				} catch (ex) {}
+			}
 		}
 		console.log("require[" + libName + "]");
 	}
 
 	async preInit() {
+		window.bLocal = location.href.indexOf('/nammour.com') > -1;
+		this.hrefs = await this.import("../../../ems/script/modules");
+
 		window._FrEMD = this;
 		this.fromHash();
 
@@ -159,6 +162,19 @@ window.FrEMD = class {
 			});
 			if (js) {
 				js = await this.runScript(js);
+
+				if (typeof (js) === "function" && typeof (js.constructor) === "function") {
+					try {
+						var obj = new js();
+						if (obj && obj.main) {
+							console.log("Calling " + block + ".main()");
+							await obj.main();
+						}
+					} catch (ex) {
+						console.log(ex);
+					}
+				}
+
 			}
 		} catch (ex) {
 			console.log(ex);
@@ -215,14 +231,20 @@ window.FrEMD = class {
 		if (frames[0].reRender) {
 			frames[0].reRender();
 		}
+
+		await this._bindKO();
+	}
+
+	async _bindKO() {
 		if (typeof (ko) !== "undefined") {
-			//setTimeout(() => {
-			ko.cleanNode(window.frames[0].document.body);
-			ko.applyBindings(window, window.frames[0].document.body);
-			window.title = window.frames[0].document.title; //??
-			window.document.body.style.visibility = 'visible';
-			//}, 0);
+			setTimeout(() => {
+				ko.cleanNode(window.frames[0].document.body);
+				ko.applyBindings(window, window.frames[0].document.body);
+				window.title = window.frames[0].document.title; //??
+				window.document.body.style.visibility = 'visible';
+			}, 300);
 		}
+
 	}
 
 	async init() {
@@ -231,7 +253,7 @@ window.FrEMD = class {
 	}
 
 	async _loadEntityClasses() {
-		var EntityClassJS = "script/EntityClass.js";
+		var EntityClassJS = "script/EntityClass.jst";
 		if (typeof window.company !== 'undefined' && window.company && !window.company.Store) {
 			EntityClassJS = "/nammour.com/ems/" + EntityClassJS;
 		}
@@ -324,362 +346,6 @@ window.FrEMD = class {
 			});
 
 			pdf.save(filename);
-		});
-	}
-
-	_defineLinks() {
-		// later on we will do this through ems by storing libs in as an entity and loading linked entities
-		this.hrefs = [];
-		this.hrefs.push({
-			lib: "Company",
-			src: "script/company.js"
-		});
-
-		var bLocal = location.href.indexOf('/nammour.com') > -1;
-		this.hrefs.push({
-			lib: "ServiceRouter",
-			src: (bLocal ? "/nammour.com/cms/" : "") + "script/ServiceRouter.js",
-		});
-		this.hrefs.push({
-			lib: "FormHelper",
-			src: (bLocal ? "/nammour.com/ems/" : "") + "script/FormHelper.js",
-		});
-		this.hrefs.push({
-			lib: "DynaForm",
-			src: (bLocal ? "/nammour.com/ems/" : "") + "script/DynaForm.js",
-			css: "http://voky.com.ua/showcase/sky-forms/examples/css/sky-forms.css",
-		});
-		this.hrefs.push({
-			lib: "EasyUI",
-			src: ["https://www.jeasyui.com/easyui/jquery.easyui.min.js" /*, "https://www.jeasyui.com/easyui/jquery.easyui.mobile.js"*/ ],
-			css: ["https://www.jeasyui.com/easyui/themes/icon.css",
-				"https://www.jeasyui.com/easyui/themes/default/easyui.css"
-			],
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "SemanticUI",
-			src: "https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js",
-			css: "https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css",
-		});
-		this.hrefs.push({
-			lib: "MaterialUI",
-			src: "https://unpkg.com/@material-ui/core@latest/umd/material-ui.development.js",
-			module: true,
-		});
-		this.hrefs.push({
-			lib: "knockout",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js",
-		});
-		this.hrefs.push({
-			lib: "js2PDF",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js",
-		});
-		this.hrefs.push({
-			lib: "html2canvas",
-			src: "https://html2canvas.hertzen.com/dist/html2canvas.min.js",
-		});
-		this.hrefs.push({
-			lib: "SweetAlert",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js",
-			css: "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"
-		});
-		this.hrefs.push({
-			lib: "PouchDB",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/pouchdb/7.1.1/pouchdb.min.js",
-		});
-		this.hrefs.push({
-			lib: "JSZip",
-			src: ["https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"],
-		});
-		this.hrefs.push({
-			lib: "BabelJS",
-			src: "https://unpkg.com/@babel/standalone/babel.min.js",
-		});
-		this.hrefs.push({
-			lib: "DataTables",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js",
-			css: "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/jquery.dataTables.min.css",
-		});
-		this.hrefs.push({
-			lib: "BT Tables",
-			src: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/bootstrap-table.min.js",
-			css: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/bootstrap-table.min.css"
-		});
-		this.hrefs.push({
-			lib: "Ionic",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/ionic/1.3.2/js/ionic.min.js",
-			css: "https://cdnjs.cloudflare.com/ajax/libs/ionic/1.3.2/css/ionic.min.css"
-		});
-		this.hrefs.push({
-			lib: "uuid",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js",
-		});
-		this.hrefs.push({
-			lib: "WebIX",
-			src: "http://cdn.webix.com/edge/webix.js",
-			css: "http://cdn.webix.com/edge/webix.css"
-		});
-		this.hrefs.push({
-			lib: "ThreeJS",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/three.js/r74/three.js",
-		});
-		this.hrefs.push({
-			lib: "Kendo UI",
-			src: "https://kendo.cdn.telerik.com/2016.1.112/js/kendo.all.min.js",
-			css: ["https://kendo.cdn.telerik.com/2016.1.112/styles/kendo.common.min.css",
-				"http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.material.min.css"
-			]
-		});
-		this.hrefs.push({
-			lib: "Semantic UI",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js",
-			css: "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-		});
-		this.hrefs.push({
-			lib: "LZ-String",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js",
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "JQuery Form",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js",
-		});
-		this.hrefs.push({
-			lib: "Sencha",
-			src: 'https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/ext-all.js',
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "XLSX",
-			src: [
-				"https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.12.3/xlsx.full.min.js",
-			],
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "ZingChart",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/zingchart/2.8.5/zingchart.min.js",
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "PlantUML",
-			src: "https://cdn.rawgit.com/jmnote/plantuml-encoder/d133f316/dist/plantuml-encoder.min.js",
-		});
-		this.hrefs.push({
-			lib: "DynaTable",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.min.js",
-			css: "https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.min.css",
-		});
-		this.hrefs.push({
-			lib: "JQuery Validate",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js",
-		});
-		this.hrefs.push({
-			lib: "AngularJS",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js",
-		});
-		this.hrefs.push({
-			lib: "Underscore",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js",
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "AccordionMenu",
-			src: "http://www.jqueryscript.net/demo/Multilevel-Accordion-Menu-Plugin-For-jQuery/js/script.js",
-			css: "http://www.jqueryscript.net/demo/Multilevel-Accordion-Menu-Plugin-For-jQuery/css/style.css"
-		});
-		this.hrefs.push({
-			lib: "JSGrid",
-			src: "http://js-grid.com/js/jsgrid.min.js",
-			css: "http://js-grid.com/css/jsgrid.min.css"
-		});
-		this.hrefs.push({
-			lib: "FancyForm",
-			src: "http://fancyjs.com/fancy/build/fancyform-min.js",
-			css: "http://fancyjs.com/fancy/build/fancyform-min.css"
-		});
-		this.hrefs.push({
-			lib: 'nonoScroller',
-			src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery.nanoscroller/0.8.7/javascripts/jquery.nanoscroller.min.js',
-			css: 'https://cdnjs.cloudflare.com/ajax/libs/jquery.nanoscroller/0.8.7/css/nanoscroller.min.css',
-		});
-		this.hrefs.push({
-			lib: "VueJS",
-			src: "https://cdn.jsdelivr.net/npm/vue/dist/vue.js",
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "Moment",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js",
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "HTML2Canvas",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"
-		});
-		this.hrefs.push({
-			lib: "JQuery Mobile",
-			type: "mobile",
-			src: "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js",
-			css: "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"
-		});
-		this.hrefs.push({
-			lib: "Juxtapose",
-			src: "https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js",
-			css: "https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css"
-		});
-		this.hrefs.push({
-			lib: "TwentyTwenty",
-			src: ["https://cdnjs.cloudflare.com/ajax/libs/mhayes-twentytwenty/1.0.0/js/jquery.event.move.min.js", "https://cdnjs.cloudflare.com/ajax/libs/mhayes-twentytwenty/1.0.0/js/jquery.twentytwenty.min.js"],
-			css: ["https://cdnjs.cloudflare.com/ajax/libs/mhayes-twentytwenty/1.0.0/css/twentytwenty.min.css", "https://cdnjs.cloudflare.com/ajax/libs/mhayes-twentytwenty/1.0.0/css/foundation.min.css"],
-		});
-		this.hrefs.push({
-			lib: "MD5",
-			primary: true,
-			src: "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core.js",
-		});
-		this.hrefs.push({
-			lib: "Pako",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.3/pako.min.js"
-		});
-		this.hrefs.push({
-			lib: "PapaCSV",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.3.7/papaparse.min.js",
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "JQ Transform",
-			src: "https://cdn.jsdelivr.net/jquery.jqtransform/1.1/jquery.jqtransform.js",
-			css: "https://cdn.jsdelivr.net/jquery.jqtransform/1.1/jqtransform.css"
-		});
-		this.hrefs.push({
-			lib: "Boostrap Select",
-			src: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js",
-			css: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/css/bootstrap-select.min.css"
-		});
-		this.hrefs.push({
-			lib: "Prettier",
-			src: ["https://prettier.io/lib/standalone.js", "https://prettier.io/lib/parser-babylon.js"],
-		});
-		this.hrefs.push({
-			lib: "ACEEditor",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/ace.js"
-		});
-		this.hrefs.push({
-			lib: "Beautifier",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.2/beautifier.min.js",
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "prettyCheckable",
-			src: "//cdn.jsdelivr.net/jquery.prettycheckable/1.2/prettyCheckable.js",
-			css: "//cdn.jsdelivr.net/jquery.prettycheckable/1.2/prettyCheckable.css"
-		});
-		this.hrefs.push({
-			lib: "JQuery UI",
-			type: "desktop",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js",
-			css: "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
-		});
-		this.hrefs.push({
-			lib: "Dojo",
-			src: "https://ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js",
-		});
-		this.hrefs.push({
-			lib: "ReactJS",
-			src: ["https://unpkg.com/react@16/umd/react.development.js",
-				"https://unpkg.com/react-dom@16/umd/react-dom.development.js",
-			],
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "EasyUI Mobile",
-			src: "http://www.jeasyui.com/easyui/jquery.easyui.mobile.js",
-			css: "http://www.jeasyui.com/easyui/themes/mobile.css",
-		});
-		this.hrefs.push({
-			lib: "UIkit",
-			type: "desktop",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.2/js/uikit.min.js",
-			css: "https://cdnjs.cloudflare.com/ajax/libs/uikit/2.24.2/css/uikit.min.css"
-		});
-		this.hrefs.push({
-			lib: "printThis",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/printThis/1.12.3/printThis.min.js",
-		});
-		this.hrefs.push({
-			lib: "Flowchart",
-			type: "desktop",
-			src: ["https://cdnjs.cloudflare.com/ajax/libs/svg.js/1.0.1/svg.min.js",
-				"http://www.jqueryscript.net/demo/Simple-SVG-Flow-Chart-Plugin-with-jQuery-flowSVG/jquery.scrollTo.min.js", "http://www.jqueryscript.net/demo/Simple-SVG-Flow-Chart-Plugin-with-jQuery-flowSVG/dist/flowsvg.min.js"
-			],
-		});
-		this.hrefs.push({
-			lib: "UIkit DatePicker",
-			type: "desktop",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/uikit/2.22.0/js/components/datepicker.min.js",
-			css: "https://cdnjs.cloudflare.com/ajax/libs/uikit/2.22.0/css/components/datepicker.css"
-		});
-		this.hrefs.push({
-			lib: "UIkit Password",
-			type: "desktop",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/uikit/2.22.0/js/components/form-password.min.js",
-			css: "https://cdnjs.cloudflare.com/ajax/libs/uikit/2.22.0/css/components/form-password.min.css"
-		});
-		this.hrefs.push({
-			lib: "Charts",
-			type: "desktop",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js",
-			//src: "http://canvasjs.com/assets/script/canvasjs.min.js",
-		});
-		this.hrefs.push({
-			lib: "Filters",
-			src: "script/filters.js"
-		});
-		this.hrefs.push({
-			lib: "ACE",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.7/ace.js"
-		});
-		this.hrefs.push({
-			lib: "doT",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/dot/1.0.3/doT.min.js"
-		});
-		this.hrefs.push({
-			lib: "Handlebars",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"
-		});
-		this.hrefs.push({
-			lib: "EJS",
-			src: "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/embeddedjavascript/ejs_production.js",
-		});
-		this.hrefs.push({
-			lib: "XML2JSON",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/x2js/1.2.0/xml2json.min.js",
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "JQuery NivoSlider",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/jquery-nivoslider/3.2/jquery.nivo.slider.min.js"
-		});
-		this.hrefs.push({
-			lib: "NOTY",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.8/packaged/jquery.noty.packaged.min.js",
-			css: "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css",
-			cache: true,
-		});
-		this.hrefs.push({
-			lib: "JQuery Easing",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"
-		});
-		this.hrefs.push({
-			lib: "jsPDF",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"
-		});
-		this.hrefs.push({
-			lib: "Tabulator",
-			src: "https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.3/js/tabulator.min.js",
-			css: "https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.3/css/tabulator.min.css"
 		});
 	}
 
@@ -847,6 +513,8 @@ window.FrEMD = class {
 	}
 
 	_inject(html, data) {
+		if (!html) return html;
+
 		if (typeof EJS !== 'undefined') {
 			return new EJS({
 				text: html
@@ -870,15 +538,15 @@ window.FrEMD = class {
 
 		if (!data) data = window.page.data || {};
 
-		data.page = this.allData.page;
-		data.pages = this.allData.pages;
+		//data.pages = this.allData.pages;
+		//data.page = this.allData.page;
 
 		await this.doCalls();
 		if (fCallBack) {
 			await fCallBack();
 		}
 
-		//console.log(this.allHTML, data);
+		//console.log("end() with data", data);
 		var sHTML = this._inject(this.allHTML, data);
 
 		var oContent = $('body');
@@ -1117,9 +785,6 @@ window.FrEMD = class {
 			}
 		}
 
-		page.data = data;
-
-		window.page = page;
 		if (!window.sr.bLocal && (page.Body || page.toEntityObject)) {
 			console.log("Page " + page._code + " already loaded, serving...");
 			// found the page and it is an object
@@ -1142,7 +807,6 @@ window.FrEMD = class {
 			// store to avoid redundant loading
 			console.log("Page " + page._code + " found in CMS, serving...");
 			page = ret;
-			//this.endCalled = false;
 		} else {
 			console.log("Page " + page._code + " not found in CMS, looking in EMS");
 			var eoPage = null;
@@ -1164,11 +828,11 @@ window.FrEMD = class {
 			}
 
 			try {
-				let data = await $.ajax({
+				let html = await $.ajax({
 					url: "templates" + this.m() + "/" + page._code + ".htm" + this.randURL()
 				});
 				console.log("Page " + page._code + " html template found");
-				page.Body = data;
+				page.Body = html;
 			} catch (ex) {
 				console.log("Page " + page._code + " has no html template");
 				if (!page.Body && typeof (React) !== "undefined" && typeof (MainComponent) === "undefined") {
@@ -1188,17 +852,16 @@ window.FrEMD = class {
 					page.Script = js;
 				}
 				console.log("Page " + page._code + " script is retrieved");
-				//window.sr.runScript(js);
 			} catch (ex) {
 				console.log(ex);
 			}
 
-			//console.log("GOT DATA");
 			this.step();
 
 			// only cache pages that come from EMS
 			if (page.toEntityObject) this.pages.push(page);
 		}
+		page.data = data;
 		page.Script = await this.runScript(page.Script);
 
 		//console.log("page Body", page._body || page.Body);
@@ -1214,14 +877,6 @@ window.FrEMD = class {
 			}
 		}
 
-		if (typeof (ga) !== "undefined") {
-			ga('send', {
-				hitType: 'pageview',
-				page: '/' + page._code + '.dynamic',
-				title: page._title
-			});
-			console.log("Sent GA hit for page: " + (page._code || page.Page || page));
-		}
 		return page;
 	}
 
@@ -1229,6 +884,14 @@ window.FrEMD = class {
 		var _page = await this._render(page, data, options);
 		if (!_page) return null;
 
+		if (typeof (ga) !== "undefined") {
+			ga('send', {
+				hitType: 'pageview',
+				page: '/' + _page._code + '.dynamic',
+				title: _page._title
+			});
+			console.log("Sent GA hit for page: " + (_page._code || _page.Page || _page));
+		}
 		window.page = _page;
 
 		this.allHTML = this.headerHTML + (this.contentHTML || _page.Body || _page._body) + this.footerHTML;
@@ -1240,17 +903,21 @@ window.FrEMD = class {
 		this.allOptions = options;
 
 		this.endCalled = false;
-		await this.end();
+		await this.end(null, window.page.data || data);
 	}
 
 	async runScript(js, bAsync) {
 		if (typeof (js) !== "string") return js;
 
-		if (js.indexOf('class ') >= 0 && !bAsync) {
-			// a class definition, do not enclose it in a function
-			return await sr.runScript(js);
+		if (typeof (sr) !== "undefined") {
+			if (js.indexOf('class ') >= 0 && !bAsync) {
+				// a class definition, do not enclose it in a function
+				return await sr.runScript(js);
+			} else {
+				return await sr.runScript("(async () => {" + js + "\n})();");
+			}
 		} else {
-			return await sr.runScript("(async () => {" + js + "\n})();");
+			return eval(js);
 		}
 	}
 };
