@@ -102,7 +102,7 @@ window.FrEMD = class {
 
 	async preInit() {
 		window.bLocal = location.href.indexOf('/nammour.com') > -1;
-		this.hrefs = await this.import("../../../ems/script/modules");
+		this.hrefs = await this.import((window.bLocal ? "../../../ems/" : "") + "script/modules");
 
 		window._FrEMD = this;
 		this.fromHash();
