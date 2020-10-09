@@ -40,6 +40,35 @@ window.FrEMD = class {
 		return !!pattern.test(str);
 	}
 
+	_attr(ea) {
+		try {
+			return $.grep(Object.keys(ea), k => !k.indexOf("Is")).find(k => ea[k]).replace('Is', '');
+		} catch (ex) {
+			return null;
+		}
+	}
+
+	_sqlType(ea) {
+		switch (this._attr(ea)) {
+		case "String":
+			return "VARCHAR(255)";
+		case "Text":
+			return "VARCHAR(4000)";
+		case "Bool":
+			return "BIT";
+		case "Date":
+			return "DATETIME";
+		case "Int":
+			return "INTEGER";
+		case "Long":
+			return "BIGINT";
+		case null:
+			return "BIGINT";
+		default:
+			return this._attr(ea) + "(40)";
+		}
+	}
+
 	async import(module, bAsync) {
 		if (Array.isArray(module)) {
 			for (var m of module) {
@@ -71,8 +100,24 @@ window.FrEMD = class {
 		return await this.runScript(js, bAsync);
 	}
 
+	_toJS(o) {
+		let json = JSON.stringify(o, (key, value) => {
+			// if we get a function, give us the code for that function  
+			if (typeof value === 'function') {
+				return value.toString();
+			}
+			return value;
+		});
+		return `JSON.parse((json => typeof(atob)==="undefined"?Buffer.from(json, "base64").toString():atob(json))("${btoa(unescape(encodeURIComponent(json)))}"), (key, value) => {if (typeof value === "string" && (value.indexOf("function ") === 0 || value.indexOf("=>") > 0)) {return eval("(" + value + ")");}return value;})`;
+	}
+
 	async require(libName) {
 		for await (const n of $.grep(this.hrefs, l => l.lib === libName && this._include(l))) {
+			n.requires = n.requires || [];
+			for await (const r of n.requires) {
+				await this.require(r);
+			}
+
 			for (const c of Array.isArray(n.css) ? n.css : [n.css]) {
 				this._css(c);
 				//calls.push(this._css(c));
@@ -80,7 +125,11 @@ window.FrEMD = class {
 			var modules = [];
 			for await (const s of Array.isArray(n.src) ? n.src : [n.src]) {
 				try {
-					if (n.module) {
+					if (s.Name) {
+						// stored script
+						let _sc = await sr._("ContentManager.cmsStoredScriptFind", null, s);
+						await sr.runScript(_sc.Script);
+					} else if (n.module) {
 						modules.push(await import(s));
 					} else {
 						await $.ajax({
@@ -107,6 +156,14 @@ window.FrEMD = class {
 		window._FrEMD = this;
 		this.fromHash();
 
+		$(window).on('hashchange', () => {
+			this.fromHash();
+
+			if (this.hash.pageid) this.RenderPage({
+				_code: this.hash.pageid
+			});
+		});
+
 		await this.require("Company");
 		await this.require("ServiceRouter");
 		if (company.OnBeforeRequire) await company.OnBeforeRequire();
@@ -117,6 +174,24 @@ window.FrEMD = class {
 		}
 		await this._loadEntityClasses();
 		console.log("Done Loading");
+	}
+
+	excelToJSON(data, start, count) {
+		if (typeof (XLSX) === "undefined") return [];
+
+		try {
+			var workbook = XLSX.read(data, {
+				type: 'binary',
+				sheetRows: 0 /*start + "-" + (start + count)*/
+			});
+			//var range = XLSX.utils.decode_range(workbook.Sheets[workbook.SheetNames[0]]['!ref']);
+			var sheet = workbook.Sheets[workbook.SheetNames[0]];
+			return XLSX.utils.sheet_to_json(sheet);
+		} catch (e) {
+			//throw e;
+			console.log("ERROR:", e);
+			return [];
+		}
 	}
 
 	async downloadSRCache(code, filename) {
@@ -220,6 +295,8 @@ window.FrEMD = class {
 	}
 
 	async initDOM() {
+		window._FrEMD = this;
+
 		window.document.body.style.visibility = 'hidden';
 		await this.preInit();
 		try {
@@ -237,6 +314,25 @@ window.FrEMD = class {
 
 	async _bindKO() {
 		if (typeof (ko) !== "undefined") {
+			this.fromHash();
+			if (!this.hash.noBinding && company.Bindings) {
+				let arBindings = await company.Bindings();
+				sr.groupBy(arBindings, "_path").forEach(pb => {
+					try {
+						let e = window.frames[0].document.evaluate(pb.key, window.frames[0].document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+						let d_bind = [];
+						pb.values.forEach(b => {
+							d_bind.push(b.attribute() + ": " + b.code());
+						});
+						$(e).attr("data-bind", d_bind.join(', '));
+						//console.log(pb.key, e);
+					} catch (ex) {
+						console.log(pb.key, ex);
+					}
+				});
+			}
+
 			setTimeout(() => {
 				ko.cleanNode(window.frames[0].document.body);
 				ko.applyBindings(window, window.frames[0].document.body);
@@ -244,7 +340,6 @@ window.FrEMD = class {
 				window.document.body.style.visibility = 'visible';
 			}, 300);
 		}
-
 	}
 
 	async init() {
@@ -252,40 +347,156 @@ window.FrEMD = class {
 		return await this._loadContent();
 	}
 
-	async _loadEntityClasses() {
-		var EntityClassJS = "script/EntityClass.jst";
-		if (typeof window.company !== 'undefined' && window.company && !window.company.Store) {
-			EntityClassJS = "/nammour.com/ems/" + EntityClassJS;
-		}
-		let eas = await window.sr._("EnterpriseManager.emsEntityAttributeFindall", null, {
-			EntityClass: {
-				Company: {
-					Code: company.Code
+	_uuid() {
+		return typeof (uuid) !== "undefined" ? uuid() : Math.floor(Math.random(new Date()) * Math.pow(10, 10));
+	}
+
+	async _loadEntityClasses(ec, scope) {
+		scope = scope || "window";
+
+		let eas = [];
+		if (ec && ec.library && !Array.isArray(ec)) {
+			let lcs = await sr._("ContentManager.cmsGenerateLayerClass", null, ec.library);
+
+			$.each(lcs, (_, c) => $.each(c.LayerAttributes, (_, la) => eas.push({
+				Active: true,
+				Enabled: true,
+				Id: this._uuid(),
+				Name: la.Name,
+				Plural: la.Name + "s",
+				//LayerAttribute: la,
+				IsBool: la.NativeType == "bool",
+				IsString: la.NativeType == "string",
+				IsText: la.NativeType == "text",
+				IsLong: la.NativeType == "long",
+				IsFloat: la.NativeType == "float",
+				IsInt: la.NativeType == "integer",
+				IsDouble: la.NativeType == "double",
+				IsDate: la.NativeType == "datetime",
+				IsFile: la.NativeType == "file",
+				IsImage: la.NativeType == "image",
+				EntityClass: {
+					Id: sr.hashCode(c.Name),
+					Name: c.Name,
+					Plural: c.Name + "s",
+					Active: true,
+					Date: new Date(),
+					Remark: "",
+					Company: {
+						Id: sr.hashCode(company.Name),
+						Name: company.Name
+					},
+					Group: {
+						Id: sr.hashCode("Main"),
+						Name: "Main"
+					}
+				},
+			})));
+
+			$.each(lcs, (_, c) => $.each($.grep(c.RelationAttributes, ra => !ra.IsArray), (_, ra) => eas.push({
+				Active: true,
+				Enabled: true,
+				Id: this._uuid(),
+				Name: ra.Name,
+				Plural: ra.Name + "s",
+				//LayerAttribute: ra,
+				IsBool: false,
+				IsString: false,
+				IsText: false,
+				IsLong: false,
+				IsFloat: false,
+				IsInt: false,
+				IsDouble: false,
+				IsDate: false,
+				IsFile: false,
+				IsImage: false,
+				EntityType: {
+					Id: sr.hashCode(ra.RelationClass.Name),
+					Name: ra.RelationClass.Name,
+				},
+				EntityClass: {
+					Id: sr.hashCode(c.Name),
+					Name: c.Name,
+					Plural: c.Name + "s",
+					Active: true,
+					Date: new Date(),
+					Remark: "",
+					Company: {
+						Id: sr.hashCode(company.Name),
+						Name: company.Name
+					},
+					Group: {
+						Id: sr.hashCode("Main"),
+						Name: "Main"
+					}
+				},
+			})));
+		} else {
+			eas = await window.sr._("EnterpriseManager.emsEntityAttributeFindall", null, {
+				EntityClass: ec || {
+					Company: {
+						Code: company.Code
+					}
 				}
-			}
-		});
-		let html = await $.get(EntityClassJS + "?rand=" + Math.random());
-		this.step();
-
-		var classes = window.sr.groupBy(eas, "EntityClass");
-		var tClasses = window.sr.groupBy(eas, "EntityType");
-		$.each(classes, (_, c) => {
-			c.key.EntityAttributes = c.values;
-			var tas = tClasses.find(tc => tc.key && c.key && tc.key.Id === c.key.Id);
-			c.key.TypedAttributes = tas ? tas.values : [];
-		});
-		window.EntityClasses = classes.map(a => a.key);
-
-		this.step();
-		for (var i = 0; i < window.EntityClasses.length; i++) {
-			var code = this._inject(html, {
-				c: window.EntityClasses[i]
 			});
-			//console.log(code);
-			code += "window." + window.EntityClasses[i].Name.replace(/ /g, '_') + " = " + window.EntityClasses[i].Name.replace(/ /g, '_') + ";";
-
-			window.sr.runScript(code);
 		}
+		this.step();
+
+		let ret = null;
+		if (!Array.isArray(ec)) {
+			var classes = window.sr.groupBy(eas, "EntityClass");
+			var tClasses = window.sr.groupBy(eas, "EntityType");
+			$.each(classes, (_, c) => {
+				c.key.EntityAttributes = c.values;
+				var tas = tClasses.find(tc => tc.key && c.key && tc.key.Id === c.key.Id);
+				c.key.TypedAttributes = tas ? tas.values : [];
+			});
+			ret = classes.map(a => a.key);
+		} else {
+			$.each(ec, (_, c) => {
+				if (typeof (c.TypedAttributes) === "undefined") c.TypedAttributes = [];
+				if (typeof (c.Id) === "undefined") c.Id = this._uuid();
+				if (typeof (c.Plural) === "undefined") c.Plural = c.Name + "s";
+				$.each(c.EntityAttributes, (_, ea) => {
+					if (typeof (ea.Id) === "undefined") ea.Id = this._uuid();
+					if (typeof (ea.EntityClass) === "undefined") ea.EntityClass = c;
+					if (typeof (ea.EntityType) !== "undefined") ea.EntityType = ec.find(_c => _c.Name == ea.EntityType.Name);
+				});
+				$.each(c.TypedAttributes, (_, ta) => {
+					if (typeof (ta.Id) === "undefined") ta.Id = this._uuid();
+					if (typeof (ta.EntityClass) === "undefined") ta.EntityClass = c;
+				});
+			});
+
+			ec = $.grep(ec, c => typeof (c.Active) === "undefined" || c.Active);
+			$.each(ec, (_, c) => {
+				c.EntityAttributes = $.grep(c.EntityAttributes || [], ea => typeof (ea.Active) === "undefined" || ea.Active);
+			});
+			ret = ec;
+		}
+
+		if (typeof (window[scope]) === "undefined") window[scope] = {};
+		window[scope].EntityClasses = ret;
+
+		let html = await $.get((sr.bLocal ? "/nammour.com/ems/" : "") + "script/EntityClass.jst" + "?rand=" + Math.random());
+
+		for await (const m of [...(html.matchAll(/(<%=).[\w\-.]+[\.](js)(%>)/gm))]) {
+			let code = await $.get((sr.bLocal ? "/nammour.com/ems/" : "") + "script/" + m[0].replace("<%=", "").replace("%>", "") + "?rand=" + Math.random());
+			html = html.replace(m[0], code);
+		}
+
+		this.step();
+		window[scope].GenericServiceAPI = GenericServiceAPI;
+		$.each(ret, (_, c) => {
+			let code = this._inject(html, {
+				c: c,
+				scope: scope
+			}) + '\n' + c.Name.replace(/ /g, '_');
+			if (typeof (beautifier) !== "undefined") {
+				code = beautifier.js(code);
+			}
+			window[scope][c.Name.replace(/ /g, '_')] = sr.runScript(code);
+		});
 	}
 
 	_initServiceRouter() {
@@ -522,11 +733,11 @@ window.FrEMD = class {
 		} else if (typeof doT !== 'undefined') {
 			var tempFn = doT.template(html);
 			return tempFn(data);
+		} else if (typeof _ === 'function' && typeof _.template !== 'undefined') {
+			return _.template(html)(data);
 		} else if (typeof Handlebars !== 'undefined') {
 			var template = Handlebars.compile(html);
 			return template(data);
-		} else if (typeof _ === 'function' && typeof _.template !== 'undefined') {
-			return _.template(html)(data);
 		} else {
 			return html;
 		}
@@ -690,6 +901,114 @@ window.FrEMD = class {
 
 			}
 		}
+	}
+
+	extType(v) {
+		return ({
+			html: 'html',
+			htm: 'html',
+			js: 'javascript',
+			cs: 'csharp',
+			py: 'python',
+			jsx: 'javascript',
+		} [v.match(/\.[^.\\/:*?"<>|\r\n]+$/)[0].replace('.', '')] || "text");
+	}
+
+	async OpenEditor(e, language, loader, saver, fData, oElement) {
+		var editor = ace.edit(e);
+		editor.session.setUseWrapMode(true);
+
+		if (loader) {
+			if (typeof ($.messager) !== "undefined") {
+				$.messager.progress({
+					title: 'Please waiting',
+					msg: 'Loading data...',
+					interval: oElement ? (oElement.interval || 300) : 300,
+				});
+			} else {
+				editor.session.setValue('loading...');
+			}
+			try {
+				let content = await loader(fData);
+				editor.session.setValue(content);
+			} catch (ex) {
+				editor.session.setValue("Error Loading file: \n" + JSON.stringify(ex, null, 4));
+				console.log(ex);
+			}
+			if (typeof ($.messager) !== "undefined") {
+				$.messager.progress('close');
+			}
+		}
+
+		let type = "";
+		if (language) {
+			try {
+				type = language(fData);
+			} catch (ex) {}
+		}
+
+		editor.session.setMode('ace/mode/' + type);
+		if (saver) editor.commands.addCommand({
+			name: 'save',
+			bindKey: {
+				win: "Ctrl-S",
+				mac: "Cmd-S"
+			},
+			exec: async editor => {
+				var value = this._beautify(editor.getValue(), type);
+				if (value != editor.session.getValue()) editor.session.setValue(value);
+
+				if (saver) {
+					if (typeof ($.messager) !== "undefined") {
+						$.messager.progress({
+							title: 'Please waiting',
+							msg: 'Saving data...',
+							interval: oElement ? (oElement.interval || 600) : 600,
+						});
+					}
+					try {
+						let ret = await saver(editor.session.getValue(), fData);
+					} catch (ex) {
+						this._error("Unable to Save file.\n" + ex);
+					}
+					if (typeof ($.messager) !== "undefined") {
+						$.messager.progress('close');
+					}
+				}
+			}
+		});
+	}
+
+	_beautify(value, type) {
+		try {
+			if (typeof (beautifier) !== "undefined") {
+				var options = {
+					"indent_size": "1",
+					"indent_char": "\t",
+					"max_preserve_newlines": "5",
+					"preserve_newlines": true,
+					"keep_array_indentation": false,
+					"break_chained_methods": false,
+					"indent_scripts": "normal",
+					"brace_style": "collapse",
+					"space_before_conditional": true,
+					"unescape_strings": false,
+					"jslint_happy": true,
+					"end_with_newline": false,
+					"wrap_line_length": "0",
+					"indent_inner_html": false,
+					"comma_first": false,
+					"e4x": true,
+					"indent_empty_lines": false
+				};
+				if (['csharp', 'javascript'].indexOf(type) > -1) {
+					value = beautifier.js(value, options);
+				} else if (['html'].indexOf(type) > -1) {
+					value = beautifier.html(value, options);
+				}
+			}
+		} catch (ex) {}
+		return value;
 	}
 
 	_lang(code) {

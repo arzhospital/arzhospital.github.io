@@ -11,17 +11,49 @@
 	lib: "DynaForm",
 	src: (window.bLocal ? "/nammour.com/ems/" : "") + "script/DynaForm.js",
 	css: "http://voky.com.ua/showcase/sky-forms/examples/css/sky-forms.css",
+	requires: ["EasyUI"],
 }, {
 	lib: "EasyUI",
-	src: ["https://www.jeasyui.com/easyui/jquery.easyui.min.js" /*, "https://www.jeasyui.com/easyui/jquery.easyui.mobile.js"*/ ],
-	css: ["https://www.jeasyui.com/easyui/themes/icon.css",
-		"https://www.jeasyui.com/easyui/themes/default/easyui.css"
-	],
+	src: ["https://www.jeasyui.com/easyui/jquery.easyui.min.js", "https://www.jeasyui.com//easyui/datagrid-filter.js"],
+	_src: {
+		Name: 'jquery-easyui'
+	},
+	css: ["https://www.jeasyui.com/easyui/themes/icon.css"].concat(["https://www.jeasyui.com/easyui/themes/material/easyui.css"]), //.concat(["https://www.jeasyui.com/easyui/themes/material-teal/easyui.css"]).concat(["https://www.jeasyui.com/easyui/themes/default/easyui.css"]),
+	cache: true,
+}, {
+	lib: "JSForce",
+	src: "//cdnjs.cloudflare.com/ajax/libs/jsforce/1.9.1/jsforce.min.js",
+	cache: true,
+}, {
+	lib: "Axios",
+	src: "https://unpkg.com/axios/dist/axios.min.js",
+	cache: true,
+}, {
+	lib: "Obfuscator",
+	src: "https://cdn.jsdelivr.net/npm/javascript-obfuscator/dist/index.browser.js",
+	cache: true,
+}, {
+	lib: "Esprima",
+	src: "https://unpkg.com/esprima@~4.0/dist/esprima.js",
+	cache: true,
+}, {
+	lib: "D3",
+	src: "https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.1/d3.min.js",
 	cache: true,
 }, {
 	lib: "SemanticUI",
 	src: "https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js",
 	css: "https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css",
+}, {
+	lib: "Bootstrap",
+	css: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
+	src: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
+	cache: true,
+}, {
+	lib: "Alpaca",
+	cache: true,
+	src: "//cdn.jsdelivr.net/npm/alpaca@1.5.27/dist/alpaca/bootstrap/alpaca.min.js",
+	css: "//cdn.jsdelivr.net/npm/alpaca@1.5.27/dist/alpaca/bootstrap/alpaca.min.css",
 }, {
 	lib: "JSONata",
 	//src: "https://cdn.jsdelivr.net/npm/jsonpath@1.0.2/jsonpath.min.js",
@@ -201,10 +233,13 @@
 	src: ["https://prettier.io/lib/standalone.js", "https://prettier.io/lib/parser-babylon.js"],
 }, {
 	lib: "ACEEditor",
-	src: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/ace.js"
+	src: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/ace.js",
+	cache: true,
 }, {
 	lib: "Beautifier",
-	src: "https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.2/beautifier.min.js",
+	src: "https://beautifier.io/js/lib/beautifier.min.js",
+	//src: "https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.11.0/beautifier.min.js",
+	//src: ["https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.11.0/beautify.min.js", "https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.11.0/beautify-html.min.js", "https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.11.0/beautify-css.min.js"],
 	cache: true,
 }, {
 	lib: "prettyCheckable",
@@ -223,6 +258,11 @@
 	src: ["https://unpkg.com/react@16/umd/react.development.js",
 		"https://unpkg.com/react-dom@16/umd/react-dom.development.js",
 	],
+	cache: true,
+}, {
+	lib: "ChartJS",
+	src: "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js",
+	css: "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css",
 	cache: true,
 }, {
 	lib: "EasyUI Mobile",
@@ -268,7 +308,7 @@
 	src: "https://cdnjs.cloudflare.com/ajax/libs/dot/1.0.3/doT.min.js"
 }, {
 	lib: "Handlebars",
-	src: "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"
+	src: "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"
 }, {
 	lib: "EJS",
 	src: "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/embeddedjavascript/ejs_production.js",

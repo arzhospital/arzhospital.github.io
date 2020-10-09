@@ -9,6 +9,52 @@ window.DynaForm = class {
 		this.sTable = null;
 		this.bDebug = false;
 
+		this.events = [{
+			name: 'onClick',
+			handler: 'onToggle',
+			params: 'n=event',
+			type: 'toggle',
+		}, {
+			name: 'onClose',
+			handler: 'PanOnClose',
+			params: 'n=event',
+			type: 'window',
+		}, {
+			name: 'onSelect',
+			handler: 'SelectChange',
+			params: 'n',
+			type: 'tabs',
+		}, {
+			name: 'onBeforeExpand',
+			handler: 'Expand',
+			params: 'n',
+			type: 'tree',
+		}, {
+			name: 'onChange',
+			handler: 'FieldChange',
+			params: 'n, o'
+		}, {
+			name: 'onBeforeOpen',
+			handler: 'PanelOpen',
+			params: '',
+			type: 'window',
+		}, {
+			name: 'onOpen',
+			handler: 'PendAfterOpen',
+			params: '',
+			type: 'window',
+		}, {
+			name: 'onClick',
+			handler: 'doLink',
+			params: 'n=event',
+			type: 'link',
+		}, {
+			name: 'onClickRow',
+			handler: 'FieldChange',
+			params: 'n, o',
+			type: 'grid',
+		}];
+
 		this.width = window.innerWidth * 0.8;
 		this.height = window.innerHeight * 0.7;
 	}
@@ -18,6 +64,35 @@ window.DynaForm = class {
 	}
 
 	init() {
+		var select = {
+			init: function (container, options) {
+				var op = null;
+				var fop = null;
+				for (var i = 0; i < window.DForm.grids.length; i++)
+					if (window.DForm.grids[i].id == options.source) op = window.DForm.grids[i].options;
+				for (i = 0; i < op.columns.length; i++)
+					if (op.columns[i].name == options.field) fop = op.columns[i];
+
+				fop.width = (window.DForm.width / 3);
+				var e = $(window.DForm.select(fop));
+				var input = e.appendTo(container);
+				input.combogrid();
+				window.DForm.bind(input);
+				return input;
+			},
+			destroy: function (target) {
+				$(target).remove();
+			},
+			getValue: function (target) {
+				return $(target).val();
+			},
+			setValue: function (target, value) {
+				$(target).val(value);
+			},
+			resize: function (target, width) {
+				$(target)._outerWidth(width);
+			}
+		};
 		$.extend($.fn.datagrid.defaults.editors, {
 			datetime: {
 				init: function (container, options) {
@@ -58,56 +133,8 @@ window.DynaForm = class {
 					$(target)._outerWidth(width);
 				}
 			},
-			select: {
-				init: function (container, options) {
-					var op = null;
-					var fop = null;
-					for (var i = 0; i < window.DForm.grids.length; i++)
-						if (window.DForm.grids[i].id == options.source) op = window.DForm.grids[i].options;
-					for (i = 0; i < op.columns.length; i++)
-						if (op.columns[i].name == options.field) fop = op.columns[i];
-
-					fop.width = (window.DForm.width / 3);
-					var e = $(window.DForm.select(fop));
-					var input = e.appendTo(container);
-					input.combogrid();
-					window.DForm.bind(input);
-					return input;
-				},
-				destroy: function (target) {
-					$(target).remove();
-				},
-				getValue: function (target) {
-					return $(target).val();
-				},
-				setValue: function (target, value) {
-					$(target).val(value);
-				},
-				resize: function (target, width) {
-					$(target)._outerWidth(width);
-				}
-			},
-			code: {
-				init: function (container, options) {
-					var editor = ace.edit(target);
-					editor.setTheme("ace/theme/monokai");
-					editor.session.setMode("ace/mode/" + (options.language || "javascript"));
-				},
-				destroy: function (target) {
-					editor.destroy();
-					$editor = $(target);
-					$editor.remove();
-				},
-				getValue: function (target) {
-					return ace.edit(target).getValue();
-				},
-				setValue: function (target, value) {
-					ace.edit(target).setValue(value);
-				},
-				resize: function (target, width) {
-					//$(target)._outerWidth(width);
-				}
-			}
+			combotreegrid: select,
+			select: select,
 		});
 	}
 
@@ -287,48 +314,37 @@ window.DynaForm = class {
 		};
 	}
 
-	header(name, title, bFixed) {
+	async _wait(ms) {
+		return new Promise(resolve => {
+			setTimeout(resolve, ms);
+		});
+	}
+
+	header(name, title, bFixed, links) {
 		this.title = title || this.title;
 		name = name || this.name;
 
 		var ret = '';
 		if (!bFixed) {
-			ret += '<div id="win' + this.name + '" class="easyui-window" title="' + this.title + '" data-options="iconCls:\'icon-save\'" style="width:' + this.width + 'px;height:' + this.height + 'px;padding:10px;">';
+			ret += `<div id='win${this.name}' class='easyui-window' tools:'#${this.name}_tools' title='${this.title}' data-options='iconCls:"icon-save"' style='width:${this.width}px;height:${this.height}px;padding:10px;'><div id="${this.name}_tools">`;
+
+			ret += $.map($.grep(links || [], l => !l.ignore), l => `<a href="javascript:void(0)" class = "icon-${l.icon}" onclick='(async () => {var a = ${_FrEMD._toJS(l)}; $("#win${this.name}").window("setTitle", "${this.title}: " + a.name); await a.action(DForm.get()); $("#win${this.name}").window("setTitle", "${this.title}");})()'></a>`).join('\n');
+
+			ret += "</div>";
 		}
-		return ret + '<form id="frm' + this.name + '" method="post" novalidate>';
+		return ret + `<form id="frm${this.name}" method="post" novalidate>`;
 	}
 
 	footer(bFixed) {
-		var ret = '</form><div id="dlg-buttons">';
-		var bWidth = Math.min(this.width * 0.95 / this.buttons.length, this.cWidth());
-		for (var i = 0; i < this.buttons.length; i++) {
-			ret += '<a id="' + this.buttons[i].name + '" href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-' + (this.buttons[i].icon || 'save') + '" style="width:' + bWidth + 'px" onclick=\'window.DForm.doClick(' + i + ');\'>' + (this.buttons[i].title || this.buttons[i].name) + '</a>&nbsp;&nbsp;';
-		}
-		if (!bFixed) {
-			ret += '</div>';
-		}
-		return ret;
+		return `</form><div id="dlg-buttons">` + $.map(this.buttons, b => `<a id='${b.name}' href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-${b.icon || 'save'}" style="width:${Math.min(120, this.width * 0.95 / this.buttons.length, this.cWidth())}px" onclick='window.DForm.doClick(${_FrEMD._toJS(b)})'>${b.title || b.name}</a>&nbsp;&nbsp;`).join('') + (bFixed ? "" : '</div>');
 	}
 
-	doLink(eName, index) {
-		var oElement = this.byName(eName);
-
-		oElement.links[index].onClick(this.get());
-	}
-
-	async doClick(bIndex) {
-		var button = this.buttons[bIndex];
-
-		if (!button || !button.onclick) return;
+	async doClick(button) {
+		button = this.buttons.find(b => b.name == button.name);
 
 		this.busy(true);
 		var o = this.get();
-		var sMissing = "";
-		for (const e of this.elements) {
-			if (e.required && !o[e.name]) {
-				sMissing += "<li>" + (e.label || e.name) + "</li>";
-			}
-		}
+		var sMissing = $.map($.grep(this.elements, e => e.required && !o[e.name]), e => "<li>" + (e.label || e.name) + "</li>").join("");
 		if (sMissing) {
 			window._FrEMD._error("Missing mandatory fields:<br/><ul>" + sMissing + "</ul>", 5000);
 			this.busy(false);
@@ -336,6 +352,7 @@ window.DynaForm = class {
 		}
 
 		await button.onclick(o);
+		this.busy(false);
 	}
 
 	busy(bBusy) {
@@ -364,40 +381,40 @@ window.DynaForm = class {
 		var o = {};
 		$.each(this.elements, (_, e) => {
 			var name = (e.emsSource ? "_" : "") + e.name;
-			try {
-				switch (e.type) {
-				case 'text':
-				case 'string':
-				case 'password':
-					o[name] = "";
-					break;
-				case "DateTime":
-				case "datetime":
-					o[name] = "";
-					break;
-				case "int":
-				case "number":
-				case "integer":
-				case "long":
-				case "Long":
-				case "progress":
-					o[name] = 0;
-					break;
-				case "select":
-					o[name] = "";
-					break;
-				case "grid":
-					o[name].data = [];
-					break;
-				case "bool":
-					o[name] = false;
-					break;
-				default:
-					break;
-				}
-			} catch (ex) {}
+
+			switch (e.type) {
+			case 'text':
+			case 'string':
+			case 'password':
+			case "DateTime":
+			case "datetime":
+				o[name] = "";
+				break;
+			case "int":
+			case "number":
+			case "integer":
+			case "long":
+			case "Long":
+			case "progress":
+				o[name] = 0;
+				break;
+			case "tree":
+			case "select":
+				o[name] = null;
+				break;
+			case "grid":
+				o[name] ? o[name].data = [] : null;
+				break;
+			case "bool":
+				o[name] = false;
+				break;
+			default:
+				break;
+			}
 		});
+		//console.log("clear", o);
 		this.set(o);
+		this.busy(false);
 	}
 
 	set(o, eName) {
@@ -410,18 +427,25 @@ window.DynaForm = class {
 				// an EntityValue
 				for (var p in o)
 					if (p.endsWith("Value")) att = p;
+				oElement.emsSource = o;
 			}
-			oElement.emsSource = o;
 
 			try {
 				switch (oElement.type) {
+				case 'label':
+					if (att) {
+						$("#lbl" + oElement.name).html(o[att]);
+					} else {
+						$("#lbl" + oElement.name).html((o && o.EntityAttribute) ? "" : o);
+					}
+					break;
 				case 'text':
 				case 'string':
 				case 'password':
 					if (att) {
 						$("#txt" + oElement.name).textbox("setValue", o[att]);
 					} else {
-						$("#txt" + oElement.name).textbox("setValue", (o && o["EntityAttribute"]) ? "" : o);
+						$("#txt" + oElement.name).textbox("setValue", (o && o.EntityAttribute) ? "" : o);
 					}
 					break;
 				case "DateTime":
@@ -429,7 +453,7 @@ window.DynaForm = class {
 					if (att) {
 						$("#dtp" + oElement.name).datetimebox('setValue', (o[att] ? sr.toDateTime(o[att]) : ""));
 					} else {
-						$("#dtp" + oElement.name).datetimebox('setValue', (o && o["EntityAttribute"]) ? "" : (o ? sr.toDateTime(o) : ""));
+						$("#dtp" + oElement.name).datetimebox('setValue', (o && o.EntityAttribute) ? "" : (o ? sr.toDateTime(o) : ""));
 					}
 					break;
 				case "int":
@@ -440,14 +464,21 @@ window.DynaForm = class {
 					if (att) {
 						$("#nud" + oElement.name).numberspinner('setValue', o[att]);
 					} else {
-						$("#nud" + oElement.name).numberspinner('setValue', (o && o["EntityAttribute"]) ? "" : o);
+						$("#nud" + oElement.name).numberspinner('setValue', (o && o.EntityAttribute) ? "" : o);
 					}
 					break;
 				case "bool":
 					if (att) {
 						$("#chk" + oElement.name).switchbutton((o[att] ? '' : 'un') + 'check');
 					} else {
-						$("#chk" + oElement.name).switchbutton((((o && o["EntityAttribute"]) ? "" : o) ? '' : 'un') + 'check');
+						$("#chk" + oElement.name).switchbutton((((o && o.EntityAttribute) ? "" : o) ? '' : 'un') + 'check');
+					}
+					break;
+				case "window":
+					if (att) {
+						oElement.value = o[att];
+					} else {
+						oElement.value = (o && o.EntityAttribute) ? "" : o;
 					}
 					break;
 				case "progress":
@@ -455,26 +486,40 @@ window.DynaForm = class {
 					if (att) {
 						v = o[att];
 					} else {
-						v = (o && o["EntityAttribute"]) ? "" : o;
+						v = (o && o.EntityAttribute) ? "" : o;
 					}
 					$("#prg" + oElement.name).progressbar('setValue', Math.round(v * 10) / 10);
 					break;
 				case "grid":
+					let cols = JSON.parse("{" + this.mapColumns(oElement, true) + "}");
+					$.each(cols.columns[0], (_, c) => c.formatter = sr.runScript(this.formatter(oElement.name, c)));
+					$("#cmb" + oElement.name).datagrid(cols);
+
 					if (att) {
-						$("#grd" + oElement.name).datagrid({
+						$("#cmb" + oElement.name).datagrid({
 							data: o[att]
 						});
 					} else {
-						$("#grd" + oElement.name).datagrid({
-							data: (o && o["EntityAttribute"]) ? "" : o
+						$("#cmb" + oElement.name).datagrid({
+							data: (o && o.EntityAttribute) ? "" : o
 						});
+					}
+					$("#cmb" + oElement.name).datagrid("unselectAll");
+					$("#cmb" + oElement.name).datagrid();
+					break;
+				case "tree":
+					var v = att ? o[att] : ((o && o.EntityAttribute) ? "" : o);
+					if (Array.isArray(v)) {
+						$("#cmb" + oElement.name).combotree("tree").tree("loadData", v);
+					} else {
+						$("#cmb" + oElement.name).combotree('setValue', v);
 					}
 					break;
 				case "select":
 					if (att) {
 						$("#cmb" + oElement.name).combogrid('setValue' + (oElement.multiple ? 's' : ''), (o[att] ? o[att] : ""));
 					} else {
-						var v = null;
+						v = null;
 						if (o === null) {} else if (o.constructor === Array) {} else if (!o.EntityAttribute) {
 							v = o || {
 								Id: o.Id,
@@ -490,36 +535,38 @@ window.DynaForm = class {
 				default:
 					break;
 				}
-			} catch (ex) {}
+			} catch (ex) {
+				console.log(ex);
+			}
 		} else {
-			for (var i = 0; i < this.elements.length; i++) {
-				var att = (company.library ? "" : "_") + this.elements[i].name;
+			for (var p in o) {
+				if (p.indexOf('_') === 0) p = p.substring(1);
+				var e = this.byName(p);
 
-				if (typeof (o[att]) === "undefined") continue;
+				if (!e || !e.name) continue;
+				var value = o[p];
 
-				var v = o[att];
-
-				if (this.elements[i].name == this.sTable) {
-					v = o;
-					v.Date = new Date();
+				if (e.name == this.sTable) {
+					value = o;
+					value.Date = new Date();
 				}
-				if (o.EntityValues) {
+				if (p == "EntityValues") {
 					// an emsFormValues source
 					// find the EntityValue for this element and set it
 					for (var j = 0; j < o.EntityValues.length; j++) {
-						if (o.EntityValues[j].EntityAttribute.Name == this.elements[i].name) {
+						if (o.EntityValues[j].EntityAttribute.Name == e.name) {
 							// found the EntityValue for this element
-							v = o.EntityValues[j];
-							for (var p in v) {
-								if (p.endsWith("Value")) {
-									v[p] = o[att];
+							_v = o.EntityValues[j];
+							for (var q in _v) {
+								if (q.endsWith("Value")) {
+									_v[q] = value;
 								}
 							}
 							break;
 						}
 					}
 				}
-				if (this.elements[i].name) this.set(v, this.elements[i].name);
+				this.set(value, e.name);
 			}
 		}
 	}
@@ -532,6 +579,10 @@ window.DynaForm = class {
 			var cn = null;
 			var v = null;
 			switch (this.elements[i].type) {
+			case 'label':
+				v = $("#lbl" + this.elements[i].name).html();
+				cn = $("#lbl" + this.elements[i].name);
+				break;
 			case 'text':
 			case 'string':
 			case 'password':
@@ -561,7 +612,14 @@ window.DynaForm = class {
 				cn = $("#nud" + this.elements[i].name);
 				break;
 			case "grid":
-				v = $("#grd" + this.elements[i].name).datagrid('getData');
+				v = $("#cmb" + this.elements[i].name).datagrid('getData');
+				break;
+			case "tree":
+				v = $("#cmb" + this.elements[i].name).combotree("tree").tree("getSelected");
+				cn = $("#cmb" + this.elements[i].name);
+				break;
+			case "window":
+				v = this.elements[i].value;
 				break;
 			case "select":
 				if (this.elements[i].options) {
@@ -605,10 +663,12 @@ window.DynaForm = class {
 	}
 
 	cWidth(options) {
+		if (options && options.editor) return window.innerWidth;
 		return Math.floor(((options ? options.width : null) || (this.width / 3)));
 	}
 
 	cHeight(options) {
+		if (options && options.editor) return window.innerHeight;
 		return Math.floor(((options ? options.height : null) || (this.height / 3)));
 	}
 
@@ -616,28 +676,6 @@ window.DynaForm = class {
 		options.height = 20;
 		options.simple = true;
 		return this.text(options);
-	}
-
-	code(options) {
-		return `
-<style type="text/css" media="screen">
-    #editor { 
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
-</style>
-<div id="cod${options.name}" style="width:${this.cWidth(options)}px">
-${options.value}
-<div>
-<script>
-    var editor = ace.edit("cod${options.name}");
-    editor.setTheme("ace/theme/monokai");
-    editor.session.setMode("ace/mode/javascript");
-</script>
-        `;
 	}
 
 	datetime(options) {
@@ -664,6 +702,36 @@ ${options.value}
 		return '<input id="nud' + options.name + '" class="easyui-numberspinner" required="' + (options.required ? 'true' : 'false') + '" value="' + (options.value || '0') + '" data-options="increment:' + (options.increment || 1) + '" style="width:' + this.cWidth(options) + 'px;"></input>';
 	}
 
+	menu(options) {
+		var ret = "";
+		ret += '<div class="easyui-panel" id="mnu' + options.name + '" style="padding:5px;">\n';
+		$.each(options.menu, (_, m) => ret += '<a href="#" class="easyui-splitbutton" data-options="menu:\'#mm' + m.label.replace(/ /g, '') + '\',iconCls:\'icon-' + (m.icon || 'none') + '\'">' + m.label + '</a>\n');
+		ret += "</div>\n";
+
+		let dv = m => {
+			let ret = '<div' + (m.subMenus ? '' : ` data-options="iconCls:'icon-${m.icon || 'none'}'"`) + '>\n';
+			ret += m.subMenus ? '<span>' + m.label + '</span>\n<div>' : (`<span width='100%' onclick='(async () => {let m = ${_FrEMD._toJS(m)}; if(m.action){return await m.action(DForm.get(), m);} if (m.subMenus) return; await _FrEMD.RenderPage({_code: m.code || m.label.replace(/ /g, "").toLowerCase()}, m.data);})()'>${m.label}</span>`);
+			$.each(m.subMenus, (_, s) => ret += dv(s));
+			ret += (m.subMenus ? "</div>\n" : "") + `</div>\n`;
+			return ret;
+		};
+
+		if (false) $.each(options.menu, (_, m) => ret += '<div id="mm' + m.label.replace(/ /g, '') + '" style="width:150px;">' + $.map(m.subMenus, sm => dv(sm)).join('\n') + '</div>\n');
+
+		if (true)
+			for (var i = 0; i < options.menu.length; i++) {
+				var m = options.menu[i];
+				ret += '<div id="mm' + m.label.replace(/ /g, '') + '" style="width:150px;">';
+				for (var j = 0; j < m.subMenus.length; j++) {
+					var sm = m.subMenus[j];
+					ret += dv(sm);
+				}
+				ret += '</div>\n';
+			}
+
+		return ret;
+	}
+
 	integer(options) {
 		return this.int(options);
 	}
@@ -677,20 +745,11 @@ ${options.value}
 	}
 
 	bool(options) {
-		return '<input id="chk' + options.name + '" required="' + (options.required ? 'true' : 'false') + '" data-options="onChange:function(){var s = $(\'#\' + this.id).switchbutton(\'options\'); window.DForm.FieldChange(s, window.DForm.byName(\'' + options.name + '\'));}" class="easyui-switchbutton" ' + (options.checked ? 'checked' : '') + '>';
+		return `<input id="chk${options.name}" required="${options.required?'true':'false'}" data-options='disabled:${options.disabled?'true':'false'},${this.eventHandlers(options)}' class="easyui-switchbutton" ${options.checked?'checked':''} />`;
 	}
 
 	label(options) {
-		return (options.value || "");
-	}
-
-	link(options) {
-		var ret = '<div class="easyui-panel" style="padding:5px;width:' + this.cWidth(options) + 'px;">';
-		for (var i = 0; i < options.links.length; i++) {
-			ret += '<a href="#" class="easyui-linkbutton" data-options="iconCls:\'icon-' + (options.links[i].icon || 'ok') + '\',' + (options.name ? 'group:\'' + options.name + '\'' : '') + '" onclick="window.DForm.doLink(\'' + options.name + '\', ' + i + ')">' + (options.links[i].label || i) + '</a>';
-		}
-		ret += "</div>";
-		return ret;
+		return `<span id="lbl${options.name}" style="width:${this.cWidth(options)}px" data-options="disabled:${options.disabled?'true':'false'}">${options.value || ''}</span>`;
 	}
 
 	url(options) {
@@ -698,7 +757,49 @@ ${options.value}
 	}
 
 	text(options) {
-		return '<input id="txt' + options.name + '" class="easyui-' + (options.editor || "textbox") + '" data-options="onChange:function(){var s = $(\'#\' + this.id).textbox(\'options\'); window.DForm.FieldChange(s, window.DForm.byName(\'' + options.name + '\'));}" multiline="' + (options.simple ? 'false' : 'true') + '" style="white-space: pre-wrap; width: ' + this.cWidth(options) + 'px;height: ' + this.cHeight(options) + 'px" required="' + (options.required ? 'true' : 'false') + '" value="' + (options.value || "") + '">';
+		return `<input id="txt${options.name}" class="easyui-${options.editor || "textbox"}" data-options='disabled:${options.disabled?'true':'false'},${this.eventHandlers(options)}' multiline="${options.simple ? 'false' : 'true'}" style="white-space:pre-wrap;width:${this.cWidth(options)}px;height:${this.cHeight(options)}px" required="${options.required ? 'true' : 'false'}" value="${options.value || ""}" />`;
+	}
+
+	toScript(o, type) {
+		var editor = null;
+		if (typeof (o) === "string") {
+			// only a name
+			editor = ace.edit(o);
+		} else {
+			editor = ace.edit("txt" + o.name);
+		}
+		editor.session.setUseWrapMode(true);
+		if (typeof (beautifier) !== "undefined") {
+			var value = editor.getValue();
+			var options = {
+				"indent_size": "1",
+				"indent_char": "\t",
+				"max_preserve_newlines": "5",
+				"preserve_newlines": true,
+				"keep_array_indentation": false,
+				"break_chained_methods": false,
+				"indent_scripts": "normal",
+				"brace_style": "collapse",
+				"space_before_conditional": true,
+				"unescape_strings": false,
+				"jslint_happy": true,
+				"end_with_newline": false,
+				"wrap_line_length": "0",
+				"indent_inner_html": false,
+				"comma_first": false,
+				"e4x": true,
+				"indent_empty_lines": false
+			};
+			type = type || o.type || "javascript";
+			editor.session.setMode('ace/mode/' + type);
+			if (['csharp', 'javascript'].indexOf(type) > -1) {
+				value = beautifier.js(value, options);
+			} else if (['html'].indexOf(type) > -1) {
+				value = beautifier.html(value, options);
+			}
+			if (value != editor.session.getValue()) editor.session.setValue(value);
+		}
+		return editor;
 	}
 
 	password(options) {
@@ -725,80 +826,309 @@ ${options.value}
 	}
 
 	tree(options) {
-		var ret = '<table id="tr' + options.name + '" width="' + this.cWidth(options) + '" height="' + this.cHeight(options) + '" class="easyui-treegrid" data-options="iconCls: \'icon-ok\', rownumbers: true, animate: true, collapsible: true, fitColumns: true"><thead><tr>';
-		$.each(options.columns, (_, c) => {
-			ret += '<th data-options="field:\'' + c.name + '\',width:180' + (c.formatter ? ",formatter: (" + JSON.stringify(c.formatter) : ")") + ':">' + (c.label || c.name) + '</th>';
-		});
-
-		ret += '</tr></thead></table>';
+		return this.select(options, "select");
 	}
 
-	combotree(options) {
-		var ret = this.select(options, "input", "treegrid");
-		return ret;
+	formatter(name, c, json) {
+		json = json ? '"' : '';
+		return `${json}(value,row,index)=>{var c = (DForm.byName(\`${name}\`).columns || []).find(c => c.field==\`${c.field}\`); try{return c&&c.format?c.format(value,row,index):value;}catch(ex){return value;} }${json}`;
 	}
 
-	grid(options, tag, type) {
-		var pWidth = this.cWidth(options) * 2;
+	mapColumns(options, json) {
+		var cols = $.grep(options.columns || [], c => !c.ignore);
 
-		var ret = '<table name="grd' + options.name + '" id="grd' + options.name + '" class="easyui-datagrid" style="width:' + this.cWidth(options) + 'px" required="' + (options.required ? 'true' : 'false') + '" data-options="onChange:function(n,o){var s = $(\'#\' + this.id).datagrid(\'options\'); window.DForm.FieldChange(s, window.DForm.byName(\'' + options.name + '\'));}, rownumbers:true, pagination: true, panelWidth:' + pWidth + ', fitColumns: true, columns: [[';
-		$.each(options.columns, (__, o) => {
-			ret += "{field:'" + (o.field || o) + "',title:'" + (o.title || this.english((o.field || o))) + "',align:'right', sortable: true},";
-		});
-		ret += ']]" ';
-		if (options.data) {
-			ret += ", data: '" + JSON.stringify(options.data) + "'";
+		let ret = "";
+		if (options.multiple) ret += `{"field":'ck',"checkbox":true},`;
+
+		ret = `"frozenColumns": [[`;
+
+		if (!options.frozen) {
+			ret += `{"field":"${options.idField.field}","title": "${options.idField.title}","sortable": "true", "formatter": ${this.formatter(options.name, options.idField, json)}},`;
+			if (options.textField.field != options.idField.field) ret += `{"field":"${options.textField.field}","title":"${options.textField.title}","width":"${options.textField.width||120}", "sortable": "true", "formatter": ${this.formatter(options.name, options.textField, json)}}`;
+		} else {
+			$.map($.grep(cols, c => c.frozen), c => `{"field":"${c.field}","title":"${c.title || c.field}","width":"${c.width||120}","align":'right',"sortable":"true", "formatter": ${this.formatter(options.name, c, json)}}`).join(",");
 		}
-		ret += '>';
-		ret += '</table>';
+
+		ret += `]], "columns": [[`;
+		ret += $.map($.grep(cols, c => !c.frozen), c => `{"field":"${c.field}","title":"${c.title || this.english(c.field)}","align":"right","sortable":"true", "formatter": ${this.formatter(options.name, c, json)}}`).join(",");
+		ret += ']]';
 
 		return ret;
 	}
 
 	combo(options, tag, type) {
-		var textField = company.library ? '_ToString' : '_name';
+		var cols = $.grep(options.columns || [], c => !c.ignore);
+		tag = tag || "select";
 
-		var pWidth = this.cWidth(options) * 2;
+		options.idField = $.uniqueSort([{
+			field: options.idField,
+			title: options.idField
+		}].concat($.grep(cols, c => c.primary), [{
+			field: 'Id',
+			title: 'ID'
+		}])).find(x => typeof (x.field) !== "undefined");
 
-		var tag = tag || "select";
+		options.textField = $.uniqueSort([{
+			field: options.textField,
+			title: options.textField
+		}].concat($.grep(cols, c => c.display), [{
+			field: company.library ? '_ToString' : '_name',
+			title: options.name,
+		}])).find(x => typeof (x.field) !== "undefined");
 
-		var ret = '<' + tag + ' id="cmb' + options.name + '" class="easyui-combo' + (type || (options.options ? 'box' : 'grid')) + '" style="width:' + this.cWidth(options) + 'px" required="' + (options.required ? 'true' : 'false') + '" data-options="onChange:function(n,o){var s = $(\'#\' + this.id).combo' + (options.options ? 'box' : 'grid') + '(\'options\'); window.DForm.FieldChange(s, window.DForm.byName(\'' + options.name + '\'));}, rownumbers:true, pagination: ' + (tag == "select" ? "true" : "false") + ', panelWidth:' + pWidth + ', fitColumns: true, multiple: ' + (options.multiple || 'false') + ', idField: \'Id\', textField: \'' + textField + '\',frozenColumns: [[';
-		if (options.multiple) ret += "{field:'ck',checkbox:true},";
-		ret += "{field:'Id',title:'ID',sortable: true},";
-		ret += "{field:'" + textField + "',title:'" + options.name + "',width:120, sortable: true},";
-		ret += "]], columns: [[";
-		if (options.columns) {
-			for (var i = 0; i < options.columns.length; i++) {
-				ret += "{field:'" + options.columns[i].field + "',title:'" + options.columns[i].title + "',align:'right', sortable: true},";
-			}
+		var fun = type || this.eFun(options);
+
+		var dropdown = ['combotreegrid', 'combotree', 'combogrid', 'select'].indexOf(fun) > -1;
+		if (dropdown) this.selects.push({
+			id: "cmb" + options.name,
+			options: this.byName(options.name)
+		});
+		this.selects = $.uniqueSort(this.selects);
+
+
+		var ret = `<${tag} id="cmb${options.name}" class="easyui-${fun}" style="max-width:${dropdown?'400px':this.cWidth(options)}; width:${this.cWidth(options)}px" required="${(options.required ? 'true' : 'false')}" data-options='disabled:${options.disabled?'true':'false'},${this.eventHandlers(options)}, value:"${options.value}", rownumbers:${fun.indexOf('tree')>-1?'false':'true'}, pagination:${fun.indexOf('tree')>-1?'false':'true'}, panelWidth:${2*this.cWidth(options)}, fitColumns: true, singleSelect: true, multiple:${(options.multiple || 'false')}, idField: "${options.idField.field}", enableFilter: ${options.filter?'true':'false'}, textField: "${options.textField.field}", treeField: "${options.textField.field}",`;
+		if (fun.indexOf('tree') == -1) {
+			ret += 'fitColumns: false,' + this.mapColumns(options);
 		}
-		ret += ']], fitColumns: false">';
-		for (var i = 0; options.options && i < options.options.length; i++) {
-			ret += '<option value="' + options.options[i] + '">' + options.options[i] + '</option>';
-		}
-		ret += '</' + tag + '>';
+		ret += `'>`;
+		ret += $.map(options.options, o => `<option value="${o}">${o}</option>`).join('\n');
+		ret += `</${tag}>`;
+
+		// console.log(ret);
 
 		return ret;
 	}
 
-	select(options, tag, type) {
-		var s = $.grep(this.selects, x => x.id == "cmb" + options.name);
-		s = s.length ? s[0] : null;
-		if (!s && !options.avoid) {
-			s = {
-				id: "cmb" + options.name
-			};
-			this.selects.push(s);
-		}
-		s.options = options;
+	grid(options, tag, type) {
+		return this.combo(options, "table", "datagrid");
+	}
 
+	treegrid(options) {
+		return this.combo(options, 'table', 'tree');
+	}
+
+	eventHandlers(options) {
+		return $.map($.grep(this.events, e => e.type == options.type || typeof (e.type) === 'undefined'), e => `${e.name}: (${e.params || ''}) => {try{DForm.${e.handler}(DForm.byName("${options.name}") || ${_FrEMD._toJS(options)} || {name: "${options.name}",type: "${options.type}"}, ${e.params})}catch(ex){console.log("Link Click", ex);}}`).join(',');
+	}
+
+	async doLink(e, event) {
+		this.busy(true);
+		try {
+			await e.links.find(l => l.label == event.target.innerText).onClick(this.get());
+		} catch (ex) {
+			console.log("doLink", ex);
+		}
+		this.busy(false);
+	}
+
+	window(options) {
+		options.title = options.title || options.name;
+		var ret = `<div id = "pnl${options.name}" class = "easyui-window" title = "${options.title}" data-options = '${this.eventHandlers(options)}, closed:true,iconCls:"icon-${options.icon}", tools:"#${options.name}_tools"' style = "width:${this.cWidth(options)}px;height:${this.cHeight(options)}px;padding:10px;">${options.value}</div><div id="${options.name}_tools">`;
+
+		ret += $.map($.grep(options.links || [], l => !l.ignore), l => `<a href="javascript:void(0)" class = "icon-${l.icon}" onclick = '(async () => {var a = ${_FrEMD._toJS(l)}; $("#pnl${options.name}").window("setTitle", "${options.title}: " + a.name); await a.action(DForm.get()); $("#pnl${options.name}").window("setTitle", "${options.title}");})()'></a>`).join('\n');
+
+		ret += `</div>`;
+		return ret;
+	}
+
+	async PanOnClose(e) {
+		if (e.editor && typeof (ace) !== "undefined") {
+			e.value = ace.edit('pnl' + e.name).session.getValue();
+		}
+		if (e.close) {
+			await e.close(this.get());
+		}
+	}
+
+	async PendAfterOpen(e) {
+		if (e.editor && typeof (ace) !== "undefined") {
+			let loader = e.loader;
+			if (!loader) loader = o => e.value;
+			let saver = e.saver;
+			if (!saver) saver = (v, o) => {};
+			let language = e.language;
+			if (!language) language = o => "html";
+			await _FrEMD.OpenEditor('pnl' + e.name, language, loader, saver, this.get(), e);
+		}
+		if (e.open) {
+			await e.open(this.get());
+		}
+	}
+
+	async PanelOpen(e) {
+		if (e.editor) return true;
+
+		let content = e.value;
+		if (e.loader) {
+			content = await e.loader(this.get());
+		}
+		if (content) {
+			try {
+				$("#pnl" + e.name).panel('body').html(content);
+			} catch (ex) {
+				//console.log(ex);
+			}
+		}
+		return content;
+	}
+
+	link(options) {
+		return $.grep(options.links, l => !l.ignore).map(l => `<a href="#" class="easyui-linkbutton" data-options='${this.eventHandlers(options)}, iconCls:"icon-${l.icon || 'ok'}"'>${l.label}</a>`).join('\n');
+	}
+
+	select(options, tag, type) {
 		return this.combo(options, tag, type);
 	}
 
-	async FieldChange(s, options) {
+	async SetTreeData(e, n, data) {
+		$.each($("#cmb" + e.name)[this.eFun(e)]('tree').tree("getChildren", n.target), (_, c) => $("#cmb" + e.name)[this.eFun(e)]('tree').tree("remove", c.target));
+		$("#cmb" + e.name)[this.eFun(e)]('tree').tree("append", {
+			parent: n.target,
+			data: data
+		});
+		return true;
+	}
+
+	async Expand(e, n) {
+		this.SetTreeData(e, n, [{
+			id: null,
+			text: "loading..."
+		}]);
+
+		var obj = {};
+		var pField = e.parentField || $.map($.grep(e.columns || [], c => c.parent), c => c.field).concat([null])[0];
+		var idField = $.grep(e.columns || [], c => c.primary).concat(e.idField)[0].field;
+		if (pField) {
+			obj[pField] = {
+				_source: n._source
+			};
+			if (idField) {
+				obj[pField][idField] = n.id;
+			} else {
+				obj[pField] = n.id;
+			}
+		}
+
+		let data = await this._loadData({
+			id: "cmb" + e.name,
+			options: e
+		}, obj);
+
+		this.SetTreeData(e, n, data);
+	}
+
+	async _loadData(s, o, start, end) {
+		var name = (s && s.options ? (s.options.Class ? s.options.Class.Name.replace(' ', '_') : (s.options.table || s.options.name)) : s.name);
+		o = o || (window[name] ? new window[name]() : {
+			Active: true,
+		});
+		o = (typeof filters !== "undefined" && filters && filters[name]) ? filters[name](o) : o;
+		o = (s && s.options && s.options.source ? s.options.source(o, this.get()) : o);
+
+		let names = $.uniqueSort([s.options.searchField].concat($.map($.grep(s.options.columns || [], c => c.search), c => c.field), ["Name"]));
+
+		var fun = this.eFun(s.options);
+		//if ($("#" + s.id).fun('getText')) o[names[0]] = $("#" + s.id).combobox('getText');
+		if (!o[names[0]]) o[names[0]] = $("#" + s.id)[fun]('getText');
+
+		var data = null;
+		if (s.options.loader) {
+			data = await s.options.loader(this.get(), s.options, o);
+		} else if (company.library) {
+			data = await sr._(company.Code.toLowerCase() + name + "Findall", null, o, null, start, end);
+		} else {
+			// ems
+			data = await window._FrEMD._o(null, o);
+		}
+
+		if (s.options.postload) {
+			await s.options.postload(data);
+		}
+
+		$.each(data, (i, d) => {
+			d.__OWNER = s;
+			$.each(s.options.columns, (_, c) => {
+				if (c.value) {
+					d[c.field] = c.value(d, data, i);
+				}
+			});
+		});
+
+		if (!s.options.columns && fun.indexOf('tree') > -1) {
+			data = $.map(data, d => {
+				let ret = {
+					id: d[s.options.idField.field],
+					text: d[s.options.textField.field],
+					state: d.state || (s.options.loader ? "file" : "closed"),
+					_source: d,
+				};
+				ret.children = (ret.state == "closed") ? [{
+					text: 'loading...'
+				}] : null;
+
+				return ret;
+			});
+		}
+
+		return data || [];
+	}
+
+	async fillData(g, o, start, end) {
+		var s = null;
+		for (var i = 0; i < this.selects.length; i++) {
+			if (this.selects[i].id == g[0].id) s = this.selects[i];
+		}
+		if (!s) return;
+
+		this.busy(true);
+		try {
+			var fun = g[0].classList["0"].replace('easyui-', '');
+			try {
+				$("#" + s.id)[fun]('grid').datagrid('getPager').pagination('loading');
+			} catch (ex) {}
+
+			if (s.options.noload) {
+				let _data = null;
+				try {
+					_data = $("#" + s.id)[fun]('grid').datagrid("getData");
+				} catch (ex) {
+					_data = $("#" + s.id)[fun]('tree').tree('getRoot');
+				}
+				if (_data) {
+					return this.busy(false);
+				}
+			}
+
+			var data = await this._loadData(s, o, start, end);
+
+			try {
+				if ($("#" + s.id)[fun]('grid')) $("#" + s.id)[fun]('grid').datagrid('getPager').pagination('loaded');
+			} catch (ex) {}
+
+			try {
+				$("#" + s.id)[fun]('grid').datagrid('loadData', {
+					total: data.Count || data.length,
+					rows: data,
+				});
+			} catch (ex) {
+				$("#" + s.id)[fun]('tree').tree('loadData', data);
+			}
+		} catch (ex) {
+			console.log(ex);
+		}
+		this.busy(false);
+	}
+
+	async SelectChange(options, tab) {
+		this.busy(true);
+		$.grep(this.elements, e => e.type == "grid" && e.group == tab).forEach(e => $("#cmb" + e.name).datagrid());
+		this.busy(false);
+	}
+
+	async FieldChange(options, value) {
 		this.busy(true);
 		if (options && options.change) {
-			await options.change(window.DForm.get(), options);
+			await options.change(window.DForm.get(), value);
 		}
 		this.busy(false);
 	}
@@ -854,107 +1184,61 @@ ${options.value}
 		}
 	}
 
-	excelToJSON(data, start, count) {
-		if (typeof (XLSX) === "undefined") return [];
-
+	eFun(e) {
 		try {
-			var workbook = XLSX.read(data, {
-				type: 'binary',
-				sheetRows: 0 /*start + "-" + (start + count)*/
-			});
-			//var range = XLSX.utils.decode_range(workbook.Sheets[workbook.SheetNames[0]]['!ref']);
-			var sheet = workbook.Sheets[workbook.SheetNames[0]];
-			return XLSX.utils.sheet_to_json(sheet);
-		} catch (e) {
-			//throw e;
-			console.log("ERROR:", e);
-			return [];
-		}
-	}
-
-	fillData(g, start, end) {
-		var s = null;
-		for (var i = 0; i < window.DForm.selects.length; i++) {
-			if (window.DForm.selects[i].id == g[0].id) s = window.DForm.selects[i];
-		}
-		if (!s) return;
-		g.combogrid('grid').datagrid('getPager').pagination('loading');
-
-		var name = s.options.Class ? s.options.Class.Name.replace(' ', '_') : (s.options.table || s.options.name);
-		var o = window[name] ? new window[name]() : {
-			Active: true,
-		};
-		o = (typeof filters !== "undefined" && filters && filters[name]) ? filters[name](o) : o;
-		o = (s.options.source ? s.options.source(o, this.get()) : o);
-		o.Name = $("#" + s.id).combobox('getText');
-		if (company.library) {
-			if (o === null) return;
-			sr._(company.Code.toLowerCase() + name + "Findall", function (ret) {
-				$("#" + s.id).combogrid('grid').datagrid('getPager').pagination('loaded');
-				for (var i = 0; i < ret.length; i++) ret[i].__OWNER = s;
-				$("#" + s.id).combogrid('grid').datagrid('loadData', {
-					total: ret.Count,
-					rows: ret
-				});
-				if (s.options.multiple) {
-					$.each(ret, (_, r) => {});
+			if (e.type == "tree") {
+				if (e.columns) {
+					return "combotreegrid";
+				} else {
+					return "combotree";
 				}
-				//window.sr.PostCache(1000);
-			}, o, null, start, end);
-		} else {
-			// ems
-			window._FrEMD._o(function (ret) {
-				$("#" + s.id).combogrid('grid').datagrid('getPager').pagination('loaded');
-				for (var i = 0; i < ret.length; i++) ret[i].__OWNER = s;
-				$("#" + s.id).combogrid('grid').datagrid('loadData', {
-					total: ret.length,
-					rows: ret
-				});
-			}, o);
+			} else if (e.type == "combotree") {
+				return "combotreegrid";
+			}
+			return "combogrid";
+		} catch (ex) {
+			return "combogrid";
 		}
 	}
 
 	bind(obj) {
 		var objBind = (o, e) => {
-			if (e && e.type == "combotree") {
-				o.combotreegrid({
-
-				});
-			} else {
-				o.combogrid({
-					onShowPanel: function () {
-						window.DForm.fillData($("#" + this.id), 0, 10);
-					},
-					onClickRow: function (index, row) {
-						var s = row.__OWNER;
-						if (s && s.options.select) {
-							s.options.select(row);
-						}
+			//console.log(this.eFun(e), o, e);
+			o[this.eFun(e)]({
+				onShowPanel: () => {
+					this.fillData($("#" + e.id), null, 0, 10);
+				},
+				onClickRow: (index, row) => {
+					var s = row ? row.__OWNER : null;
+					if (s && s.options.select) {
+						s.options.select(row);
 					}
-				});
+				}
+			});
 
-				var dg = o.combogrid('grid');
+			try {
+				var dg = o[this.eFun(e)]('grid');
 				// dg.datagrid('enableFilter')
 				var state = dg.data('datagrid');
 				var opts = state.options;
 
 				var onBeforeLoad = opts.onBeforeLoad;
+
 				opts.onBeforeLoad = (param) => {
 					state.allRows = null;
 					return onBeforeLoad.call(this, param);
-				}
+				};
 				var pager = dg.datagrid('getPager');
 				dg.datagrid('getPanel').panel({
 					ID: i
 				});
 				pager.pagination({
 					onSelectPage: function (pageNum, pageSize) {
-						window.DForm.fillData($("#" + window.DForm.selects[$(this.parentNode).panel('options').ID].id), pageSize * (pageNum - 1), pageSize * pageNum);
+						window.DForm.fillData($("#" + window.DForm.selects[$(this.parentNode).panel('options').ID].id), null, pageSize * (pageNum - 1), pageSize * pageNum);
 					}
 				});
 				dg.datagrid('loadData', state.data);
-			}
-
+			} catch (ex) {}
 		}
 
 		if (obj) {
@@ -1134,7 +1418,6 @@ ${options.value}
 		flowSVG.config({
 			interactive: true,
 			showButtons: true,
-			connectorLength: 60,
 			scrollto: true,
 			// Shape width
 			w: 100,
@@ -1155,21 +1438,58 @@ ${options.value}
 
 	english(s) {
 		if (!s) return "";
-		return s.charAt(0).toUpperCase() + s.slice(1).split(/(?=[A-Z])/).toString().replace(',', ' ');
+
+		var result = s.replace(/([A-Z])/g, " $1");
+		return result.charAt(0).toUpperCase() + result.slice(1);
+	}
+
+	eInfo(name) {
+		return {
+			elm: $(`[id$='${name}']`),
+			fun: $(`[id$='${name}']`)[0].className.split(' ').find(c => c.indexOf('easyui-') > -1).replace('easyui-', '')
+		};
+	}
+
+	onToggle(e, bValue) {
+		var info = this.eInfo(e.for.name);
+
+		if (typeof (bValue) === "undefined") {
+			bValue = !info.elm.prop("disabled");
+		}
+		info.elm[info.fun](bValue ? "enable" : "disable");
 	}
 
 	render(name, title, elements, buttons, bFixed) {
-		this.elements = elements;
+		this.elements = $.grep(elements, e => !e.ignore);
 		this.buttons = buttons;
 		this.selects = [];
 		this.grids = [];
-		var ret = this.header(name, title, bFixed);
+		var ret = this.header(name, title, bFixed, false && [{
+			icon: "add",
+			onClick: o => _FrEMD.RenderPage({
+				_code: page._code
+			}, page.data)
+		}]);
 
 		var tWidth = Math.floor(this.width * 0.95);
 		var tHeight = Math.floor(this.height * 0.85);
 
+		$.map($.grep(this.elements, e => e.type == "window"), w => this.elements.push({
+			name: "_" + w.name,
+			type: "link",
+			title: w.title || w.name,
+			group: w.group,
+			links: [{
+				label: 'Open',
+				icon: 'edit',
+				onClick: o => {
+					$("#pnl" + w.name).window('open');
+				}
+			}]
+		}));
+
 		var gElements = window.sr.groupBy(this.elements, "group");
-		if (gElements.length > 1) ret += '<div id="tt" class="easyui-tabs" style="width:' + tWidth + 'px;height:' + tHeight + 'px;">';
+		if (gElements.length > 1) ret += `<div id="tt" class="easyui-tabs" data-options='${this.eventHandlers({type: 'tabs'})}' style="width:${tWidth}px;height:${tHeight}px;">`;
 
 		for (var g = 0; g < gElements.length; g++) {
 			if (gElements.length > 1) ret += '<div title="' + (gElements[g].key || "Main") + '" style="padding:20px;display:none;">';
@@ -1178,12 +1498,25 @@ ${options.value}
 			if (sElements.length > 1) ret += '<div class="easyui-accordion" style="width:' + tWidth + 'px;height:' + tHeight + 'px;">';
 
 			for (var s = 0; s < sElements.length; s++) {
-				ret += '<div title="' + (sElements[s].key || "") + '" data-options="iconCls:\'icon-help\'" style="padding:10px;">';
+				ret += `<div title="${sElements[s].key || ""}" data-options="iconCls:'icon-help'" style="padding:10px;">`;
 				for (var i = 0; i < sElements[s].values.length; i++) {
 					var e = sElements[s].values[i];
+					if (e.ignore) continue;
 					e.value = e.value || sr.$_REQUEST(e.name);
-					ret += '<div class="fitem"><label>' + this.english(e.title || e.name) + ':</label>';
-					if (e.type && this[e.type]) ret += this[e.type](e);
+					ret += `<div class="fitem" style="display: ${e.type=='window'?'none':''}">`;
+
+					if (e.toggle) {
+						ret += `<a href="#" class="easyui-linkbutton" data-options='${this.eventHandlers({type: 'toggle', for: e})},plain:true,iconCls:"icon-${e.icon || 'search'}"' style="width:100px;height:30px">${e.title || this.english(e.name)}</a>`;
+					} else {
+						ret += `<label>${e.title || this.english(e.name)}:</label>`;
+					}
+
+					if (e.type && this[e.type]) {
+						ret += this[e.type](e);
+					} else if (e.render) {
+						ret += e.render();
+					}
+
 					ret += '</div>';
 				}
 				ret += '</div>';
@@ -1218,9 +1551,7 @@ ${options.value}
 	}
 
 	byName(name) {
-		for (var i = 0; i < this.elements.length; i++)
-			if (this.elements[i].name == name) return this.elements[i];
-		return null;
+		return this.elements.find(e => e.name === name);
 	}
 };
 

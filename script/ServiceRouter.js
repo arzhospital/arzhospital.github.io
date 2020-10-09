@@ -22,7 +22,7 @@ function ServiceRouter() {
 
 	var s_ErrorMessages;
 
-	this.buildURL = function(srURL) {
+	this.buildURL = function (srURL) {
 		if (!srURL) {
 			this.srURL = this.$_REQUEST('sr');
 			if (!this.srURL) {
@@ -78,7 +78,7 @@ function ServiceRouter() {
 		return this.srURL;
 	};
 
-	this.init = function(
+	this.init = function (
 		srURL,
 		systemName,
 		bPost,
@@ -93,8 +93,7 @@ function ServiceRouter() {
 		if (!bDebug && document.URL && document.URL.indexOf('debug=true') > 0)
 			bDebug = true;
 
-		this.bLocal =
-			!this.Store &&
+		this.bLocal = !this.Store &&
 			document.URL &&
 			!(document.URL.indexOf('local=false') >= 0);
 		if (!document.URL) this.bLocal = true;
@@ -118,7 +117,7 @@ function ServiceRouter() {
 		return this;
 	};
 
-	this.preProcessHTML = function(html) {
+	this.preProcessHTML = function (html) {
 		if (!html) return html;
 
 		try {
@@ -148,7 +147,7 @@ function ServiceRouter() {
 		}
 	};
 
-	this.$_REQUEST = function(key, url) {
+	this.$_REQUEST = function (key, url) {
 		url = url || (window.location && window.location.href);
 		if (!url) return null;
 
@@ -159,14 +158,14 @@ function ServiceRouter() {
 			var regex = new RegExp('[\\?|&]' + key + '=([^&#]*)');
 			var results = regex.exec('?' + url.split('?')[1]);
 			ret =
-				results === null
-					? ''
-					: decodeURIComponent(results[1].replace(/\+/g, ' '));
+				results === null ?
+				'' :
+				decodeURIComponent(results[1].replace(/\+/g, ' '));
 		}
 		return ret === null ? '' : ret;
 	};
 
-	this.groupBy = function(ar, field) {
+	this.groupBy = function (ar, field) {
 		if (!ar || !field) return null;
 
 		fields = field.split('.');
@@ -175,9 +174,7 @@ function ServiceRouter() {
 		for (var i = 0; i < ar.length; i++) {
 			var key = null;
 			for (
-				var f = 0;
-				f < fields.length;
-				key = (key || ar[i])[fields[f++]]
+				var f = 0; f < fields.length; key = (key || ar[i])[fields[f++]]
 			);
 			try {
 				keys[
@@ -200,7 +197,7 @@ function ServiceRouter() {
 		return keys;
 	};
 
-	this.compile = function(arModules) {
+	this.compile = function (arModules) {
 		var calls = [];
 		$.each(arModules, (i, m) =>
 			calls.push(
@@ -211,14 +208,14 @@ function ServiceRouter() {
 		);
 		return $.when(...calls).then((...arRet) => {
 			var _ret = [];
-			$.map(arRet, p => {
+			$.map(arRet, (p) => {
 				ret.push(_.template(p.HTML)(sr.runScript(p[0].Script)));
 			});
 			return _ret;
 		});
 	};
 
-	this.import = async function(arModules) {
+	this.import = async function (arModules) {
 		var ret = [];
 		for (var i = 0; i < arModules.length; i++) {
 			let p = await this._('ContentManager.cmsHTMLPageFind', null, {
@@ -230,14 +227,14 @@ function ServiceRouter() {
 		return ret;
 	};
 
-	this.getObject = function(s) {
+	this.getObject = function (s) {
 		var code = s + ';';
 		code = '(typeof ' + s + " === 'undefined')?sr.newObject():" + s;
 		//return this.runScript(s+";");
 		return this.runScript(code);
 	};
 
-	this.runScript = function(s) {
+	this.runScript = function (s) {
 		if (!s) return null;
 		try {
 			if (window._content && window._content.eval) {
@@ -284,7 +281,7 @@ function ServiceRouter() {
 		}
 
 		try {
-			var fn = function() {
+			var fn = function () {
 				var ret = window.eval.call(window, s);
 				return ret;
 			};
@@ -295,7 +292,7 @@ function ServiceRouter() {
 		}
 	};
 
-	this.ShowObject = function(o, bIgnoreDebug) {
+	this.ShowObject = function (o, bIgnoreDebug) {
 		var ret = 'Object Structure:\n';
 		for (s in o) {
 			try {
@@ -308,16 +305,16 @@ function ServiceRouter() {
 		this.ShowDebug(ret, bIgnoreDebug);
 	};
 
-	this.ShowError = function(s) {
+	this.ShowError = function (s) {
 		console.log(s);
 		if (this.bShowErrors) this.ShowMessage(s);
 	};
 
-	this.ccopy = function(s) {
+	this.ccopy = function (s) {
 		if (window.clipboardData) clipboardData.setData('Text', s);
 	};
 
-	this.ShowMessage = function(s) {
+	this.ShowMessage = function (s) {
 		if (typeof noty !== 'undefined') {
 			noty({
 				text: s,
@@ -334,11 +331,11 @@ function ServiceRouter() {
 		}
 	};
 
-	this.ShowDebug = function(s, bIgnoreDebug) {
+	this.ShowDebug = function (s, bIgnoreDebug) {
 		if (this.bDebug || bIgnoreDebug) this.ShowMessage(s);
 	};
 
-	this.param = function(args) {
+	this.param = function (args) {
 		var ret =
 			'/*' +
 			this.CRNL +
@@ -355,6 +352,10 @@ function ServiceRouter() {
 			this.CRNL;
 		for (var i = 0; i < args.length; i++) {
 			var xml = this._toXML(args[i]);
+			if (false) {
+				// xml contains characters that would not arrive properly and should be converted to base64
+				xml = btoa(xml);
+			}
 			ret += '<p' + i + '>' + this.CRNL + xml + '' + this.CRNL;
 			ret += '</p' + i + '>' + this.CRNL;
 		}
@@ -362,25 +363,25 @@ function ServiceRouter() {
 		return ret;
 	};
 
-	this.resetCursor = function() {
+	this.resetCursor = function () {
 		if (!document.body) return;
 		document.body.style.cursor = 'arrow';
 		document.body.style.cursor = '';
 	};
 
-	this.serverDate = function() {
+	this.serverDate = function () {
 		return this.addMSeconds(new Date(), -this.timeDifference);
 	};
 
-	this.runSRScript = function(s) {
+	this.runSRScript = function (s) {
 		return this.runScript(
 			'(() => { var ret = null; ' +
-				s +
-				' window.method_name = method_name; window.server_time = server_time; window._exception = typeof(_exception)==="undefined"?null:_exception; window.execution_time = execution_time; return {_exception: _exception, method_name: method_name, server_time: server_time, execution_time: execution_time, ret: ret};})();'
+			s +
+			' window.method_name = method_name; window.server_time = server_time; window._exception = typeof(_exception)==="undefined"?null:_exception; window.execution_time = execution_time; return {_exception: _exception, method_name: method_name, server_time: server_time, execution_time: execution_time, ret: ret};})();'
 		);
 	};
 
-	this.processResult = async function(res) {
+	this.processResult = async function (res) {
 		if (!res || !res.Code || !res.StoredMethod) {
 			this.ActiveRequest = null;
 			return res;
@@ -408,26 +409,25 @@ function ServiceRouter() {
 			// more than we can wait, we return a reference to the result
 			console.log(
 				'We cannot wait ' +
-					Math.floor(timeout / 1000) +
-					' seconds. Returning result.'
+				Math.floor(timeout / 1000) +
+				' seconds. Returning result.'
 			);
 			return res;
 		}
 		console.log(
 			'Making the next call in ' +
-				Math.floor(timeout / 1000) +
-				' seconds.'
+			Math.floor(timeout / 1000) +
+			' seconds.'
 		);
 
-		await new Promise(resolve => setTimeout(resolve, timeout));
+		await new Promise((resolve) => setTimeout(resolve, timeout));
 		if (!this.ActiveRequest) {
 			console.log('No ActiveRequest, exiting...');
 			return null;
 		}
 		try {
 			let ret = await $.ajax({
-				url:
-					'/method/a.ashx?name=ContentManager.cmsMethodResultFind&p0={Code}' +
+				url: '/method/a.ashx?name=ContentManager.cmsMethodResultFind&p0={Code}' +
 					res.Code +
 					'{/Code}{Id}' +
 					res.Id +
@@ -446,7 +446,7 @@ function ServiceRouter() {
 		}
 	};
 
-	this.processResponse = function(readyState, callBack, responseText, url) {
+	this.processResponse = function (readyState, callBack, responseText, url) {
 		if ([4, 44].indexOf(readyState) == -1) return;
 
 		var sMethodName = this.$_REQUEST('name', url);
@@ -472,7 +472,7 @@ function ServiceRouter() {
 
 			if (_ret.server_time)
 				this.timeDifference =
-					new Date().getTime() - _ret.server_time.getTime();
+				new Date().getTime() - _ret.server_time.getTime();
 
 			if (_ret._exception) {
 				this.ShowDebug(_exception.Message);
@@ -494,14 +494,14 @@ function ServiceRouter() {
 				) {
 					this.ShowError(
 						'Mismatch in Method between server and client:\nServer Method Name: ' +
-							_ret.method_name +
-							'\nClient Method Name: ' +
-							sMethodName
+						_ret.method_name +
+						'\nClient Method Name: ' +
+						sMethodName
 					);
 				}
 				(
 					this.fLoadingEnd ||
-					function() {
+					function () {
 						window.sr.resetCursor();
 					}
 				)();
@@ -521,7 +521,7 @@ function ServiceRouter() {
 		return null;
 	};
 
-	this.isObject = function(o) {
+	this.isObject = function (o) {
 		return (
 			o != null &&
 			typeof o == 'object' &&
@@ -530,118 +530,118 @@ function ServiceRouter() {
 		);
 	};
 
-	this._toJS = function(o) {
+	this._toJS = function (o) {
 		if (o == null) return 'null';
 
 		var s = '';
 		switch (typeof o) {
-			case 'string':
+		case 'string':
+			s +=
+				'"' +
+				this.myReplace(
+					this.escapeString(o),
+					['": ,'],
+					['": null,']
+				) +
+				'"';
+			break;
+		case 'number':
+			s += o;
+			break;
+		case 'boolean':
+			s += o ? 'true' : 'false';
+			break;
+		case 'object':
+			// Date
+			if (o.constructor.toString().indexOf('function Date()') > -1) {
+				var year = o.getFullYear().toString();
+				//var month = (o.getMonth() + 1).toString(); month = (month.length == 1) ? "0" + month : month;
+				var month = o.getMonth().toString();
+				month = month.length == 1 ? '0' + month : month;
+				var date = o.getDate().toString();
+				date = date.length == 1 ? '0' + date : date;
+				var hours = o.getHours().toString();
+				hours = hours.length == 1 ? '0' + hours : hours;
+				var minutes = o.getMinutes().toString();
+				minutes = minutes.length == 1 ? '0' + minutes : minutes;
+				var seconds = o.getSeconds().toString();
+				seconds = seconds.length == 1 ? '0' + seconds : seconds;
+				var milliseconds = o.getMilliseconds().toString();
+				var tzminutes = Math.abs(o.getTimezoneOffset());
+				var tzhours = 0;
+				while (tzminutes >= 60) {
+					tzhours++;
+					tzminutes -= 60;
+				}
+				tzminutes =
+					tzminutes.toString().length == 1 ?
+					'0' + tzminutes.toString() :
+					tzminutes.toString();
+				tzhours =
+					tzhours.toString().length == 1 ?
+					'0' + tzhours.toString() :
+					tzhours.toString();
+				var timezone =
+					(o.getTimezoneOffset() < 0 ? '+' : '-') +
+					tzhours +
+					':' +
+					tzminutes;
 				s +=
-					'"' +
-					this.myReplace(
-						this.escapeString(o),
-						['": ,'],
-						['": null,']
-					) +
-					'"';
-				break;
-			case 'number':
-				s += o;
-				break;
-			case 'boolean':
-				s += o ? 'true' : 'false';
-				break;
-			case 'object':
-				// Date
-				if (o.constructor.toString().indexOf('function Date()') > -1) {
-					var year = o.getFullYear().toString();
-					//var month = (o.getMonth() + 1).toString(); month = (month.length == 1) ? "0" + month : month;
-					var month = o.getMonth().toString();
-					month = month.length == 1 ? '0' + month : month;
-					var date = o.getDate().toString();
-					date = date.length == 1 ? '0' + date : date;
-					var hours = o.getHours().toString();
-					hours = hours.length == 1 ? '0' + hours : hours;
-					var minutes = o.getMinutes().toString();
-					minutes = minutes.length == 1 ? '0' + minutes : minutes;
-					var seconds = o.getSeconds().toString();
-					seconds = seconds.length == 1 ? '0' + seconds : seconds;
-					var milliseconds = o.getMilliseconds().toString();
-					var tzminutes = Math.abs(o.getTimezoneOffset());
-					var tzhours = 0;
-					while (tzminutes >= 60) {
-						tzhours++;
-						tzminutes -= 60;
+					'new Date(' +
+					year +
+					',' +
+					month +
+					',' +
+					date +
+					',' +
+					hours +
+					',' +
+					minutes +
+					',' +
+					seconds +
+					',' +
+					milliseconds +
+					')';
+			}
+			// Array
+			else if (o.constructor.toString().indexOf('Array()') > -1) {
+				s += '[';
+				for (var p in o) {
+					s += '';
+					if (!isNaN(p)) {
+						// linear array
+						s += this._toJS(o[p]);
+					} else {
+						// associative array
+						s += '{"' + p + '": ' + this._toJS(o[p]) + '}';
 					}
-					tzminutes =
-						tzminutes.toString().length == 1
-							? '0' + tzminutes.toString()
-							: tzminutes.toString();
-					tzhours =
-						tzhours.toString().length == 1
-							? '0' + tzhours.toString()
-							: tzhours.toString();
-					var timezone =
-						(o.getTimezoneOffset() < 0 ? '+' : '-') +
-						tzhours +
-						':' +
-						tzminutes;
-					s +=
-						'new Date(' +
-						year +
-						',' +
-						month +
-						',' +
-						date +
-						',' +
-						hours +
-						',' +
-						minutes +
-						',' +
-						seconds +
-						',' +
-						milliseconds +
-						')';
+					s += ', ';
 				}
-				// Array
-				else if (o.constructor.toString().indexOf('Array()') > -1) {
-					s += '[';
-					for (var p in o) {
-						s += '';
-						if (!isNaN(p)) {
-							// linear array
-							s += this._toJS(o[p]);
-						} else {
-							// associative array
-							s += '{"' + p + '": ' + this._toJS(o[p]) + '}';
-						}
-						s += ', ';
-					}
-					s += ']';
+				s += ']';
+			}
+			// Object or custom function
+			else {
+				s += '{';
+				for (var p in o) {
+					s += '"' + p + '": ' + this._toJS(o[p]) + ', ';
 				}
-				// Object or custom function
-				else {
-					s += '{';
-					for (var p in o) {
-						s += '"' + p + '": ' + this._toJS(o[p]) + ', ';
-					}
-					if (s.lastIndexOf(', ') == s.length - 2)
-						s = s.substring(0, s.length - 2);
-					s += '}';
-				}
-				break;
-			case 'function':
-				// functions are not working, ILLEGAL TOKEN....
-				//s += "\""+this.escapeString(o.toString())+"\"";
-				s += 'null';
-				break;
-			default:
-				s += 'null';
+				if (s.lastIndexOf(', ') == s.length - 2)
+					s = s.substring(0, s.length - 2);
+				s += '}';
+			}
+			break;
+		case 'function':
+			// functions are not working, ILLEGAL TOKEN....
+			//s += "\""+this.escapeString(o.toString())+"\"";
+			s += 'null';
+			break;
+		default:
+			s += 'null';
 		}
 		return s;
 	};
 
-	this.escapeString = function(text) {
+	this.escapeString = function (text) {
 		if (!arguments.callee.sRE) {
 			var specials = [
 				'\r',
@@ -683,160 +683,166 @@ function ServiceRouter() {
 		return ret;
 	};
 
-	this._toXML = function(o, level) {
+	this._toXML = function (o, level) {
 		if (!level) level = 0;
 		var s = '';
 		if (o == null) return s;
 		switch (typeof o) {
-			case 'string':
-				s +=
-					'<![CDATA[' +
-					o /*.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")*/ +
-					']]>';
-				break;
-			case 'number':
-			case 'boolean':
-				s += o.toString();
-				break;
-			case 'object':
-				// Date
-				if (
-					o.constructor &&
-					o.constructor.toString().indexOf('function Date()') > -1
-				) {
-					var year = o.getFullYear().toString();
-					var month = (o.getMonth() + 1).toString();
-					month = month.length == 1 ? '0' + month : month;
-					var date = o.getDate().toString();
-					date = date.length == 1 ? '0' + date : date;
-					var hours = o.getHours().toString();
-					hours = hours.length == 1 ? '0' + hours : hours;
-					var minutes = o.getMinutes().toString();
-					minutes = minutes.length == 1 ? '0' + minutes : minutes;
-					var seconds = o.getSeconds().toString();
-					seconds = seconds.length == 1 ? '0' + seconds : seconds;
-					var milliseconds = o.getMilliseconds().toString();
-					var tzminutes = Math.abs(o.getTimezoneOffset());
-					var tzhours = 0;
-					while (tzminutes >= 60) {
-						tzhours++;
-						tzminutes -= 60;
-					}
-					tzminutes =
-						tzminutes.toString().length == 1
-							? '0' + tzminutes.toString()
-							: tzminutes.toString();
-					tzhours =
-						tzhours.toString().length == 1
-							? '0' + tzhours.toString()
-							: tzhours.toString();
-					var timezone =
-						(o.getTimezoneOffset() < 0 ? '+' : '-') +
-						tzhours +
-						':' +
-						tzminutes;
-					//s += year + "-" + month + "-" + date + "T" + hours + ":" + minutes + ":" + seconds + "." + milliseconds + timezone;
-					s +=
-						month +
-						'/' +
-						date +
-						'/' +
-						year +
-						' ' +
-						hours +
-						':' +
-						minutes +
-						':' +
-						seconds;
+		case 'string':
+			if (
+				o.match(
+					/^([A-Za-z0-9+\/]{4})*([A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{2}==)?$/g
+				)
+			) {
+				// already a base64, send as is
+				s += o;
+			} else {
+				s += '<![CDATA[' + o + ']]>';
+			}
+
+			break;
+		case 'number':
+		case 'boolean':
+			s += o.toString();
+			break;
+		case 'object':
+			// Date
+			if (
+				o.constructor &&
+				o.constructor.toString().indexOf('function Date()') > -1
+			) {
+				var year = o.getFullYear().toString();
+				var month = (o.getMonth() + 1).toString();
+				month = month.length == 1 ? '0' + month : month;
+				var date = o.getDate().toString();
+				date = date.length == 1 ? '0' + date : date;
+				var hours = o.getHours().toString();
+				hours = hours.length == 1 ? '0' + hours : hours;
+				var minutes = o.getMinutes().toString();
+				minutes = minutes.length == 1 ? '0' + minutes : minutes;
+				var seconds = o.getSeconds().toString();
+				seconds = seconds.length == 1 ? '0' + seconds : seconds;
+				var milliseconds = o.getMilliseconds().toString();
+				var tzminutes = Math.abs(o.getTimezoneOffset());
+				var tzhours = 0;
+				while (tzminutes >= 60) {
+					tzhours++;
+					tzminutes -= 60;
 				}
-				// Array
-				else if (
-					o.constructor &&
-					o.constructor.toString().indexOf('Array()') > -1
-				) {
+				tzminutes =
+					tzminutes.toString().length == 1 ?
+					'0' + tzminutes.toString() :
+					tzminutes.toString();
+				tzhours =
+					tzhours.toString().length == 1 ?
+					'0' + tzhours.toString() :
+					tzhours.toString();
+				var timezone =
+					(o.getTimezoneOffset() < 0 ? '+' : '-') +
+					tzhours +
+					':' +
+					tzminutes;
+				//s += year + "-" + month + "-" + date + "T" + hours + ":" + minutes + ":" + seconds + "." + milliseconds + timezone;
+				s +=
+					month +
+					'/' +
+					date +
+					'/' +
+					year +
+					' ' +
+					hours +
+					':' +
+					minutes +
+					':' +
+					seconds;
+			}
+			// Array
+			else if (
+				o.constructor &&
+				o.constructor.toString().indexOf('Array()') > -1
+			) {
+				for (var p in o) {
+					if (p == 'OPERATORS' || p == 'ORS') continue;
+					s += '<Object>';
+					if (!isNaN(p)) {
+						// linear array
+						if (o[p] == null) {
+							// null entry in the array
+							s += '<Id>0</Id>';
+						} else {
+							/function\s+(\w*)\s*\(/gi.exec(
+								o[p].constructor.toString()
+							);
+							var type = RegExp.$1;
+							switch (type) {
+							case '':
+								type = typeof o[p];
+							case 'String':
+								type = 'string';
+								break;
+							case 'Number':
+								type = 'int';
+								break;
+							case 'Boolean':
+								type = 'bool';
+								break;
+							case 'Date':
+								type = 'DateTime';
+								break;
+							}
+							s += this._toXML(o[p], level++);
+						}
+					} else {
+						// associative array
+						s +=
+							'<' +
+							p +
+							this.coop(o, p) +
+							'>' +
+							this._toXML(o[p], level++) +
+							'</' +
+							p +
+							'>';
+					}
+					s += '</Object>' + this.CRNL;
+				}
+			}
+			// Object or custom function
+			else {
+				if (o == null || o.Id == 0) {} else if (false && o.Id) {
+					// this is creating a problem, better send all the object
+					// do not send other data if we have a value for the Id
+					s += '<Id>' + this._toXML(o.Id, level++) + '</Id>';
+				} else {
 					for (var p in o) {
 						if (p == 'OPERATORS' || p == 'ORS') continue;
-						s += '<Object>';
-						if (!isNaN(p)) {
-							// linear array
-							if (o[p] == null) {
-								// null entry in the array
-								s += '<Id>0</Id>';
-							} else {
-								/function\s+(\w*)\s*\(/gi.exec(
-									o[p].constructor.toString()
-								);
-								var type = RegExp.$1;
-								switch (type) {
-									case '':
-										type = typeof o[p];
-									case 'String':
-										type = 'string';
-										break;
-									case 'Number':
-										type = 'int';
-										break;
-									case 'Boolean':
-										type = 'bool';
-										break;
-									case 'Date':
-										type = 'DateTime';
-										break;
-								}
-								s += this._toXML(o[p], level++);
-							}
-						} else {
-							// associative array
-							s +=
-								'<' +
-								p +
-								this.coop(o, p) +
-								'>' +
-								this._toXML(o[p], level++) +
-								'</' +
-								p +
-								'>';
-						}
-						s += '</Object>' + this.CRNL;
+						s +=
+							'<' +
+							p +
+							this.coop(o, p) +
+							this.OR(o, p) +
+							'>' +
+							this._toXML(o[p], level++) +
+							'</' +
+							p +
+							'>';
 					}
 				}
-				// Object or custom function
-				else {
-					if (o == null || o.Id == 0) {
-					} else if (false && o.Id) {
-						// this is creating a problem, better send all the object
-						// do not send other data if we have a value for the Id
-						s += '<Id>' + this._toXML(o.Id, level++) + '</Id>';
-					} else {
-						for (var p in o) {
-							if (p == 'OPERATORS' || p == 'ORS') continue;
-							s +=
-								'<' +
-								p +
-								this.coop(o, p) +
-								this.OR(o, p) +
-								'>' +
-								this._toXML(o[p], level++) +
-								'</' +
-								p +
-								'>';
-						}
-					}
-				}
-				break;
+			}
+			break;
 		}
 		return s;
 	};
 
-	this.OR = function(o, p) {
-		return o.ORS && o.ORS[p]
-			? " OR='" +
-					this.myReplace(o.ORS[p], ['<', '>'], ['&lt;', '&gt;']) +
-					"'"
-			: '';
+	this.OR = function (o, p) {
+		return o.ORS && o.ORS[p] ?
+			" OR='" +
+			this.myReplace(o.ORS[p], ['<', '>'], ['&lt;', '&gt;']) +
+			"'" :
+			'';
 	};
 
-	this.coop = function(o, p) {
+	this.coop = function (o, p) {
 		if (!o.OPERATORS || !o.OPERATORS[p]) {
 			return '';
 		}
@@ -847,7 +853,7 @@ function ServiceRouter() {
 		);
 	};
 
-	this.getXmlHTTP = function() {
+	this.getXmlHTTP = function () {
 		var x = null;
 		var activexmodes = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP']; //activeX versions to check for in IE
 		if (window.ActiveXObject) {
@@ -870,7 +876,7 @@ function ServiceRouter() {
 		return (window.xmlHTTP = x);
 	};
 
-	this.cacheResult = async function(request, textresponse) {
+	this.cacheResult = async function (request, textresponse) {
 		if (!this.bCacheResult) return;
 		request = request || this.ActiveRequest;
 
@@ -891,27 +897,27 @@ function ServiceRouter() {
 		var sMethod = this.$_REQUEST('name', request.URL);
 		sMethod = sMethod.substring(sMethod.lastIndexOf('.') + 1);
 		try {
-			var _usable = r => {
+			var _usable = (r) => {
 				var item =
 					r &&
 					r.hash == request.hash &&
 					r.URL == request.URL &&
 					r.TextResponse &&
 					(typeof r.Expires === 'undefined' ||
-						new Date(r.Expires) > new Date())
-						? r
-						: null;
+						new Date(r.Expires) > new Date()) ?
+					r :
+					null;
 				if (textresponse) {
 					item = item || request;
 					item.TextResponse = textresponse;
 					item.Expires = new Date(
 						new Date().getTime() +
-							parseFloat(
-								this.$_REQUEST('nCacheExpireHours') || 1
-							) *
-								60 *
-								60 *
-								1000
+						parseFloat(
+							this.nCacheExpireHours || this.$_REQUEST('nCacheExpireHours') || 1
+						) *
+						60 *
+						60 *
+						1000
 					);
 				}
 
@@ -953,9 +959,9 @@ function ServiceRouter() {
 				};
 				let record = await $.ajax(ajax(request.hash));
 				r =
-					record && record.length
-						? JSON.parse(record[0].value)
-						: null;
+					record && record.length ?
+					JSON.parse(record[0].value) :
+					null;
 				var item = _usable(r);
 
 				if (!item) {
@@ -977,8 +983,7 @@ function ServiceRouter() {
 				var ajax = (key, value, id) => {
 					var method = 'Find';
 					var ret = {
-						url:
-							'/method/a.ashx?name=ContentManager.cmsMethodResult',
+						url: '/method/a.ashx?name=ContentManager.cmsMethodResult',
 						processData: false,
 						type: 'POST',
 					};
@@ -990,7 +995,7 @@ function ServiceRouter() {
 							// new record
 							method = 'Insert';
 						}
-						ret.beforeSend = request => {
+						ret.beforeSend = (request) => {
 							request.setRequestHeader(
 								'Content-Type',
 								'multipart/form-data; boundary=--------------'
@@ -1017,9 +1022,8 @@ function ServiceRouter() {
 						var p0 = {
 							Code: (company ? company.Code + '-' : '') + key,
 							Completed: new Date(),
-							Date: this.ActiveRequest
-								? this.ActiveRequest.Date
-								: new Date(),
+							Date: this.ActiveRequest ?
+								this.ActiveRequest.Date : new Date(),
 							Result: item.TextResponse,
 							StoredMethod: {
 								Name: sMethod,
@@ -1038,8 +1042,8 @@ function ServiceRouter() {
 				try {
 					record = this.runScript(
 						'(() => { var ret = null; ' +
-							(await $.ajax(ajax(request.hash))) +
-							'return ret;})();'
+						(await $.ajax(ajax(request.hash))) +
+						'return ret;})();'
 					);
 					r = record ? JSON.parse(record.Result) : null;
 					var item = _usable(r);
@@ -1067,8 +1071,7 @@ function ServiceRouter() {
 				let res = null;
 				try {
 					res = await $.ajax({
-						url:
-							'https://arzhospital.github.io/' +
+						url: 'https://arzhospital.github.io/' +
 							company.Store +
 							'/' +
 							request.hash +
@@ -1116,11 +1119,11 @@ function ServiceRouter() {
 		}
 	};
 
-	this._ = async function(fun, callBack) {
+	this._ = async function (fun, callBack) {
 		if (this.s_ErrorMessages.length > 0) {
 			alert(
 				'The following errors were found in your data:\n' +
-					this.s_ErrorMessages
+				this.s_ErrorMessages
 			);
 			this.s_ErrorMessages = '';
 			return null;
@@ -1131,7 +1134,7 @@ function ServiceRouter() {
 		//var postData = "System.Collections.ArrayList ret = new System.Collections.ArrayList();"+this.CRNL;
 		(
 			this.fLoadingStart ||
-			function() {
+			function () {
 				if (document.body) document.body.style.cursor = 'wait';
 			}
 		)();
@@ -1172,12 +1175,9 @@ function ServiceRouter() {
 				PostData: postData,
 				Date: new Date(),
 				CallBack: callBack,
-				Company:
-					typeof company !== 'undefined' && company
-						? {
-								Code: company.Code,
-						  }
-						: null,
+				Company: typeof company !== 'undefined' && company ? {
+					Code: company.Code,
+				} : null,
 				TextResponse: null,
 				hash: hCode,
 			};
@@ -1189,9 +1189,9 @@ function ServiceRouter() {
 				var _theUrl =
 					(this.Store ||
 						'/store/' +
-							(window.company && window.company.Code
-								? window.company.Code + '/'
-								: '/')) +
+						(window.company && window.company.Code ?
+							window.company.Code + '/' :
+							'/')) +
 					hCode +
 					'.js?rand=' +
 					Math.random();
@@ -1207,9 +1207,9 @@ function ServiceRouter() {
 				if (!responseText) {
 					console.log(
 						'Live Mode, no response text for ' +
-							this.ActiveRequest.hash +
-							' - ' +
-							this.$_REQUEST('name', this.ActiveRequest.URL)
+						this.ActiveRequest.hash +
+						' - ' +
+						this.$_REQUEST('name', this.ActiveRequest.URL)
 					);
 					return null;
 				}
@@ -1240,9 +1240,9 @@ function ServiceRouter() {
 						} catch (e) {
 							this.ShowError(
 								'Error in Callback:\n\n' +
-									callBack +
-									'\n\n' +
-									e.message
+								callBack +
+								'\n\n' +
+								e.message
 							);
 						}
 					}
@@ -1272,7 +1272,7 @@ function ServiceRouter() {
 		}
 	};
 
-	this.promise = function(data, callBack) {
+	this.promise = function (data, callBack) {
 		if (!callBack || {}.toString.call(callBack) !== '[object Function]') {
 			return data;
 		}
@@ -1295,7 +1295,7 @@ function ServiceRouter() {
 		return p ? p.promise() : data;
 	};
 
-	this.sendXML = async function(url, postData, callBack) {
+	this.sendXML = async function (url, postData, callBack) {
 		if (!window.SR) window.SR = this;
 
 		if (window.jQuery) {
@@ -1314,7 +1314,7 @@ function ServiceRouter() {
 				if (this.bPost || postData.length > nMaxURLLength) {
 					ajax.url = url;
 					ajax.type = 'POST';
-					ajax.beforeSend = request => {
+					ajax.beforeSend = (request) => {
 						request.setRequestHeader(
 							'Content-Type',
 							'multipart/form-data; boundary=--------------'
@@ -1339,7 +1339,7 @@ function ServiceRouter() {
 			var xmlHTTP = this.getXmlHTTP();
 			if (!xmlHTTP) return false;
 			if (callBack != null) {
-				window.xmlHTTP.onreadystatechange = function() {
+				window.xmlHTTP.onreadystatechange = function () {
 					if (window.xmlHTTP.readyState == 4) {
 						if ($.when) {
 							$.when(
@@ -1349,7 +1349,7 @@ function ServiceRouter() {
 									window.xmlHTTP.responseText,
 									url
 								)
-							).then(result => window.SR.processResult(result));
+							).then((result) => window.SR.processResult(result));
 						} else {
 							window.SR.processResult(
 								window.SR.processResponse(
@@ -1372,7 +1372,7 @@ function ServiceRouter() {
 				); // fool cross-domain checking in chrome
 				window.xmlHTTP.send(
 					'POSTDATA=\r\n' /*+ "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\r\n"*/ +
-						postData
+					postData
 				);
 			} else {
 				xmlHTTP.open(
@@ -1393,7 +1393,7 @@ function ServiceRouter() {
 							xmlHTTP.responseText,
 							_url
 						)
-					).then(result => {
+					).then((result) => {
 						return this.processResult(result);
 					});
 				} else {
@@ -1410,7 +1410,7 @@ function ServiceRouter() {
 		}
 	};
 
-	this._url = function(fun, filename) {
+	this._url = function (fun, filename) {
 		var args = Array();
 		for (var i = 2; i < arguments.length; i++) {
 			args[i - 2] = arguments[i];
@@ -1439,7 +1439,7 @@ function ServiceRouter() {
 		);
 	};
 
-	this._json = function(fun) {
+	this._json = function (fun) {
 		var args = Array();
 		for (var i = 1; i < arguments.length; i++) {
 			args[i - 1] = arguments[i];
@@ -1458,7 +1458,7 @@ function ServiceRouter() {
 		);
 	};
 
-	this.myReplace = function(s, fc, rc) {
+	this.myReplace = function (s, fc, rc) {
 		if (typeof s !== 'string') return s;
 
 		var ret = '';
@@ -1474,7 +1474,7 @@ function ServiceRouter() {
 		return ret;
 	};
 
-	this.runCode = function(csCode, jsCode, pXML, callBack) {
+	this.runCode = function (csCode, jsCode, pXML, callBack) {
 		// avoid using this please
 		var postData = 'StoredMethod m = new StoredMethod();' + this.CRNL;
 		postData +=
@@ -1495,7 +1495,7 @@ function ServiceRouter() {
 		this.sendXML(this.srURL + '&code=true', postData, callBack);
 	};
 
-	this.Get = function(url, callBack) {
+	this.Get = function (url, callBack) {
 		if (!callBack) {
 			// synchronous mode
 			if (!window.jQuery) {
@@ -1520,14 +1520,14 @@ function ServiceRouter() {
 					type: 'GET',
 					url: url,
 					processData: false,
-					success: data => callBack(data),
-					error: err => callBack(null),
+					success: (data) => callBack(data),
+					error: (err) => callBack(null),
 				});
 			}
 		}
 	};
 
-	this.Post = function(
+	this.Post = function (
 		url,
 		callBack,
 		postData,
@@ -1558,7 +1558,7 @@ function ServiceRouter() {
 				for (var i = 0; i < headers.length; i++)
 					xmlHTTP.setRequestHeader(headers[i].key, headers[i].value);
 
-			xmlHTTP.onreadystatechange = function() {
+			xmlHTTP.onreadystatechange = function () {
 				if (window.xmlHTTP.readyState == 4 && callBack) {
 					callBack(window.xmlHTTP.responseText);
 				}
@@ -1567,7 +1567,7 @@ function ServiceRouter() {
 		}
 	};
 
-	this.hashCode = function(s) {
+	this.hashCode = function (s) {
 		var hash = 0,
 			i,
 			chr,
@@ -1581,21 +1581,28 @@ function ServiceRouter() {
 		return hash;
 	};
 
-	this.toHex = function(s) {
+	this.toHex = function (s) {
 		if (typeof s !== 'string') return s;
 
-		var ret = '';
-		for (var i = 0; i < Math.min(s.length, nMaxURLLength); i++) {
-			var c = s.charAt(i);
-			var hex = this.ascii_value(c)
-				.toString(16)
-				.toString();
-			ret += hex + '-';
+		var arr1 = [];
+		for (var n = 0, l = s.length; n < l; n++) {
+			var hex = Number(s.charCodeAt(n)).toString(16);
+			arr1.push(hex);
 		}
-		return ret;
+		return arr1.join('');
+
+		if (false) {
+			var ret = '';
+			for (var i = 0; i < Math.min(s.length, nMaxURLLength); i++) {
+				var c = s.charAt(i);
+				var hex = this.ascii_value(c).toString(16).toString();
+				ret += hex + '-';
+			}
+			return ret;
+		}
 	};
 
-	this.ascii_value = function(c) {
+	this.ascii_value = function (c) {
 		// restrict input to a single character
 		c = c.charAt(0);
 
@@ -1621,35 +1628,35 @@ function ServiceRouter() {
 	/**
 	 * Date Functions
 	 */
-	this.daysDiff = function(d2, d1) {
+	this.daysDiff = function (d2, d1) {
 		return Math.ceil((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
 	};
 
-	this.addMSeconds = function(o, ms) {
+	this.addMSeconds = function (o, ms) {
 		return new Date(o.getTime() + ms);
 	};
 
-	this.addSeconds = function(o, s) {
+	this.addSeconds = function (o, s) {
 		return this.addMSeconds(o, s * 1000);
 	};
 
-	this.addMinutes = function(o, m) {
+	this.addMinutes = function (o, m) {
 		return this.addSeconds(o, m * 60);
 	};
 
-	this.addHours = function(o, h) {
+	this.addHours = function (o, h) {
 		return this.addMinutes(o, h * 60);
 	};
 
-	this.addDays = function(o, d) {
+	this.addDays = function (o, d) {
 		return this.addHours(o, d * 24);
 	};
 
-	this.addYears = function(o, y) {
+	this.addYears = function (o, y) {
 		return this.addMonths(o, y * 12);
 	};
 
-	this.addMonths = function(o, m) {
+	this.addMonths = function (o, m) {
 		return new Date(
 			o.getFullYear(),
 			o.getMonth() + m,
@@ -1660,7 +1667,7 @@ function ServiceRouter() {
 		);
 	};
 
-	this.isDate = function(o) {
+	this.isDate = function (o) {
 		return (
 			o != null &&
 			o.constructor != null &&
@@ -1668,12 +1675,12 @@ function ServiceRouter() {
 		);
 	};
 
-	this.toShortDate = function(o) {
+	this.toShortDate = function (o) {
 		if (!this.isDate(o)) return ''; // avoid nulls
 		return o.getMonth() + 1 + '/' + o.getDate() + '/' + o.getFullYear();
 	};
 
-	this.toShortTime = function(o) {
+	this.toShortTime = function (o) {
 		if (!this.isDate(o)) return ''; // avoid nulls
 		var hours = '' + o.getHours(); //o.getHours()%12;
 		var minutes = '' + o.getMinutes();
@@ -1684,7 +1691,7 @@ function ServiceRouter() {
 		return hours + ':' + minutes + ':' + seconds; // + " " + (o.getHours()>=12?"PM":"AM");
 	};
 
-	this.toDateTime = function(o) {
+	this.toDateTime = function (o) {
 		if (!this.isDate(o)) return ''; // avoid nulls
 		return this.toShortDate(o) + ' ' + this.toShortTime(o);
 	};
@@ -1692,7 +1699,7 @@ function ServiceRouter() {
 	 * END: Date Functions
 	 */
 
-	this.setProperty = function(cid, s, prop, def) {
+	this.setProperty = function (cid, s, prop, def) {
 		if (!cid) return;
 		var o = $(cid);
 		if (!o) return;
@@ -1731,7 +1738,7 @@ function ServiceRouter() {
 	/**
 	 * Validation
 	 */
-	this.validNotNull = function(s) {
+	this.validNotNull = function (s) {
 		if (typeof s == 'string') {
 			return s && s.length > 0;
 		} else {
@@ -1739,11 +1746,11 @@ function ServiceRouter() {
 		}
 	};
 
-	this.validObject = function(o) {
+	this.validObject = function (o) {
 		return o != null;
 	};
 
-	this.validEmail = function(str) {
+	this.validEmail = function (str) {
 		var at = '@';
 		var dot = '.';
 		var lat = str.indexOf(at);
@@ -1769,7 +1776,7 @@ function ServiceRouter() {
 		}
 	};
 
-	this.validate = function(o, type, config) {
+	this.validate = function (o, type, config) {
 		if (typeof o == 'string') o = $(o);
 		var bAlert = true;
 		if (!o) return;
@@ -1840,7 +1847,7 @@ function ServiceRouter() {
 	 * END: Validation
 	 */
 
-	this.EnglishName = function(s) {
+	this.EnglishName = function (s) {
 		var ret = '';
 		for (var i = 0; i < s.length; i++) {
 			if (s[i] >= 'A' && s[i] <= 'Z') {
@@ -1856,13 +1863,13 @@ function ServiceRouter() {
 	};
 
 	/** Object Comparison **/
-	this.newObject = function() {
+	this.newObject = function () {
 		var ret = new Object();
 		ret.__OBJECTID = Math.random();
 		return ret;
 	};
 
-	this.Equals = function(o1, o2) {
+	this.Equals = function (o1, o2) {
 		if (o1 == o2) return true;
 
 		if (
@@ -1881,7 +1888,7 @@ function ServiceRouter() {
 	};
 	/** Object Comparison **/
 
-	this.serialize = function(_obj) {
+	this.serialize = function (_obj) {
 		try {
 			// Let Gecko browsers do this the easy way
 			if (
@@ -1895,44 +1902,44 @@ function ServiceRouter() {
 				// numbers, booleans, and functions are trivial:
 				// just return the object itself since its default .toString()
 				// gives us exactly what we want
-				case 'number':
-				case 'boolean':
-				case 'function':
-					return _obj;
-					break;
+			case 'number':
+			case 'boolean':
+			case 'function':
+				return _obj;
+				break;
 
 				// for JSON format, strings need to be wrapped in quotes
-				case 'string':
-					return "'" + _obj + "'";
-					break;
+			case 'string':
+				return "'" + _obj + "'";
+				break;
 
-				case 'object':
-					var str;
-					if (
-						_obj.constructor === Array ||
-						typeof _obj.callee !== 'undefined'
-					) {
-						str = '[';
-						var i,
-							len = _obj.length;
-						for (i = 0; i < len - 1; i++) {
-							str += this.serialize(_obj[i]) + ',';
-						}
-						str += this.serialize(_obj[i]) + ']';
-					} else {
-						str = '{';
-						var key;
-						for (key in _obj) {
-							str += key + ':' + this.serialize(_obj[key]) + ',';
-						}
-						str = str.replace(/\,$/, '') + '}';
+			case 'object':
+				var str;
+				if (
+					_obj.constructor === Array ||
+					typeof _obj.callee !== 'undefined'
+				) {
+					str = '[';
+					var i,
+						len = _obj.length;
+					for (i = 0; i < len - 1; i++) {
+						str += this.serialize(_obj[i]) + ',';
 					}
-					return str;
-					break;
+					str += this.serialize(_obj[i]) + ']';
+				} else {
+					str = '{';
+					var key;
+					for (key in _obj) {
+						str += key + ':' + this.serialize(_obj[key]) + ',';
+					}
+					str = str.replace(/\,$/, '') + '}';
+				}
+				return str;
+				break;
 
-				default:
-					return 'UNKNOWN';
-					break;
+			default:
+				return 'UNKNOWN';
+				break;
 			}
 		} catch (e) {
 			this.ShowDebug(e.message);

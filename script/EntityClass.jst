@@ -1,133 +1,289 @@
-class <%=c.Name.replace(/ /g, '_')%> {
+class <%=c.Name.replace(/ /g, '_')%> extends <%=scope%>.GenericServiceAPI {
+    <%c.Tool = c.Tool || {};%>
+    
     constructor(id) {
+        super(id);
         this.EntityClass = {
             Id: <%=c.Id%>,
             Name: "<%=c.Name%>",
         };
-
-        this.EntityValues = [];
+        
+        this.Scope = "<%=scope%>";
+        
         this.ValueEntities = [];
 
         this.Date = null;
-        this.Id = id;
+        if(id && typeof(this.Id)==="undefined") this.Id = id;
 
-        <% for(var i=0; i<c.EntityAttributes.length; i++){ var ea = c.EntityAttributes[i]; %>
-        /** start: setters and getters for <%=ea.Name%> **/
+        this.EntityValues = [];
+<%=$.map(c.EntityAttributes, ea => `
         this.EntityValues.push({
             EntityAttribute: {
-                Id: <%=ea.Id%>,
-                Name: "<%=ea.Name%>",
+                Id: ${ea.Id},
+                Name: "${ea.Name}",
                 EntityClass: {
-                    Id: <%=ea.EntityClass.Id%>
+                    Id: ${ea.EntityClass.Id}
                 },
             },
             OPERATORS: {}
         });
-        this.clear_<%=ea.Name.replace(/ /g, '_')%>();
-        <% } %>
+        this.clear_${ea.Name.replace(/ /g, '_')}();
+`).join('') %>
 
 
-        <% for(var i=0; i < c.TypedAttributes.length; i++){var ta = c.TypedAttributes[i];%>
-        this.clear_<%=ta.Name.replace(/ /g, '_')%>_<%=ta.EntityClass.Plural.replace(/ /g, '_')%>()
-        <% } %>
+<%=$.map(c.TypedAttributes, ta => `
+        this.clear_${ta.Name.replace(/ /g, '_')}_${ta.EntityClass.Plural.replace(/ /g, '_')}();
+`).join('') %>
     }
 
-    _revert(bSource) {
-        if (bSource) {
-            // revert from source data
-        } else {
-            // use EntityValues and ValueEntities to revert the attribute values
-            $.each(this.EntityValues, (_, ev) => {
-                var ea = ev.EntityAttribute;
-                try {
-                    var attrN = "";
-                    if (ea.IsBool) attrN = "Bool";
-                    if (ea.IsInt) attrN = "Int";
-                    if (ea.IsLong) attrN = "Long";
-                    if (ea.IsFloat) attrN = "Float";
-                    if (ea.IsString) attrN = "String";
-                    if (ea.IsText) attrN = "Text";
-                    if (ea.IsDate) attrN = "Date";
-                    if (ea.IsImage) attrN = "Image";
-                    if (ea.EntityType) attrN = "Object";
-                    this["_" + ea.Name.replace(/ /g, '_')] = ev[attrN + "Value"];
-                } catch (ex) {
-                    return true;
-                }
-                this["_" + ea.Name.replace(/ /g, '_') + "_set"] = true;
-            });
-
-            $.each($.grep(this.ValueEntities, ve => ve.ObjectValue), (_, ve) => {
-                var ea = ve.EntityAttribute;
-                this["_" + ea.Name.replace(/ /g, '_')] = ve.ObjectValue;
-                this["_" + ea.Name.replace(/ /g, '_') + "_set"] = true;
-            });
-        }
-    }
-
-    <% for(var i=0; i<c.EntityAttributes.length; i++){ var ea = c.EntityAttributes[i]; %>
-    <%=ea.Name.replace(/ /g, '_')%>(v, co, id) {
-        if (co) this._<%=ea.Name.replace(/ /g, '_')%>_coop = co;
-
-        var ev = this.EntityValue("<%=ea.Name%>");
-        if (!ev) return this;
-
-        if (id) ev.Id = id;
-
-        <%
-        var attrN = "";
-        if(ea.IsBool) attrN = "Bool";
-        if(ea.IsInt) attrN = "Int";
-        if(ea.IsLong) attrN = "Long";
-        if(ea.IsFloat) attrN = "Float";
-        if(ea.IsString) attrN = "String";
-        if(ea.IsText) attrN = "Text";
-        if(ea.IsDate) attrN = "Date";
-        if(ea.EntityType) attrN = "Object";
-        %>
-
-        var attr = "<%=attrN%>";
-        if (arguments.length) {
-            // a setter
-            this._<%=ea.Name.replace(/ /g, '_')%> = v;
-            <%
-    if(ea.EntityType){
-%>
-            ev[attr + "Value"] = ((v && v.toEntityObject) ? v.toEntityObject() : v);
-            <%
-    }else{
-%>
-            ev[attr + "Value"] = v;
-            if (co) ev.OPERATORS[attr + "Value"] = co;
+    _toSelectSQL(fields){
+        let sql = "select " + (fields || "<%=(c.EntityAttributes.find(ea => ea.Name.toLowerCase()=='id')?[]:['id']).concat($.map(c.EntityAttributes, ea => ea.Name.replace(/ /g, '_') + (ea.EntityType?'id':''))).join(',')%>") + " from <%=c.Name.replace(/ /g, '_')%> where 1=1";
+        <% $.each(c.EntityAttributes, (_, ea) => { %>
+        if(this._<%=ea.Name.replace(/ /g, '_')%>_set){
+            let v = this.<%=ea.Name.replace(/ /g, '_')%>();
+            let oper = (this._<%=ea.Name.replace(/ /g, '_')%>_coop || "LIKE");
+            if(v && v._toSelectSQL && !v.Id){
+                sql += " and <%=ea.Name.replace(/ /g, '_')%>id " + (this._<%=ea.Name.replace(/ /g, '_')%>_coop || "IN") + " (" + this.<%=ea.Name.replace(/ /g, '_')%>()._toSelectSQL("id") + ") ";
+            }else{
+                sql += " and <%=ea.Name.replace(/ /g, '_')%> " + oper + " ";
+                if(v == null){
+                    sql += "null";
+                }else{
+            <% if(ea.IsDate){ %>
+                sql += this.<%=ea.Name.replace(/ /g, '_')%>().toISOString();
+            <% }else{ %>
+                sql += "'" + (oper=="LIKE"?"%":"") + (this.<%=ea.Name.replace(/ /g, '_')%>()<%=(ea.IsBool?"?1:0":"")%>) + (oper=="LIKE"?"%":"") + "' ";
             <% } %>
-            this._<%=ea.Name.replace(/ /g, '_')%>_set = true;
-
-            // values were given, therefore a setter
-            return this;
-        } else {
-            return this._<%=ea.Name.replace(/ /g, '_')%>;
+                }
+            }
         }
-    }
+        <% }); %>
 
-    clear_<%=ea.Name.replace(/ /g, '_')%>() {
-        this._<%=ea.Name.replace(/ /g, '_')%>_set = false;
-        this._<%=ea.Name.replace(/ /g, '_')%> = null;
-        this._<%=ea.Name.replace(/ /g, '_')%>_coop = null;
+        <% $.each(c.TypedAttributes, (_, ta) => { var taName = ta.EntityClass.Plural.replace(/ /g, '_'); %>
+        if(this._<%=ta.Name.replace(" ", "_")%>_<%=taName%>_set){
+            sql += "and id in (" + this.<%=ta.Name.replace(/ /g, '_')%>_<%=taName%>().map(v => v._toSelectSQL(taName + "id")).join(',') + ")";
+        }
+        <% }); %>
+        
+        if(sql.endsWith("where 1=1")){
+            sql = sql.replace("where 1=1", "where 1=0");
+        }else{
+            sql = sql.replace("where 1=1 and ", "where ");
+        }
+        
+        //console.log(sql);
+
+        return sql;
+    }
+    
+	async _toEntityClasses(depth = 1, name, plural, inactive) {
+		this.EntityClasses = this.EntityClasses || [];
+		if (depth < 0) return;
+		if(this.EntityClasses.find(r => r.Name==name)) return;
+		
+		name = name || "<%=c.Name%>";
+		plural = plural || "<%=c.Plural%>";
+
+<% if(c.Tool.Name == "ServiceNow") {%>
+		    // go to parent first, if it exists
+		    let tbl = await <%=scope%>.servicenow.axios.get("https://" + <%=scope%>.servicenow.instance + ".service-now.com/api/now/table/sys_db_object?sysparm_query=name=" + name.replace(/ /g, '_')+"^super_class!=NULL", {
+                auth: {
+                    username: <%=scope%>.servicenow.username,
+                    password: <%=scope%>.servicenow.password,
+                }
+            });
+            let extTbl = null;
+            if(tbl.data.result.length){
+                // get parent fields
+                extTbl = await <%=scope%>.servicenow.axios.get(tbl.data.result[0].super_class.link, {
+                    auth: {
+                        username: <%=scope%>.servicenow.username,
+                        password: <%=scope%>.servicenow.password,
+                    }
+                });
+
+                await this._toEntityClasses(0, extTbl.data.result.name, extTbl.data.result.name + "s", inactive);
+            }
+            
+            let query = "name=" + name.replace(/ /g, '_') + "^element!=NULL^internal_type!=collection^ORinternal_type=NULL";
+            let res = await <%=scope%>.servicenow.axios.get("https://" + <%=scope%>.servicenow.instance + ".service-now.com/api/now/table/sys_dictionary?sysparm_query=" + query, {
+                auth: {
+                    username: <%=scope%>.servicenow.username,
+                    password: <%=scope%>.servicenow.password,
+                }
+            });
+
+            this.EntityClasses.push({
+                Name: name,
+				Plural: plural,
+				Active: inactive?false:true,
+				IsMain: this.EntityClasses.length?false:true,
+				Tool: {
+				    Name: "ServiceNow"
+				},
+				EntityAttributes: (extTbl?this.EntityClasses.find(c => c.Name==extTbl.data.result.name).EntityAttributes:[]).concat(res.data.result.map(function(f){
+					let ea = {
+						Name: f.element,
+						Active: inactive?false:true,
+					};
+					switch (f.internal_type.value) {
+					case "boolean":
+					    ea.IsBool = true;
+					    break;
+					case "integer":
+					    ea.IsInt = true;
+					    break;
+					case "glide_date_time":
+					    ea.IsDate = true;
+					    break;
+					case "GUID":
+					case "string":
+					case "choice":
+					    ea.IsString = true;
+					    break;
+					case "reference":
+						ea.EntityType = {
+							Name: f.reference.value
+						};
+						break;
+					default:
+						ea._type = f.internal_type.value;
+					}
+					return ea;
+				}))
+            });
+<% } else if(c.Tool.Name == "SalesForce") {%>
+			let fields = await resume.salesforce.db.describe(name.replace(/ /g, '_'));
+			fields = fields.fields;
+			if (!fields) return;
+			
+			this.EntityClasses.push({
+				Name: name,
+				Plural: plural,
+				IsMain: this.EntityClasses.length?false:true,
+				Tool: {
+				    Name: "SalesForce"
+				},
+				Active: inactive?false:true,
+				EntityAttributes: fields.map(function(f){
+					let ea = {
+						Name: f.type == "reference" ? f.name.slice(0, -2) : f.name,
+						Active: inactive?false:true,
+					};
+					switch (f.type) {
+					case "int":
+						ea.IsInt = true;
+						break;
+					case "string":
+					case "picklist":
+					case "id":
+					case "phone":
+					case "email":
+						ea.IsString = true;
+						break;
+					case "textarea":
+						ea.IsText = true;
+						break;
+					case "boolean":
+						ea.IsBool = true;
+						break;
+					case "datetime":
+						ea.IsDate = true;
+						break;
+					case "reference":
+						ea.EntityType = {
+							Name: f.referenceTo[0]
+						};
+						break;
+					default:
+						ea._sf_type = f.type;
+					}
+					return ea;
+				}),
+			});
+<% } %>
+
+        for await (const ea of this.EntityClasses[this.EntityClasses.length-1].EntityAttributes.filter(ea => ea.EntityType)){
+            if(this.EntityClasses.find(r => r.Name==ea.EntityType.Name)) continue;
+            
+            if(false) this.EntityClasses.push({
+                Name: ea.EntityType.Name,
+                Active: inactive?false:true,
+                IsMain: false,
+                Tool: this.EntityClasses[0].Tool,
+            });
+            await this._toEntityClasses(depth - 1, ea.EntityType.Name, ea.EntityType.Name + "s", inactive);
+        }
+	}
+
+    _toInsertSQL(fields){
+        let sql = "insert into <%=c.Name.replace(/ /g, '_')%> (";
+        let fNames = [];
+        let fValues = [];
+        if(this.Id){
+            fNames.push("id");
+            fValues.push("'" + this.Id + "'");
+        }
+        <% $.each(c.EntityAttributes, (_, ea) => { %>
+        if(((fields && fields.indexOf("<%=ea.Name%>")) || !fields) && this._<%=ea.Name.replace(/ /g, '_')%>_set){
+            let fValue = null;
+            <% if(ea.EntityType){%>
+            if(this._<%=ea.Name.replace(/ /g, '_')%>.Id){
+                fValue = this.<%=ea.Name.replace(/ /g, '_')%>().Id;
+            }
+            <% }else if(ea.IsBool){%>
+                fValue = this.<%=ea.Name.replace(/ /g, '_')%>()?1:0;
+            <% }else{ %>
+                fValue = this.<%=ea.Name.replace(/ /g, '_')%>();
+            <% } %>
+            
+            fValues.push("'" + fValue + "'");
+            fNames.push("<%=ea.Name.replace(/ /g, '_') + (ea.EntityType?'id':'')%>");
+        }
+        <% }); %>
+        
+        sql += fNames.join() + ") values (" + fValues.join() + ");";
+
+        return sql;
+    }
+    
+    _toTableSQL(fields){
+        let sql = `
+CREATE TABLE IF NOT EXISTS <%=c.Name.replace(/ /g, '_')%>(
+    <%=$.map(c.EntityAttributes, ea => `
+    ${ea.Name.replace(/ /g, '_') + (ea.EntityType?'id':'')} ${_FrEMD._sqlType(ea)}`).join(',\n')%>,
+    id CHAR(25) PRIMARY KEY
+);
+        
+        <%=$.map(c.EntityAttributes, ea => `ALTER TABLE ${c.Name.replace(/ /g, '_')} ALTER COLUMN ${ea.Name.replace(/ /g, '_') + (ea.EntityType?'id':'')} ${_FrEMD._sqlType(ea)};`).join('\n')%>
+        `;
+        
+<%=$.map($.grep(c.EntityAttributes, ea => ea.EntityType), ea => `
+        if(this._${ea.Name.replace(/ /g, '_')}_set) sql += this.${ea.Name.replace(/ /g, '_')}()._toTableSQL();
+`).join('')%>
+        return sql;
+    }
+    
+    _fromSQLTable(table, fields){
+        // table is a json array
+        <% $.each(c.EntityAttributes, (_, ea) => { %>
+        if((fields && fields.indexOf("<%=ea.Name.replace(/ /g, '_')%>")) || !fields){
+            this.<%=ea.Name.replace(/ /g, '_')%>(table["<%=ea.Name.replace(/ /g, '_')%>"]);
+        }
+        <% }); %>
+        
         return this;
     }
 
-    /** end: setters and getters for <%=ea.Name%> **/
-    <% } %>
-
-    <%
-for(var i=0; i < c.TypedAttributes.length; i++)
-{
+<%for(var i=0; i < c.TypedAttributes.length; i++){
     var ta = c.TypedAttributes[i];
 	var taName = ta.EntityClass.Plural.replace(/ /g, '_');
 %>
     /** start: setters and getters for <%=ta.Name%>_<%=taName%> **/
     <%=ta.Name.replace(/ /g, '_')%>_<%=taName%>(v) {
-        this._<%=ta.Name.replace(" ", "_")%>_<%=taName%> = v;
+        if(typeof(v)==="undefined") return this._<%=ta.Name.replace(" ", "_")%>_<%=taName%>;
+        
+        this._<%=ta.Name.replace(" ", "_")%>_<%=taName%> = Array.isArray(v)?v:[v];
         this._<%=ta.Name.replace(" ", "_")%>_<%=taName%>_set = true;
         return this;
     }
@@ -138,7 +294,199 @@ for(var i=0; i < c.TypedAttributes.length; i++)
     }
     /** end: setters and getters for <%=ta.Name.replace(/ /g, '_')%>_<%=taName%> **/
 
+<% } %>
+
+    _revert(bSource) {
+        if (bSource) {
+            // revert from source data
+        } else {
+            // use EntityValues and ValueEntities to revert the attribute values
+            $.each(this.EntityValues, (_, ev) => {
+                this["_" + ev.EntityAttribute.Name.replace(/ /g, '_')] = ev.EntityAttribute.EntityType?ev.ObjectValue:ev[_FrEMD._attr(ev.EntityAttribute) + "Value"];
+                this["_" + ev.EntityAttribute.Name.replace(/ /g, '_') + "_set"] = true;
+            });
+
+            $.each(this.ValueEntities, (_, ve) => {
+                //console.log(ve);
+                var ta = ve.EntityAttribute;
+            	var taName = ta.EntityClass.Plural.replace(/ /g, '_');
+
+                this["_" + ta.Name.replace(" ", "_") + "_" + taName] = ve.ObjectValue;
+                this["_" + ta.Name.replace(" ", "_") + "_" + taName + "_set"] = true;
+            });
+        }
+    }
+    
+    /* Start: Util functions */
+    ipAddress(){
+        return [].concat(...Object.values(require('os').networkInterfaces())).find((details) => details.family === 'IPv4' && !details.internal).address;
+    }
+    
+    objid(id, len){
+        var timestamp = ((id?Number(id):new Date().getTime()/10) | 0).toString(16);
+        return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => {
+            return ((id?id:Math.random()) * 16 | 0).toString(16);
+        }).toLowerCase().substring(0, len || 24);
+    }
+    
+    hasMongoDB(){
+        return typeof(<%=scope%>.mongodb)!=="undefined" && typeof(<%=scope%>.mongodb.MongoClient)!=="undefined";
+    }
+    
+    hasSqlDB(){
+        return typeof(<%=scope%>.sql)!=="undefined" && <%=scope%>.sql.type && typeof(<%=scope%>.sql[<%=scope%>.sql.type])!=="undefined";
+    }
+    
+    hasServiceNow(){
+        return typeof(<%=scope%>.servicenow)!=="undefined";
+    }
+    
+    hasRestDBIO(){
+        return typeof(<%=scope%>.restdbio)!=="undefined";
+    }
+    
+    hasSalesForce(){
+        return typeof(<%=scope%>.salesforce)!=="undefined";
+    }
+    
+    hasHubSpot(){
+        return typeof(<%=scope%>.hubspot)!=="undefined";
+    }
+
+    async DSConnect(){
+        try{
+<% if(c.Tool.Name=="MongoDB"){ %>
+            if(typeof(<%=scope%>.mongodb.db)==="undefined"){
+                const uri = `mongodb+srv://${<%=scope%>.mongodb.username}:${<%=scope%>.mongodb.password}@${<%=scope%>.mongodb.host}/${<%=scope%>.mongodb.database || '<%=scope%>'}?retryWrites=true&w=majority`;
+                let conn = await new <%=scope%>.mongodb.MongoClient(uri, { useNewUrlParser: true , useUnifiedTopology: true}).connect();
+                <%=scope%>.mongodb.db = conn.db(`${<%=scope%>.mongodb.database || '<%=scope%>'}`);
+            }
+<% } else if(c.Tool.Name=="SqlDB"){ %>
+            if(typeof(<%=scope%>.sql.db)==="undefined"){
+                if(<%=scope%>.sql[<%=scope%>.sql.type]["Database"]){
+                    <%=scope%>.sql.db = new <%=scope%>.sql[<%=scope%>.sql.type].Database(<%=scope%>.sql.database);
+                }
+            }
+<% } else if(c.Tool.Name=="SalesForce"){ %>
+            if(typeof(<%=scope%>.salesforce.conn)==="undefined"){
+                <%=scope%>.salesforce.db = new <%=scope%>.salesforce.jsforce.Connection({
+                    oauth2 : {
+                        clientId : <%=scope%>.salesforce.clientId,
+                        clientSecret : <%=scope%>.salesforce.clientSecret,
+                    }
+                });
+    
+                <%=scope%>.salesforce.userInfo = await <%=scope%>.salesforce.db.login(<%=scope%>.salesforce.username, <%=scope%>.salesforce.password);
+            }
+<% } else if(c.Tool.Name=="ServiceNow"){ %>
+            // loading some platform stuff
+            <%=scope%>.servicenow.sys_properties = <%=scope%>.servicenow.sys_properties || {};
+            let res = await <%=scope%>.servicenow.axios.get("https://" + <%=scope%>.servicenow.instance + ".service-now.com/api/now/table/sys_properties?sysparm_query=nameINglide.sys.time_format,glide.sys.date_format,glide.sys.default.tz", {
+                auth: {
+                        username: <%=scope%>.servicenow.username,
+                        password: <%=scope%>.servicenow.password,
+                }
+            });
+            if(res.data.result){
+                res.data.result.forEach(r => <%=scope%>.servicenow.sys_properties[r.name] = r.value);
+            }
+<% } %>
+        }catch(ex){
+            console.log("<%=c.Name%>.DSConnect(): " + ex);
+        }
+        return this;
+    }
+    /* End: Util functions */
+    
+    _fromDocument(obj){
+        if(!obj) return null;
+        if(obj._id){
+            this.Id = obj._id;
+        }
+
+<% for(const ea of c.EntityAttributes){ %>
+        if(obj.<%=ea.Name.replace(/ /g, '_')%>){
+    <% if(ea.EntityType){ %>
+            this.<%=ea.Name.replace(/ /g, '_')%>(new <%=scope%>.<%=ea.EntityType.Name.replace(/ /g, '_')%>()._fromDocument(obj.<%=ea.Name.replace(/ /g, '_')%>));
+    <% }else if(ea.IsDate){ %>
+            var dt = obj.<%=ea.Name.replace(/ /g, '_')%>;
+<% if(c.Tool.Name=="SqlDB"){ %>
+                if(typeof(<%=scope%>.moment)!=="undefined" && typeof(<%=scope%>.servicenow.sys_properties)!=="undefined"){
+                    console.log(dt);
+                    dt = <%=scope%>.moment.parseZone(dt, <%=scope%>.servicenow.sys_properties["glide.sys.date_format"] + " " + <%=scope%>.servicenow.sys_properties["glide.sys.time_format"], <%=scope%>.servicenow.sys_properties["glide.sys.default.tz"]).toDate();
+                }else{
+                    dt = new Date(Date.parse(dt + " GMT"));
+                }
+<% } else if(c.Tool.Name=="SalesForce"){ %>
+                console.log("<%=c.Name%>.<%=ea.Name%> from SF", dt);
+                dt = new Date(Date.parse(dt + " GMT"));
+<% } else { %>
+                dt = new Date(Date.parse(dt + " GMT"));
+<% } %>
+            this.<%=ea.Name.replace(/ /g, '_')%>(dt);
+    <% }else{ %>
+            this.<%=ea.Name.replace(/ /g, '_')%>(obj.<%=ea.Name.replace(/ /g, '_')%>);
     <% } %>
+        }
+<% } %>
+
+        return this;
+    }
+    
+    _toDocument(){
+        let ret = {
+            _id: this.Id || this.objid(),
+        };
+        
+<%=$.map(c.EntityAttributes, ea => `
+        if(this._${ea.Name.replace(/ /g, '_')}_set){
+            ret.${ea.Name.replace(/ /g, '_')} = this.${ea.Name.replace(/ /g, '_')}()${ea.EntityType?'._toDocument()':''};
+        }
+`).join('') %>
+        
+        return ret;
+    }
+
+<%=$.map(c.EntityAttributes, ea => `
+    /** start: setters and getters for ${ea.Name} **/
+    ${ea.Name.replace(/ /g, '_')}(v, co, id) {
+        if (co) this._${ea.Name.replace(/ /g, '_')}_coop = co;
+
+        var ev = this.EntityValue("${ea.Name}");
+        if (!ev){
+            return this;
+        }
+
+        if (id) ev.Id = id;
+
+        if (arguments.length) {
+            // a setter
+            this._${ea.Name.replace(/ /g, '_')} = v;
+` + (ea.EntityType?`
+            delete ev.ObjectValueid;
+            ev.ObjectValue = ((v && v.toEntityObject) ? v.toEntityObject() : v);
+`:`
+            ev.${_FrEMD._attr(ea)}Value = v;
+            if (co) ev.OPERATORS.${_FrEMD._attr(ea)}Value = co;
+`) + `
+            this._${ea.Name.replace(/ /g, '_')}_set = true;
+
+            // values were given, therefore a setter
+            return this;
+        } else {
+            return this.i18n(ev, this._${ea.Name.replace(/ /g, '_')});
+        }
+    }
+
+    clear_${ea.Name.replace(/ /g, '_')}() {
+        this._${ea.Name.replace(/ /g, '_')}_set = false;
+        this._${ea.Name.replace(/ /g, '_')} = null;
+        this._${ea.Name.replace(/ /g, '_')}_coop = null;
+        return this;
+    }
+
+    /** end: setters and getters for ${ea.Name} **/
+`).join('') %>
 
     async get(name) {
         if (!this.Id) return null;
@@ -172,8 +520,18 @@ for(var i=0; i < c.TypedAttributes.length; i++)
 
             if (!ev.ObjectValue) return null;
 
-            return new window[$.grep(window.EntityClasses, c => c.Id == ev.EntityAttribute.EntityTypeid)[0].Name.replace(/ /g, '_')](ev.ObjectValue.Id);
+            return new <%=scope%>[$.grep(<%=scope%>.EntityClasses, c => c.Id == ev.EntityAttribute.EntityTypeid)[0].Name.replace(/ /g, '_')](ev.ObjectValue.Id);
         });
+    }
+    
+    i18n(ev, v){
+        if(typeof(window)==="undefined" || typeof(window.i18n_store)==="undefined") return v;
+        
+        if(!ev.EntityAttribute.IsText && !ev.EntityAttribute.IsString){
+            return v;
+        }else{
+            return window.i18n_store[sr.hashCode(v)] = window.i18n_store[sr.hashCode(v)] || v;
+        }
     }
 
     Equals(obj) {
@@ -184,41 +542,46 @@ for(var i=0; i < c.TypedAttributes.length; i++)
         }
     }
 
-    <%
-for(var i=0; i<c.EntityAttributes.length; i++)
-{
-    var ea = c.EntityAttributes[i];
-	if(!ea.EntityType) continue;
-%>
-    by<%=ea.EntityType.Name.replace(/ /g, '_')%>(ar) {
+<%=$.map($.grep(c.EntityAttributes, ea => ea.EntityType), ea => `
+    by${ea.EntityType.Name.replace(/ /g, '_')}(ar) {
         var ret = [];
         for (var i = 0; i < ar.length; i++) {
             for (var j = 0; j < ret.length; j++) {
-                if (ar[i]["_<%=ea.Name.replace(/ /g, '_')%>]"] && ar[i]["_<%=ea.Name.replace(/ /g, '_')%>]"].Equals(ret[j])) {
-                    ret[j]._<%=ea.Name.replace(/ /g, '_')%>_<%=c.Plural.replace(/ /g, '_')%>.push(ar[i]);
+                if (ar[i]["_${ea.Name.replace(/ /g, '_')}"] && ar[i]["_${ea.Name.replace(/ /g, '_')}"].Equals(ret[j])) {
+                    ret[j]._${ea.Name.replace(/ /g, '_')}_${c.Plural.replace(/ /g, '_')}.push(ar[i]);
                 }
             }
         }
         return ret;
     }
-    <% } %>
+`).join('')%>
 
     toString() {
-        <%
-var _name = null;
-for(var i=0; i<c.EntityAttributes.length; i++)
-{
-    var ea = c.EntityAttributes[i];
-    if(ea.EntityType || !ea.IsString) continue;
-    if(_name==null) _name = ea;
-    if(_name && ea.Name=="name") _name=ea;
-}
+<%
+var sEas = $.grep(c.EntityAttributes, ea => !ea.EntityType && (ea.IsString || ea.IsText));
+var _name = sEas.find(ea => ea.Name=='name') || sEas.length?sEas[0]:null;
+if(_name){
 %>
         return this._<%=_name.Name.replace(" ", "_")%>;
+<%
+}else{
+%>
+        return _this.Id;
+<%
+}
+%>
     }
 
     EntityValue(aName) {
-        return $.merge($.merge([], this.EntityValues), this.ValueEntities).find(ev => ev.EntityAttribute.Name == aName);
+        let ret = [].concat(this.EntityValues, this.ValueEntities).find(ev => ev.EntityAttribute.Name == aName);
+        
+        if(!ret){
+            // an attribute that has yet no known entity value
+            ret = {Active: true, OPERATORS: {}, EntityAttribute: {Name: aName, Active: true, EntityClass: {Id: this.EntityClass.Id}}};
+            this.EntityValues.push(ret);
+        }
+        
+        return ret;
     }
 
     async find(depth = 1) {
@@ -226,58 +589,22 @@ for(var i=0; i<c.EntityAttributes.length; i++)
         return ret[0];
     }
 
-    async findAllValues(depth = 1) {
-        var _THIS = [{
-            EntityObject: this.toEntityObject(true)
-        }];
-        for (var i = 1; i <= depth; i++) {
-            _THIS.push({
-                Active: true,
-                EntityObject: {
-                    Active: true,
-                    ValueEntities: [_THIS[i - 1]]
-                }
-            });
-        }
-        
-        <% $.each(c.TypedAttributes, (_, ta) => {%>
-        _THIS.push({
-            EntityObject: new <%=ta.EntityClass.Name.replace(/ /g, '_')%>().<%=ta.Name.replace(/ /g, '_')%>(this).toEntityObject(true)
-        });
-        _THIS.push({
-            EntityObject: {
-                Active: true,
-                ValueEntities: [{
-                    EntityObject: new <%=ta.EntityClass.Name.replace(/ /g, '_')%>().<%=ta.Name.replace(/ /g, '_')%>(this).toEntityObject(true)
-                }]
-            }
-        });
-        <% }); %>
-
-        let evs = await sr._("EnterpriseManager.emsEntityValueFindall", null, {
-            THIS: _THIS
-        });
-
+    _asObjects(evs){
         $.each(evs, (_, ev) => {
-            $.each(window.EntityClasses, (_, c) => {
-                ev.EntityAttribute = $.merge($.merge([], c.EntityAttributes), c.TypedAttributes).find(ea => ea.Id == ev.EntityAttribute.Id) || ev.EntityAttribute;
+            $.each(<%=scope%>.EntityClasses, (_, c) => {
+                ev.EntityAttribute = [].concat(c.EntityAttributes, c.TypedAttributes).find(ea => ea.Id == ev.EntityAttribute.Id) || ev.EntityAttribute;
             });
             ev.EntityObject.EntityClass = ev.EntityAttribute.EntityClass;
         });
 
-        return evs;
-    }
-
-    async findAll(depth = 1) {
-        let evs = await this.findAllValues(depth);
-
         var obj = [];
         $.each(sr.groupBy(evs, "EntityObject"), (_, evg) => {
             //console.log(evg);
-            obj = $.merge(obj, $.map($.grep(window.EntityClasses, c => c.Id == evg.key.EntityClass.Id), ec => {
-                var c = new window[ec.Name.replace(/ /g, '_')]();
-                c.EntityValues = $.grep(evg.values, ev => !ev.ObjectValue);
-                c.ValueEntities = $.grep(evg.values, ev => ev.ObjectValue);
+            obj.push(...$.map($.grep(<%=scope%>.EntityClasses, c => c.Id == evg.key.EntityClass.Id), ec => {
+                var c = new <%=scope%>[ec.Name.replace(/ /g, '_')]();
+                //console.log(ec.Name, evg.values);
+                c.EntityValues = evg.values;
+                c.ValueEntities = [];
                 c.EntityClass = ec;
                 c.Id = evg.key.Id;
                 c._revert();
@@ -286,7 +613,9 @@ for(var i=0; i<c.EntityAttributes.length; i++)
         });
 
         $.each($.grep(evs, ev => ev.ObjectValue), (_, ev) => {
-            ev.ObjectValue = obj.find(o => o.Id == ev.ObjectValue.Id);
+            var _f = obj.find(o => o.Id == ev.ObjectValue.Id);
+            if(_f) _f.ValueEntities.push(ev);
+            ev.ObjectValue = _f;
         });
         $.each($.grep(evs, ev => ev.EntityObject), (_, ev) => {
             ev.EntityObject = obj.find(o => o.Id == ev.EntityObject.Id);
@@ -306,73 +635,514 @@ for(var i=0; i<c.EntityAttributes.length; i++)
 
         return ret;
     }
-
-    async insert() {
-        return sr._("EnterpriseManager.emsEntityObjectInsert", null, this.toEntityObject());
-    }
-
-    async update() {
-        return sr._("EnterpriseManager.emsEntityObjectUpdate", null, this.toEntityObject());
-    }
-
-    toEntityObject(bQuery) {
-            var ret = new Object();
-            if (this.Date) ret.Date = this.Date;
-            if (this.Id) ret.Id = this.Id;
-
-            ret.OPERATORS = new Object();
-            <%
-for(var i=0; i<c.EntityAttributes.length; i++)
-{
-    var ea = c.EntityAttributes[i];
-%>
-            //if (this._<%=ea.Name.replace(/ /g, '_')%>_set) ret.OPERATORS.<%=ea.Name.replace(/ /g, '_')%> = this._<%=ea.Name.replace(/ /g, '_')%>_coop;
-            <% } %>
-
-            ret.EntityClass = this.EntityClass;
-
-            ret.EntityValues = [];
-            ret.OPERATORS.EntityValues = "INTERSECT";
-
-            ret.ValueEntities = [];
-            ret.OPERATORS.ValueEntities = "INTERSECT";
-            if (bQuery) {
-                // return only set EntityValues
-                <%
-for(var i=0; i<c.EntityAttributes.length; i++)
-{
-    var ea = c.EntityAttributes[i];
-%>
-                if (this._<%=ea.Name.replace(/ /g, '_')%>_set) {
-                    ret.EntityValues.push(this.EntityValue("<%=ea.Name%>"));
+    
+    _buildThis(depth=1){
+        let _class = {Active: true, Company: {Active: true, Enabled: true, EntityClasses: [this.EntityClass]}};
+        var ret = [{
+            Active: true,
+            //EntityAttribute: {Active: true, EntityClass: _class},
+            EntityObject: this.toEntityObject(true),
+        }];
+        for (var i = 1; i <= depth; i++) {
+            ret.push({
+                Active: true,
+                EntityAttribute: {Active: true, EntityClass: _class},
+                EntityObject: {
+                    Active: true,
+                    EntityClass: _class,
+                    ValueEntities: [ret[i - 1]]
                 }
-                <%}%>
-    		}else{
-    		    ret.EntityValues = this.EntityValues;
-    		}
-<%
-for(var i=0; i<c.TypedAttributes.length; i++)
-{
-    var ta = c.TypedAttributes[i];
-%>
-                if (this._<%=ta.Name.replace(" ", "_")%>_<%=taName%>_set) {
-                    ret.ValueEntities.push(...this._<%=ta.Name.replace(" ", "_")%>_<%=taName%>.map(o => {
-                        return {
-                            Active: true,
-                            EntityAttribute: {
-                                Id: <%=ta.Id%>
-                            },
-                            EntityObject: o.toEntityObject(bQuery)
-                        };
-                    }));
-                    $.each(ret.ValueEntities, (_, ve) => {
-                        ve.EntityObject.EntityValues = ve.EntityObject.EntityValues.filter(ev => {
-                            return ev.EntityAttribute.Id != <%=ta.Id%>;
-                        });
+            });
+        }
+        
+<%=$.map(c.TypedAttributes, ta => `
+        if(depth>1){
+            ret.push({
+                Active: true,
+                EntityAttribute: {Active: true, EntityClass: _class},
+                EntityObject: new ${scope}.${ta.EntityClass.Name.replace(/ /g, '_')}().${ta.Name.replace(/ /g, '_')}(this).toEntityObject(true)
+            });
+    
+            ret.push({
+                EntityObject: {
+                    Active: true,
+                    EntityClass: _class,
+                    ValueEntities: [{
+                        Active: true,
+                        EntityAttribute: {Active: true, EntityClass: _class},
+                        EntityObject: new ${scope}.${ta.EntityClass.Name.replace(/ /g, '_')}().${ta.Name.replace(/ /g, '_')}(this).toEntityObject(true)
+                    }]
+                }
+            });
+        }
+`).join('')%>
+        
+        return ret;
+    }
+    
+    _sql(sql){
+        return new Promise((resolve, reject) => {
+            let db = (<%=scope%>.sql || <%=scope%>.salesforce).db;
+            if (db["query"]) {
+                db.query(sql, (err, ret, fields) => {
+                    if(err) return reject(err);
+                    resolve(ret);
+                });
+            } else if (db["all"]) {
+                // sqlite
+                if(sql.toLowerCase().indexOf("select ")==0){
+                    // select query
+                    db.all(sql, [], (err, ret) => {
+                        if(err){
+                            console.log(`
+While Sending Query SQL:
+${sql}
+    
+ERROR:
+${err}
+`);
+                            return reject(null);
+                        }
+                        resolve(ret);
+                    });
+                }else{
+                    // DML
+                    db.run(sql, [], function(err){
+                        if(err){
+                            console.log(`
+While Sending MOD SQL:
+${sql}
+    
+ERROR:
+${err}
+`);
+                            return reject(null);
+                        }
+                        resolve(this);
                     });
                 }
-                <%}%>
+            }
+        });
+    }
+    
+    _atob(a){
+        return typeof(atob)==="undefined"?Buffer.from(a).toString('base64'):atob(a);
+    }
+    
+    _btoa(b){
+        return typeof(btoa)==="undefined"?Buffer.from(b, 'base64').toString():btoa(unescape(encodeURIComponent(a)));
+    }
+    
+    async sync() {
+        return (await this.find() || await this.store());
+    }
 
+    async store() {
+        let ret = null;
+<% if(c.Tool.Name == "ServiceNow") {%>
+        if(this._sys_id || this.Id){
+<% }else{ %>
+        if(this.Id){
+<% } %>
+            ret = await this.update();
+        }else{
+            ret = await this.insert();
+        }
+        return ret;
+    }
+
+    async insert() {
+<% if(c.Tool.Name == "MongoDB") {%>
+            let _this = this._toDocument();
+            let id = _this._id;
+            delete _this._id;
+            let ret = await <%=scope%>.mongodb.db.collection("<%=c.Name.replace(/ /g, '_')%>").replaceOne({"_id": id}, _this, {upsert: true});
+            ret.ops._id = id;
+            return this._fromDocument(ret.ops);
+<% } else if(c.Tool.Name == "SqlDB") {%>
+            if(!this.Id) this.Id = this.objid();
+<%=$.map($.grep(c.EntityAttributes, ea => ea.EntityType), ea => `
+            if(this._${ea.Name.replace(/ /g, '_')}_set){
+                let _ins = await this._${ea.Name.replace(/ /g, '_')}.store();
+                this._${ea.Name.replace(/ /g, '_')}.Id = _ins.Id;
+            }
+`).join('')%>
+
+            let ret = await this._sql(this._toInsertSQL());
+<%=$.map(c.EntityAttributes, ea => `
+            if(typeof(ret["${ea.Name.replace(/ /g, '_') + (ea.EntityType?'id':'')}"])!=="undefined") this.${ea.Name.replace(/ /g, '_')}(ret["${ea.Name.replace(/ /g, '_') + (ea.EntityType?'id':'')}"]);
+`).join('')%> 
+            return this;
+<% } else if(c.Tool.Name == "SalesForce") {%>
+<% $.each($.grep(c.EntityAttributes, ea => ea.EntityType), (_, ea) => {%>
+            if(this._<%=ea.Name.replace(/ /g, '_')%>_set){
+                let _ins = await this._<%=ea.Name.replace(/ /g, '_')%>.sync();
+
+    <% $.each(ea.EntityType.EntityAttributes, (_, _ra) => {%>
+                    this._<%=ea.Name.replace(/ /g, '_')%>.<%=_ra.Name.replace(/ /g, '_')%>(_ins.<%=_ra.Name.replace(/ /g, '_')%>());
+    <% }); %>
+            }
+<% }); %>
+
+            let obj = {};
+<% $.each(c.EntityAttributes, (_, ea) => {%>
+            if(this._<%=ea.Name.replace(/ /g, '_')%>_set){
+    <% if(ea.EntityType){ %>
+                obj.<%=ea.Name.replace(/ /g, '_')%> = this._<%=ea.Name.replace(/ /g, '_')%>.Id;
+    <% }else{ %>
+                obj.<%=ea.Name.replace(/ /g, '_')%> = this.<%=ea.Name.replace(/ /g, '_')%>();
+    <% } %>
+            }
+<% }); %>
+
+            console.log("Sending to SF", obj);
+
+            let res = await <%=scope%>.salesforce.db.sobject("<%=c.Name.replace(/ /g, '_')%>").create(obj);
+            this.Id = res.id;
+            return this;
+<% } else if(c.Tool.Name == "ServiceNow") {%>
+            try{
+    <% $.each($.grep(c.EntityAttributes, ea => ea.EntityType), (_, ea) => {%>
+                if(this._<%=ea.Name.replace(/ /g, '_')%>_set && this.<%=ea.Name.replace(/ /g, '_')%>()){
+                    let _ins = await this.<%=ea.Name.replace(/ /g, '_')%>().sync();
+    
+        <% $.each(ea.EntityType.EntityAttributes, (_, _ra) => {%>
+                        this._<%=ea.Name.replace(/ /g, '_')%>.<%=_ra.Name.replace(/ /g, '_')%>(_ins.<%=_ra.Name.replace(/ /g, '_')%>());
+        <% }); %>
+                }
+    <% }); %>
+    
+                let obj = {};
+    <% $.each(c.EntityAttributes, (_, ea) => {%>
+                if(this._<%=ea.Name.replace(/ /g, '_')%>_set && this.<%=ea.Name.replace(/ /g, '_')%>()){
+        <% if(ea.EntityType){ %>
+                    obj.<%=ea.Name.replace(/ /g, '_')%> = this.<%=ea.Name.replace(/ /g, '_')%>()._sys_id;
+        <% }else{ %>
+                    obj.<%=ea.Name.replace(/ /g, '_')%> = this.<%=ea.Name.replace(/ /g, '_')%>();
+        <% } %>
+                }
+    <% }); %>
+    
+                console.log("<%=c.Name%>.insert(): Sending to SN", obj);
+                let ret = await <%=scope%>.servicenow.axios.post("https://" + <%=scope%>.servicenow.instance + ".service-now.com/api/now/table/<%=c.Name.replace(/ /g, '_').toLowerCase()%>", obj, {
+                    auth: {
+                        username: <%=scope%>.servicenow.username,
+                        password: <%=scope%>.servicenow.password,
+                    }
+                });
+                return this._fromDocument(ret.data.result);
+            }catch(ex){
+                console.log("Error inserting to SN: " + ex.message);
+            }
+<% } else if(c.Tool.Name == "RestDBIO") {%>
+            try{
+<% $.each($.grep(c.EntityAttributes, ea => ea.EntityType), (_, ea) => {%>
+                if(this._<%=ea.Name.replace(/ /g, '_')%>_set){
+                    let _ins = await this._<%=ea.Name.replace(/ /g, '_')%>.sync();
+
+    <% $.each(ea.EntityType.EntityAttributes, (_, _ra) => {%>
+                    this._<%=ea.Name.replace(/ /g, '_')%>.<%=_ra.Name.replace(/ /g, '_')%>(_ins.<%=_ra.Name.replace(/ /g, '_')%>());
+    <% }); %>
+                }
+<% }); %>
+
+                let obj = {};
+<% $.each(c.EntityAttributes, (_, ea) => {%>
+                if(this._<%=ea.Name.replace(/ /g, '_')%>_set){
+    <% if(ea.EntityType){ %>
+                    obj.<%=ea.Name.replace(/ /g, '_')%> = this.<%=ea.Name.replace(/ /g, '_')%>()._id();
+    <% }else{ %>
+                    obj.<%=ea.Name.replace(/ /g, '_')%> = this.<%=ea.Name.replace(/ /g, '_')%>();
+    <% } %>
+                }
+<% }); %>
+
+                console.log("Sending to RESTDBIO to save");
+                console.log(obj);
+
+                let url = "https://" + <%=scope%>.restdbio.database + ".restdb.io/rest/<%=c.Name.replace(/ /g, '-').toLowerCase()%>";
+                let res = await <%=scope%>.restdbio.axios.post(url, obj, {
+                    headers: {
+                        "cache-control": "no-cache",
+                        "x-apikey": <%=scope%>.restdbio.apikey,
+                        "content-type": "application/json",
+                    }
+                });
+
+                console.log("insert() result");
+                console.log(res.data);
+                return this._fromDocument(res.data);
+            }catch(ex){
+                console.log(ex);
+            }
+<% } else {%>
+            return sr._("EnterpriseManager.emsEntityObjectInsert", null, this.toEntityObject());
+<% } %>
+    }
+    
+    async update() {
+        let _idField = "Id";
+<% if(c.Tool.Name == "ServiceNow") {%>
+        _idField = "sys_id";
+<% }else if(c.Tool.Name=="RestDBIO") {%>
+        _idField = "_id";
+<% } %>
+        let obj = {};
+<% $.each(c.EntityAttributes, (_, ea) => {%>
+        if(this._<%=ea.Name.replace(/ /g, '_')%>_set && typeof(this.<%=ea.Name.replace(/ /g, '_')%>())!=="undefined"){
+    <% if(ea.EntityType){ %>
+            if(this.<%=ea.Name.replace(/ /g, '_')%>()[_idField]){
+                obj.<%=ea.Name.replace(/ /g, '_')%> = this.<%=ea.Name.replace(/ /g, '_')%>()[_idField]();
+            }else{
+                obj.<%=ea.Name.replace(/ /g, '_')%> = this.<%=ea.Name.replace(/ /g, '_')%>().Id;
+            }
+    <% }else{ %>
+            obj.<%=ea.Name.replace(/ /g, '_')%> = this.<%=ea.Name.replace(/ /g, '_')%>();
+    <% } %>
+        }
+<% }); %>
+
+<% if(c.Tool.Name == "MongoDB") {%>
+        let ret = await <%=scope%>.mongodb.db.collection("<%=c.Name.replace(/ /g, '_')%>").replaceOne({
+            "_id": this.Id,
+        }, this._toDocument());
+        return this._fromDocument(ret.ops);
+<% } else if(c.Tool.Name == "SqlDB") {%>
+        // update recursively, then find again without recursion
+<%=$.map($.grep(c.EntityAttributes, ea => ea.EntityType), ea => `
+        if(this._${ea.Name.replace(/ /g, '_')}_set){
+            await this._${ea.Name.replace(/ /g, '_')}.store();
+        }
+`).join('')%>
+
+        let ret = await this._sql(this._toUpdateSQL());
+            
+<%=$.map(c.EntityAttributes, ea => `
+        if(typeof(ret["${ea.Name.replace(/ /g, '_') + (ea.EntityType?'id':'')}"])!=="undefined") this.${ea.Name.replace(/ /g, '_')}(ret["${ea.Name.replace(/ /g, '_') + (ea.EntityType?'id':'')}"]);
+`).join('')%>
+        return this;
+<% } else if(c.Tool.Name == "ServiceNow") {%>
+        let ret = await <%=scope%>.servicenow.axios.put("https://" + <%=scope%>.servicenow.instance + ".service-now.com/api/now/table/<%=c.Name.replace(/ /g, '_').toLowerCase()%>/" + this.sys_id(), obj, {
+            auth: {
+                username: <%=scope%>.servicenow.username,
+                password: <%=scope%>.servicenow.password,
+            }
+        });
+        return this._fromDocument(ret.data.result);
+<% } else if(c.Tool.Name == "RestDBIO") {%>
+        try{
+
+
+            console.log("Sending to RESTDBIO to save");
+            console.log(obj);
+
+            let url = "https://" + <%=scope%>.restdbio.database + ".restdb.io/rest/<%=c.Name.replace(/ /g, '-').toLowerCase()%>/" + this._id();
+            let res = await <%=scope%>.restdbio.axios.put(url, obj, {
+                headers: {
+                    "cache-control": "no-cache",
+                    "x-apikey": <%=scope%>.restdbio.apikey,
+                    "content-type": "application/json",
+                }
+            });
+
+            console.log("insert() result");
+            console.log(res.data);
+            return this._fromDocument(res.data);
+        }catch(ex){
+            console.log(ex);
+        }
+<% } else {%>
+        return sr._("EnterpriseManager.emsEntityObjectUpdate", null, this.toEntityObject());
+<% } %>
+    }
+    
+    async findAll(depth = 1, objs, start, end) {
+        let ret = [];
+<% if(c.Tool.Name == "MongoDB") {%>
+        let ret = await <%=scope%>.mongodb.db.collection("<%=c.Name.replace(/ /g, '_')%>").find(this._toDocument());
+        console.log(ret);
+<% } else if(c.Tool.Name == "SqlDB") {%>
+        ret = await this._sql(this._toSelectSQL());
+<% } else if(c.Tool.Name == "SalesForce") {%>
+        let res = await this._sql(this._toSelectSQL());
+        ret = res.records.map(r => {
+            let o = new <%=scope%>.<%=c.Name.replace(/ /g, '_')%>();
+<% $.each(c.EntityAttributes, (_, ea) => { %>
+    <% if(ea.EntityType){ %>
+            if(r.<%=ea.Name.replace(/ /g, '_')%>Id){
+                try{
+                    o.<%=ea.Name.replace(/ /g, '_')%>(new <%=scope%>.<%=ea.EntityType.Name.replace(/ /g, '_')%>().Id(r.<%=ea.Name.replace(/ /g, '_')%>Id, "="));
+                }catch(ex){
+                }
+            }
+    <% } else { %>
+            if(r.<%=ea.Name.replace(/ /g, '_')%>){
+                try{
+                    o.<%=ea.Name.replace(/ /g, '_')%>(r.<%=ea.Name.replace(/ /g, '_')%>);
+                }catch(ex){
+                }
+            }
+    <% } %>
+                
+<% }); %>
+            return o;
+        });
+<% } else if(c.Tool.Name == "HubSpot") {%>
+        try{
+        }catch(ex){
+        }
+<% } else if(c.Tool.Name == "ServiceNow") {%>
+        try{
+            let conditions = [];
+<% $.each(c.EntityAttributes, (_, ea) => { %>
+            if(this._<%=ea.Name.replace(/ /g, '_')%>_set){
+    <% if(ea.IsDate){ %>
+                conditions.push("<%=ea.Name.replace(/ /g, '_')%>" + (this._<%=ea.Name.replace(/ /g, '_')%>_coop || '=') + this.<%=ea.Name.replace(/ /g, '_')%>().toISOString().replace(/\.[0-9]*Z/g, ''));
+    <% }else{ %>
+                conditions.push("<%=ea.Name.replace(/ /g, '_')%>" + (this._<%=ea.Name.replace(/ /g, '_')%>_coop || '=') + this.<%=ea.Name.replace(/ /g, '_')%>());
+    <% } %>
+            }
+<% }); %>
+
+            let url = "https://" + <%=scope%>.servicenow.instance + ".service-now.com/api/now/table/<%=c.Name.replace(/ /g, '_').toLowerCase()%>?sysparm_query=" + conditions.join('^') + (end?("&sysparm_limit="+end):"");
+            //console.log(url);
+            let res = await <%=scope%>.servicenow.axios.get(url, {
+                auth: {
+                    username: <%=scope%>.servicenow.username,
+                    password: <%=scope%>.servicenow.password,
+                }
+            });
+                
+            //console.log("GOT from SN", res.data.result);
+
+            // change into an array of <%=c.Name%>
+            ret = res.data.result.map(r => {
+                r._id = r.sys_id;
+<% $.each($.grep(c.EntityAttributes, ea => ea.EntityType), (_, ea) => {%>
+                if(r.<%=ea.Name.replace(/ /g, '_')%>){
+                    r.<%=ea.Name.replace(/ /g, '_')%>.sys_id = r.<%=ea.Name.replace(/ /g, '_')%>.value;
+                }
+<% }); %>
+                return new <%=scope%>.<%=c.Name.replace(/ /g, '_')%>()._fromDocument(r);
+            });
+        }catch(ex){
+            console.log(ex);
+        }
+<% } else if(c.Tool.Name == "RestDBIO") {%>
+        try{
+            let conditions = {};
+<%=$.map(c.EntityAttributes, ea => `
+            if(this._${ea.Name.replace(/ /g, '_')}_set){
+                conditions.${ea.Name.replace(/ /g, '_')} = this.${ea.Name.replace(/ /g, '_')}();
+            }
+`).join('')%>
+
+            let url = "https://" + <%=scope%>.restdbio.database + ".restdb.io/rest/<%=c.Name.replace(/ /g, '-').toLowerCase()%>?q=" + JSON.stringify(conditions);
+            let res = await <%=scope%>.restdbio.axios.get(url, {
+                headers: {
+                    "cache-control": "no-cache",
+                    "x-apikey": <%=scope%>.restdbio.apikey,
+                }
+            });
+
+            console.log("findAll got");
+            console.log(res.data);
+            ret = res.data.map(r => new <%=scope%>.<%=c.Name.replace(/ /g, '_')%>()._fromDocument(r));
+        }catch(ex){
+            console.log(ex);
+        }
+<% } else {%>
+        return this._asObjects(await sr._("EnterpriseManager.emsEntityValueFindall", null, {
+            THIS: objs?objs.map(obj => {
+                return obj.toEntityObject?{
+                    Active: true,
+                    EntityObject: obj.toEntityObject(true),
+                }:obj;
+            }):this._buildThis(depth),
+        }));
+<% } %>
+
+        if(depth>1){
+            for await (const r of ret){
+<% $.each($.grep(c.EntityAttributes, ea => ea.EntityType), (_, ea) => { %>
+                if(r.<%=ea.Name.replace(/ /g, '_')%>()){
+                    r.<%=ea.Name.replace(/ /g, '_')%>(await r.<%=ea.Name.replace(/ /g, '_')%>().find(depth));
+                }
+<% }); %>
+            }
+        }
+        
+        return ret;
+    }
+    
+    toEntityObject(bQuery) {
+        var ret = new Object();
+        if (this.Date) ret.Date = this.Date;
+        if (this.Id) ret.Id = this.Id;
+        ret.Active = true;
+
+        ret.OPERATORS = new Object();
+<%=$.map(c.EntityAttributes, ea => `
+        //if (this._${ea.Name.replace(/ /g, '_')}_set) ret.OPERATORS.${ea.Name.replace(/ /g, '_')} = this._${ea.Name.replace(/ /g, '_')}_coop;
+`).join('') %>
+
+        ret.EntityClass = this.EntityClass;
+
+        ret.EntityValues = [];
+        ret.OPERATORS.EntityValues = "INTERSECT";
+
+        ret.ValueEntities = [];
+        ret.OPERATORS.ValueEntities = "INTERSECT";
+        if (bQuery) {
+            // return only set EntityValues
+<%=$.map(c.EntityAttributes, ea => `
+            if (this._${ea.Name.replace(/ /g, '_')}_set) {
+                let ev = this.EntityValue("${ea.Name}");
+                ret.EntityValues.push(ev);
+                if(${ea.EntityType!=null} && this._${ea.Name.replace(/ /g, '_')}.toEntityObject){
+                    ev.ObjectValue = this._${ea.Name.replace(/ /g, '_')}.toEntityObject(true);
+                }
+            }
+`).join('') %>
+    	}else{
+    	    ret.EntityValues = this.EntityValues;
+    	}
+
+<%=$.map(c.TypedAttributes, ta => `
+        if (this._${ta.Name.replace(" ", "_")}_${ta.EntityClass.Plural.replace(/ /g, '_')}_set) {
+            let o = this._${ta.Name.replace(" ", "_")}_${ta.EntityClass.Plural.replace(/ /g, '_')};
+            ret.ValueEntities.push(...this._${ta.Name.replace(" ", "_")}_${ta.EntityClass.Plural.replace(/ /g, '_')}.map(o => {
+                return {
+                    Active: true,
+                    EntityAttribute: {
+                        Active: true,
+                        EntityClass: {
+                            Active: true,
+                            Id: ${ta.EntityClass.Id},
+                        },
+                    },
+                    EntityObject: o.toEntityObject?o.toEntityObject(bQuery):{Id: o.Id},
+                };
+            }));
+        }
+`).join('') %>
+
+		if(!bQuery){
+            // saving the object, avoid circular references
+            ret.EntityValues.filter(ev => ev.Id).forEach(ev => {
+                delete ev.EntityObject;
+                delete ev.EntityAttribute;
+            });
+            ret.ValueEntities.filter(ve => ve.Id).forEach(ve => {
+                delete ve.EntityObject;
+                delete ve.EntityAttribute;
+            });
+            if(ret.Id && ret.EntityClass) delete ret.EntityClass;
+		}
 		return ret;
 	}
 }
+
+<%if(c.IsMain){%>
+<%=GenericServiceAPI.js%>
+<%}%>
