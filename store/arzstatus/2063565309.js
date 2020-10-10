@@ -1,8 +1,8 @@
 var method_name = "CorporateMeasures.comGroupViewFind";
 
-var server_time = new Date(2020, 10-1, 8, 17, 39, 21);
+var server_time = new Date(2020, 10-1, 10, 7, 19, 52);
 
-var execution_time = 2.692866;
+var execution_time = 2.518133;
 
 
 ret = new Object();

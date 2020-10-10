@@ -1,8 +1,8 @@
 var method_name = "EnterpriseManager.emsEntityValueFindall";
 
-var server_time = new Date(2020, 10-1, 8, 17, 37, 39);
+var server_time = new Date(2020, 10-1, 10, 7, 18, 19);
 
-var execution_time = 2.682483;
+var execution_time = 3.062839;
 
 
 var ret = new Array();
