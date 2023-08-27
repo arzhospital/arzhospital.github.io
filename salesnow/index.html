@@ -1,1 +1,1 @@
-<html><head><script>var xhr = new XMLHttpRequest();xhr.onreadystatechange = () => (xhr.readyState === 4 && xhr.status === 200)?eval(atob(JSON.parse(xhr.responseText).content)):null;xhr.open('GET', 'Content/apiserver.json', true);xhr.send();</script></head><body><ul id="LogHTML">HTML Node Testing...</div></body></html>
+<script>fetch('${ct.__config('path.read') + ct._fileName()}?__random='+Math.random()').then(async response => eval(atob((await response.json()).content)))</script>
