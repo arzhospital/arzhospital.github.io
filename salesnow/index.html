@@ -1,1 +1,1 @@
-<script>fetch('${ct.__config('path.read') + ct._fileName()}?__random='+Math.random()').then(async response => eval(atob((await response.json()).content)))</script>
+<script>fetch('Content/apiserver.json').then(async response => eval(atob((await response.json()).content)))</script>
