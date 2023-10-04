@@ -1,17 +1,17 @@
 {
-		    name: 'Fadi Nammour',
-		    code: 'fadi',
-		    title: 'Dr.',
-		    gender: {
-		        code: 'M',
-		        name: 'Male',
-		    },
-		    maritalStatus: {
-		        code: 'M',
-		        name: 'Married',
-		    },
-		    location: {
-		        code: 'GER',
-		        name: 'Germany',
-		    },
-		}
+  "name": "Fadi Nammour",
+  "code": "fadi",
+  "title": "Dr.",
+  "gender": {
+    "code": "M",
+    "name": "Male"
+  },
+  "maritalStatus": {
+    "code": "M",
+    "name": "Married"
+  },
+  "location": {
+    "code": "GER",
+    "name": "Germany"
+  }
+}
