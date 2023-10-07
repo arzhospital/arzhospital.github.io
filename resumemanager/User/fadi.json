@@ -1,0 +1,36 @@
+{
+	"__id": "0a9f3013-fba8-4d3f-aecb-8e9cc2627cd9",
+	"active": true,
+	"enabled": true,
+	"code": "fadi",
+	"date": "2023-10-07T17:22:26.923Z",
+	"name": "Fadi Nammour",
+	"title": "Dr.",
+	"gender": {
+		"__id": "4454aead-ec6c-46af-a254-71ccbc026598",
+		"active": true,
+		"enabled": true,
+		"code": "M",
+		"date": "2023-10-07T17:22:27.202Z",
+		"name": "Male"
+	},
+	"location": {
+		"__id": "88e9a1e8-10c3-4e35-8cc0-ba89c1ebf19c",
+		"active": true,
+		"enabled": true,
+		"code": "GER",
+		"date": "2023-10-07T17:22:28.079Z",
+		"name": "Germany"
+	},
+	"maritalStatus": {
+		"__id": "9a8e515a-5d1b-437b-a607-6c7dd8ab146c",
+		"active": true,
+		"enabled": true,
+		"code": "M",
+		"date": "2023-10-07T17:22:29.032Z",
+		"name": "Married"
+	},
+	"user_User_Skills": [
+		{}
+	]
+}
