@@ -1,0 +1,49 @@
+{
+	"__id": "216f270b-7442-4119-8297-9774d9a9f72c",
+	"active": true,
+	"enabled": true,
+	"code": "fadi",
+	"date": "2023-10-07T13:24:10.547Z",
+	"name": "Fadi Nammour",
+	"title": "Dr.",
+	"gender": {
+		"__id": "d505e908-b6d6-449e-8d5c-af9adb0f9877",
+		"active": true,
+		"enabled": true,
+		"code": "M",
+		"date": "2023-10-07T13:24:10.912Z",
+		"name": "Male"
+	},
+	"location": {
+		"__id": "aad717e4-7eb6-4ffb-a7eb-c0f673845b66",
+		"active": true,
+		"enabled": true,
+		"code": "GER",
+		"date": "2023-10-07T13:24:12.191Z",
+		"name": "Germany"
+	},
+	"maritalStatus": {
+		"__id": "16d03c45-f4c8-4165-b772-4ffb3dc18420",
+		"active": true,
+		"enabled": true,
+		"code": "M",
+		"date": "2023-10-07T13:24:13.315Z",
+		"name": "Married"
+	},
+	"user_User_Skills": [
+		{
+			"percentage": "20",
+			"skill": {
+				"code": "JS",
+				"name": "Javascript",
+				"type": {
+					"code": "HS",
+					"name": "Hard Skill"
+				}
+			}
+		}
+	],
+	"user_User_Skills9": [
+		null
+	]
+}
