@@ -1,12 +1,12 @@
 {
-	"__id": "0eb37476-d9bf-410c-b324-8f7bbf581aae",
+	"__id": "e789419fe2fbba1e29c0a53014de12020524c61b",
 	"active": true,
 	"enabled": true,
 	"code": "JS",
-	"date": "2023-10-05T10:26:13.191Z",
+	"date": "2023-10-07T03:18:06.868Z",
 	"name": "Javascript",
 	"type": {
-		"__id": "c09ba847-7378-4a42-8f89-13a4081ac3fb",
+		"__id": "b46c8790-0898-4ca3-a193-c38ba07e48a8",
 		"name": "Hard Skill"
 	}
 }
