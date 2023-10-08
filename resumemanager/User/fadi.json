@@ -1,9 +1,9 @@
 {
-	"__id": "4129379a-8803-481a-9e98-67534f947adc",
+	"__id": "4dc2ca93d4b2c79674bb35899dd5725056878275",
 	"active": true,
 	"enabled": true,
 	"code": "fadi",
-	"date": "2023-10-08T11:52:14.194Z",
+	"date": "2023-10-08T16:04:00.223Z",
 	"name": "Fadi Nammour",
 	"title": "Dr.",
 	"gender": {
@@ -14,6 +14,9 @@
 	},
 	"maritalStatus": {
 		"code": "M"
+	},
+	"template": {
+		"code": "TEMP05"
 	},
 	"user_User_Skills": [
 		{
