@@ -1,22 +1,9 @@
 {
-	"__id": "9c729974-1d05-4ad9-bfdb-536881241e67",
+	"__id": "74b59488eff234914d03dc11a2c99c64adb52812",
 	"code": "fadi-JS",
 	"name": "Fadi Nammour-Javascript",
 	"percentage": "20",
 	"skill": {
-		"__id": "3b8cb0e5-bfa2-4723-a7ee-ef3822028d70",
-		"active": true,
-		"enabled": true,
-		"code": "JS",
-		"date": "2023-10-07T17:22:30.329Z",
-		"name": "Javascript",
-		"type": {
-			"__id": "85c27af8-5f8b-4edb-8aa6-a36e59acd748",
-			"active": true,
-			"enabled": true,
-			"code": "HS",
-			"date": "2023-10-07T17:22:30.573Z",
-			"name": "Hard Skill"
-		}
+		"code": "JS"
 	}
 }
