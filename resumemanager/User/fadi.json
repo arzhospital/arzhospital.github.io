@@ -1,23 +1,12 @@
 {
-	"__id": "67249c1532ff6ebe9711bedff9ae374523f07826",
+	"__id": "9231ef2f6f6e9aaa074e7968670ac68f5a7ac133",
 	"active": true,
 	"enabled": true,
 	"code": "fadi",
-	"date": "2023-10-08T05:45:22.719Z",
+	"date": "2023-10-08T05:47:00.315Z",
 	"name": "Fadi Nammour",
 	"title": "Dr.",
 	"gender": {
 		"code": "M"
-	},
-	"location": {
-		"code": "GER"
-	},
-	"maritalStatus": {
-		"code": "M"
-	},
-	"user_User_Skills": [
-		{
-			"code": "fadi-JS"
-		}
-	]
+	}
 }
