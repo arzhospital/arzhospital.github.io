@@ -1,0 +1,12 @@
+{
+	"__id": "ed1883ae-1348-41e4-8c6e-f31b41211c67",
+	"active": true,
+	"enabled": true,
+	"code": "SNINT-fadi",
+	"date": "2023-10-09T10:36:36.311Z",
+	"name": "SNINT-fadi",
+	"percentage": "100",
+	"skill": {
+		"code": "SNINT"
+	}
+}
