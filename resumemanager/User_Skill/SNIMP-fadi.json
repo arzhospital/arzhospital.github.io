@@ -1,0 +1,12 @@
+{
+	"__id": "018714a7-cb0d-4ec2-8d9e-a43654209bf6",
+	"active": true,
+	"enabled": true,
+	"code": "SNIMP-fadi",
+	"date": "2023-10-09T10:36:36.347Z",
+	"name": "SNIMP-fadi",
+	"percentage": "100",
+	"skill": {
+		"code": "SNIMP"
+	}
+}
