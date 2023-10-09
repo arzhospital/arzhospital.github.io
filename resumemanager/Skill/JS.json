@@ -1,10 +1,16 @@
 {
-	"__id": "9da74e1e6287802155abc40f67dc5ff94b03bbc3",
+	"__id": "50af68ebb9dd44bbe80df2904ee6c3ab3bdfaef7",
 	"active": true,
 	"enabled": true,
 	"code": "JS",
-	"date": "2023-10-08T16:04:03.995Z",
+	"date": "2023-10-09T10:36:36.388Z",
 	"name": "Javascript",
+	"discipline": {
+		"code": "CSC"
+	},
+	"industry": {
+		"code": "IT"
+	},
 	"type": {
 		"code": "HS"
 	}
