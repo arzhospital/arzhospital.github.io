@@ -1,0 +1,17 @@
+{
+	"__id": "9c619dd0-64b2-4bdb-9a3f-60c000d10778",
+	"active": true,
+	"enabled": true,
+	"code": "SNINT",
+	"date": "2023-10-09T10:36:36.320Z",
+	"name": "ServiceNow Integrations",
+	"discipline": {
+		"code": "CSC"
+	},
+	"industry": {
+		"code": "IT"
+	},
+	"type": {
+		"code": "HS"
+	}
+}
