@@ -1,0 +1,17 @@
+{
+	"__id": "495adf62-0acd-4d31-adb7-7ca4025b2023",
+	"active": true,
+	"enabled": true,
+	"code": "SNIMP",
+	"date": "2023-10-09T10:36:36.355Z",
+	"name": "ServiceNow Implementations",
+	"discipline": {
+		"code": "CSC"
+	},
+	"industry": {
+		"code": "IT"
+	},
+	"type": {
+		"code": "HS"
+	}
+}
