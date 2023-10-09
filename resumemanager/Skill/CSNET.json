@@ -1,9 +1,9 @@
 {
-	"__id": "658795fc-4357-4258-ba05-a02ecb67fa7a",
+	"__id": "1037df9b74c05e93d03ddacda4f568f23406f48c",
 	"active": true,
 	"enabled": true,
 	"code": "CSNET",
-	"date": "2023-10-09T10:36:36.421Z",
+	"date": "2023-10-09T20:04:52.808Z",
 	"name": "C# DotNet",
 	"discipline": {
 		"code": "CSC"
