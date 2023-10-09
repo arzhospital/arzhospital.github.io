@@ -1,9 +1,9 @@
 {
-	"__id": "927be18016b632dcc0b7d681114f30de8cbc7a71",
+	"__id": "b6d087b554c21d901fe8256a43a378afb6d143df",
 	"active": true,
 	"enabled": true,
 	"code": "fadi",
-	"date": "2023-10-09T20:02:01.123Z",
+	"date": "2023-10-09T20:04:45.535Z",
 	"name": "Fadi Nammour",
 	"remark": "Challenges in the modern heterogeneous IT environment dictate a skill-focused mentality to compensate for the fast-moving pace of changes. Teams can achieve a significant edge in the industry through the addition of individuals that are highly educated with a long experience of problem-solving through a modernized set of IT skills and quality-focused attitude",
 	"address": "Munich, Germany",
@@ -32,6 +32,53 @@
 	"workMode": {
 		"code": "FULL"
 	},
+	"user_User_Skills": [
+		{
+			"code": "SNINT-fadi"
+		},
+		{
+			"code": "SNIMP-fadi"
+		},
+		{
+			"code": "JS-fadi"
+		},
+		{
+			"code": "CSNET-fadi"
+		},
+		{
+			"code": "SYSINT-fadi"
+		},
+		{
+			"code": "RESTAPI-fadi"
+		},
+		{
+			"code": "DTMNG-fadi"
+		},
+		{
+			"code": "DBMS-fadi"
+		},
+		{
+			"code": "JAVA-fadi"
+		},
+		{
+			"code": "PHTHON-fadi"
+		},
+		{
+			"code": "CRTV-fadi"
+		},
+		{
+			"code": "CRTHNK-fadi"
+		},
+		{
+			"code": "DEPND-fadi"
+		},
+		{
+			"code": "BLML-fadi"
+		},
+		{
+			"code": "EFCMN-fadi"
+		}
+	],
 	"user_User_Experiences": [
 		{
 			"code": "FULL-exccon-SENTCON-fadi"
