@@ -1,0 +1,12 @@
+{
+	"__id": "d76fc244-df5a-485c-a1b9-178e939e234d",
+	"active": true,
+	"enabled": true,
+	"date": "2023-10-17T13:18:03.463Z",
+	"name": "connstr",
+	"value": "\"\\\"\\\"\"",
+	"node": "[object Object]",
+	"tool": {
+		"code": "null"
+	}
+}
