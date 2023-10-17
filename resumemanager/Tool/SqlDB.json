@@ -1,24 +1,10 @@
 {
-	"__id": "9627df20-974e-415a-abcc-17aa108b9ccc",
+	"__id": "cef209fa072dbb89a3fd59c7c855e3f85a5d4778",
 	"active": true,
 	"enabled": true,
 	"code": "null",
 	"order": 0,
 	"date": "2023-10-17T13:18:01.276Z",
 	"name": "SqlDB",
-	"remark": "null",
-	"type": {
-		"code": "null"
-	},
-	"tool_Configs": [
-		{},
-		{},
-		{
-			"code": "null"
-		},
-		{},
-		{},
-		{},
-		{}
-	]
+	"remark": "null"
 }
