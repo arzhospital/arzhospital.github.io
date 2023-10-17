@@ -1,0 +1,12 @@
+{
+	"__id": "280fe433-de06-4a2e-9b51-5195b2458d66",
+	"active": true,
+	"enabled": true,
+	"date": "2023-10-17T13:18:02.061Z",
+	"name": "server",
+	"value": "\"\\\"localhost\\\"\"",
+	"node": "[object Object]",
+	"tool": {
+		"code": "null"
+	}
+}
