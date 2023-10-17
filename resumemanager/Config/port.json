@@ -1,0 +1,16 @@
+{
+	"__id": "def79f92-28c2-4a8c-9395-cda8a537856a",
+	"active": true,
+	"enabled": true,
+	"code": "null",
+	"order": 0,
+	"date": "2023-10-17T13:18:02.370Z",
+	"name": "port",
+	"remark": "null",
+	"value": "\"\\\"\\\\\\\"\\\\\\\"\\\"\"",
+	"script": "null",
+	"node": "[object Object]",
+	"tool": {
+		"code": "null"
+	}
+}
