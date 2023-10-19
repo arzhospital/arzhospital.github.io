@@ -1,14 +1,6 @@
 {
-	"__id": "64380c369bedde77e08657e2f9b8219cc49d17e1",
+	"__id": "e7dc0c33f184a082a5fcafad593572e057ace0f1",
 	"code": "database",
 	"name": "database",
-	"value": "\"postgres\"",
-	"node": {
-		"code": "supabase",
-		"active": true,
-		"enabled": false,
-		"type": {
-			"name": "NodeJS"
-		}
-	}
+	"value": "\":memory:\""
 }
