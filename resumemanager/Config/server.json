@@ -1,10 +1,10 @@
 {
-	"__id": "6f88c9d3-75d3-4165-b126-ba51fe2a4fcc",
+	"__id": "251be54c69ca89f54a5b060dc252951fcc70bb4f",
 	"code": "server",
 	"name": "server",
-	"value": "\"db-nammour-7828.7tc.cockroachlabs.cloud\"",
+	"value": "\"db.wprtpzkopcmmocdtkzyz.supabase.co\"",
 	"node": {
-		"code": "cockroach",
+		"code": "supabase",
 		"active": true,
 		"enabled": false,
 		"type": {
