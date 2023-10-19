@@ -1,0 +1,14 @@
+{
+	"__id": "82e4df10-035e-4dfd-b8fa-0cbc5a59930d",
+	"code": "port",
+	"name": "port",
+	"value": "26257",
+	"node": {
+		"code": "cockroach",
+		"active": true,
+		"enabled": false,
+		"type": {
+			"name": "NodeJS"
+		}
+	}
+}
