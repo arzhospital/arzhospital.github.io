@@ -1,14 +1,6 @@
 {
-	"__id": "537edabf30543ae8131d4c08260d2005f5bd1c07",
+	"__id": "8cba2de864e7c6006ff22c9c97fc8fc9fd5a7463",
 	"code": "username",
 	"name": "username",
-	"value": "\"postgres\"",
-	"node": {
-		"code": "supabase",
-		"active": true,
-		"enabled": false,
-		"type": {
-			"name": "NodeJS"
-		}
-	}
+	"value": "\"root\""
 }
