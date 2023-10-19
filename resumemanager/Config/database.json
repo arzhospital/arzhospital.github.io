@@ -1,10 +1,10 @@
 {
-	"__id": "8982f20b-dd6f-4c01-816b-fa378d7ce4f9",
+	"__id": "64380c369bedde77e08657e2f9b8219cc49d17e1",
 	"code": "database",
 	"name": "database",
-	"value": "\"defaultdb\"",
+	"value": "\"postgres\"",
 	"node": {
-		"code": "cockroach",
+		"code": "supabase",
 		"active": true,
 		"enabled": false,
 		"type": {
