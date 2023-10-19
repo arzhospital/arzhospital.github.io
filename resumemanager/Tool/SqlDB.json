@@ -1,0 +1,78 @@
+{
+	"__id": "ace53598-7b4d-4da5-90c8-ed303760e6e7",
+	"active": true,
+	"enabled": true,
+	"code": "SqlDB",
+	"name": "SqlDB",
+	"type": {
+		"code": "SqlDB"
+	},
+	"tool_Configs": [
+		{
+			"code": "create"
+		},
+		{
+			"code": "database"
+		},
+		{
+			"code": "database"
+		},
+		{
+			"code": "database"
+		},
+		{
+			"code": "server"
+		},
+		{
+			"code": "server"
+		},
+		{
+			"code": "server"
+		},
+		{
+			"code": "port"
+		},
+		{
+			"code": "port"
+		},
+		{
+			"code": "port"
+		},
+		{
+			"code": "username"
+		},
+		{
+			"code": "username"
+		},
+		{
+			"code": "username"
+		},
+		{
+			"code": "password"
+		},
+		{
+			"code": "password"
+		},
+		{
+			"code": "password"
+		},
+		{
+			"code": "connstr"
+		},
+		{
+			"code": "connstr"
+		},
+		{
+			"code": "connstr"
+		},
+		{
+			"code": "type"
+		},
+		{
+			"code": "type"
+		},
+		{
+			"code": "type"
+		}
+	]
+}
