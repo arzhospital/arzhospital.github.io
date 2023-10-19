@@ -1,14 +1,6 @@
 {
-	"__id": "278be89a71ed346d56b1d59020d54d63bc71375d",
+	"__id": "59a731b1f23a27243d93b28b3d1c6f638cd21e99",
 	"code": "port",
 	"name": "port",
-	"value": "5432",
-	"node": {
-		"code": "supabase",
-		"active": true,
-		"enabled": false,
-		"type": {
-			"name": "NodeJS"
-		}
-	}
+	"value": "\"\""
 }
