@@ -1,0 +1,14 @@
+{
+	"__id": "6f88c9d3-75d3-4165-b126-ba51fe2a4fcc",
+	"code": "server",
+	"name": "server",
+	"value": "\"db-nammour-7828.7tc.cockroachlabs.cloud\"",
+	"node": {
+		"code": "cockroach",
+		"active": true,
+		"enabled": false,
+		"type": {
+			"name": "NodeJS"
+		}
+	}
+}
