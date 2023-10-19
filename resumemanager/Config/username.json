@@ -1,10 +1,10 @@
 {
-	"__id": "02194e10-aa13-43e2-a70f-ed46e4aac0d3",
+	"__id": "537edabf30543ae8131d4c08260d2005f5bd1c07",
 	"code": "username",
 	"name": "username",
-	"value": "\"db-admin\"",
+	"value": "\"postgres\"",
 	"node": {
-		"code": "cockroach",
+		"code": "supabase",
 		"active": true,
 		"enabled": false,
 		"type": {
