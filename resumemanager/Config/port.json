@@ -1,10 +1,10 @@
 {
-	"__id": "28d02bc2-b5de-488c-a431-bda582c415e2",
+	"__id": "278be89a71ed346d56b1d59020d54d63bc71375d",
 	"code": "port",
 	"name": "port",
-	"value": "26257",
+	"value": "5432",
 	"node": {
-		"code": "cockroach",
+		"code": "supabase",
 		"active": true,
 		"enabled": false,
 		"type": {
