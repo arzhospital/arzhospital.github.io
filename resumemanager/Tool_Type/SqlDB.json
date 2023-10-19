@@ -1,39 +1,5 @@
 {
-	"__id": "5fddd4be-171a-4119-b5fe-9aa71ecc4077",
-	"active": true,
-	"enabled": true,
+	"__id": "e0c29211633ff8cf5496b203cb40628430238a84",
 	"code": "SqlDB",
-	"name": "SqlDB",
-	"type_Configs": [
-		{
-			"code": "store.sensitivity"
-		},
-		{
-			"code": "SyncEntityAttributes"
-		},
-		{
-			"code": "SyncTypedAttributes"
-		}
-	],
-	"type_Mappings": [
-		{
-			"active": false,
-			"enabled": true,
-			"className": "(\\b\\w+)",
-			"context": "(\\b\\w+)",
-			"source": "(\\b\\w+)",
-			"type": {
-				"code": "SqlDB"
-			}
-		},
-		{
-			"active": true,
-			"enabled": true,
-			"context": "^(_fromDocument)$",
-			"inScript": "objTo[code] = {__id: objTo[code+'id']}",
-			"type": {
-				"code": "SqlDB"
-			}
-		}
-	]
+	"name": "SqlDB"
 }
