@@ -1,14 +1,6 @@
 {
-	"__id": "251be54c69ca89f54a5b060dc252951fcc70bb4f",
+	"__id": "6434b257ab5f304f745d2356ca454da5b365b0cf",
 	"code": "server",
 	"name": "server",
-	"value": "\"db.wprtpzkopcmmocdtkzyz.supabase.co\"",
-	"node": {
-		"code": "supabase",
-		"active": true,
-		"enabled": false,
-		"type": {
-			"name": "NodeJS"
-		}
-	}
+	"value": "\"localhost\""
 }
