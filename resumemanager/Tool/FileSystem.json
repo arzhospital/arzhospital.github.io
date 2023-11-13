@@ -1,3 +1,18 @@
 {
-	"__id": "5a23526c-1d72-411c-a5f0-a3b7c3d927d4"
+	"__id": "5cbbf7e4b5c47ec6bf8812105b1b88552c1037c2",
+	"active": true,
+	"enabled": true,
+	"code": "FileSystem",
+	"name": "FileSystem",
+	"type": {
+		"code": "FileSystem"
+	},
+	"tool_Configs": [
+		{},
+		{},
+		{},
+		{},
+		{},
+		{}
+	]
 }
