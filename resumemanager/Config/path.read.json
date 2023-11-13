@@ -1,3 +1,14 @@
 {
-	"__id": "18c07087-8283-49e9-8f22-33d492b33952"
+	"__id": "f4fe683a3ea1ac4ecb7875da7480203da215d06a",
+	"code": "path.read",
+	"name": "path.read",
+	"value": "\"./db/\"",
+	"node": {
+		"code": "51422faa39c7",
+		"active": true,
+		"enabled": false,
+		"type": {
+			"name": "NodeJS"
+		}
+	}
 }
