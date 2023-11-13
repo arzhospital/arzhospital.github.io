@@ -1,3 +1,8 @@
 {
-	"__id": "9157c930f1badc3df456912cddb111cab9ec8d15"
+	"__id": "ae59103c46052c37817618b8e4cb65585f4e227e",
+	"active": true,
+	"enabled": true,
+	"code": "SyncTypedAttributes",
+	"name": "SyncTypedAttributes",
+	"value": "true"
 }
