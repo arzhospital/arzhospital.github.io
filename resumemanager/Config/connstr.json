@@ -1,3 +1,14 @@
 {
-	"__id": "7ed3659b89009c9a6df5c3ad15562a4a916ede6f"
+	"__id": "6c0f3ca0ac64a1579c10dae2d4bf48ae769a8c22",
+	"code": "connstr",
+	"name": "connstr",
+	"value": "\"postgresql://{{username}}:{{password}}@{{server}}:{{port}}/{{database}}?sslmode=verify-full\"",
+	"node": {
+		"code": "cockroach",
+		"active": true,
+		"enabled": false,
+		"type": {
+			"name": "NodeJS"
+		}
+	}
 }
