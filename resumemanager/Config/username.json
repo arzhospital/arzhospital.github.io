@@ -1,3 +1,14 @@
 {
-	"__id": "76effd03d63c1d42f30025cabd7ecec0ba873a7f"
+	"__id": "1dac4f59016a763c691f136c2bc590bfa922ca65",
+	"code": "username",
+	"name": "username",
+	"value": "\"db-admin\"",
+	"node": {
+		"code": "cockroach",
+		"active": true,
+		"enabled": false,
+		"type": {
+			"name": "NodeJS"
+		}
+	}
 }
