@@ -1,3 +1,14 @@
 {
-	"__id": "8cf0a0aa1fa131ebf9586753e4a0bc6928eef88c"
+	"__id": "e0b1e0de755380190a0bee3d5fe4d8bdcba5b596",
+	"code": "database",
+	"name": "database",
+	"value": "\"defaultdb\"",
+	"node": {
+		"code": "cockroach",
+		"active": true,
+		"enabled": false,
+		"type": {
+			"name": "NodeJS"
+		}
+	}
 }
