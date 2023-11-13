@@ -1,3 +1,8 @@
 {
-	"__id": "496dd456da5f4d12008e324b872fd7e831f4a6f3"
+	"__id": "1094dadb75ede11105cd26a5d34cddc06191f09d",
+	"active": true,
+	"enabled": true,
+	"code": "live",
+	"name": "live",
+	"value": "true"
 }
