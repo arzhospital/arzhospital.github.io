@@ -1,3 +1,8 @@
 {
-	"__id": "a73fb57a19e11285c0ef478c702bd47c55e928ab"
+	"__id": "88d53eb3a49b6503729176669d4c9774601fe686",
+	"active": true,
+	"enabled": true,
+	"code": "store.sensitivity",
+	"name": "store.sensitivity",
+	"value": "10"
 }
