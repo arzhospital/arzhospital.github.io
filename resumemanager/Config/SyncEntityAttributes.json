@@ -1,3 +1,8 @@
 {
-	"__id": "337d9e722932d29b56224ee54e179d980f00d02f"
+	"__id": "6235ab6ac480317e996b089dc48f29dd142fa17a",
+	"active": true,
+	"enabled": true,
+	"code": "SyncEntityAttributes",
+	"name": "SyncEntityAttributes",
+	"value": "true"
 }
