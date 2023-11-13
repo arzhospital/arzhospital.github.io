@@ -1,3 +1,8 @@
 {
-	"__id": "eb76fa87-97d4-4689-8a34-4e9717a46e6a"
+	"__id": "efaa5d1ec78a26913fff88ff181c26ccaeec8822",
+	"active": true,
+	"enabled": true,
+	"code": "repository",
+	"name": "repository",
+	"value": "\"arzhospital.github.io\""
 }
