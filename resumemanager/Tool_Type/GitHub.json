@@ -1,3 +1,25 @@
 {
-	"__id": "db1a5987-5030-4ff8-9dfa-6cc01c367ca7"
+	"__id": "784c4a91fb6b42cd1fcc31b7a53784a17cb2837e",
+	"active": true,
+	"enabled": true,
+	"code": "GitHub",
+	"name": "GitHub",
+	"type_Configs": [
+		{},
+		{}
+	],
+	"type_Mappings": [
+		{
+			"active": true,
+			"enabled": true,
+			"context": "^(_toDocument)$",
+			"outScript": "objTo[code] = {code: objFrom.code()};"
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"context": "^(_toDocument)$",
+			"outScript": "objTo[code] = {code: objFrom.code()};"
+		}
+	]
 }
