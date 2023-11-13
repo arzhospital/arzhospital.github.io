@@ -1,3 +1,8 @@
 {
-	"__id": "223bf8f7-5832-43d2-ab1f-0797c5bb8c22"
+	"__id": "3f7a2bd7ce2faa2d27317ef6074c0d2f1853d4ab",
+	"active": true,
+	"enabled": true,
+	"code": "oauth.access_token",
+	"name": "oauth.access_token",
+	"value": "\"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\""
 }
