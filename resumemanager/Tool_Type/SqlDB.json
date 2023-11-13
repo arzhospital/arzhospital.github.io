@@ -1,3 +1,29 @@
 {
-	"__id": "280367bf0594c41922d4519b685dd67c649ecea7"
+	"__id": "41b736f55ad8fbcefd66de433cf027352f5f97fc",
+	"active": true,
+	"enabled": true,
+	"code": "SqlDB",
+	"name": "SqlDB",
+	"type_Configs": [
+		{},
+		{},
+		{},
+		{}
+	],
+	"type_Mappings": [
+		{
+			"active": false,
+			"enabled": true,
+			"className": "(\\b\\w+)",
+			"context": "(\\b\\w+)",
+			"source": "(\\b\\w+)"
+		},
+		{
+			"active": false,
+			"enabled": true,
+			"className": "(\\b\\w+)",
+			"context": "(\\b\\w+)",
+			"source": "(\\b\\w+)"
+		}
+	]
 }
