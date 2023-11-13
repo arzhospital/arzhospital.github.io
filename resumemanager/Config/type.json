@@ -1,3 +1,14 @@
 {
-	"__id": "d4ec0d5a-84cd-43ec-8326-c80a538013b8"
+	"__id": "f0be387d623c22d687f89b093f3ff1081ad2c7c9",
+	"code": "type",
+	"name": "type",
+	"value": "\"postgres\"",
+	"node": {
+		"code": "cockroach",
+		"active": true,
+		"enabled": false,
+		"type": {
+			"name": "NodeJS"
+		}
+	}
 }
