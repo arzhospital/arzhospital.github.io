@@ -1,8 +1,0 @@
-{
-	"__id": "2363c68c810012a233eaa8a1f1b41dbf05eac860",
-	"active": true,
-	"enabled": true,
-	"code": "url",
-	"name": "url",
-	"value": "\"https://api.github.com/repos/{{owner}}/{{repository}}/contents/\""
-}
