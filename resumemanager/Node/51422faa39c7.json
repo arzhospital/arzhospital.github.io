@@ -1,0 +1,14 @@
+{
+	"__id": "53822c7b-797d-4efc-be26-61d1c4996a23",
+	"active": true,
+	"enabled": false,
+	"code": "51422faa39c7",
+	"date": "2023-11-20T18:28:24.434Z",
+	"type": {
+		"__id": "3463d183-ac97-4228-a5fc-5f7164e34e5a",
+		"active": true,
+		"enabled": true,
+		"date": "2023-11-20T18:28:24.437Z",
+		"name": "NodeJS"
+	}
+}
