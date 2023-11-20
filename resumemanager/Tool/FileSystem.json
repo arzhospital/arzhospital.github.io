@@ -1,0 +1,64 @@
+{
+	"__id": "96225356-cfe7-4052-83ce-2f737c91e45d",
+	"active": true,
+	"enabled": true,
+	"code": "FileSystem",
+	"name": "FileSystem",
+	"type": {
+		"__id": "d19c93a8-204a-42f4-b7f2-194f6f128f67",
+		"active": true,
+		"enabled": true,
+		"code": "FileSystem",
+		"name": "FileSystem"
+	},
+	"tool_Configs": [
+		{
+			"active": true,
+			"enabled": true,
+			"code": "create",
+			"name": "create",
+			"value": "2"
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "SyncEntityAttributes",
+			"name": "SyncEntityAttributes",
+			"value": "true"
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "SyncTypedAttributes",
+			"name": "SyncTypedAttributes",
+			"value": "false"
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "live",
+			"name": "live",
+			"value": "true"
+		},
+		{
+			"code": "path.readnull",
+			"name": "path.read",
+			"value": "\"./db/\"",
+			"node": {
+				"active": true,
+				"enabled": false,
+				"code": "51422faa39c7",
+				"date": "2023-11-20T18:41:38.806Z",
+				"type": {
+					"active": true,
+					"enabled": true,
+					"date": "2023-11-20T18:41:38.809Z",
+					"name": "NodeJS"
+				}
+			}
+		},
+		{
+			"name": "path.read"
+		}
+	]
+}
