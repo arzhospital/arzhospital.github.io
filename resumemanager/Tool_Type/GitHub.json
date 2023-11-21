@@ -1,0 +1,37 @@
+{
+	"__id": "23814569-1081-46ac-82dc-bab12c5aa24b",
+	"active": true,
+	"enabled": true,
+	"code": "GitHub",
+	"name": "GitHub",
+	"type_Configs": [
+		{
+			"active": true,
+			"enabled": true,
+			"code": "url",
+			"name": "url",
+			"value": "\"https://api.github.com/repos/{{owner}}/{{repository}}/contents/\""
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "store.sensitivity",
+			"name": "store.sensitivity",
+			"value": "20"
+		}
+	],
+	"type_Mappings": [
+		{
+			"active": false,
+			"enabled": true,
+			"context": "^(_toDocument)$",
+			"outScript": "objTo[code] = {code: objFrom.code()};"
+		},
+		{
+			"active": false,
+			"enabled": true,
+			"context": "^(_toDocument)$",
+			"outScript": "objTo[code] = {code: objFrom.code()};"
+		}
+	]
+}
