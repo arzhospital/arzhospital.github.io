@@ -1,0 +1,24 @@
+{
+	"__id": "e79a73c4-f33c-491d-a9a4-6fddf39b7ca2",
+	"active": true,
+	"enabled": true,
+	"code": "4fb3375c-d9d9-420e-beff-2839756a9045",
+	"OPERATORS": {
+		"code": "!=",
+		"address": "!=",
+		"port": "!=",
+		"online": ">="
+	},
+	"date": "2023-11-21T18:09:48.438Z",
+	"address": "",
+	"port": "",
+	"online": "2023-11-21T18:14:03.049Z",
+	"parent": null,
+	"type": {
+		"__id": "6279dfdbe09503a23c45b7fd33c6107abbc80861",
+		"active": true,
+		"enabled": true,
+		"date": "2023-11-21T18:09:48.936Z",
+		"name": "NodeJS"
+	}
+}
