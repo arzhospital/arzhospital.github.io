@@ -1,0 +1,95 @@
+{
+	"__id": "d272786a-ec16-4e8a-9767-2298300e3f8a",
+	"active": true,
+	"enabled": true,
+	"code": "GitHub",
+	"name": "GitHub",
+	"type": {
+		"__id": "23814569-1081-46ac-82dc-bab12c5aa24b",
+		"active": true,
+		"enabled": true,
+		"code": "GitHub",
+		"name": "GitHub",
+		"type_Configs": [
+			{
+				"__id": "98cfe375-d1c0-46f8-81fb-282a9eadee44",
+				"active": true,
+				"enabled": true,
+				"code": "url",
+				"name": "url",
+				"value": "\"https://api.github.com/repos/{{owner}}/{{repository}}/contents/\""
+			},
+			{
+				"__id": "31affcf2-3878-453a-82c8-6273e32a24ec",
+				"active": true,
+				"enabled": true,
+				"code": "store.sensitivity",
+				"name": "store.sensitivity",
+				"value": "20"
+			}
+		],
+		"type_Mappings": [
+			{
+				"__id": "677a7c6f-8033-45f8-a3bf-63382ff08361",
+				"active": false,
+				"enabled": true,
+				"context": "^(_toDocument)$",
+				"outScript": "objTo[code] = {code: objFrom.code()};"
+			},
+			{
+				"__id": "677a7c6f-8033-45f8-a3bf-63382ff08361"
+			}
+		]
+	},
+	"tool_Configs": [
+		{
+			"active": true,
+			"enabled": true,
+			"code": "repository",
+			"name": "repository",
+			"value": "\"arzhospital.github.io\""
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "owner",
+			"name": "owner",
+			"value": "\"arzhospital\""
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "oauth.access_token",
+			"name": "oauth.access_token",
+			"value": "\"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\""
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "live",
+			"name": "live",
+			"value": "true"
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "create",
+			"name": "create",
+			"value": "2"
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "SyncEntityAttributes",
+			"name": "SyncEntityAttributes",
+			"value": "true"
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "SyncTypedAttributes",
+			"name": "SyncTypedAttributes",
+			"value": "true"
+		}
+	]
+}
