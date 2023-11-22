@@ -1,18 +1,18 @@
 {
-	"__id": "9a209654dc7f9b3e48158bdcf0253d750442a6ce",
+	"__id": "b90be522fd59087ca16d0a3d4499a41bfd3d077e",
 	"active": true,
 	"enabled": true,
 	"code": "SqlDB",
 	"name": "SqlDB",
 	"type": {
-		"__id": "d8b103426a32375e76071953c9507a3f2c60478d",
+		"__id": "a87f1dd6bd66faa5a1216b6544d4400b031cd438",
 		"active": true,
 		"enabled": true,
 		"code": "SqlDB",
 		"name": "SqlDB",
 		"type_Configs": [
 			{
-				"__id": "af37090649ca09291caeff2e56781e4cc96ac8de",
+				"__id": "02fbb61f389128c3867e57886f242365d5ad468b",
 				"active": true,
 				"enabled": true,
 				"code": "store.sensitivity",
@@ -20,7 +20,7 @@
 				"value": "10"
 			},
 			{
-				"__id": "c5e26ea154e4aaee2c807188441238267efd6298",
+				"__id": "bd417cf5381254bd41b5c61be2ef661ec48ea14f",
 				"active": true,
 				"enabled": true,
 				"code": "SyncEntityAttributes",
@@ -28,7 +28,7 @@
 				"value": "true"
 			},
 			{
-				"__id": "a2206615c76060c8fc5db429d1ba9a8a56c111a0",
+				"__id": "79a7106de92fa6c4bb4fdd9a9ff5f5dd5cb98215",
 				"active": true,
 				"enabled": true,
 				"code": "SyncTypedAttributes",
@@ -36,7 +36,7 @@
 				"value": "true"
 			},
 			{
-				"__id": "39173a12bc87b5a5f3d3a5bd2a91fb9a234f31b5",
+				"__id": "5eb9e0e7a903011417cda04cbc86edf8707a3414",
 				"active": true,
 				"enabled": true,
 				"code": "create",
@@ -46,7 +46,7 @@
 		],
 		"type_Mappings": [
 			{
-				"__id": "73331081-105f-48e2-835a-e67a649d2609",
+				"__id": "dc6603b1-89ef-439f-93aa-f2b00c0ea866",
 				"active": false,
 				"enabled": true,
 				"className": "(\\b\\w+)",
@@ -54,7 +54,7 @@
 				"source": "(\\b\\w+)"
 			},
 			{
-				"__id": "73331081-105f-48e2-835a-e67a649d2609"
+				"__id": "dc6603b1-89ef-439f-93aa-f2b00c0ea866"
 			}
 		]
 	},
@@ -67,11 +67,11 @@
 				"active": true,
 				"enabled": false,
 				"code": "cockroach",
-				"date": "2023-11-22T05:50:41.589Z",
+				"date": "2023-11-22T05:52:03.905Z",
 				"type": {
 					"active": true,
 					"enabled": true,
-					"date": "2023-11-22T05:50:41.595Z",
+					"date": "2023-11-22T05:52:03.911Z",
 					"name": "NodeJS"
 				}
 			}
