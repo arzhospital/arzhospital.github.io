@@ -1,0 +1,170 @@
+{
+	"__id": "f172eb26-f4d7-40b2-961e-f51ca001cf8a",
+	"active": true,
+	"enabled": true,
+	"code": "SqlDB",
+	"name": "SqlDB",
+	"type": {
+		"__id": "b312d348-4d25-4581-bbef-e72043a95003",
+		"active": true,
+		"enabled": true,
+		"code": "SqlDB",
+		"name": "SqlDB",
+		"type_Configs": [
+			{
+				"__id": "82a11e27-a90d-440d-bcd9-f46e798843a8",
+				"active": true,
+				"enabled": true,
+				"code": "store.sensitivity",
+				"name": "store.sensitivity",
+				"value": "10"
+			},
+			{
+				"__id": "0fbc1447-4e4b-44a9-910c-729c17d29cac",
+				"active": true,
+				"enabled": true,
+				"code": "SyncEntityAttributes",
+				"name": "SyncEntityAttributes",
+				"value": "true"
+			},
+			{
+				"__id": "b475d1d6-dbf4-419f-b9ce-295fa7f4d5d3",
+				"active": true,
+				"enabled": true,
+				"code": "SyncTypedAttributes",
+				"name": "SyncTypedAttributes",
+				"value": "true"
+			},
+			{
+				"__id": "cc21cb12-64e8-4db2-bf61-e30b140deb51",
+				"active": true,
+				"enabled": true,
+				"code": "create",
+				"name": "create",
+				"value": "2"
+			}
+		],
+		"type_Mappings": [
+			{
+				"__id": "d3d33dd1-ad52-425b-bae2-634a56d71ca8",
+				"active": false,
+				"enabled": true,
+				"className": "(\\b\\w+)",
+				"context": "(\\b\\w+)",
+				"source": "(\\b\\w+)"
+			},
+			{
+				"__id": "d3d33dd1-ad52-425b-bae2-634a56d71ca8"
+			}
+		]
+	},
+	"tool_Configs": [
+		{
+			"code": "databasenull",
+			"name": "database",
+			"value": "\"defaultdb\"",
+			"node": {
+				"active": true,
+				"enabled": false,
+				"code": "cockroach",
+				"date": "2023-11-22T05:49:19.930Z",
+				"type": {
+					"active": true,
+					"enabled": true,
+					"date": "2023-11-22T05:49:19.936Z",
+					"name": "NodeJS"
+				}
+			}
+		},
+		{
+			"name": "database"
+		},
+		{
+			"name": "database"
+		},
+		{
+			"code": "servernull",
+			"name": "server",
+			"value": "\"db-nammour-7828.7tc.cockroachlabs.cloud\"",
+			"node": {
+				"code": "cockroach"
+			}
+		},
+		{
+			"name": "server"
+		},
+		{
+			"name": "server"
+		},
+		{
+			"code": "portnull",
+			"name": "port",
+			"value": "26257",
+			"node": {
+				"code": "cockroach"
+			}
+		},
+		{
+			"name": "port"
+		},
+		{
+			"name": "port"
+		},
+		{
+			"code": "usernamenull",
+			"name": "username",
+			"value": "\"db-admin\"",
+			"node": {
+				"code": "cockroach"
+			}
+		},
+		{
+			"name": "username"
+		},
+		{
+			"name": "username"
+		},
+		{
+			"code": "passwordnull",
+			"name": "password",
+			"value": "\"kLJ_FAjGMPha5Zjn30lSOQ\"",
+			"node": {
+				"code": "cockroach"
+			}
+		},
+		{
+			"name": "password"
+		},
+		{
+			"name": "password"
+		},
+		{
+			"code": "connstrnull",
+			"name": "connstr",
+			"value": "\"postgresql://{{username}}:{{password}}@{{server}}:{{port}}/{{database}}?sslmode=verify-full\"",
+			"node": {
+				"code": "cockroach"
+			}
+		},
+		{
+			"name": "connstr"
+		},
+		{
+			"name": "connstr"
+		},
+		{
+			"code": "typenull",
+			"name": "type",
+			"value": "\"postgres\"",
+			"node": {
+				"code": "cockroach"
+			}
+		},
+		{
+			"name": "type"
+		},
+		{
+			"name": "type"
+		}
+	]
+}
