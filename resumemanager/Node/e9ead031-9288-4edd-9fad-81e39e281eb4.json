@@ -1,0 +1,43 @@
+{
+	"__id": "aeeb9525-d758-4cd1-8263-83710088b9d2",
+	"active": true,
+	"enabled": true,
+	"code": "e9ead031-9288-4edd-9fad-81e39e281eb4",
+	"date": "2023-11-22T05:49:14.795Z",
+	"address": null,
+	"port": 3000,
+	"online": "2023-11-22T05:54:00.585Z",
+	"secure": false,
+	"parent": {
+		"__id": "5e07570d-71d2-4e8f-bc27-73137df14ab2",
+		"active": true,
+		"enabled": true,
+		"code": "e9ead031-9288-4edd-9fad-81e39e281eb4",
+		"OPERATORS": {
+			"code": "!=",
+			"address": "!=",
+			"port": "!=",
+			"online": ">="
+		},
+		"date": "2023-11-22T05:49:15.170Z",
+		"address": "",
+		"port": "",
+		"online": "2023-11-22T05:53:30.458Z",
+		"parent": null,
+		"type": {
+			"__id": "4b805e04-bff7-4505-ad83-86c574a4d33f",
+			"active": true,
+			"enabled": true,
+			"date": "2023-11-22T05:49:15.657Z",
+			"name": "NodeJS"
+		}
+	},
+	"type": {
+		"__id": "f3ca46c3-f0f0-401c-a30b-601e89606590",
+		"active": true,
+		"enabled": true,
+		"date": "2023-11-22T05:49:17.269Z",
+		"name": "Browser",
+		"dynamic": true
+	}
+}
