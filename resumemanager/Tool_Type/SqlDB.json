@@ -1,0 +1,53 @@
+{
+	"__id": "b312d348-4d25-4581-bbef-e72043a95003",
+	"active": true,
+	"enabled": true,
+	"code": "SqlDB",
+	"name": "SqlDB",
+	"type_Configs": [
+		{
+			"active": true,
+			"enabled": true,
+			"code": "store.sensitivity",
+			"name": "store.sensitivity",
+			"value": "10"
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "SyncEntityAttributes",
+			"name": "SyncEntityAttributes",
+			"value": "true"
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "SyncTypedAttributes",
+			"name": "SyncTypedAttributes",
+			"value": "true"
+		},
+		{
+			"active": true,
+			"enabled": true,
+			"code": "create",
+			"name": "create",
+			"value": "2"
+		}
+	],
+	"type_Mappings": [
+		{
+			"active": false,
+			"enabled": true,
+			"className": "(\\b\\w+)",
+			"context": "(\\b\\w+)",
+			"source": "(\\b\\w+)"
+		},
+		{
+			"active": false,
+			"enabled": true,
+			"className": "(\\b\\w+)",
+			"context": "(\\b\\w+)",
+			"source": "(\\b\\w+)"
+		}
+	]
+}
