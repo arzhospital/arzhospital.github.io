@@ -1,34 +1,34 @@
 {
-	"__id": "5fa533b6-59ac-448e-9e12-a132bb2a4ae7",
+	"__id": "0cb0c60e35b7a6f0575ffafd2fafed3a02f0caf8",
 	"active": true,
 	"enabled": true,
 	"code": "exccon-fadi",
-	"date": "2023-11-22T05:58:46.910Z",
+	"date": "2023-11-22T06:03:07.890Z",
 	"name": "Exccon AG-Fadi Nammour",
 	"remark": "Specialized in ServiceNow integration with third-party tools using both REST-API and Web-Services. Integrations included both simple system web/rest and complex process-based services.\n\nImplementation of a full end-to-end GRC (Governance, Risk and Compliance) module for a large company with over 40000 hosts and devices, where ServiceNow integrates with security and vulnerability scanning tools to consolidate results into a centralized tool-independent process that leads identification of serious securities and vulnerabilities, all part of an integrated service-now scoped application.\n\nImplementation of a diverse Incident interface with strict process-based services in a flexible partner-oriented approach that leads to simplified on-boarding of different partner use-cases.\n\nEvaluating and identifying software solutions by converting customer needs into product architectural designs through researching information sources and optimizing data usability throughout complex system environments.\n\nSolid adherence to service-now's best practices for building and implementing large complex implementations.\n\nLeading roles on all software development projects, including creating coherent teams based on project scopes and duties, resulting in a timeline-centric and budget-abiding implementation groups.\n\nManagement of the solution lifecycle including design, programming, testing and documentation.\n\nProduction of comprehensive documentation for all project aspect, including high-level designs, implementation steps and guidelines, and customer-oriented manuals.\n\nLeading code-review and optimization teams for existing customer solutions, resulting in data-usage optimization and platform health improvement.\n\nEnabling ServiceNow customer teams in the role of instance administration, with follow-up on their adherence to the best practices.\n",
 	"from": "2016-05-09T00:00:00.000Z",
 	"mode": {
-		"__id": "b37dada1-1d3e-4e2b-946e-4f907a20ac23",
+		"__id": "849fc8c747a8634d463afd9a325be67a9414dd4d",
 		"active": true,
 		"enabled": true,
 		"code": "FULL",
-		"date": "2023-11-22T05:58:46.224Z",
+		"date": "2023-11-22T06:03:07.288Z",
 		"name": "Full Time"
 	},
 	"organization": {
-		"__id": "b9d26e61-c81c-42b3-ab1d-bbbc35220e0f",
+		"__id": "993b9737219d4b19fd799732175e919bcfaf4fc9",
 		"active": true,
 		"enabled": true,
 		"code": "exccon",
-		"date": "2023-11-22T05:58:46.933Z",
+		"date": "2023-11-22T06:03:07.913Z",
 		"name": "Exccon AG"
 	},
 	"position": {
-		"__id": "8737c3fb-cd61-44d1-9703-68228cb33588",
+		"__id": "ecc293f61e388992c581df6f72fe54f6a0977085",
 		"active": true,
 		"enabled": true,
 		"code": "SENTCON",
-		"date": "2023-11-22T05:58:46.942Z",
+		"date": "2023-11-22T06:03:07.921Z",
 		"name": "Senior Technical Consultant"
 	}
 }
