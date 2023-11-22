@@ -1,18 +1,18 @@
 {
-	"__id": "f172eb26-f4d7-40b2-961e-f51ca001cf8a",
+	"__id": "9a209654dc7f9b3e48158bdcf0253d750442a6ce",
 	"active": true,
 	"enabled": true,
 	"code": "SqlDB",
 	"name": "SqlDB",
 	"type": {
-		"__id": "b312d348-4d25-4581-bbef-e72043a95003",
+		"__id": "d8b103426a32375e76071953c9507a3f2c60478d",
 		"active": true,
 		"enabled": true,
 		"code": "SqlDB",
 		"name": "SqlDB",
 		"type_Configs": [
 			{
-				"__id": "82a11e27-a90d-440d-bcd9-f46e798843a8",
+				"__id": "af37090649ca09291caeff2e56781e4cc96ac8de",
 				"active": true,
 				"enabled": true,
 				"code": "store.sensitivity",
@@ -20,7 +20,7 @@
 				"value": "10"
 			},
 			{
-				"__id": "0fbc1447-4e4b-44a9-910c-729c17d29cac",
+				"__id": "c5e26ea154e4aaee2c807188441238267efd6298",
 				"active": true,
 				"enabled": true,
 				"code": "SyncEntityAttributes",
@@ -28,7 +28,7 @@
 				"value": "true"
 			},
 			{
-				"__id": "b475d1d6-dbf4-419f-b9ce-295fa7f4d5d3",
+				"__id": "a2206615c76060c8fc5db429d1ba9a8a56c111a0",
 				"active": true,
 				"enabled": true,
 				"code": "SyncTypedAttributes",
@@ -36,7 +36,7 @@
 				"value": "true"
 			},
 			{
-				"__id": "cc21cb12-64e8-4db2-bf61-e30b140deb51",
+				"__id": "39173a12bc87b5a5f3d3a5bd2a91fb9a234f31b5",
 				"active": true,
 				"enabled": true,
 				"code": "create",
@@ -46,7 +46,7 @@
 		],
 		"type_Mappings": [
 			{
-				"__id": "d3d33dd1-ad52-425b-bae2-634a56d71ca8",
+				"__id": "73331081-105f-48e2-835a-e67a649d2609",
 				"active": false,
 				"enabled": true,
 				"className": "(\\b\\w+)",
@@ -54,7 +54,7 @@
 				"source": "(\\b\\w+)"
 			},
 			{
-				"__id": "d3d33dd1-ad52-425b-bae2-634a56d71ca8"
+				"__id": "73331081-105f-48e2-835a-e67a649d2609"
 			}
 		]
 	},
@@ -67,11 +67,11 @@
 				"active": true,
 				"enabled": false,
 				"code": "cockroach",
-				"date": "2023-11-22T05:49:19.930Z",
+				"date": "2023-11-22T05:50:41.589Z",
 				"type": {
 					"active": true,
 					"enabled": true,
-					"date": "2023-11-22T05:49:19.936Z",
+					"date": "2023-11-22T05:50:41.595Z",
 					"name": "NodeJS"
 				}
 			}
