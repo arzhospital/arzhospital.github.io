@@ -1,0 +1,20 @@
+{
+	"__id": "6fbe5351-02ae-4658-af12-1606f8524389",
+	"code": "servernull",
+	"name": "server",
+	"value": "\"db-nammour-7828.7tc.cockroachlabs.cloud\"",
+	"node": {
+		"__id": "54eb3136-0855-42bf-b557-d880f9c5de8f",
+		"active": true,
+		"enabled": false,
+		"code": "cockroach",
+		"date": "2023-11-22T05:49:19.930Z",
+		"type": {
+			"__id": "558dc01c5b862ca2551a4f3b54da3b8e92366cc0",
+			"active": true,
+			"enabled": true,
+			"date": "2023-11-22T05:49:19.936Z",
+			"name": "NodeJS"
+		}
+	}
+}
