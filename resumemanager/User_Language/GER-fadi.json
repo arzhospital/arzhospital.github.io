@@ -1,0 +1,17 @@
+{
+	"__id": "e3c17c6d-21b6-4b4d-8680-c2ce222108d2",
+	"active": true,
+	"enabled": true,
+	"code": "GER-fadi",
+	"date": "2023-11-22T05:58:46.950Z",
+	"name": "German-Fadi Nammour",
+	"level": "Advanced High",
+	"language": {
+		"__id": "176e396b-4de7-41fe-8f5e-e2b4b9f9e38d",
+		"active": true,
+		"enabled": true,
+		"code": "GER",
+		"date": "2023-11-22T05:58:46.962Z",
+		"name": "German"
+	}
+}
