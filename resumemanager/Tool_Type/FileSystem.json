@@ -1,7 +1,16 @@
 {
-	"__id": "0af5ac68670b910db933e10c8f6ba4962355b53b",
+	"__id": "3f332ec17ea8583fa139e8cf1cf423207721fe0c",
 	"active": true,
 	"enabled": true,
 	"code": "FileSystem",
-	"name": "FileSystem"
+	"name": "FileSystem",
+	"type_Configs": [
+		{
+			"active": true,
+			"enabled": true,
+			"code": "file",
+			"name": "file",
+			"script": "file"
+		}
+	]
 }
