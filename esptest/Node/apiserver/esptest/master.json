@@ -1,0 +1,18 @@
+{
+	"Id": "019246fa-82a0-7007-8cdc-dd13cb809260",
+	"active": "true",
+	"enabled": "true",
+	"code": "apiserver/esptest/master",
+	"date": "2024-10-01T07:27:55.552Z",
+	"type": {
+		"Id": "abde8ba8dbe0c348f1aac34d33e7ca300431bbba",
+		"active": "true",
+		"enabled": "true",
+		"date": "2024-10-01T07:27:55.856Z",
+		"name": "Browser",
+		"dynamic": "true",
+		"__keys": ["name"]
+	},
+	"__keys": ["code"],
+	"__trMap": []
+}
