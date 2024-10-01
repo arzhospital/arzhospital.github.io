@@ -1,0 +1,35 @@
+{
+	"Id": "019246fa-8172-7007-8cdc-80c43e539065",
+	"active": "true",
+	"enabled": "true",
+	"code": "apiserver/esptest/pyclient",
+	"date": "2024-10-01T07:27:55.250Z",
+	"parent": {
+		"Id": "019246fa-82a0-7007-8cdc-dd13cb809260",
+		"active": "true",
+		"enabled": "true",
+		"code": "apiserver/esptest/master",
+		"date": "2024-10-01T07:27:55.552Z",
+		"type": {
+			"Id": "abde8ba8dbe0c348f1aac34d33e7ca300431bbba",
+			"active": "true",
+			"enabled": "true",
+			"date": "2024-10-01T07:27:55.856Z",
+			"name": "Browser",
+			"dynamic": "true",
+			"__keys": ["name"]
+		},
+		"__keys": ["code"]
+	},
+	"type": {
+		"Id": "b29dbbe27eecef4c4baf22bd661ee62bfe2acc87",
+		"active": "true",
+		"enabled": "true",
+		"date": "2024-10-01T07:27:57.796Z",
+		"name": "Browser",
+		"dynamic": "true",
+		"__keys": ["name"]
+	},
+	"__keys": ["code"],
+	"__trMap": []
+}
