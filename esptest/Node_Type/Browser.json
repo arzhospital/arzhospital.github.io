@@ -1,0 +1,10 @@
+{
+	"Id": "01924a6d-de30-7ffd-9225-781a0027de3a",
+	"active": "true",
+	"enabled": "true",
+	"date": "2024-10-01T23:32:47.280Z",
+	"name": "Browser",
+	"dynamic": "true",
+	"__keys": ["name"],
+	"__trMap": []
+}
