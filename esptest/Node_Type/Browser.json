@@ -1,8 +1,8 @@
 {
-	"Id": "abde8ba8dbe0c348f1aac34d33e7ca300431bbba",
+	"Id": "b29dbbe27eecef4c4baf22bd661ee62bfe2acc87",
 	"active": "true",
 	"enabled": "true",
-	"date": "2024-10-01T07:27:55.856Z",
+	"date": "2024-10-01T07:27:57.796Z",
 	"name": "Browser",
 	"dynamic": "true",
 	"__keys": ["name"],
