@@ -1,9 +1,12 @@
 {
-	"Id": "5a0e58d80e89ed48d937d98e098c834d0a95ed62",
+	"Id": "f52ae691fc34e8f191784cac0ba9b2439e3139d4",
 	"active": "true",
 	"enabled": "true",
-	"date": "2024-10-02T00:00:58.349Z",
+	"code": "null",
+	"order": "null",
+	"date": "2024-10-02T00:00:27.298Z",
 	"name": "Browser",
+	"remark": "null",
 	"dynamic": "true",
 	"__keys": ["name"],
 	"__trMap": []
