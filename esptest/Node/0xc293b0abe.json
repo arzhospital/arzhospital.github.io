@@ -1,0 +1,18 @@
+{
+	"Id": "01926d0d-fa77-7dd3-9ef4-0aef3851b242",
+	"active": "true",
+	"enabled": "true",
+	"code": "0xc293b0abe",
+	"date": "2024-10-08T16:54:45.623Z",
+	"type": {
+		"Id": "81963ff5adc384de71360e64e38d7892b17c25fa",
+		"active": "true",
+		"enabled": "true",
+		"date": "2024-10-08T16:54:46.115Z",
+		"name": "Browser",
+		"dynamic": "true",
+		"__keys": ["name"]
+	},
+	"__keys": ["code"],
+	"__trMap": []
+}
