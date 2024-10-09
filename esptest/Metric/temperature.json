@@ -1,9 +1,0 @@
-{
-	"Id": "01926d0d-f379-7dd3-9ef3-1a3e3446c62f",
-	"active": "true",
-	"enabled": "true",
-	"code": "temperature",
-	"date": "2024-10-08T16:54:43.834Z",
-	"__keys": ["code"],
-	"__trMap": []
-}
