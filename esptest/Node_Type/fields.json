@@ -441,6 +441,17 @@
     },
     {
         "name": "sn_map_core_building",
+        "element": "address",
+        "column_label": "Address",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Address",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_building",
         "element": "cmn_location",
         "column_label": "Location",
         "internal_type": "reference",
@@ -503,6 +514,17 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Active",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_campus",
+        "element": "address",
+        "column_label": "Address",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Address",
         "array": "0"
     },
     {
