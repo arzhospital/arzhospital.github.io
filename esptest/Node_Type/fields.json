@@ -925,6 +925,17 @@
     },
     {
         "name": "sn_wsd_core_space",
+        "element": "area",
+        "column_label": "Area",
+        "internal_type": "reference",
+        "reference": "sn_wsd_core_area",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Area",
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
         "element": "floor",
         "column_label": "Floor",
         "internal_type": "reference",
@@ -936,6 +947,17 @@
     },
     {
         "name": "sn_wsd_core_space",
+        "element": "location_type",
+        "column_label": "Space type",
+        "internal_type": "reference",
+        "reference": "sn_wsd_core_space_type",
+        "unique": "0",
+        "mandatory": "1",
+        "sys_name": "Space type",
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
         "element": "sys_id",
         "column_label": "Sys ID",
         "internal_type": "GUID",
@@ -943,6 +965,28 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": null,
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
+        "element": "occupancy_status",
+        "column_label": "Occupancy status",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Occupancy status",
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
+        "element": "wsd_assignment_type",
+        "column_label": "Assignment type",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Assignment type",
         "array": "0"
     },
     {
