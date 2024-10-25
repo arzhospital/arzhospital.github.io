@@ -683,6 +683,17 @@
     },
     {
         "name": "sn_wsd_core_campus",
+        "element": "indoor_map_campus",
+        "column_label": "Indoor map campus",
+        "internal_type": "reference",
+        "reference": "sn_map_core_campus",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Indoor map campus",
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_campus",
         "element": "sys_id",
         "column_label": "Sys ID",
         "internal_type": "GUID",
