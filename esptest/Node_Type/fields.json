@@ -1,5 +1,71 @@
 [
     {
+        "name": "cmn_department",
+        "element": "description",
+        "column_label": "Description",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Description",
+        "array": "0"
+    },
+    {
+        "name": "cmn_department",
+        "element": "code",
+        "column_label": "Code",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Code",
+        "array": "0"
+    },
+    {
+        "name": "cmn_department",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Name",
+        "array": "0"
+    },
+    {
+        "name": "cmn_department",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "GUID",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0"
+    },
+    {
+        "name": "cmn_department",
+        "element": "parent",
+        "column_label": "Parent",
+        "internal_type": "reference",
+        "reference": "cmn_department",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Parent",
+        "array": "0"
+    },
+    {
+        "name": "cmn_department",
+        "element": "company",
+        "column_label": "Company",
+        "internal_type": "reference",
+        "reference": "core_company",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Company",
+        "array": "0"
+    },
+    {
         "name": "cmn_location",
         "element": "zip",
         "column_label": "Zip / Postal Code",
@@ -74,17 +140,6 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Parent",
-        "array": "0"
-    },
-    {
-        "name": "cmn_location",
-        "element": "source",
-        "column_label": "Source",
-        "internal_type": "reference",
-        "reference": "sn_hr_integrations_source",
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Source",
         "array": "0"
     },
     {
@@ -195,6 +250,292 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Primary",
+        "array": "0"
+    },
+    {
+        "name": "cmn_location_type",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "GUID",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0"
+    },
+    {
+        "name": "cmn_location_type",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "translated_field",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Name",
+        "array": "0"
+    },
+    {
+        "name": "cmn_location_type",
+        "element": "code",
+        "column_label": "Code",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Code",
+        "array": "0"
+    },
+    {
+        "name": "core_company",
+        "element": "country",
+        "column_label": "Country",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Country",
+        "array": "0"
+    },
+    {
+        "name": "core_company",
+        "element": "street",
+        "column_label": "Street",
+        "internal_type": "multi_two_lines",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Street",
+        "array": "0"
+    },
+    {
+        "name": "core_company",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "GUID",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0"
+    },
+    {
+        "name": "core_company",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "1",
+        "sys_name": "Name",
+        "array": "0"
+    },
+    {
+        "name": "core_company",
+        "element": "parent",
+        "column_label": "Parent",
+        "internal_type": "reference",
+        "reference": "core_company",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Parent",
+        "array": "0"
+    },
+    {
+        "name": "core_company",
+        "element": "contact",
+        "column_label": "Contact",
+        "internal_type": "reference",
+        "reference": "sys_user",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Contact",
+        "array": "0"
+    },
+    {
+        "name": "core_company",
+        "element": "zip",
+        "column_label": "Zip / Postal code",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Zip / Postal code",
+        "array": "0"
+    },
+    {
+        "name": "core_company",
+        "element": "primary",
+        "column_label": "Primary",
+        "internal_type": "boolean",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Primary",
+        "array": "0"
+    },
+    {
+        "name": "core_company",
+        "element": "state",
+        "column_label": "State / Province",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "State / Province",
+        "array": "0"
+    },
+    {
+        "name": "core_company",
+        "element": "city",
+        "column_label": "City",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "City",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_building",
+        "element": "description",
+        "column_label": "Description",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Description",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_building",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "1",
+        "sys_name": "Name",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_building",
+        "element": "campus",
+        "column_label": "Campus",
+        "internal_type": "reference",
+        "reference": "sn_map_core_campus",
+        "unique": "0",
+        "mandatory": "1",
+        "sys_name": "Campus",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_building",
+        "element": "title",
+        "column_label": "Title",
+        "internal_type": "translated_text",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Title",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_building",
+        "element": "active",
+        "column_label": "Active",
+        "internal_type": "boolean",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Active",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_building",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "GUID",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "GUID",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "1",
+        "sys_name": "Name",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "building",
+        "column_label": "Building",
+        "internal_type": "reference",
+        "reference": "sn_map_core_building",
+        "unique": "0",
+        "mandatory": "1",
+        "sys_name": "Building",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "active",
+        "column_label": "Active",
+        "internal_type": "boolean",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Active",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "description",
+        "column_label": "Description",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Description",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "title",
+        "column_label": "Title",
+        "internal_type": "translated_text",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Title",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "number",
+        "column_label": "Number",
+        "internal_type": "decimal",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "1",
+        "sys_name": "Number",
         "array": "0"
     },
     {
@@ -529,6 +870,61 @@
     },
     {
         "name": "sn_wsd_core_site",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "GUID",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
+        "element": "building",
+        "column_label": "Building",
+        "internal_type": "reference",
+        "reference": "sn_wsd_core_building",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Building",
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
+        "element": "campus",
+        "column_label": "Campus",
+        "internal_type": "reference",
+        "reference": "sn_wsd_core_campus",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Campus",
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
+        "element": "site",
+        "column_label": "Site",
+        "internal_type": "reference",
+        "reference": "sn_wsd_core_site",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Site",
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
+        "element": "floor",
+        "column_label": "Floor",
+        "internal_type": "reference",
+        "reference": "sn_wsd_core_floor",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Floor",
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
         "element": "sys_id",
         "column_label": "Sys ID",
         "internal_type": "GUID",
@@ -877,17 +1273,6 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Zip / Postal code",
-        "array": "0"
-    },
-    {
-        "name": "sys_user",
-        "element": "source",
-        "column_label": "Source",
-        "internal_type": "string",
-        "reference": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Source",
         "array": "0"
     }
 ]
