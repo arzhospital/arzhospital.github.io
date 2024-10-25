@@ -732,6 +732,23 @@
     },
     {
         "name": "sn_wsd_core_building",
+        "element": "indoor_map_building",
+        "column_label": "Indoor map building",
+        "internal_type": "reference",
+        "reference": "sn_map_core_building",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Indoor map building",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_core_building",
+            "label": "Building",
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+        }
+    },
+    {
+        "name": "sn_wsd_core_building",
         "element": "campus",
         "column_label": "Campus",
         "internal_type": "reference",
