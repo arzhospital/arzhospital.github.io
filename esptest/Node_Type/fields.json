@@ -396,17 +396,6 @@
         "array": "0"
     },
     {
-        "name": "core_company",
-        "element": "vendor",
-        "column_label": "Vendor",
-        "internal_type": "boolean",
-        "reference": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Vendor",
-        "array": "0"
-    },
-    {
         "name": "sn_map_core_building",
         "element": "description",
         "column_label": "Description",
@@ -437,6 +426,28 @@
         "unique": "0",
         "mandatory": "1",
         "sys_name": "Campus",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_building",
+        "element": "address",
+        "column_label": "Address",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Address",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_building",
+        "element": "cmn_location",
+        "column_label": "Location",
+        "internal_type": "reference",
+        "reference": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Location",
         "array": "0"
     },
     {
@@ -481,6 +492,17 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": null,
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "cmn_location",
+        "column_label": "Location",
+        "internal_type": "reference",
+        "reference": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Location",
         "array": "0"
     },
     {
@@ -646,17 +668,6 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Campus",
-        "array": "0"
-    },
-    {
-        "name": "sn_wsd_core_campus",
-        "element": "indoor_map_campus",
-        "column_label": "Indoor map campus",
-        "internal_type": "reference",
-        "reference": "sn_map_core_campus",
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Indoor map campus",
         "array": "0"
     },
     {
