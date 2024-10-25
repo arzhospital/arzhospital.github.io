@@ -396,6 +396,17 @@
         "array": "0"
     },
     {
+        "name": "core_company",
+        "element": "vendor",
+        "column_label": "Vendor",
+        "internal_type": "boolean",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Vendor",
+        "array": "0"
+    },
+    {
         "name": "sn_map_core_building",
         "element": "description",
         "column_label": "Description",
