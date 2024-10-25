@@ -612,6 +612,142 @@
         }
     },
     {
+        "name": "sn_map_core_campus",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "1",
+        "sys_name": "Name",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_campus",
+            "label": "Campus",
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
+        }
+    },
+    {
+        "name": "sn_map_core_campus",
+        "element": "active",
+        "column_label": "Active",
+        "internal_type": "boolean",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Active",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_campus",
+            "label": "Campus",
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
+        }
+    },
+    {
+        "name": "sn_map_core_campus",
+        "element": "address",
+        "column_label": "Address",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Address",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_campus",
+            "label": "Campus",
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
+        }
+    },
+    {
+        "name": "sn_map_core_campus",
+        "element": "description",
+        "column_label": "Description",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Description",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_campus",
+            "label": "Campus",
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
+        }
+    },
+    {
+        "name": "sn_map_core_campus",
+        "element": "country",
+        "column_label": "Country",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Country",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_campus",
+            "label": "Campus",
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
+        }
+    },
+    {
+        "name": "sn_map_core_campus",
+        "element": "title",
+        "column_label": "Title",
+        "internal_type": "translated_text",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Title",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_campus",
+            "label": "Campus",
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
+        }
+    },
+    {
+        "name": "sn_map_core_campus",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "GUID",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_campus",
+            "label": "Campus",
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
+        }
+    },
+    {
+        "name": "sn_map_core_campus",
+        "element": "cmn_location",
+        "column_label": "Location",
+        "internal_type": "reference",
+        "reference": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Location",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_campus",
+            "label": "Campus",
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
+        }
+    },
+    {
         "name": "sn_wsd_core_area",
         "element": "site",
         "column_label": "Site",
@@ -722,23 +858,6 @@
         "unique": "0",
         "mandatory": "1",
         "sys_name": "Site",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_core_building",
-            "label": "Building",
-            "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
-        }
-    },
-    {
-        "name": "sn_wsd_core_building",
-        "element": "indoor_map_building",
-        "column_label": "Indoor map building",
-        "internal_type": "reference",
-        "reference": "sn_map_core_building",
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Indoor map building",
         "array": "0",
         "table": {
             "name": "sn_wsd_core_building",
