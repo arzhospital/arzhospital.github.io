@@ -441,6 +441,28 @@
     },
     {
         "name": "sn_map_core_building",
+        "element": "address",
+        "column_label": "Address",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Address",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_building",
+        "element": "cmn_location",
+        "column_label": "Location",
+        "internal_type": "reference",
+        "reference": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Location",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_building",
         "element": "title",
         "column_label": "Title",
         "internal_type": "translated_text",
@@ -481,6 +503,17 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": null,
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "cmn_location",
+        "column_label": "Location",
+        "internal_type": "reference",
+        "reference": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Location",
         "array": "0"
     },
     {
