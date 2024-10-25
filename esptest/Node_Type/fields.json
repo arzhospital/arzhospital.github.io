@@ -430,6 +430,17 @@
     },
     {
         "name": "sn_map_core_building",
+        "element": "cmn_location",
+        "column_label": "Location",
+        "internal_type": "reference",
+        "reference": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Location",
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_building",
         "element": "title",
         "column_label": "Title",
         "internal_type": "translated_text",
@@ -470,6 +481,17 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": null,
+        "array": "0"
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "cmn_location",
+        "column_label": "Location",
+        "internal_type": "reference",
+        "reference": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Location",
         "array": "0"
     },
     {
@@ -903,6 +925,17 @@
     },
     {
         "name": "sn_wsd_core_space",
+        "element": "indoor_map_place",
+        "column_label": "Indoor map place",
+        "internal_type": "reference",
+        "reference": "sn_map_core_place",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Indoor map place",
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
         "element": "site",
         "column_label": "Site",
         "internal_type": "reference",
@@ -910,6 +943,17 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Site",
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
+        "element": "area",
+        "column_label": "Area",
+        "internal_type": "reference",
+        "reference": "sn_wsd_core_area",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Area",
         "array": "0"
     },
     {
@@ -925,6 +969,17 @@
     },
     {
         "name": "sn_wsd_core_space",
+        "element": "location_type",
+        "column_label": "Space type",
+        "internal_type": "reference",
+        "reference": "sn_wsd_core_space_type",
+        "unique": "0",
+        "mandatory": "1",
+        "sys_name": "Space type",
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
         "element": "sys_id",
         "column_label": "Sys ID",
         "internal_type": "GUID",
@@ -932,6 +987,28 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": null,
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
+        "element": "occupancy_status",
+        "column_label": "Occupancy status",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Occupancy status",
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_space",
+        "element": "wsd_assignment_type",
+        "column_label": "Assignment type",
+        "internal_type": "string",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Assignment type",
         "array": "0"
     },
     {
