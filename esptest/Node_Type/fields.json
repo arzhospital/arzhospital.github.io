@@ -12,7 +12,8 @@
         "table": {
             "name": "cmn_department",
             "label": "Department",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -28,7 +29,8 @@
         "table": {
             "name": "cmn_department",
             "label": "Department",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -44,7 +46,8 @@
         "table": {
             "name": "cmn_department",
             "label": "Department",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -60,7 +63,8 @@
         "table": {
             "name": "cmn_department",
             "label": "Department",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -76,7 +80,8 @@
         "table": {
             "name": "cmn_department",
             "label": "Department",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -92,7 +97,8 @@
         "table": {
             "name": "cmn_department",
             "label": "Department",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -108,7 +114,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -124,7 +131,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -140,7 +148,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -156,7 +165,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -172,7 +182,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -188,7 +199,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -204,7 +216,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -220,7 +233,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -236,7 +250,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -252,7 +267,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -268,7 +284,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -284,7 +301,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -300,7 +318,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -316,7 +335,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -332,7 +352,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -348,7 +369,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -364,7 +386,8 @@
         "table": {
             "name": "cmn_location",
             "label": "Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -380,7 +403,8 @@
         "table": {
             "name": "cmn_location_type",
             "label": "Address Type",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -396,7 +420,8 @@
         "table": {
             "name": "cmn_location_type",
             "label": "Address Type",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -412,7 +437,8 @@
         "table": {
             "name": "cmn_location_type",
             "label": "Address Type",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -428,7 +454,8 @@
         "table": {
             "name": "core_company",
             "label": "Company",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -444,7 +471,8 @@
         "table": {
             "name": "core_company",
             "label": "Company",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -460,7 +488,8 @@
         "table": {
             "name": "core_company",
             "label": "Company",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -476,7 +505,8 @@
         "table": {
             "name": "core_company",
             "label": "Company",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -492,7 +522,8 @@
         "table": {
             "name": "core_company",
             "label": "Company",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -508,7 +539,8 @@
         "table": {
             "name": "core_company",
             "label": "Company",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -524,7 +556,8 @@
         "table": {
             "name": "core_company",
             "label": "Company",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -540,7 +573,8 @@
         "table": {
             "name": "core_company",
             "label": "Company",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -556,7 +590,8 @@
         "table": {
             "name": "core_company",
             "label": "Company",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -572,7 +607,8 @@
         "table": {
             "name": "core_company",
             "label": "Company",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -588,7 +624,8 @@
         "table": {
             "name": "core_company",
             "label": "Company",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -604,7 +641,8 @@
         "table": {
             "name": "sn_map_core_building",
             "label": "Building",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -620,7 +658,8 @@
         "table": {
             "name": "sn_map_core_building",
             "label": "Building",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -636,7 +675,8 @@
         "table": {
             "name": "sn_map_core_building",
             "label": "Building",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -652,7 +692,8 @@
         "table": {
             "name": "sn_map_core_building",
             "label": "Building",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -668,7 +709,8 @@
         "table": {
             "name": "sn_map_core_building",
             "label": "Building",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -684,7 +726,8 @@
         "table": {
             "name": "sn_map_core_building",
             "label": "Building",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -700,7 +743,8 @@
         "table": {
             "name": "sn_map_core_building",
             "label": "Building",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -716,7 +760,8 @@
         "table": {
             "name": "sn_map_core_campus",
             "label": "Campus",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -732,7 +777,8 @@
         "table": {
             "name": "sn_map_core_campus",
             "label": "Campus",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -748,7 +794,8 @@
         "table": {
             "name": "sn_map_core_campus",
             "label": "Campus",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -764,7 +811,8 @@
         "table": {
             "name": "sn_map_core_campus",
             "label": "Campus",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -780,7 +828,8 @@
         "table": {
             "name": "sn_map_core_campus",
             "label": "Campus",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -796,7 +845,8 @@
         "table": {
             "name": "sn_map_core_campus",
             "label": "Campus",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -812,7 +862,8 @@
         "table": {
             "name": "sn_map_core_campus",
             "label": "Campus",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -828,7 +879,8 @@
         "table": {
             "name": "sn_map_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -844,7 +896,8 @@
         "table": {
             "name": "sn_map_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -860,7 +913,8 @@
         "table": {
             "name": "sn_map_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -876,7 +930,8 @@
         "table": {
             "name": "sn_map_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -892,7 +947,8 @@
         "table": {
             "name": "sn_map_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -908,7 +964,8 @@
         "table": {
             "name": "sn_map_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -924,7 +981,8 @@
         "table": {
             "name": "sn_map_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -940,7 +998,8 @@
         "table": {
             "name": "sn_map_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "fa60558563b044509d2cba84af9c019c"
         }
     },
     {
@@ -956,7 +1015,8 @@
         "table": {
             "name": "sn_wsd_core_area",
             "label": "Area",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -972,7 +1032,8 @@
         "table": {
             "name": "sn_wsd_core_area",
             "label": "Area",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -988,7 +1049,8 @@
         "table": {
             "name": "sn_wsd_core_area",
             "label": "Area",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1004,7 +1066,8 @@
         "table": {
             "name": "sn_wsd_core_area",
             "label": "Area",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1020,7 +1083,8 @@
         "table": {
             "name": "sn_wsd_core_area",
             "label": "Area",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1036,7 +1100,8 @@
         "table": {
             "name": "sn_wsd_core_building",
             "label": "Building",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1052,7 +1117,8 @@
         "table": {
             "name": "sn_wsd_core_building",
             "label": "Building",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1068,7 +1134,8 @@
         "table": {
             "name": "sn_wsd_core_building",
             "label": "Building",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1084,7 +1151,8 @@
         "table": {
             "name": "sn_wsd_core_building",
             "label": "Building",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1100,7 +1168,8 @@
         "table": {
             "name": "sn_wsd_core_campus",
             "label": "Campus",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1116,7 +1185,8 @@
         "table": {
             "name": "sn_wsd_core_campus",
             "label": "Campus",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1132,7 +1202,8 @@
         "table": {
             "name": "sn_wsd_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1148,7 +1219,8 @@
         "table": {
             "name": "sn_wsd_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1164,7 +1236,8 @@
         "table": {
             "name": "sn_wsd_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1180,7 +1253,8 @@
         "table": {
             "name": "sn_wsd_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1196,7 +1270,8 @@
         "table": {
             "name": "sn_wsd_core_floor",
             "label": "Floor",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1212,7 +1287,8 @@
         "table": {
             "name": "sn_wsd_core_parking",
             "label": "Parking",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1228,7 +1304,8 @@
         "table": {
             "name": "sn_wsd_core_region",
             "label": "Region",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1244,7 +1321,8 @@
         "table": {
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1260,7 +1338,8 @@
         "table": {
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1276,7 +1355,8 @@
         "table": {
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1292,7 +1372,8 @@
         "table": {
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1308,7 +1389,8 @@
         "table": {
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1324,7 +1406,8 @@
         "table": {
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1340,7 +1423,8 @@
         "table": {
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1356,7 +1440,8 @@
         "table": {
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1372,7 +1457,8 @@
         "table": {
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1388,7 +1474,8 @@
         "table": {
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1404,7 +1491,8 @@
         "table": {
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1420,7 +1508,8 @@
         "table": {
             "name": "sn_wsd_core_room",
             "label": "Room",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1436,7 +1525,8 @@
         "table": {
             "name": "sn_wsd_core_site",
             "label": "Site",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1452,7 +1542,8 @@
         "table": {
             "name": "sn_wsd_core_space",
             "label": "Space",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1468,7 +1559,8 @@
         "table": {
             "name": "sn_wsd_core_space",
             "label": "Space",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1484,7 +1576,8 @@
         "table": {
             "name": "sn_wsd_core_space",
             "label": "Space",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1500,7 +1593,8 @@
         "table": {
             "name": "sn_wsd_core_space",
             "label": "Space",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1516,7 +1610,8 @@
         "table": {
             "name": "sn_wsd_core_space",
             "label": "Space",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1532,7 +1627,8 @@
         "table": {
             "name": "sn_wsd_core_space",
             "label": "Space",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1548,7 +1644,8 @@
         "table": {
             "name": "sn_wsd_core_space",
             "label": "Space",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1564,7 +1661,8 @@
         "table": {
             "name": "sn_wsd_core_space",
             "label": "Space",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1580,7 +1678,8 @@
         "table": {
             "name": "sn_wsd_core_space",
             "label": "Space",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1596,7 +1695,8 @@
         "table": {
             "name": "sn_wsd_core_space_type",
             "label": "Space Type",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1612,7 +1712,8 @@
         "table": {
             "name": "sn_wsd_core_space_type",
             "label": "Space Type",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1628,7 +1729,8 @@
         "table": {
             "name": "sn_wsd_core_space_type",
             "label": "Space Type",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1644,7 +1746,8 @@
         "table": {
             "name": "sn_wsd_core_space_type",
             "label": "Space Type",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1660,7 +1763,8 @@
         "table": {
             "name": "sn_wsd_core_space_type",
             "label": "Space Type",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1676,7 +1780,8 @@
         "table": {
             "name": "sn_wsd_core_space_type",
             "label": "Space Type",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1692,7 +1797,8 @@
         "table": {
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1708,7 +1814,8 @@
         "table": {
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1724,7 +1831,8 @@
         "table": {
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1740,7 +1848,8 @@
         "table": {
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1756,7 +1865,8 @@
         "table": {
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1772,7 +1882,8 @@
         "table": {
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1788,7 +1899,8 @@
         "table": {
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1804,7 +1916,8 @@
         "table": {
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1820,7 +1933,8 @@
         "table": {
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1836,7 +1950,8 @@
         "table": {
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1852,7 +1967,8 @@
         "table": {
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
-            "extends": null
+            "extends": null,
+            "sys_scope": "a208b07253201010b10bddeeff7b1281"
         }
     },
     {
@@ -1868,7 +1984,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -1884,7 +2001,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -1900,7 +2018,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -1916,7 +2035,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -1932,7 +2052,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -1948,7 +2069,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -1964,7 +2086,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -1980,7 +2103,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -1996,7 +2120,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -2012,7 +2137,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -2028,7 +2154,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -2044,7 +2171,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -2060,7 +2188,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     },
     {
@@ -2076,7 +2205,8 @@
         "table": {
             "name": "sys_user",
             "label": "User",
-            "extends": null
+            "extends": null,
+            "sys_scope": "global"
         }
     }
 ]
