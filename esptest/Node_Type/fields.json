@@ -297,6 +297,28 @@
         "array": "0"
     },
     {
+        "name": "sn_wsd_core_campus",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "GUID",
+        "reference": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0"
+    },
+    {
+        "name": "sn_wsd_core_campus",
+        "element": "site",
+        "column_label": "Site",
+        "internal_type": "reference",
+        "reference": "sn_wsd_core_site",
+        "unique": "0",
+        "mandatory": "1",
+        "sys_name": "Site",
+        "array": "0"
+    },
+    {
         "name": "sn_wsd_core_floor",
         "element": "site",
         "column_label": "Site",
