@@ -3,7 +3,7 @@
         "name": "cmn_department",
         "element": "description",
         "column_label": "Description",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -13,14 +13,14 @@
             "name": "cmn_department",
             "label": "Department",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_department",
         "element": "code",
         "column_label": "Code",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -30,14 +30,14 @@
             "name": "cmn_department",
             "label": "Department",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_department",
         "element": "name",
         "column_label": "Name",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -47,14 +47,14 @@
             "name": "cmn_department",
             "label": "Department",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_department",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -64,15 +64,15 @@
             "name": "cmn_department",
             "label": "Department",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_department",
         "element": "parent",
         "column_label": "Parent",
-        "internal_type": "reference",
-        "reference": "cmn_department",
+        "internal_type": "Reference",
+        "reference": "Department",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Parent",
@@ -81,15 +81,15 @@
             "name": "cmn_department",
             "label": "Department",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_department",
         "element": "company",
         "column_label": "Company",
-        "internal_type": "reference",
-        "reference": "core_company",
+        "internal_type": "Reference",
+        "reference": "Company",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Company",
@@ -98,14 +98,14 @@
             "name": "cmn_department",
             "label": "Department",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "zip",
         "column_label": "Zip / Postal Code",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -115,14 +115,14 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "name",
         "column_label": "Name",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -132,14 +132,14 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "full_name",
         "column_label": "Full name",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -149,15 +149,15 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "contact",
         "column_label": "Contact",
-        "internal_type": "reference",
-        "reference": "sys_user",
+        "internal_type": "Reference",
+        "reference": "User",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Contact",
@@ -166,14 +166,14 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "time_zone",
         "column_label": "Time zone",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -183,14 +183,14 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "state",
         "column_label": "State / Province",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -200,15 +200,15 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "parent",
         "column_label": "Parent",
-        "internal_type": "reference",
-        "reference": "cmn_location",
+        "internal_type": "Reference",
+        "reference": "Location",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Parent",
@@ -217,15 +217,15 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "company",
         "column_label": "Company",
-        "internal_type": "reference",
-        "reference": "core_company",
+        "internal_type": "Reference",
+        "reference": "Company",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Company",
@@ -234,14 +234,14 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -251,14 +251,14 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "city",
         "column_label": "City",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -268,14 +268,14 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "cmn_location_type",
         "column_label": "Location type",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -285,15 +285,15 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "type",
         "column_label": "Type",
-        "internal_type": "glide_list",
-        "reference": "cmn_location_type",
+        "internal_type": "List",
+        "reference": "Address Type",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Type",
@@ -302,14 +302,14 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "country",
         "column_label": "Country",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -319,14 +319,14 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "duplicate",
         "column_label": "Duplicate",
-        "internal_type": "boolean",
+        "internal_type": "True/False",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -336,14 +336,14 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "street",
         "column_label": "Street",
-        "internal_type": "multi_two_lines",
+        "internal_type": "Two Line Text Area",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -353,14 +353,14 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location",
         "element": "primary",
         "column_label": "Primary",
-        "internal_type": "boolean",
+        "internal_type": "True/False",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -370,14 +370,14 @@
             "name": "cmn_location",
             "label": "Location",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location_type",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -387,14 +387,14 @@
             "name": "cmn_location_type",
             "label": "Address Type",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location_type",
         "element": "name",
         "column_label": "Name",
-        "internal_type": "translated_field",
+        "internal_type": "Translated Field",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -404,14 +404,14 @@
             "name": "cmn_location_type",
             "label": "Address Type",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "cmn_location_type",
         "element": "code",
         "column_label": "Code",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -421,14 +421,14 @@
             "name": "cmn_location_type",
             "label": "Address Type",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "core_company",
         "element": "country",
         "column_label": "Country",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -438,14 +438,14 @@
             "name": "core_company",
             "label": "Company",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "core_company",
         "element": "street",
         "column_label": "Street",
-        "internal_type": "multi_two_lines",
+        "internal_type": "Two Line Text Area",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -455,14 +455,14 @@
             "name": "core_company",
             "label": "Company",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "core_company",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -472,32 +472,32 @@
             "name": "core_company",
             "label": "Company",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "core_company",
         "element": "name",
         "column_label": "Name",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
-        "mandatory": "1",
+        "mandatory": "true",
         "sys_name": "Name",
         "array": "0",
         "table": {
             "name": "core_company",
             "label": "Company",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "core_company",
         "element": "parent",
         "column_label": "Parent",
-        "internal_type": "reference",
-        "reference": "core_company",
+        "internal_type": "Reference",
+        "reference": "Company",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Parent",
@@ -506,15 +506,15 @@
             "name": "core_company",
             "label": "Company",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "core_company",
         "element": "contact",
         "column_label": "Contact",
-        "internal_type": "reference",
-        "reference": "sys_user",
+        "internal_type": "Reference",
+        "reference": "User",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Contact",
@@ -523,14 +523,14 @@
             "name": "core_company",
             "label": "Company",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "core_company",
         "element": "zip",
         "column_label": "Zip / Postal code",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -540,14 +540,14 @@
             "name": "core_company",
             "label": "Company",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "core_company",
         "element": "primary",
         "column_label": "Primary",
-        "internal_type": "boolean",
+        "internal_type": "True/False",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -557,14 +557,14 @@
             "name": "core_company",
             "label": "Company",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "core_company",
         "element": "state",
         "column_label": "State / Province",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -574,14 +574,14 @@
             "name": "core_company",
             "label": "Company",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "core_company",
         "element": "city",
         "column_label": "City",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -591,14 +591,14 @@
             "name": "core_company",
             "label": "Company",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "core_company",
         "element": "vendor",
         "column_label": "Vendor",
-        "internal_type": "boolean",
+        "internal_type": "True/False",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -608,168 +608,32 @@
             "name": "core_company",
             "label": "Company",
             "extends": null,
-            "sys_scope": "global"
-        }
-    },
-    {
-        "name": "sn_map_core_campus",
-        "element": "name",
-        "column_label": "Name",
-        "internal_type": "string",
-        "reference": null,
-        "unique": "0",
-        "mandatory": "1",
-        "sys_name": "Name",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_campus",
-            "label": "Campus",
-            "extends": null,
-            "sys_scope": "fa60558563b044509d2cba84af9c019c"
-        }
-    },
-    {
-        "name": "sn_map_core_campus",
-        "element": "active",
-        "column_label": "Active",
-        "internal_type": "boolean",
-        "reference": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Active",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_campus",
-            "label": "Campus",
-            "extends": null,
-            "sys_scope": "fa60558563b044509d2cba84af9c019c"
-        }
-    },
-    {
-        "name": "sn_map_core_campus",
-        "element": "address",
-        "column_label": "Address",
-        "internal_type": "string",
-        "reference": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Address",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_campus",
-            "label": "Campus",
-            "extends": null,
-            "sys_scope": "fa60558563b044509d2cba84af9c019c"
-        }
-    },
-    {
-        "name": "sn_map_core_campus",
-        "element": "description",
-        "column_label": "Description",
-        "internal_type": "string",
-        "reference": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Description",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_campus",
-            "label": "Campus",
-            "extends": null,
-            "sys_scope": "fa60558563b044509d2cba84af9c019c"
-        }
-    },
-    {
-        "name": "sn_map_core_campus",
-        "element": "country",
-        "column_label": "Country",
-        "internal_type": "string",
-        "reference": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Country",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_campus",
-            "label": "Campus",
-            "extends": null,
-            "sys_scope": "fa60558563b044509d2cba84af9c019c"
-        }
-    },
-    {
-        "name": "sn_map_core_campus",
-        "element": "title",
-        "column_label": "Title",
-        "internal_type": "translated_text",
-        "reference": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Title",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_campus",
-            "label": "Campus",
-            "extends": null,
-            "sys_scope": "fa60558563b044509d2cba84af9c019c"
-        }
-    },
-    {
-        "name": "sn_map_core_campus",
-        "element": "sys_id",
-        "column_label": "Sys ID",
-        "internal_type": "GUID",
-        "reference": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": null,
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_campus",
-            "label": "Campus",
-            "extends": null,
-            "sys_scope": "fa60558563b044509d2cba84af9c019c"
-        }
-    },
-    {
-        "name": "sn_map_core_campus",
-        "element": "cmn_location",
-        "column_label": "Location",
-        "internal_type": "reference",
-        "reference": "cmn_location",
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Location",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_campus",
-            "label": "Campus",
-            "extends": null,
-            "sys_scope": "fa60558563b044509d2cba84af9c019c"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sn_wsd_core_area",
         "element": "site",
         "column_label": "Site",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_site",
+        "internal_type": "Reference",
+        "reference": "Site",
         "unique": "0",
-        "mandatory": "1",
+        "mandatory": "true",
         "sys_name": "Site",
         "array": "0",
         "table": {
             "name": "sn_wsd_core_area",
             "label": "Area",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_area",
         "element": "campus",
         "column_label": "Campus",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_campus",
+        "internal_type": "Reference",
+        "reference": "Campus",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Campus",
@@ -778,15 +642,15 @@
             "name": "sn_wsd_core_area",
             "label": "Area",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_area",
         "element": "floor",
         "column_label": "Floor",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_floor",
+        "internal_type": "Reference",
+        "reference": "Floor",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Floor",
@@ -795,14 +659,14 @@
             "name": "sn_wsd_core_area",
             "label": "Area",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_area",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -812,15 +676,15 @@
             "name": "sn_wsd_core_area",
             "label": "Area",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_area",
         "element": "building",
         "column_label": "Building",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_building",
+        "internal_type": "Reference",
+        "reference": "Building",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Building",
@@ -829,14 +693,14 @@
             "name": "sn_wsd_core_area",
             "label": "Area",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_building",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -846,32 +710,32 @@
             "name": "sn_wsd_core_building",
             "label": "Building",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_building",
         "element": "site",
         "column_label": "Site",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_site",
+        "internal_type": "Reference",
+        "reference": "Site",
         "unique": "0",
-        "mandatory": "1",
+        "mandatory": "true",
         "sys_name": "Site",
         "array": "0",
         "table": {
             "name": "sn_wsd_core_building",
             "label": "Building",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_building",
         "element": "campus",
         "column_label": "Campus",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_campus",
+        "internal_type": "Reference",
+        "reference": "Campus",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Campus",
@@ -880,15 +744,15 @@
             "name": "sn_wsd_core_building",
             "label": "Building",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_campus",
         "element": "indoor_map_campus",
         "column_label": "Indoor map campus",
-        "internal_type": "reference",
-        "reference": "sn_map_core_campus",
+        "internal_type": "Reference",
+        "reference": "Campus",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Indoor map campus",
@@ -897,14 +761,14 @@
             "name": "sn_wsd_core_campus",
             "label": "Campus",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_campus",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -914,48 +778,48 @@
             "name": "sn_wsd_core_campus",
             "label": "Campus",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_campus",
         "element": "site",
         "column_label": "Site",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_site",
+        "internal_type": "Reference",
+        "reference": "Site",
         "unique": "0",
-        "mandatory": "1",
+        "mandatory": "true",
         "sys_name": "Site",
         "array": "0",
         "table": {
             "name": "sn_wsd_core_campus",
             "label": "Campus",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_floor",
         "element": "site",
         "column_label": "Site",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_site",
+        "internal_type": "Reference",
+        "reference": "Site",
         "unique": "0",
-        "mandatory": "1",
+        "mandatory": "true",
         "sys_name": "Site",
         "array": "0",
         "table": {
             "name": "sn_wsd_core_floor",
             "label": "Floor",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_floor",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -965,15 +829,15 @@
             "name": "sn_wsd_core_floor",
             "label": "Floor",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_floor",
         "element": "campus",
         "column_label": "Campus",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_campus",
+        "internal_type": "Reference",
+        "reference": "Campus",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Campus",
@@ -982,15 +846,15 @@
             "name": "sn_wsd_core_floor",
             "label": "Floor",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_floor",
         "element": "building",
         "column_label": "Building",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_building",
+        "internal_type": "Reference",
+        "reference": "Building",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Building",
@@ -999,15 +863,15 @@
             "name": "sn_wsd_core_floor",
             "label": "Floor",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_floor",
         "element": "indoor_map_floor",
         "column_label": "Indoor map floor",
-        "internal_type": "reference",
-        "reference": "sn_map_core_floor",
+        "internal_type": "Reference",
+        "reference": "Floor",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Indoor map floor",
@@ -1016,14 +880,14 @@
             "name": "sn_wsd_core_floor",
             "label": "Floor",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_parking",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1033,14 +897,14 @@
             "name": "sn_wsd_core_parking",
             "label": "Parking",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_region",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1050,14 +914,14 @@
             "name": "sn_wsd_core_region",
             "label": "Region",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_reservation",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1067,14 +931,14 @@
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_reservation",
         "element": "number",
         "column_label": "Number",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1084,14 +948,14 @@
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_reservation",
         "element": "check_in_time",
         "column_label": "Check in time",
-        "internal_type": "glide_date_time",
+        "internal_type": "Date/Time",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1101,14 +965,14 @@
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_reservation",
         "element": "reservation_type",
         "column_label": "Reservation type",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1118,14 +982,14 @@
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_reservation",
         "element": "check_out_time",
         "column_label": "Check out time",
-        "internal_type": "glide_date_time",
+        "internal_type": "Date/Time",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1135,14 +999,14 @@
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_reservation",
         "element": "state",
         "column_label": "State",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1152,15 +1016,15 @@
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_reservation",
         "element": "workplace_location",
         "column_label": "Workplace location",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_space",
+        "internal_type": "Reference",
+        "reference": "Space",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Workplace location",
@@ -1169,15 +1033,15 @@
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_reservation",
         "element": "requested_for",
         "column_label": "Requested for",
-        "internal_type": "reference",
-        "reference": "sys_user",
+        "internal_type": "Reference",
+        "reference": "User",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Requested for",
@@ -1186,14 +1050,14 @@
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_reservation",
         "element": "start",
         "column_label": "Start",
-        "internal_type": "glide_date_time",
+        "internal_type": "Date/Time",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1203,14 +1067,14 @@
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_reservation",
         "element": "end",
         "column_label": "End",
-        "internal_type": "glide_date_time",
+        "internal_type": "Date/Time",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1220,14 +1084,14 @@
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_reservation",
         "element": "active",
         "column_label": "Active",
-        "internal_type": "boolean",
+        "internal_type": "True/False",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1237,14 +1101,14 @@
             "name": "sn_wsd_core_reservation",
             "label": "Reservation",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_room",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1254,14 +1118,14 @@
             "name": "sn_wsd_core_room",
             "label": "Room",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_site",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1271,15 +1135,15 @@
             "name": "sn_wsd_core_site",
             "label": "Site",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space",
         "element": "building",
         "column_label": "Building",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_building",
+        "internal_type": "Reference",
+        "reference": "Building",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Building",
@@ -1288,15 +1152,15 @@
             "name": "sn_wsd_core_space",
             "label": "Space",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space",
         "element": "campus",
         "column_label": "Campus",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_campus",
+        "internal_type": "Reference",
+        "reference": "Campus",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Campus",
@@ -1305,15 +1169,15 @@
             "name": "sn_wsd_core_space",
             "label": "Space",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space",
         "element": "site",
         "column_label": "Site",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_site",
+        "internal_type": "Reference",
+        "reference": "Site",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Site",
@@ -1322,15 +1186,15 @@
             "name": "sn_wsd_core_space",
             "label": "Space",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space",
         "element": "area",
         "column_label": "Area",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_area",
+        "internal_type": "Reference",
+        "reference": "Area",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Area",
@@ -1339,15 +1203,15 @@
             "name": "sn_wsd_core_space",
             "label": "Space",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space",
         "element": "floor",
         "column_label": "Floor",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_floor",
+        "internal_type": "Reference",
+        "reference": "Floor",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Floor",
@@ -1356,31 +1220,31 @@
             "name": "sn_wsd_core_space",
             "label": "Space",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space",
         "element": "location_type",
         "column_label": "Space type",
-        "internal_type": "reference",
-        "reference": "sn_wsd_core_space_type",
+        "internal_type": "Reference",
+        "reference": "Space Type",
         "unique": "0",
-        "mandatory": "1",
+        "mandatory": "true",
         "sys_name": "Space type",
         "array": "0",
         "table": {
             "name": "sn_wsd_core_space",
             "label": "Space",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1390,14 +1254,14 @@
             "name": "sn_wsd_core_space",
             "label": "Space",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space",
         "element": "occupancy_status",
         "column_label": "Occupancy status",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1407,14 +1271,14 @@
             "name": "sn_wsd_core_space",
             "label": "Space",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space",
         "element": "wsd_assignment_type",
         "column_label": "Assignment type",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1424,14 +1288,14 @@
             "name": "sn_wsd_core_space",
             "label": "Space",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space_type",
         "element": "space_function",
         "column_label": "Space function",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1441,14 +1305,14 @@
             "name": "sn_wsd_core_space_type",
             "label": "Space Type",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space_type",
         "element": "active",
         "column_label": "Active",
-        "internal_type": "boolean",
+        "internal_type": "True/False",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1458,31 +1322,31 @@
             "name": "sn_wsd_core_space_type",
             "label": "Space Type",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space_type",
         "element": "name",
         "column_label": "Name",
-        "internal_type": "translated_text",
+        "internal_type": "Translated Text",
         "reference": null,
         "unique": "0",
-        "mandatory": "1",
+        "mandatory": "true",
         "sys_name": "Name",
         "array": "0",
         "table": {
             "name": "sn_wsd_core_space_type",
             "label": "Space Type",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space_type",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1492,31 +1356,31 @@
             "name": "sn_wsd_core_space_type",
             "label": "Space Type",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space_type",
         "element": "code",
         "column_label": "Code",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
-        "mandatory": "1",
+        "mandatory": "true",
         "sys_name": "Code",
         "array": "0",
         "table": {
             "name": "sn_wsd_core_space_type",
             "label": "Space Type",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_space_type",
         "element": "table",
         "column_label": "Table",
-        "internal_type": "table_name",
+        "internal_type": "Table Name",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1526,14 +1390,14 @@
             "name": "sn_wsd_core_space_type",
             "label": "Space Type",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_workplace_location",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1543,14 +1407,14 @@
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_workplace_location",
         "element": "active",
         "column_label": "Active",
-        "internal_type": "boolean",
+        "internal_type": "True/False",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1560,14 +1424,14 @@
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_workplace_location",
         "element": "number",
         "column_label": "Number",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1577,14 +1441,14 @@
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_workplace_location",
         "element": "title",
         "column_label": "Title",
-        "internal_type": "translated_text",
+        "internal_type": "Translated Text",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1594,14 +1458,14 @@
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_workplace_location",
         "element": "requires_check_in",
         "column_label": "Requires check-in",
-        "internal_type": "boolean",
+        "internal_type": "True/False",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1611,14 +1475,14 @@
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_workplace_location",
         "element": "is_reservable",
         "column_label": "Is reservable",
-        "internal_type": "boolean",
+        "internal_type": "True/False",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1628,14 +1492,14 @@
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_workplace_location",
         "element": "capacity",
         "column_label": "Capacity",
-        "internal_type": "integer",
+        "internal_type": "Integer",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1645,14 +1509,14 @@
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_workplace_location",
         "element": "external_id",
         "column_label": "External ID",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1662,15 +1526,15 @@
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_workplace_location",
         "element": "managed_by",
         "column_label": "Managed by",
-        "internal_type": "reference",
-        "reference": "sys_user",
+        "internal_type": "Reference",
+        "reference": "User",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Managed by",
@@ -1679,14 +1543,14 @@
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_workplace_location",
         "element": "description",
         "column_label": "Description",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1696,15 +1560,15 @@
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sn_wsd_core_workplace_location",
         "element": "department",
         "column_label": "Department",
-        "internal_type": "reference",
-        "reference": "cmn_department",
+        "internal_type": "Reference",
+        "reference": "Department",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Department",
@@ -1713,14 +1577,14 @@
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
             "extends": null,
-            "sys_scope": "a208b07253201010b10bddeeff7b1281"
+            "sys_scope.name": "Workplace Core"
         }
     },
     {
         "name": "sys_user",
         "element": "state",
         "column_label": "State / Province",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1730,14 +1594,14 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "time_zone",
         "column_label": "Time zone",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1747,15 +1611,15 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "company",
         "column_label": "Company",
-        "internal_type": "reference",
-        "reference": "core_company",
+        "internal_type": "Reference",
+        "reference": "Company",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Company",
@@ -1764,14 +1628,14 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "title",
         "column_label": "Title",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1781,15 +1645,15 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "building",
         "column_label": "Building",
-        "internal_type": "reference",
-        "reference": "cmn_building",
+        "internal_type": "Reference",
+        "reference": "Building",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Building",
@@ -1798,14 +1662,14 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "name",
         "column_label": "Name",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1815,14 +1679,14 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "sys_id",
         "column_label": "Sys ID",
-        "internal_type": "GUID",
+        "internal_type": "Sys ID (GUID)",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1832,14 +1696,14 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "city",
         "column_label": "City",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1849,14 +1713,14 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "active",
         "column_label": "Active",
-        "internal_type": "boolean",
+        "internal_type": "True/False",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1866,14 +1730,14 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "country",
         "column_label": "Country code",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1883,14 +1747,14 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "street",
         "column_label": "Street",
-        "internal_type": "multi_two_lines",
+        "internal_type": "Two Line Text Area",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1900,16 +1764,16 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "user_name",
         "column_label": "User ID",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
-        "unique": "1",
+        "unique": "true",
         "mandatory": "0",
         "sys_name": "User ID",
         "array": "0",
@@ -1917,15 +1781,15 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "department",
         "column_label": "Department",
-        "internal_type": "reference",
-        "reference": "cmn_department",
+        "internal_type": "Reference",
+        "reference": "Department",
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Department",
@@ -1934,14 +1798,14 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     },
     {
         "name": "sys_user",
         "element": "zip",
         "column_label": "Zip / Postal code",
-        "internal_type": "string",
+        "internal_type": "String",
         "reference": null,
         "unique": "0",
         "mandatory": "0",
@@ -1951,7 +1815,7 @@
             "name": "sys_user",
             "label": "User",
             "extends": null,
-            "sys_scope": "global"
+            "sys_scope.name": "Global"
         }
     }
 ]
