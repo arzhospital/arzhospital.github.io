@@ -612,6 +612,125 @@
         }
     },
     {
+        "name": "sn_map_core_floor",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Name",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "building",
+        "column_label": "Building",
+        "internal_type": "Reference",
+        "reference.name": "sn_map_core_building",
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Building",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "active",
+        "column_label": "Active",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Active",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "description",
+        "column_label": "Description",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Description",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "title",
+        "column_label": "Title",
+        "internal_type": "Translated Text",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Title",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "number",
+        "column_label": "Number",
+        "internal_type": "Decimal",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Number",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
         "name": "sn_wsd_core_area",
         "element": "site",
         "column_label": "Site",
@@ -743,23 +862,6 @@
         "table": {
             "name": "sn_wsd_core_building",
             "label": "Building",
-            "extends": null,
-            "sys_scope.name": "Workplace Core"
-        }
-    },
-    {
-        "name": "sn_wsd_core_campus",
-        "element": "indoor_map_campus",
-        "column_label": "Indoor map campus",
-        "internal_type": "Reference",
-        "reference.name": "sn_map_core_campus",
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Indoor map campus",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_core_campus",
-            "label": "Campus",
             "extends": null,
             "sys_scope.name": "Workplace Core"
         }
