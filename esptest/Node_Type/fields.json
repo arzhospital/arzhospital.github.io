@@ -1,73 +1,5 @@
 [
     {
-        "name": "cmn_building",
-        "element": "contact",
-        "column_label": "Contact",
-        "internal_type": "Reference",
-        "reference.name": "sys_user",
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Contact",
-        "array": "0",
-        "table": {
-            "name": "cmn_building",
-            "label": "Building",
-            "extends": null,
-            "sys_scope.name": "Global"
-        }
-    },
-    {
-        "name": "cmn_building",
-        "element": "name",
-        "column_label": "Name",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Name",
-        "array": "0",
-        "table": {
-            "name": "cmn_building",
-            "label": "Building",
-            "extends": null,
-            "sys_scope.name": "Global"
-        }
-    },
-    {
-        "name": "cmn_building",
-        "element": "floors",
-        "column_label": "Floors",
-        "internal_type": "Integer",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Floors",
-        "array": "0",
-        "table": {
-            "name": "cmn_building",
-            "label": "Building",
-            "extends": null,
-            "sys_scope.name": "Global"
-        }
-    },
-    {
-        "name": "cmn_building",
-        "element": "sys_id",
-        "column_label": "Sys ID",
-        "internal_type": "Sys ID (GUID)",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": null,
-        "array": "0",
-        "table": {
-            "name": "cmn_building",
-            "label": "Building",
-            "extends": null,
-            "sys_scope.name": "Global"
-        }
-    },
-    {
         "name": "cmn_department",
         "element": "description",
         "column_label": "Description",
@@ -677,6 +609,142 @@
             "label": "Company",
             "extends": null,
             "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "cmn_location",
+        "column_label": "Location",
+        "internal_type": "Reference",
+        "reference.name": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Location",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Name",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "building",
+        "column_label": "Building",
+        "internal_type": "Reference",
+        "reference.name": "sn_map_core_building",
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Building",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "active",
+        "column_label": "Active",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Active",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "description",
+        "column_label": "Description",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Description",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "title",
+        "column_label": "Title",
+        "internal_type": "Translated Text",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Title",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
+        }
+    },
+    {
+        "name": "sn_map_core_floor",
+        "element": "number",
+        "column_label": "Number",
+        "internal_type": "Decimal",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Number",
+        "array": "0",
+        "table": {
+            "name": "sn_map_core_floor",
+            "label": "Floor",
+            "extends": null,
+            "sys_scope.name": "Indoor Mapping"
         }
     },
     {
