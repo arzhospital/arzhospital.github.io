@@ -612,7 +612,41 @@
         }
     },
     {
-        "name": "sn_map_core_floor",
+        "name": "sn_wsd_case_workplace_case",
+        "element": "wsd_parent_case",
+        "column_label": "Parent Case",
+        "internal_type": "Reference",
+        "reference.name": "sn_wsd_case_workplace_case",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Parent Case",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_case_workplace_case",
+            "label": "Workplace Case",
+            "extends": null,
+            "sys_scope.name": "Workplace Case Management"
+        }
+    },
+    {
+        "name": "sn_wsd_case_workplace_case",
+        "element": "requested_for",
+        "column_label": "Requested for",
+        "internal_type": "Reference",
+        "reference.name": "sys_user",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Requested for",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_case_workplace_case",
+            "label": "Workplace Case",
+            "extends": null,
+            "sys_scope.name": "Workplace Case Management"
+        }
+    },
+    {
+        "name": "sn_wsd_case_workplace_case",
         "element": "sys_id",
         "column_label": "Sys ID",
         "internal_type": "Sys ID (GUID)",
@@ -622,112 +656,10 @@
         "sys_name": null,
         "array": "0",
         "table": {
-            "name": "sn_map_core_floor",
-            "label": "Floor",
+            "name": "sn_wsd_case_workplace_case",
+            "label": "Workplace Case",
             "extends": null,
-            "sys_scope.name": "Indoor Mapping"
-        }
-    },
-    {
-        "name": "sn_map_core_floor",
-        "element": "name",
-        "column_label": "Name",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "true",
-        "sys_name": "Name",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_floor",
-            "label": "Floor",
-            "extends": null,
-            "sys_scope.name": "Indoor Mapping"
-        }
-    },
-    {
-        "name": "sn_map_core_floor",
-        "element": "building",
-        "column_label": "Building",
-        "internal_type": "Reference",
-        "reference.name": "sn_map_core_building",
-        "unique": "0",
-        "mandatory": "true",
-        "sys_name": "Building",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_floor",
-            "label": "Floor",
-            "extends": null,
-            "sys_scope.name": "Indoor Mapping"
-        }
-    },
-    {
-        "name": "sn_map_core_floor",
-        "element": "active",
-        "column_label": "Active",
-        "internal_type": "True/False",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Active",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_floor",
-            "label": "Floor",
-            "extends": null,
-            "sys_scope.name": "Indoor Mapping"
-        }
-    },
-    {
-        "name": "sn_map_core_floor",
-        "element": "description",
-        "column_label": "Description",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Description",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_floor",
-            "label": "Floor",
-            "extends": null,
-            "sys_scope.name": "Indoor Mapping"
-        }
-    },
-    {
-        "name": "sn_map_core_floor",
-        "element": "title",
-        "column_label": "Title",
-        "internal_type": "Translated Text",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Title",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_floor",
-            "label": "Floor",
-            "extends": null,
-            "sys_scope.name": "Indoor Mapping"
-        }
-    },
-    {
-        "name": "sn_map_core_floor",
-        "element": "number",
-        "column_label": "Number",
-        "internal_type": "Decimal",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "true",
-        "sys_name": "Number",
-        "array": "0",
-        "table": {
-            "name": "sn_map_core_floor",
-            "label": "Floor",
-            "extends": null,
-            "sys_scope.name": "Indoor Mapping"
+            "sys_scope.name": "Workplace Case Management"
         }
     },
     {
@@ -1678,6 +1610,74 @@
         "table": {
             "name": "sn_wsd_core_workplace_location",
             "label": "Workplace Location",
+            "extends": null,
+            "sys_scope.name": "Workplace Core"
+        }
+    },
+    {
+        "name": "sn_wsd_core_workplace_task",
+        "element": "table",
+        "column_label": "Table",
+        "internal_type": "Table Name",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Table",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_core_workplace_task",
+            "label": "Workplace Task",
+            "extends": null,
+            "sys_scope.name": "Workplace Core"
+        }
+    },
+    {
+        "name": "sn_wsd_core_workplace_task",
+        "element": "workplace_location",
+        "column_label": "Workplace location",
+        "internal_type": "Reference",
+        "reference.name": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Workplace location",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_core_workplace_task",
+            "label": "Workplace Task",
+            "extends": null,
+            "sys_scope.name": "Workplace Core"
+        }
+    },
+    {
+        "name": "sn_wsd_core_workplace_task",
+        "element": "vendor",
+        "column_label": "Vendor",
+        "internal_type": "Reference",
+        "reference.name": "core_company",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Vendor",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_core_workplace_task",
+            "label": "Workplace Task",
+            "extends": null,
+            "sys_scope.name": "Workplace Core"
+        }
+    },
+    {
+        "name": "sn_wsd_core_workplace_task",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_core_workplace_task",
+            "label": "Workplace Task",
             "extends": null,
             "sys_scope.name": "Workplace Core"
         }
