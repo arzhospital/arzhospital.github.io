@@ -1089,6 +1089,23 @@
     },
     {
         "name": "sn_wsd_core_reservation",
+        "element": "short_description",
+        "column_label": "Short description",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Short description",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_core_reservation",
+            "label": "Reservation",
+            "extends": null,
+            "sys_scope.name": "Workplace Core"
+        }
+    },
+    {
+        "name": "sn_wsd_core_reservation",
         "element": "workplace_location",
         "column_label": "Workplace location",
         "internal_type": "Reference",
@@ -1884,6 +1901,57 @@
             "label": "Reservation Invitee",
             "extends": null,
             "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_organization",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Name",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_organization",
+            "label": "Organization",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_organization",
+        "element": "short_description",
+        "column_label": "Short description",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Short description",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_organization",
+            "label": "Organization",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_organization",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_organization",
+            "label": "Organization",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
         }
     },
     {
