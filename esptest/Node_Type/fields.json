@@ -477,6 +477,23 @@
     },
     {
         "name": "core_company",
+        "element": "status",
+        "column_label": "Status",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Status",
+        "array": "0",
+        "table": {
+            "name": "core_company",
+            "label": "Company",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "core_company",
         "element": "country",
         "column_label": "Country",
         "internal_type": "String",
@@ -660,6 +677,159 @@
             "label": "Company",
             "extends": null,
             "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sc_cat_item_producer",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sc_cat_item_producer",
+            "label": "Record Producer",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sc_cat_item_producer",
+        "element": "table_name",
+        "column_label": "Table name",
+        "internal_type": "Table Name",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Table name",
+        "array": "0",
+        "table": {
+            "name": "sc_cat_item_producer",
+            "label": "Record Producer",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sn_ex_online_spke_subscriptions",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sn_ex_online_spke_subscriptions",
+            "label": "Microsoft Exchange Online Subscriptions",
+            "extends": null,
+            "sys_scope.name": "Microsoft Exchange Online Spoke"
+        }
+    },
+    {
+        "name": "sn_ex_online_spke_subscriptions",
+        "element": "event_type",
+        "column_label": "Event Type",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Event Type",
+        "array": "0",
+        "table": {
+            "name": "sn_ex_online_spke_subscriptions",
+            "label": "Microsoft Exchange Online Subscriptions",
+            "extends": null,
+            "sys_scope.name": "Microsoft Exchange Online Spoke"
+        }
+    },
+    {
+        "name": "sn_ex_online_spke_subscriptions",
+        "element": "notification_url",
+        "column_label": "Notification URL",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Notification URL",
+        "array": "0",
+        "table": {
+            "name": "sn_ex_online_spke_subscriptions",
+            "label": "Microsoft Exchange Online Subscriptions",
+            "extends": null,
+            "sys_scope.name": "Microsoft Exchange Online Spoke"
+        }
+    },
+    {
+        "name": "sn_ex_online_spke_subscriptions",
+        "element": "status",
+        "column_label": "Status",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Status",
+        "array": "0",
+        "table": {
+            "name": "sn_ex_online_spke_subscriptions",
+            "label": "Microsoft Exchange Online Subscriptions",
+            "extends": null,
+            "sys_scope.name": "Microsoft Exchange Online Spoke"
+        }
+    },
+    {
+        "name": "sn_ex_online_spke_subscriptions",
+        "element": "expiration_time",
+        "column_label": "Expiration Time",
+        "internal_type": "Date/Time",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Expiration Time",
+        "array": "0",
+        "table": {
+            "name": "sn_ex_online_spke_subscriptions",
+            "label": "Microsoft Exchange Online Subscriptions",
+            "extends": null,
+            "sys_scope.name": "Microsoft Exchange Online Spoke"
+        }
+    },
+    {
+        "name": "sn_ex_online_spke_subscriptions",
+        "element": "resource",
+        "column_label": "Resource",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Resource",
+        "array": "0",
+        "table": {
+            "name": "sn_ex_online_spke_subscriptions",
+            "label": "Microsoft Exchange Online Subscriptions",
+            "extends": null,
+            "sys_scope.name": "Microsoft Exchange Online Spoke"
+        }
+    },
+    {
+        "name": "sn_ex_online_spke_subscriptions",
+        "element": "subscription_id",
+        "column_label": "Subscription ID",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "true",
+        "mandatory": "true",
+        "sys_name": "Subscription ID",
+        "array": "0",
+        "table": {
+            "name": "sn_ex_online_spke_subscriptions",
+            "label": "Microsoft Exchange Online Subscriptions",
+            "extends": null,
+            "sys_scope.name": "Microsoft Exchange Online Spoke"
         }
     },
     {
@@ -1989,6 +2159,278 @@
         }
     },
     {
+        "name": "sn_wsd_rsvsync_provider",
+        "element": "description",
+        "column_label": "Description",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Description",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_provider",
+            "label": "Provider",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_provider",
+        "element": "strict_mode",
+        "column_label": "Strict mode",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Strict mode",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_provider",
+            "label": "Provider",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_provider",
+        "element": "sync_batch_size",
+        "column_label": "Sync batch size",
+        "internal_type": "Integer",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Sync batch size",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_provider",
+            "label": "Provider",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_provider",
+        "element": "sync_attendees",
+        "column_label": "Synchronize attendees",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Synchronize attendees",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_provider",
+            "label": "Provider",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_provider",
+        "element": "processor",
+        "column_label": "Calendar processor",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Calendar processor",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_provider",
+            "label": "Provider",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_provider",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Name",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_provider",
+            "label": "Provider",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_provider",
+        "element": "active",
+        "column_label": "Active",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Active",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_provider",
+            "label": "Provider",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_provider",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_provider",
+            "label": "Provider",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+        "element": "email",
+        "column_label": "Email",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Email",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+            "label": "Reservable Sync Configuration",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+        "element": "configuration_item",
+        "column_label": "Configuration item",
+        "internal_type": "Reference",
+        "reference.name": "cmdb_ci",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Configuration item",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+            "label": "Reservable Sync Configuration",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+        "element": "provider",
+        "column_label": "Provider",
+        "internal_type": "Reference",
+        "reference.name": "sn_wsd_rsvsync_provider",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Provider",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+            "label": "Reservable Sync Configuration",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+        "element": "reservable_module",
+        "column_label": "Reservable module",
+        "internal_type": "Reference",
+        "reference.name": "sn_wsd_rsv_reservable_module",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Reservable module",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+            "label": "Reservable Sync Configuration",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+        "element": "location",
+        "column_label": "Location",
+        "internal_type": "Reference",
+        "reference.name": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Location",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+            "label": "Reservable Sync Configuration",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+        "element": "active",
+        "column_label": "Active",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Active",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+            "label": "Reservable Sync Configuration",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+            "label": "Reservable Sync Configuration",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
+        "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+        "element": "subscription_reference",
+        "column_label": "Subscription",
+        "internal_type": "Reference",
+        "reference.name": "sn_ex_online_spke_subscriptions",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Subscription",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsvsync_reservable_sync_configuration",
+            "label": "Reservable Sync Configuration",
+            "extends": null,
+            "sys_scope.name": "Workplace Calendar Synchronization"
+        }
+    },
+    {
         "name": "sn_wsd_rsv_m2m_reservation_invitee",
         "element": "reservation",
         "column_label": "Reservation",
@@ -2120,6 +2562,227 @@
         "table": {
             "name": "sn_wsd_rsv_m2m_reservation_invitee",
             "label": "Reservation Invitee",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "all_day",
+        "column_label": "All day",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "All day",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Name",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "allow_recurring",
+        "column_label": "Allow recurring reservations",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Allow recurring reservations",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "allow_invitees",
+        "column_label": "Allow invitees",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Allow invitees",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "title",
+        "column_label": "Title",
+        "internal_type": "Translated Text",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Title",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "additional_details_record_producer",
+        "column_label": "Additional details record producer",
+        "internal_type": "Reference",
+        "reference.name": "sc_cat_item_producer",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Additional details record producer",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "display_number_of_attendees",
+        "column_label": "Display number of attendees",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Display number of attendees",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "order",
+        "column_label": "Order",
+        "internal_type": "Integer",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Order",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "short_description",
+        "column_label": "Short description",
+        "internal_type": "Translated Text",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Short description",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "active",
+        "column_label": "Active",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Active",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "description",
+        "column_label": "Description",
+        "internal_type": "Translated Text",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Description",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservable_module",
+        "element": "allow_whole_day",
+        "column_label": "Allow all day reservations",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Allow all day reservations",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservable_module",
+            "label": "Reservable Module",
             "extends": null,
             "sys_scope.name": "Workplace Reservation Management"
         }
@@ -2320,6 +2983,23 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": "All day",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_rsv_reservation",
+            "label": "Workplace Reservation",
+            "extends": null,
+            "sys_scope.name": "Workplace Reservation Management"
+        }
+    },
+    {
+        "name": "sn_wsd_rsv_reservation",
+        "element": "reservable_module",
+        "column_label": "Reservable module",
+        "internal_type": "Reference",
+        "reference.name": "sn_wsd_rsv_reservable_module",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Reservable module",
         "array": "0",
         "table": {
             "name": "sn_wsd_rsv_reservation",
@@ -3125,6 +3805,159 @@
             "label": "Visitor Registration",
             "extends": null,
             "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sys_calendar",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Name",
+        "array": "0",
+        "table": {
+            "name": "sys_calendar",
+            "label": "Calendar",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_calendar",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sys_calendar",
+            "label": "Calendar",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_sg_calendar_data_source",
+        "element": "data_source_label",
+        "column_label": "Data Source Label",
+        "internal_type": "Translated Field",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Data Source Label",
+        "array": "0",
+        "table": {
+            "name": "sys_sg_calendar_data_source",
+            "label": "Calendar Data Source",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_sg_calendar_data_source",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sys_sg_calendar_data_source",
+            "label": "Calendar Data Source",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_sg_calendar_screen",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sys_sg_calendar_screen",
+            "label": "Calendar screen",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_sg_data_item",
+        "element": "description",
+        "column_label": "Description",
+        "internal_type": "Translated Text",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Description",
+        "array": "0",
+        "table": {
+            "name": "sys_sg_data_item",
+            "label": "Data Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_sg_data_item",
+        "element": "table",
+        "column_label": "Table",
+        "internal_type": "Table Name",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Table",
+        "array": "0",
+        "table": {
+            "name": "sys_sg_data_item",
+            "label": "Data Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_sg_data_item",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "Translated Field",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Name",
+        "array": "0",
+        "table": {
+            "name": "sys_sg_data_item",
+            "label": "Data Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_sg_data_item",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sys_sg_data_item",
+            "label": "Data Item",
+            "extends": null,
+            "sys_scope.name": "Global"
         }
     },
     {
