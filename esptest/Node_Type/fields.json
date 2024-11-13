@@ -2381,23 +2381,6 @@
     },
     {
         "name": "sn_wsd_rsv_reservation",
-        "element": "opened_by",
-        "column_label": "Opened by (Deprecated)",
-        "internal_type": "Reference",
-        "reference.name": "sys_user",
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Opened by (Deprecated)",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsv_reservation",
-            "label": "Workplace Reservation",
-            "extends": null,
-            "sys_scope.name": "Workplace Reservation Management"
-        }
-    },
-    {
-        "name": "sn_wsd_rsv_reservation",
         "element": "sync_state",
         "column_label": "Synchronization state",
         "internal_type": "String",
@@ -2745,23 +2728,6 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Number",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_visitor_visitor_registration",
-            "label": "Visitor Registration",
-            "extends": null,
-            "sys_scope.name": "Workplace Visitor Management"
-        }
-    },
-    {
-        "name": "sn_wsd_visitor_visitor_registration",
-        "element": "opened_by",
-        "column_label": "Opened by",
-        "internal_type": "Reference",
-        "reference.name": "sys_user",
-        "unique": "0",
-        "mandatory": "true",
-        "sys_name": "Opened by",
         "array": "0",
         "table": {
             "name": "sn_wsd_visitor_visitor_registration",
