@@ -2653,6 +2653,23 @@
     },
     {
         "name": "sn_wsd_visitor_visit",
+        "element": "organization",
+        "column_label": "Organization",
+        "internal_type": "Reference",
+        "reference.name": "sn_wsd_visitor_organization",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Organization",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visit",
+            "label": "Visit",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_visit",
         "element": "remark",
         "column_label": "Remark",
         "internal_type": "String",
@@ -3000,6 +3017,23 @@
         "unique": "0",
         "mandatory": "true",
         "sys_name": "Last name",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visitor_registration",
+            "label": "Visitor Registration",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_visitor_registration",
+        "element": "organization",
+        "column_label": "Organization",
+        "internal_type": "Reference",
+        "reference.name": "sn_wsd_visitor_organization",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Organization",
         "array": "0",
         "table": {
             "name": "sn_wsd_visitor_visitor_registration",
