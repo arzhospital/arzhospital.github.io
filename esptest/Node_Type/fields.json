@@ -2176,295 +2176,6 @@
         }
     },
     {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "configuration_item",
-        "column_label": "Configuration item",
-        "internal_type": "Reference",
-        "reference.name": "cmdb_ci",
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Configuration item",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "sub_state",
-        "column_label": "Sub state",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Sub state",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "payload",
-        "column_label": "Payload",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Payload",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "http_status_code",
-        "column_label": "HTTP Status",
-        "internal_type": "Integer",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "HTTP Status",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "provider",
-        "column_label": "Provider",
-        "internal_type": "Reference",
-        "reference.name": "sn_wsd_rsvsync_provider",
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Provider",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "provider_payload",
-        "column_label": "Provider payload",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Provider payload",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "location",
-        "column_label": "Location",
-        "internal_type": "Reference",
-        "reference.name": "cmn_location",
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Location",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "response",
-        "column_label": "Response",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Response",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "state",
-        "column_label": "State",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "State",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "number",
-        "column_label": "Number",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Number",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "end_point",
-        "column_label": "End point",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "End point",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "sys_id",
-        "column_label": "Sys ID",
-        "internal_type": "Sys ID (GUID)",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": null,
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "parent",
-        "column_label": "Parent",
-        "internal_type": "Reference",
-        "reference.name": "sn_wsd_rsvsync_event",
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Parent",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "external_id",
-        "column_label": "External id",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "External id",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "short_description",
-        "column_label": "Short description",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Short description",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "reservation",
-        "column_label": "Reservation",
-        "internal_type": "Reference",
-        "reference.name": "sn_wsd_rsv_reservation",
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Reservation",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
-        "name": "sn_wsd_rsvsync_event",
-        "element": "action",
-        "column_label": "Action",
-        "internal_type": "String",
-        "reference.name": null,
-        "unique": "0",
-        "mandatory": "0",
-        "sys_name": "Action",
-        "array": "0",
-        "table": {
-            "name": "sn_wsd_rsvsync_event",
-            "label": "Event",
-            "extends": null,
-            "sys_scope.name": "Workplace Calendar Synchronization"
-        }
-    },
-    {
         "name": "sn_wsd_rsvsync_provider",
         "element": "description",
         "column_label": "Description",
@@ -4111,6 +3822,108 @@
             "label": "Visitor Registration",
             "extends": null,
             "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sys_attachment",
+        "element": "file_name",
+        "column_label": "File name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "File name",
+        "array": "0",
+        "table": {
+            "name": "sys_attachment",
+            "label": "Attachment",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_attachment",
+        "element": "state",
+        "column_label": "State",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "State",
+        "array": "0",
+        "table": {
+            "name": "sys_attachment",
+            "label": "Attachment",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_attachment",
+        "element": "table_sys_id",
+        "column_label": "Table sys ID",
+        "internal_type": "Char",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Table sys ID",
+        "array": "0",
+        "table": {
+            "name": "sys_attachment",
+            "label": "Attachment",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_attachment",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sys_attachment",
+            "label": "Attachment",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_attachment",
+        "element": "table_name",
+        "column_label": "Table name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Table name",
+        "array": "0",
+        "table": {
+            "name": "sys_attachment",
+            "label": "Attachment",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_attachment",
+        "element": "content_type",
+        "column_label": "Content type",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Content type",
+        "array": "0",
+        "table": {
+            "name": "sys_attachment",
+            "label": "Attachment",
+            "extends": null,
+            "sys_scope.name": "Global"
         }
     },
     {
