@@ -5270,6 +5270,142 @@
         }
     },
     {
+        "name": "sys_user_group",
+        "element": "email",
+        "column_label": "Group email",
+        "internal_type": "Email",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Group email",
+        "array": "0",
+        "table": {
+            "name": "sys_user_group",
+            "label": "Group",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_user_group",
+        "element": "type",
+        "column_label": "Type",
+        "internal_type": "List",
+        "reference.name": "sys_user_group_type",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Type",
+        "array": "0",
+        "table": {
+            "name": "sys_user_group",
+            "label": "Group",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_user_group",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "true",
+        "mandatory": "0",
+        "sys_name": "Name",
+        "array": "0",
+        "table": {
+            "name": "sys_user_group",
+            "label": "Group",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_user_group",
+        "element": "source",
+        "column_label": "Source",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Source",
+        "array": "0",
+        "table": {
+            "name": "sys_user_group",
+            "label": "Group",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_user_group",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sys_user_group",
+            "label": "Group",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_user_group",
+        "element": "parent",
+        "column_label": "Parent",
+        "internal_type": "Reference",
+        "reference.name": "sys_user_group",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Parent",
+        "array": "0",
+        "table": {
+            "name": "sys_user_group",
+            "label": "Group",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_user_group",
+        "element": "active",
+        "column_label": "Active",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Active",
+        "array": "0",
+        "table": {
+            "name": "sys_user_group",
+            "label": "Group",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_user_group",
+        "element": "description",
+        "column_label": "Description",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Description",
+        "array": "0",
+        "table": {
+            "name": "sys_user_group",
+            "label": "Group",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
         "name": "sys_user_has_role",
         "element": "user",
         "column_label": "User",
