@@ -1428,6 +1428,57 @@
         }
     },
     {
+        "name": "sn_hr_integrations_source",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "true",
+        "mandatory": "0",
+        "sys_name": "Name",
+        "array": "0",
+        "table": {
+            "name": "sn_hr_integrations_source",
+            "label": "HR Integrations Source",
+            "extends": null,
+            "sys_scope.name": "Human Resources: Integrations"
+        }
+    },
+    {
+        "name": "sn_hr_integrations_source",
+        "element": "active",
+        "column_label": "Active",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Active",
+        "array": "0",
+        "table": {
+            "name": "sn_hr_integrations_source",
+            "label": "HR Integrations Source",
+            "extends": null,
+            "sys_scope.name": "Human Resources: Integrations"
+        }
+    },
+    {
+        "name": "sn_hr_integrations_source",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sn_hr_integrations_source",
+            "label": "HR Integrations Source",
+            "extends": null,
+            "sys_scope.name": "Human Resources: Integrations"
+        }
+    },
+    {
         "name": "sn_wsd_case_workplace_case",
         "element": "wsd_parent_case",
         "column_label": "Parent Case",
