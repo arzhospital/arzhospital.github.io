@@ -1,5 +1,209 @@
 [
     {
+        "name": "cmdb_ci",
+        "element": "department",
+        "column_label": "Department",
+        "internal_type": "Reference",
+        "reference.name": "cmn_department",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Department",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
+        "element": "location",
+        "column_label": "Location",
+        "internal_type": "Reference",
+        "reference.name": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Location",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
+        "element": "managed_by",
+        "column_label": "Managed by",
+        "internal_type": "Reference",
+        "reference.name": "sys_user",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Managed by",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
+        "element": "asset",
+        "column_label": "Asset",
+        "internal_type": "Reference",
+        "reference.name": "alm_asset",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Asset",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Name",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
+        "element": "short_description",
+        "column_label": "Description",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Description",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
+        "element": "company",
+        "column_label": "Company",
+        "internal_type": "Reference",
+        "reference.name": "core_company",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Company",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
+        "element": "assignment_group",
+        "column_label": "Change Group",
+        "internal_type": "Reference",
+        "reference.name": "sys_user_group",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Assignment group",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
+        "element": "vendor",
+        "column_label": "Vendor",
+        "internal_type": "Reference",
+        "reference.name": "core_company",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Vendor",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
+        "element": "assigned_to",
+        "column_label": "Assigned to",
+        "internal_type": "Reference",
+        "reference.name": "sys_user",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Assigned to",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
+        "element": "serial_number",
+        "column_label": "Serial number",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Serial number",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
         "name": "cmn_department",
         "element": "source",
         "column_label": "Source",
@@ -280,6 +484,23 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "cmn_location",
+            "label": "Location",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmn_location",
+        "element": "phone",
+        "column_label": "Phone",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Phone",
         "array": "0",
         "table": {
             "name": "cmn_location",
@@ -637,6 +858,23 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": "State / Province",
+        "array": "0",
+        "table": {
+            "name": "core_company",
+            "label": "Company",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "core_company",
+        "element": "phone",
+        "column_label": "Phone",
+        "internal_type": "Phone Number",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Phone",
         "array": "0",
         "table": {
             "name": "core_company",
@@ -1980,6 +2218,23 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Vendor",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_core_workplace_task",
+            "label": "Workplace Task",
+            "extends": null,
+            "sys_scope.name": "Workplace Core"
+        }
+    },
+    {
+        "name": "sn_wsd_core_workplace_task",
+        "element": "asset",
+        "column_label": "Enterprise Asset",
+        "internal_type": "Reference",
+        "reference.name": "sn_ent_asset",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Enterprise Asset",
         "array": "0",
         "table": {
             "name": "sn_wsd_core_workplace_task",
@@ -3400,6 +3655,176 @@
         }
     },
     {
+        "name": "sn_wsd_visitor_visitor",
+        "element": "email",
+        "column_label": "Email",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "true",
+        "mandatory": "true",
+        "sys_name": "Email",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visitor",
+            "label": "Visitor",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_visitor",
+        "element": "parking_type",
+        "column_label": "Parking type",
+        "internal_type": "Choice",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Parking type",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visitor",
+            "label": "Visitor",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_visitor",
+        "element": "phone",
+        "column_label": "Phone",
+        "internal_type": "Phone Number (E164)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Phone",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visitor",
+            "label": "Visitor",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_visitor",
+        "element": "license_plate",
+        "column_label": "License plate",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "License plate",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visitor",
+            "label": "Visitor",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_visitor",
+        "element": "first_name",
+        "column_label": "First name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "First name",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visitor",
+            "label": "Visitor",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_visitor",
+        "element": "vip",
+        "column_label": "VIP",
+        "internal_type": "True/False",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "VIP",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visitor",
+            "label": "Visitor",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_visitor",
+        "element": "last_name",
+        "column_label": "Last name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Last name",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visitor",
+            "label": "Visitor",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_visitor",
+        "element": "organization",
+        "column_label": "Organization",
+        "internal_type": "Reference",
+        "reference.name": "sn_wsd_visitor_organization",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Organization",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visitor",
+            "label": "Visitor",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_visitor",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visitor",
+            "label": "Visitor",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_visitor",
+        "element": "number",
+        "column_label": "Number",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Number",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visitor",
+            "label": "Visitor",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
         "name": "sn_wsd_visitor_visitor_registration",
         "element": "sys_id",
         "column_label": "Sys ID",
@@ -3792,6 +4217,23 @@
     },
     {
         "name": "sn_wsd_visitor_visitor_registration",
+        "element": "phone",
+        "column_label": "Phone",
+        "internal_type": "Phone Number (E164)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Phone",
+        "array": "0",
+        "table": {
+            "name": "sn_wsd_visitor_visitor_registration",
+            "label": "Visitor Registration",
+            "extends": null,
+            "sys_scope.name": "Workplace Visitor Management"
+        }
+    },
+    {
+        "name": "sn_wsd_visitor_visitor_registration",
         "element": "license_plate",
         "column_label": "License plate",
         "internal_type": "String",
@@ -4156,6 +4598,23 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Title",
+        "array": "0",
+        "table": {
+            "name": "sys_user",
+            "label": "User",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "sys_user",
+        "element": "phone",
+        "column_label": "Business phone",
+        "internal_type": "Phone Number",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Business phone",
         "array": "0",
         "table": {
             "name": "sys_user",
