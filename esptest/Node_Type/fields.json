@@ -1,5 +1,226 @@
 [
     {
+        "name": "alm_asset",
+        "element": "quantity",
+        "column_label": "Quantity",
+        "internal_type": "Integer",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "true",
+        "sys_name": "Quantity",
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "alm_asset",
+        "element": "ci",
+        "column_label": "Configuration Item",
+        "internal_type": "Reference",
+        "reference.name": "cmdb_ci",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Configuration Item",
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "alm_asset",
+        "element": "serial_number",
+        "column_label": "Serial number",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Serial number",
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "alm_asset",
+        "element": "assigned_to",
+        "column_label": "Assigned to",
+        "internal_type": "Reference",
+        "reference.name": "sys_user",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Assigned to",
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "alm_asset",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "alm_asset",
+        "element": "parent",
+        "column_label": "Parent",
+        "internal_type": "Reference",
+        "reference.name": "alm_asset",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Parent",
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "alm_asset",
+        "element": "asset_tag",
+        "column_label": "Asset tag",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Asset tag",
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "alm_asset",
+        "element": "company",
+        "column_label": "Company",
+        "internal_type": "Reference",
+        "reference.name": "core_company",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Company",
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "alm_asset",
+        "element": "vendor",
+        "column_label": "Vendor",
+        "internal_type": "Reference",
+        "reference.name": "core_company",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Vendor",
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "alm_asset",
+        "element": "po_number",
+        "column_label": "PO number",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "PO number",
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "alm_asset",
+        "element": "location",
+        "column_label": "Location",
+        "internal_type": "Reference",
+        "reference.name": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Location",
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "alm_asset",
+        "element": "managed_by",
+        "column_label": "Managed by",
+        "internal_type": "Reference",
+        "reference.name": "sys_user",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Managed by",
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "alm_asset",
+        "element": "department",
+        "column_label": "Department",
+        "internal_type": "Reference",
+        "reference.name": "cmn_department",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Department",
+        "array": "0",
+        "table": {
+            "name": "alm_asset",
+            "label": "Asset",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
         "name": "cmdb_ci",
         "element": "department",
         "column_label": "Department",
@@ -25,6 +246,23 @@
         "unique": "0",
         "mandatory": "0",
         "sys_name": "Location",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
+        "element": "po_number",
+        "column_label": "PO number",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "PO number",
         "array": "0",
         "table": {
             "name": "cmdb_ci",
@@ -154,6 +392,23 @@
     },
     {
         "name": "cmdb_ci",
+        "element": "asset_tag",
+        "column_label": "Asset tag",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Asset tag",
+        "array": "0",
+        "table": {
+            "name": "cmdb_ci",
+            "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmdb_ci",
         "element": "vendor",
         "column_label": "Vendor",
         "internal_type": "Reference",
@@ -199,6 +454,91 @@
         "table": {
             "name": "cmdb_ci",
             "label": "Configuration Item",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmn_building",
+        "element": "location",
+        "column_label": "Location",
+        "internal_type": "Reference",
+        "reference.name": "cmn_location",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Location",
+        "array": "0",
+        "table": {
+            "name": "cmn_building",
+            "label": "Building",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmn_building",
+        "element": "contact",
+        "column_label": "Contact",
+        "internal_type": "Reference",
+        "reference.name": "sys_user",
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Contact",
+        "array": "0",
+        "table": {
+            "name": "cmn_building",
+            "label": "Building",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmn_building",
+        "element": "name",
+        "column_label": "Name",
+        "internal_type": "String",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Name",
+        "array": "0",
+        "table": {
+            "name": "cmn_building",
+            "label": "Building",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmn_building",
+        "element": "floors",
+        "column_label": "Floors",
+        "internal_type": "Integer",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": "Floors",
+        "array": "0",
+        "table": {
+            "name": "cmn_building",
+            "label": "Building",
+            "extends": null,
+            "sys_scope.name": "Global"
+        }
+    },
+    {
+        "name": "cmn_building",
+        "element": "sys_id",
+        "column_label": "Sys ID",
+        "internal_type": "Sys ID (GUID)",
+        "reference.name": null,
+        "unique": "0",
+        "mandatory": "0",
+        "sys_name": null,
+        "array": "0",
+        "table": {
+            "name": "cmn_building",
+            "label": "Building",
             "extends": null,
             "sys_scope.name": "Global"
         }
