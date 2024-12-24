@@ -1,7 +1,7 @@
 {
-	"Id": "6df01e340473f6b5a16e7bdb4a4cd6a14c3cc75a",
+	"Id": "f72ac361f920b5aaf173af65331c80d2fa0799b8",
 	"code": "browser",
-	"date": "2024-12-24T13:23:07.365Z",
+	"date": "2024-12-24T13:23:15.717Z",
 	"name": "Browser",
 	"__keys": ["name"],
 	"active": true,
