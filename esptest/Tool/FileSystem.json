@@ -1,5 +1,5 @@
 {
-	"Id": "fba2bfff5a93855044b4650226078841877bb673",
+	"Id": "389713c26ea1172273735c3b0a8a0c1e5562513c",
 	"code": "FileSystem",
 	"name": "FileSystem",
 	"type": {
@@ -10,21 +10,6 @@
 		"active": true,
 		"enabled": true
 	},
-	"tool_Configs": [{
-		"Id": "019462d2-7a2b-7439-9528-6519019418f2",
-		"code": "live",
-		"name": "live",
-		"value": "true",
-		"tool": {
-			"__keys": ["name"],
-			"Id": "fba2bfff5a93855044b4650226078841877bb673",
-			"__reused": 2,
-			"name": "FileSystem"
-		},
-		"__keys": ["name"],
-		"active": true,
-		"enabled": true
-	}],
 	"__keys": ["name"],
 	"active": true,
 	"enabled": true,
