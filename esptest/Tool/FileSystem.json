@@ -1,11 +1,108 @@
 {
-	"Id": "389713c26ea1172273735c3b0a8a0c1e5562513c",
+	"Id": "22ed024b9bb76aa2869d9280a7c436a4b2b48b6a",
 	"code": "FileSystem",
 	"name": "FileSystem",
 	"type": {
 		"code": "FileSystem",
 		"name": "FileSystem",
 		"icon": "server_file",
+		"type_Configs": [{
+			"Id": "01946406-ddcd-7130-b8b4-2ed7f81309cb",
+			"code": "SyncEntityAttributes",
+			"name": "SyncEntityAttributes",
+			"value": "ZmFsc2U=",
+			"type": {
+				"code": "FileSystem",
+				"name": "FileSystem",
+				"icon": "server_file",
+				"type_Configs": [{
+					"__keys": ["name"],
+					"Id": "01946406-ddcd-7130-b8b4-2ed7f81309cb",
+					"__reused": 2,
+					"name": "SyncEntityAttributes"
+				}, {
+					"Id": "01946406-ddcd-7130-b8b4-32c96b639343",
+					"code": "SyncTypedAttributes",
+					"name": "SyncTypedAttributes",
+					"value": "ZmFsc2U=",
+					"type": {
+						"code": "FileSystem",
+						"name": "FileSystem",
+						"icon": "server_file",
+						"type_Configs": [{
+							"__keys": ["name"],
+							"Id": "01946406-ddcd-7130-b8b4-2ed7f81309cb",
+							"__reused": 3,
+							"name": "SyncEntityAttributes"
+						}, {
+							"__keys": ["name"],
+							"Id": "01946406-ddcd-7130-b8b4-32c96b639343",
+							"__reused": 2,
+							"name": "SyncTypedAttributes"
+						}, {
+							"Id": "01946406-ddcd-7130-b8b4-363fe9798144",
+							"code": "live",
+							"name": "live",
+							"value": "true",
+							"type": {
+								"code": "FileSystem",
+								"name": "FileSystem",
+								"icon": "server_file",
+								"type_Configs": [{
+									"__keys": ["name"],
+									"Id": "01946406-ddcd-7130-b8b4-2ed7f81309cb",
+									"__reused": 4,
+									"name": "SyncEntityAttributes"
+								}, {
+									"__keys": ["name"],
+									"Id": "01946406-ddcd-7130-b8b4-32c96b639343",
+									"__reused": 3,
+									"name": "SyncTypedAttributes"
+								}, {
+									"__keys": ["name"],
+									"Id": "01946406-ddcd-7130-b8b4-363fe9798144",
+									"__reused": 2,
+									"name": "live"
+								}],
+								"__keys": ["name"],
+								"active": true,
+								"enabled": true
+							},
+							"__keys": ["name"],
+							"active": true,
+							"enabled": true
+						}],
+						"__keys": ["name"],
+						"active": true,
+						"enabled": true
+					},
+					"__keys": ["name"],
+					"active": true,
+					"enabled": true
+				}, {
+					"__keys": ["name"],
+					"Id": "01946406-ddcd-7130-b8b4-363fe9798144",
+					"__reused": 3,
+					"name": "live"
+				}],
+				"__keys": ["name"],
+				"active": true,
+				"enabled": true
+			},
+			"__keys": ["name"],
+			"active": true,
+			"enabled": true
+		}, {
+			"__keys": ["name"],
+			"Id": "01946406-ddcd-7130-b8b4-32c96b639343",
+			"__reused": 4,
+			"name": "SyncTypedAttributes"
+		}, {
+			"__keys": ["name"],
+			"Id": "01946406-ddcd-7130-b8b4-363fe9798144",
+			"__reused": 4,
+			"name": "live"
+		}],
 		"__keys": ["name"],
 		"active": true,
 		"enabled": true
