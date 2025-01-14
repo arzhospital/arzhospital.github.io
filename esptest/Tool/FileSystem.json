@@ -1,0 +1,32 @@
+{
+	"Id": "019462ce-c42c-72d1-b219-2092242d47ce",
+	"code": "FileSystem",
+	"name": "FileSystem",
+	"type": {
+		"code": "FileSystem",
+		"name": "FileSystem",
+		"icon": "server_file",
+		"__keys": ["name"],
+		"active": true,
+		"enabled": true
+	},
+	"tool_Configs": [{
+		"Id": "019462ce-c42c-72d1-b219-258d372d3ef2",
+		"code": "live",
+		"name": "live",
+		"value": "true",
+		"tool": {
+			"__keys": ["name"],
+			"Id": "019462ce-c42c-72d1-b219-2092242d47ce",
+			"__reused": 2,
+			"name": "FileSystem"
+		},
+		"__keys": ["name"],
+		"active": true,
+		"enabled": true
+	}],
+	"__keys": ["name"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
