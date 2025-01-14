@@ -1,0 +1,123 @@
+{
+	"Id": "01946276-5b87-70a5-8c2b-ffd071a22990",
+	"date": "2025-01-14T01:38:22.209Z",
+	"name": "null",
+	"className": "null",
+	"scope": "null",
+	"context": "^(_fromDocument)$",
+	"source": "null",
+	"target": "null",
+	"inScript": "b2JqVG9bY29kZV0gPSB7X19pZDogb2JqVG9bY29kZSsnaWQnXX0=",
+	"type": {
+		"Id": "01946276-36f3-7376-b353-5aaff0b36572",
+		"code": "SqlDB",
+		"name": "SqlDB",
+		"icon": "mysql-icon",
+		"type_Configs": [{
+			"Id": "01946276-3c17-74e5-a09b-c4f75734e5f1",
+			"code": "store.sensitivity",
+			"name": "store.sensitivity",
+			"value": "MQ==",
+			"type": {
+				"__keys": ["name"],
+				"Id": "01946276-36f3-7376-b353-5aaff0b36572",
+				"__reused": 2,
+				"name": "SqlDB"
+			},
+			"__keys": ["name"],
+			"active": true,
+			"enabled": true
+		}, {
+			"Id": "01946276-415c-709f-a7f4-50b98c484c38",
+			"code": "SyncEntityAttributes",
+			"name": "SyncEntityAttributes",
+			"value": "true",
+			"type": {
+				"__keys": ["name"],
+				"Id": "01946276-36f3-7376-b353-5aaff0b36572",
+				"__reused": 3,
+				"name": "SqlDB"
+			},
+			"__keys": ["name"],
+			"active": true,
+			"enabled": true
+		}, {
+			"Id": "01946276-47cb-766a-a477-49ac5898fb66",
+			"code": "SyncTypedAttributes",
+			"name": "SyncTypedAttributes",
+			"value": "true",
+			"type": {
+				"__keys": ["name"],
+				"Id": "01946276-36f3-7376-b353-5aaff0b36572",
+				"__reused": 4,
+				"name": "SqlDB"
+			},
+			"__keys": ["name"],
+			"active": true,
+			"enabled": true
+		}, {
+			"Id": "01946276-4ca2-708d-86db-937976f9448b",
+			"code": "create",
+			"name": "create",
+			"value": "Mg==",
+			"type": {
+				"__keys": ["name"],
+				"Id": "01946276-36f3-7376-b353-5aaff0b36572",
+				"__reused": 5,
+				"name": "SqlDB"
+			},
+			"__keys": ["name"],
+			"active": true,
+			"enabled": true
+		}, {
+			"Id": "01946276-51dd-719d-b481-3e3922da1043",
+			"code": "null",
+			"name": "null",
+			"value": "MjA=",
+			"type": {
+				"__keys": ["name"],
+				"Id": "01946276-36f3-7376-b353-5aaff0b36572",
+				"__reused": 6,
+				"name": "SqlDB"
+			},
+			"__keys": ["name"],
+			"active": true,
+			"enabled": true
+		}],
+		"type_Mappings": [{
+			"Id": "01946276-56a8-70df-a0f2-5413b5d1b290",
+			"date": "2025-01-14T01:38:22.198Z",
+			"name": "null",
+			"className": "(\b\w+)",
+			"scope": "null",
+			"context": "^(_toDocument|_toJSON|_fromDocument|EntityAttribute)$",
+			"source": "Id",
+			"target": "__id",
+			"type": {
+				"__keys": ["name"],
+				"Id": "01946276-36f3-7376-b353-5aaff0b36572",
+				"__reused": 7,
+				"name": "SqlDB"
+			},
+			"__keys": ["className", "scope", "context", "source", "target"],
+			"active": true,
+			"enabled": true
+		}, {
+			"__keys": ["className", "scope", "context", "source", "target"],
+			"Id": "01946276-5b87-70a5-8c2b-ffd071a22990",
+			"__reused": 2,
+			"className": "null",
+			"scope": "null",
+			"context": "^(_fromDocument)$",
+			"source": "null",
+			"target": "null"
+		}],
+		"__keys": ["name"],
+		"active": true,
+		"enabled": true
+	},
+	"__keys": ["className", "scope", "context", "source", "target"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
