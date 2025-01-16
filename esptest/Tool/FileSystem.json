@@ -1,107 +1,54 @@
 {
-	"Id": "22ed024b9bb76aa2869d9280a7c436a4b2b48b6a",
+	"Id": "1c775c229e4e516cd2d09092aee430918ab37d89",
 	"code": "FileSystem",
 	"name": "FileSystem",
 	"type": {
+		"Id": "01946cb2-eda4-7715-b58c-11d14baed4ef",
 		"code": "FileSystem",
 		"name": "FileSystem",
 		"icon": "server_file",
 		"type_Configs": [{
-			"Id": "01946406-ddcd-7130-b8b4-2ed7f81309cb",
+			"Id": "01946cb2-bdca-7408-83c4-f76b98a3e2e7",
 			"code": "SyncEntityAttributes",
 			"name": "SyncEntityAttributes",
 			"value": "ZmFsc2U=",
 			"type": {
-				"code": "FileSystem",
-				"name": "FileSystem",
-				"icon": "server_file",
-				"type_Configs": [{
-					"__keys": ["name"],
-					"Id": "01946406-ddcd-7130-b8b4-2ed7f81309cb",
-					"__reused": 2,
-					"name": "SyncEntityAttributes"
-				}, {
-					"Id": "01946406-ddcd-7130-b8b4-32c96b639343",
-					"code": "SyncTypedAttributes",
-					"name": "SyncTypedAttributes",
-					"value": "ZmFsc2U=",
-					"type": {
-						"code": "FileSystem",
-						"name": "FileSystem",
-						"icon": "server_file",
-						"type_Configs": [{
-							"__keys": ["name"],
-							"Id": "01946406-ddcd-7130-b8b4-2ed7f81309cb",
-							"__reused": 3,
-							"name": "SyncEntityAttributes"
-						}, {
-							"__keys": ["name"],
-							"Id": "01946406-ddcd-7130-b8b4-32c96b639343",
-							"__reused": 2,
-							"name": "SyncTypedAttributes"
-						}, {
-							"Id": "01946406-ddcd-7130-b8b4-363fe9798144",
-							"code": "live",
-							"name": "live",
-							"value": "true",
-							"type": {
-								"code": "FileSystem",
-								"name": "FileSystem",
-								"icon": "server_file",
-								"type_Configs": [{
-									"__keys": ["name"],
-									"Id": "01946406-ddcd-7130-b8b4-2ed7f81309cb",
-									"__reused": 4,
-									"name": "SyncEntityAttributes"
-								}, {
-									"__keys": ["name"],
-									"Id": "01946406-ddcd-7130-b8b4-32c96b639343",
-									"__reused": 3,
-									"name": "SyncTypedAttributes"
-								}, {
-									"__keys": ["name"],
-									"Id": "01946406-ddcd-7130-b8b4-363fe9798144",
-									"__reused": 2,
-									"name": "live"
-								}],
-								"__keys": ["name"],
-								"active": true,
-								"enabled": true
-							},
-							"__keys": ["name"],
-							"active": true,
-							"enabled": true
-						}],
-						"__keys": ["name"],
-						"active": true,
-						"enabled": true
-					},
-					"__keys": ["name"],
-					"active": true,
-					"enabled": true
-				}, {
-					"__keys": ["name"],
-					"Id": "01946406-ddcd-7130-b8b4-363fe9798144",
-					"__reused": 3,
-					"name": "live"
-				}],
 				"__keys": ["name"],
-				"active": true,
-				"enabled": true
+				"Id": "01946cb2-eda4-7715-b58c-11d14baed4ef",
+				"__reused": 2,
+				"name": "FileSystem"
 			},
 			"__keys": ["name"],
 			"active": true,
 			"enabled": true
 		}, {
+			"Id": "01946cb2-bdca-7408-83c4-fa38c297fcb9",
+			"code": "SyncTypedAttributes",
+			"name": "SyncTypedAttributes",
+			"value": "ZmFsc2U=",
+			"type": {
+				"__keys": ["name"],
+				"Id": "01946cb2-eda4-7715-b58c-11d14baed4ef",
+				"__reused": 3,
+				"name": "FileSystem"
+			},
 			"__keys": ["name"],
-			"Id": "01946406-ddcd-7130-b8b4-32c96b639343",
-			"__reused": 4,
-			"name": "SyncTypedAttributes"
+			"active": true,
+			"enabled": true
 		}, {
+			"Id": "01946cb2-bdca-7408-83c4-fe084b3df375",
+			"code": "live",
+			"name": "live",
+			"value": "true",
+			"type": {
+				"__keys": ["name"],
+				"Id": "01946cb2-eda4-7715-b58c-11d14baed4ef",
+				"__reused": 4,
+				"name": "FileSystem"
+			},
 			"__keys": ["name"],
-			"Id": "01946406-ddcd-7130-b8b4-363fe9798144",
-			"__reused": 4,
-			"name": "live"
+			"active": true,
+			"enabled": true
 		}],
 		"__keys": ["name"],
 		"active": true,
