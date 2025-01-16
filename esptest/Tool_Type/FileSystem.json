@@ -1,0 +1,53 @@
+{
+	"Id": "01946cb2-eda4-7715-b58c-11d14baed4ef",
+	"code": "FileSystem",
+	"name": "FileSystem",
+	"icon": "server_file",
+	"type_Configs": [{
+		"Id": "01946cb2-bdca-7408-83c4-f76b98a3e2e7",
+		"code": "SyncEntityAttributes",
+		"name": "SyncEntityAttributes",
+		"value": "ZmFsc2U=",
+		"type": {
+			"__keys": ["name"],
+			"Id": "01946cb2-eda4-7715-b58c-11d14baed4ef",
+			"__reused": 2,
+			"name": "FileSystem"
+		},
+		"__keys": ["name"],
+		"active": true,
+		"enabled": true
+	}, {
+		"Id": "01946cb2-bdca-7408-83c4-fa38c297fcb9",
+		"code": "SyncTypedAttributes",
+		"name": "SyncTypedAttributes",
+		"value": "ZmFsc2U=",
+		"type": {
+			"__keys": ["name"],
+			"Id": "01946cb2-eda4-7715-b58c-11d14baed4ef",
+			"__reused": 3,
+			"name": "FileSystem"
+		},
+		"__keys": ["name"],
+		"active": true,
+		"enabled": true
+	}, {
+		"Id": "01946cb2-bdca-7408-83c4-fe084b3df375",
+		"code": "live",
+		"name": "live",
+		"value": "true",
+		"type": {
+			"__keys": ["name"],
+			"Id": "01946cb2-eda4-7715-b58c-11d14baed4ef",
+			"__reused": 4,
+			"name": "FileSystem"
+		},
+		"__keys": ["name"],
+		"active": true,
+		"enabled": true
+	}],
+	"__keys": ["name"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
