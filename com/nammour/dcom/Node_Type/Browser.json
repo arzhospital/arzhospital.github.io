@@ -1,0 +1,10 @@
+{
+	"Id": "0194a748-6e55-777d-a906-fd8898a0696a",
+	"date": "2025-01-27T10:22:09.493Z",
+	"name": "Browser",
+	"__keys": ["name"],
+	"active": true,
+	"enabled": true,
+	"dynamic": true,
+	"__trMap": []
+}
