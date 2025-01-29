@@ -1,9 +1,0 @@
-{
-	"Id": "0194a731-26a2-700d-a6d3-2fdb72df1b11",
-	"username": "cfadmin",
-	"password": "admin",
-	"__keys": ["username"],
-	"active": true,
-	"enabled": true,
-	"__trMap": []
-}
