@@ -1,7 +1,7 @@
 {
-	"Id": "0112ef9854638a1832e917a49c26b56cc6e40e15",
+	"Id": "d3e55aa688229e9efa5ed492db883dae71a46475",
 	"name": "Company",
-	"script": "ewogICAgIkNvZGUiOiAiZW1zIiwKICAgICJSZXF1aXJlZCI6IFsKICAgICAgICAiRmlsdGVycyIsCiAgICAgICAgIkR5bmFGb3JtIiwKICAgICAgICAiZG90LW9iamVjdCIsCiAgICAgICAgIlNRTEpTIiwKICAgICAgICAic3FsLWZvcm1hdHRlciIsCiAgICAgICAgIk1RVFQiCiAgICBdLAogICAgIlJlc3BvbnNpdmUiOiB0cnVlLAogICAgIk5hbWUiOiAiRW50ZXJwcmlzZSBNYW5hZ2VtZW50IFN5c3RlbSIsCiAgICAibGlicmFyeSI6ICJFbnRlcnByaXNlTWFuYWdlciIsCiAgICAiU2NvcGUiOiAid2luZG93Igp9",
+	"script": "cmV0dXJuIHsiQ29kZSI6ImVtcyIsIlJlcXVpcmVkIjpbIkZpbHRlcnMiLCJEeW5hRm9ybSIsImRvdC1vYmplY3QiLCJTUUxKUyIsInNxbC1mb3JtYXR0ZXIiLCJNUVRUIl0sIlJlc3BvbnNpdmUiOnRydWUsIk5hbWUiOiJFbnRlcnByaXNlIE1hbmFnZW1lbnQgU3lzdGVtIiwibGlicmFyeSI6IkVudGVycHJpc2VNYW5hZ2VyIiwiU2NvcGUiOiJ3aW5kb3cifQ==",
 	"__keys": ["name"],
 	"active": true,
 	"enabled": true,
