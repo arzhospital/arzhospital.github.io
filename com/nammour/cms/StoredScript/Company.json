@@ -1,0 +1,9 @@
+{
+	"Id": "0194e618fb57709eac072cc06a31aeae",
+	"name": "Company",
+	"script": "ewogICAgIkNvZGUiOiAiZW1zIiwKICAgICJSZXF1aXJlZCI6IFsKICAgICAgICAiRmlsdGVycyIsCiAgICAgICAgIkR5bmFGb3JtIiwKICAgICAgICAiZG90LW9iamVjdCIsCiAgICAgICAgIlNRTEpTIiwKICAgICAgICAic3FsLWZvcm1hdHRlciIsCiAgICAgICAgIk1RVFQiCiAgICBdLAogICAgIlJlc3BvbnNpdmUiOiB0cnVlLAogICAgIk5hbWUiOiAiRW50ZXJwcmlzZSBNYW5hZ2VtZW50IFN5c3RlbSIsCiAgICAibGlicmFyeSI6ICJFbnRlcnByaXNlTWFuYWdlciIsCiAgICAiU2NvcGUiOiAid2luZG93Igp9",
+	"__keys": ["name"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
