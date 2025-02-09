@@ -1,5 +1,5 @@
 {
-	"Id": "6e3a2dd40f545d62782cf69bcceb6ae6d1f2452b",
+	"Id": "abf93118b1959581695bcd2ed60848dc8044d57a",
 	"page": "cmsweb/templates/d/login",
 	"script": "d2luZG93LkxvZ2luQ29tcG9uZW50ID0gY2xhc3MgZXh0ZW5kcyBERm9ybS5Mb2dpbkNvbXBvbmVudCB7Cglhc3luYyBfYXV0aGVudGljYXRlKG8pIHsKCQlvLk9QRVJBVE9SUyA9IHsKCQkJVXNlcm5hbWU6ICI9IiwKCQkJUGFzc3dvcmQ6ICI9IgoJCX07CgkJcmV0dXJuIChhd2FpdCBzci5fKCJjbXNBdXRob3JGaW5kIiwgbnVsbCwgbykpOwoJfQp9",
 	"__keys": ["page"],
