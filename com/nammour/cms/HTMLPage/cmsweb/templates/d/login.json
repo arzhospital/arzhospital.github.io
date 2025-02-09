@@ -1,0 +1,7 @@
+{
+	"Id": "0194ec3a65af713b81f11993f8fe47c9",
+	"page": "cmsweb/templates/d/login",
+	"script": "d2luZG93LkxvZ2luQ29tcG9uZW50ID0gY2xhc3MgZXh0ZW5kcyBERm9ybS5Mb2dpbkNvbXBvbmVudCB7Cglhc3luYyBfYXV0aGVudGljYXRlKG8pIHsKCQlvLk9QRVJBVE9SUyA9IHsKCQkJVXNlcm5hbWU6ICI9IiwKCQkJUGFzc3dvcmQ6ICI9IgoJCX07CgkJcmV0dXJuIChhd2FpdCBzci5fKCJjbXNBdXRob3JGaW5kIiwgbnVsbCwgbykpOwoJfQp9",
+	"__keys": ["page"],
+	"__trMap": []
+}
