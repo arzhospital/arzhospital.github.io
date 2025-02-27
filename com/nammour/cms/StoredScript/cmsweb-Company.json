@@ -1,7 +1,7 @@
 {
-	"Id": "aa6797cd452b9a9f3eef3ef9024113d758590d5a",
+	"Id": "c4ec05da15a5846dd6f60de5418f6ea34ecaec6a",
 	"name": "cmsweb-Company",
-	"script": "d2luZG93LmNvbXBhbnkgPSB7DQoJIkNvZGUiOiAiY21zIiwNCgkiU2NoZW1hIjogIkVNUyBXZWIiLA0KCSJSZXNwb25zaXZlIjogdHJ1ZSwNCgkiTmFtZSI6ICJDb250ZW50IE1hbmFnZW1lbnQgU3lzdGVtIiwNCgkibGlicmFyeSI6ICJDb250ZW50TWFuYWdlciINCn0=",
+	"script": "d2luZG93LmNvbXBhbnkgPSB7DQoJIkNvZGUiOiAiY21zIiwNCgkiU2NoZW1hIjogIkVNUyBXZWIiLA0KCSJSZXNwb25zaXZlIjogdHJ1ZSwNCgkiUmVxdWlyZWQiOiBbIkR5bmFGb3JtIl0sDQoJIk5hbWUiOiAiQ29udGVudCBNYW5hZ2VtZW50IFN5c3RlbSIsDQoJImxpYnJhcnkiOiAiQ29udGVudE1hbmFnZXIiDQp9",
 	"__keys": ["name"],
 	"active": true,
 	"enabled": true,
