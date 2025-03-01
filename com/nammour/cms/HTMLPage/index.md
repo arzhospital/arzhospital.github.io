@@ -5,7 +5,7 @@
 	},
 	{
 		"__filename__": "index.md",
-		"Id": "b7bc71205cae2406dfdb4ffc2b43c5bb1a2649d7"
+		"Id": "cd1a41c05b1cc62f82c4620fb47b79be24ecb44e"
 	},
 	{
 		"__filename__": "test1",
@@ -26,5 +26,9 @@
 	{
 		"__filename__": "test5",
 		"Id": "bad05e9ce4b82196d63ff5cb8f5a1327bc72adc0"
+	},
+	{
+		"__filename__": "test6",
+		"Id": "e0c293af3e86bd483a8df7ffbc5704a3580f5b2b"
 	}
 ]
