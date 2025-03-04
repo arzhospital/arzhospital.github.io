@@ -1,0 +1,12 @@
+{
+	"Id": "01956029e364771ebad60bc7544ce7ff",
+	"username": "admin",
+	"password": "admin",
+	"firstName": "System",
+	"lastName": "Administrator",
+	"ToString": "U3lzdGVtIEFkbWluaXN0cmF0b3I=",
+	"__keys": ["username"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
