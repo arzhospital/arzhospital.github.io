@@ -1,7 +1,7 @@
 {
-	"Id": "66770a90642e8b6eb1584cb542a0641010ba719e",
+	"Id": "6a75b42919f6f7674d7ffb35f755dc01715c921f",
 	"page": "emsweb/templates/d/store",
-	"script": "d2luZG93LlN0b3JlQ29tcG9uZW50ID0gY2xhc3MgREZvcm0uU3RvcmVDb21wb25lbnQge30=",
+	"script": "d2luZG93LlN0b3JlQ29tcG9uZW50ID0gY2xhc3MgZXh0ZW5kcyBERm9ybS5TdG9yZUNvbXBvbmVudCB7fQ==",
 	"__keys": ["page"],
 	"__trMap": []
 }
