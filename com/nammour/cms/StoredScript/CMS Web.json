@@ -1,16 +1,11 @@
 {
-	"Id": "96466efe2214286bb60ec92e187924b6c68692d9",
-	"date": "null",
+	"Id": "3306b7a6725736a03dc8d05fe9b5c98c6167a336",
 	"name": "CMS Web",
-	"order": ,
-	"remark": "wp7DqWU=",
+	"script": "W3s=",
 	"Name": "Q01TIFdlYg==",
-	"Script": "null",
+	"Script": "W3s=",
 	"__keys": ["name"],
 	"active": true,
-	"after": false,
-	"async": true,
-	"before": false,
 	"enabled": true,
 	"__trMap": []
 }
