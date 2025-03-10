@@ -1,12 +1,14 @@
 {
-	"Id": "01956029e364771ebad60bc7544ce7ff",
+	"Id": "ef672a700265cd36de5403cbebf39ac4c3eb1277",
 	"username": "admin",
 	"password": "admin",
-	"firstName": "System",
-	"lastName": "Administrator",
-	"ToString": "U3lzdGVtIEFkbWluaXN0cmF0b3I=",
-	"__keys": ["username"],
-	"active": true,
-	"enabled": true,
+	"active": null,
+	"enabled": null,
+	"firstName": "undefined",
+	"lastName": "undefined",
+	"middleName": "undefined",
+	"company": null,
+	"ToString": "dW5kZWZpbmVkIHVuZGVmaW5lZA==",
+	"__keys": ["username", "company"],
 	"__trMap": []
 }
