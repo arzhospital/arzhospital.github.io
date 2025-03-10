@@ -1,8 +1,15 @@
 {
-	"Id": "ed0cad93b5ab6828e7f3c67f26121ddb32863823",
+	"Id": "2640344b353a3d8e8b9eca5028348f37ae262302",
+	"email": "",
+	"firstName": "System",
+	"lastName": "Administrator",
 	"password": "admin",
 	"username": "admin",
-	"ToString": "bnVsbCBudWxs",
+	"ToString": "U3lzdGVtIEFkbWluaXN0cmF0b3I=",
+	"Username": "YWRtaW4=",
 	"__keys": ["username"],
+	"active": true,
+	"enabled": true,
+	"admin": true,
 	"__trMap": []
 }
