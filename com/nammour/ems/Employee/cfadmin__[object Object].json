@@ -1,0 +1,25 @@
+{
+	"Id": "0195808176c77062b7dac1040a0b6c1d",
+	"username": "cfadmin",
+	"password": "admin",
+	"active": null,
+	"enabled": null,
+	"firstName": "undefined",
+	"lastName": "undefined",
+	"middleName": "undefined",
+	"company": {
+		"Id": "0195808178bf7498af1eb57e697e094c",
+		"code": "undefined",
+		"order": null,
+		"date": "2025-03-10T14:42:03.583Z",
+		"name": "CFCompany",
+		"remark": "dW5kZWZpbmVk",
+		"logo": "undefined",
+		"__keys": ["code"],
+		"active": true,
+		"enabled": true
+	},
+	"ToString": "dW5kZWZpbmVkIHVuZGVmaW5lZA==",
+	"__keys": ["username", "company"],
+	"__trMap": []
+}
