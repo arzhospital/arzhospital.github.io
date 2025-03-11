@@ -1,0 +1,13 @@
+{
+	"Id": "555fa836582f81cbd95cf10e1b0f1d08ea63885a",
+	"code": "arzhospital",
+	"order": null,
+	"date": "1901-01-01T00:22:00.000Z",
+	"name": "Arz Hospital",
+	"remark": "",
+	"logo": "undefined",
+	"__keys": ["code"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
