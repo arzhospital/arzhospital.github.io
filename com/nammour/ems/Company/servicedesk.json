@@ -1,0 +1,13 @@
+{
+	"Id": "019584bd72517027b317aa2fca0ab8dd",
+	"code": "servicedesk",
+	"order": null,
+	"date": "0001-01-01T00:00:00.000Z",
+	"name": "ServiceDesk",
+	"remark": "PHA+CglTZXJ2aWNlIERlc2sgc3lzdGVtIGZvciBzdXBwb3J0IHRpY2tldHMgYW5kIG1hbmFnZW1lbnQgb2YgcHJvdmlkZWQgc2VydmljZXMgdG8gY2xpZW50cy48L3A+",
+	"logo": "undefined",
+	"__keys": ["code"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
