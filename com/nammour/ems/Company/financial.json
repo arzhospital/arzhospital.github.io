@@ -1,0 +1,13 @@
+{
+	"Id": "019584bcd64276ca9ec135331f0b5b55",
+	"code": "financial",
+	"order": null,
+	"date": "0001-01-01T00:00:00.000Z",
+	"name": "Financial",
+	"remark": "PHA+CglBIHNtYWxsIGZpbmFuY2lhbCBtYW5hZ2VtZW50IHN5c3RlbSBmb3Igc21hbGwgYnVzaW5lc3NlcyBvciBlbnRpdGllczwvcD4=",
+	"logo": "undefined",
+	"__keys": ["code"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
