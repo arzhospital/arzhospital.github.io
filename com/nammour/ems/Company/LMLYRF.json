@@ -1,0 +1,13 @@
+{
+	"Id": "019584bd111976cc8ab3c64296fb5f2d",
+	"code": "LMLYRF",
+	"order": null,
+	"date": "0001-01-01T00:00:00.000Z",
+	"name": "Nammour Family",
+	"remark": "PHA+CglNYW5hZ2VtZW50IHBhdHRlciBmb3IgdGhlIE5hbW1vdXIgZmFtaWx5IGZvbGxvd2luZyB0aGUgZGVhdGggb2YgYW1tbyBNYXVyaWNlPC9wPg==",
+	"logo": "undefined",
+	"__keys": ["code"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
