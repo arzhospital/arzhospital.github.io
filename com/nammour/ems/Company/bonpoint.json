@@ -1,0 +1,13 @@
+{
+	"Id": "019584bc5e3276e690dfa09de9c94bd9",
+	"code": "bonpoint",
+	"order": null,
+	"date": "0001-01-01T00:00:00.000Z",
+	"name": "BonPoint",
+	"remark": "",
+	"logo": "undefined",
+	"__keys": ["code"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
