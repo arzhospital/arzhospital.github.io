@@ -1,0 +1,13 @@
+{
+	"Id": "019584bd95aa70e6b87514aed0a5ab88",
+	"code": "nammour",
+	"date": "0001-01-01T00:00:00.000Z",
+	"name": "Nammour.com",
+	"remark": "PHA+CglOYW1tb3VyLmNvbSBVTUwgQnVzaW5lc3MgU29sdXRpb25zPC9wPg==",
+	"logo": "undefined",
+	"__keys": ["code"],
+	"active": true,
+	"enabled": true,
+	"order": 1,
+	"__trMap": []
+}
