@@ -1,0 +1,25 @@
+{
+	"Id": "019585915775773e92896159e10089ab",
+	"username": "username",
+	"password": "password",
+	"firstName": "First",
+	"lastName": "Last",
+	"middleName": "Middle",
+	"company": {
+		"Id": "4a24c6eecc82c2440d559f92be85b7916c6c4f1e",
+		"code": "LMLYRF",
+		"order": null,
+		"date": "2025-03-11T14:17:30.774Z",
+		"name": "LMLYRF",
+		"remark": "dW5kZWZpbmVk",
+		"logo": "undefined",
+		"__keys": ["code"],
+		"active": true,
+		"enabled": true
+	},
+	"ToString": "Rmlyc3QgTGFzdA==",
+	"__keys": ["username", "company"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
