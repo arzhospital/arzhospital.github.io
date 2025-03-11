@@ -1,0 +1,13 @@
+{
+	"Id": "019584bcca6c71db95a9c2c74df4f1ee",
+	"code": "eujobs",
+	"order": null,
+	"date": "0001-01-01T00:00:00.000Z",
+	"name": "EU-Jobs",
+	"remark": "",
+	"logo": "undefined",
+	"__keys": ["code"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
