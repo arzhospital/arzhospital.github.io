@@ -1,0 +1,13 @@
+{
+	"Id": "019584bce1dc768db87a7999912f7dba",
+	"code": "hammoud",
+	"order": null,
+	"date": "0001-01-01T00:00:00.000Z",
+	"name": "Hammoud Hospital",
+	"remark": "PHA+CglVbml2ZXJzaXR5IE1lZGljYWwgQ2VudGVyPGJyIC8+CgkmbmJzcDs8L3A+",
+	"logo": "undefined",
+	"__keys": ["code"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
