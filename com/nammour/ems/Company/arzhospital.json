@@ -1,10 +1,10 @@
 {
-	"Id": "555fa836582f81cbd95cf10e1b0f1d08ea63885a",
+	"Id": "c34009c7622b6526b00908ce88db6addf270da14",
 	"code": "arzhospital",
 	"order": null,
-	"date": "1901-01-01T00:22:00.000Z",
+	"date": "0001-01-01T00:00:00.000Z",
 	"name": "Arz Hospital",
-	"remark": "",
+	"remark": "PHA+CglBcnogSG9zcGl0YWwgZGF0YSByZXBvc2l0b3J5PC9wPg==",
 	"logo": "undefined",
 	"__keys": ["code"],
 	"active": true,
