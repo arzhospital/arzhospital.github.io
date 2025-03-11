@@ -1,0 +1,13 @@
+{
+	"Id": "019584b99509751dab44ecfd9f198b98",
+	"code": "APP_PORTAL",
+	"order": null,
+	"date": "0001-01-01T00:00:00.000Z",
+	"name": "Applications Portal",
+	"remark": "",
+	"logo": "undefined",
+	"__keys": ["code"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
