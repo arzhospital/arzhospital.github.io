@@ -1,0 +1,13 @@
+{
+	"Id": "019584bd66ab72ef828b079718bc63aa",
+	"code": "SALESEXPERTS",
+	"order": null,
+	"date": "0001-01-01T00:00:00.000Z",
+	"name": "Sales Experts",
+	"remark": "PHA+CglJcyBhIHRvb2wgZm9yIGJvb3N0aW5nIHNhbGVzIG9uIGNsaWVudCB3ZWJzaXRlcyBieSBjcmVhdGluZyBhIHVuaXF1ZSB1c2VyIGV4cGVyaWVuY2Ugd2hlcmUgcG90ZW50aWFsIGNsaWVudHMgaW50ZXJhY3Qgd2l0aCB0aGUgc3lzdGVtIHdoaWNoIGluIHR1cm4gb2ZmZXJzIHRoZW0gY2hvaWNlcyBmb3IgcHJvZHVjdHMgYmFzZWQgb24gdGhlaXIgZmVhdHVyZSBhbmQgaW5mb3JtYXRpb24gc2VsZWN0aW9ucy48L3A+",
+	"logo": "undefined",
+	"__keys": ["code"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
