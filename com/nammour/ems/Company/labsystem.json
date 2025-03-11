@@ -1,0 +1,13 @@
+{
+	"Id": "019584bd7e5c734cb9e45392e8e3bd73",
+	"code": "labsystem",
+	"order": null,
+	"date": "0001-01-01T00:00:00.000Z",
+	"name": "Small Laboratory",
+	"remark": "PHA+CglBdHdpIExhYm9yYXRvcmllcywgU2FpZGE8L3A+",
+	"logo": "undefined",
+	"__keys": ["code"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
