@@ -1,0 +1,13 @@
+{
+	"Id": "019584bd05ac750d83abb17c25185f37",
+	"code": "Nagelstudio",
+	"order": null,
+	"date": "0001-01-01T00:00:00.000Z",
+	"name": "Nagelstudio Weidhausen",
+	"remark": "",
+	"logo": "undefined",
+	"__keys": ["code"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
