@@ -1,7 +1,18 @@
 {
-	"Id": "0194ef42f7727626a0c658853b82adfd",
+	"Id": "e4278f72f6433597bfa56d7d74a80e59919fa13d",
+	"active": null,
+	"alwaysGenerate": null,
+	"body": "dW5kZWZpbmVk",
+	"date": "undefined",
+	"description": "dW5kZWZpbmVk",
+	"footer": "dW5kZWZpbmVk",
+	"imageSource": "undefined",
 	"page": "cmsweb/templates/d/index",
+	"preScript": "dW5kZWZpbmVk",
+	"public": null,
 	"script": "d2luZG93LkluZGV4Q29tcG9uZW50ID0gY2xhc3MgZXh0ZW5kcyBERm9ybS5JbmRleENvbXBvbmVudCB7fQ==",
+	"title": "dW5kZWZpbmVk",
+	"author": null,
 	"__keys": ["page"],
 	"__trMap": []
 }
