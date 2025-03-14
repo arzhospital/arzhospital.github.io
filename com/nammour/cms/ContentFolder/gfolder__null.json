@@ -1,0 +1,13 @@
+{
+	"Id": "019594485b4375b88c52bac1ded73d1c",
+	"code": "gfolder",
+	"order": null,
+	"date": "2025-03-14T10:52:04.803Z",
+	"name": "null",
+	"remark": "dW5kZWZpbmVk",
+	"folder": null,
+	"__keys": ["code", "folder"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
