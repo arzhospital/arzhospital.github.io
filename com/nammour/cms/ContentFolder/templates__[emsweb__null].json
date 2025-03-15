@@ -1,0 +1,24 @@
+{
+	"Id": "019598800f9b73f1a4b2804f8dca4fc6",
+	"code": "templates",
+	"order": null,
+	"date": "2025-03-15T06:31:24.315Z",
+	"name": "undefined",
+	"remark": "dW5kZWZpbmVk",
+	"folder": {
+		"Id": "01959880112771ca9ef5d3980340deed",
+		"code": "emsweb",
+		"order": null,
+		"date": "2025-03-15T06:31:24.711Z",
+		"name": "undefined",
+		"remark": "dW5kZWZpbmVk",
+		"folder": null,
+		"__keys": ["code", "folder"],
+		"active": true,
+		"enabled": true
+	},
+	"__keys": ["code", "folder"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
