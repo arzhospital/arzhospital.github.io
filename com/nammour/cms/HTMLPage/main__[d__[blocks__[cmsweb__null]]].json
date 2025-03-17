@@ -1,0 +1,53 @@
+{
+	"Id": "0195a4aa43dd706c85fba28e46c6aa76",
+	"active": null,
+	"alwaysGenerate": null,
+	"body": "dW5kZWZpbmVk",
+	"date": "undefined",
+	"description": "dW5kZWZpbmVk",
+	"footer": "dW5kZWZpbmVk",
+	"imageSource": "undefined",
+	"code": "main",
+	"preScript": "dW5kZWZpbmVk",
+	"public": null,
+	"script": "d2luZG93Lk1haW5Db21wb25lbnQgPSBjbGFzcyB7Cgljb25zdHJ1Y3RvcihwYWdlKSB7CgkJdGhpcy5wYWdlID0gcGFnZTsKCX0KCglfYnVpbGRNZW51KCkgewoJCXJldHVybiBbewoJCQlsYWJlbDogIk1haW4iLAoJCQlpY29uOiAiZWRpdCIsCgkJCXN1Yk1lbnVzOiBbewoJCQkJCWxhYmVsOiAnSW5kZXgnLAoJCQkJfSwgewoJCQkJCWxhYmVsOiAiTG9naW4iLAoJCQkJfSwKCQkJCXsKCQkJCQlsYWJlbDogIkxvZ291dCIKCQkJCX0KCQkJXQoJCX0sIHsKCQkJbGFiZWw6ICJTZXR1cCIsCgkJCWljb246ICJzYXZlIiwKCQkJc3ViTWVudXM6IFt7CgkJCQlsYWJlbDogIkZpbGVzIiwKCQkJCWNvZGU6ICJmaWxlX2xpc3QiLAoJCQkJaWNvbjogImZpbGVzYXZlIiwKCQkJfSwgewoJCQkJbGFiZWw6ICJQYWdlcyIsCgkJCQljb2RlOiAicGFnZV9saXN0IiwKCQkJCWljb246ICJib29rIiwKCQkJfSwgewoJCQkJbGFiZWw6ICJNZXRob2RzIiwKCQkJCWNvZGU6ICJtZXRob2RfbGlzdCIsCgkJCQlpY29uOiAiZmlsdGVyIiwKCQkJfSwgewoJCQkJbGFiZWw6ICJTdG9yZWQgU2NyaXB0IiwKCQkJCWNvZGU6ICJzdG9yZWRzY3JpcHQiLAoJCQkJaWNvbjogInN1bSIsCgkJCX0sIHsKCQkJCWxhYmVsOiAiUGFnZSBUZW1wbGF0ZXMiLAoJCQkJY29kZTogInBhZ2V0ZW1wbGF0ZSIsCgkJCQlpY29uOiAic3VtIiwKCQkJfV0KCQl9XTsKCX0KCgltYWluKCkgewoKCX0KfTs=",
+	"title": "dW5kZWZpbmVk",
+	"folder": {
+		"Id": "0195a4aa45c5712ea7b5bd9b76f24b1c",
+		"code": "d",
+		"order": null,
+		"date": "2025-03-17T15:12:57.285Z",
+		"name": "undefined",
+		"remark": "dW5kZWZpbmVk",
+		"folder": {
+			"Id": "0195a4aa479a728d86bd44321c6d7f3f",
+			"code": "blocks",
+			"order": null,
+			"date": "2025-03-17T15:12:57.754Z",
+			"name": "undefined",
+			"remark": "dW5kZWZpbmVk",
+			"folder": {
+				"Id": "ae082c4d2c066e9660e96a491221e060a333d4c7",
+				"code": "cmsweb",
+				"order": null,
+				"date": "2025-03-17T15:12:58.693Z",
+				"name": "undefined",
+				"remark": "dW5kZWZpbmVk",
+				"folder": null,
+				"__keys": ["code", "folder"],
+				"active": true,
+				"enabled": true
+			},
+			"__keys": ["code", "folder"],
+			"active": true,
+			"enabled": true
+		},
+		"__keys": ["code", "folder"],
+		"active": true,
+		"enabled": true
+	},
+	"ToString": "Li9jb20vbmFtbW91ci9jbXMvSFRNTFBhZ2UvbWFpbl9fW2RfX1tibG9ja3NfX1tjbXN3ZWJfX251bGxdXV0uanNvbg==",
+	"author": null,
+	"__keys": ["code", "folder"],
+	"__trMap": []
+}
