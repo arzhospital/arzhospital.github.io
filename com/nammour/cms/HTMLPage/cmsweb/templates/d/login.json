@@ -1,7 +1,0 @@
-{
-	"Id": "e7aa9bbcb82091bf868a57355a2a3db3cfa4f83e",
-	"page": "cmsweb/templates/d/login",
-	"script": "d2luZG93LkxvZ2luQ29tcG9uZW50ID0gY2xhc3MgZXh0ZW5kcyBERm9ybS5Mb2dpbkNvbXBvbmVudCB7Cglhc3luYyBfYXV0aGVudGljYXRlKG8pIHsKCQlpZiAoX0ZyRU1ELmFwaVNlcnZlcikgcmV0dXJuIGF3YWl0IF9GckVNRC5hcGlTZXJ2ZXIuX25ldygnQXV0aG9yJykudXNlcm5hbWUoby5Vc2VybmFtZSwgJz0nKS5wYXNzd29yZChvLlBhc3N3b3JkLCAnPScpLmFjdGl2ZSh0cnVlKS5lbmFibGVkKHRydWUpLmZpbmQoKTsKCgkJby5PUEVSQVRPUlMgPSB7CgkJCVVzZXJuYW1lOiAiPSIsCgkJCVBhc3N3b3JkOiAiPSIKCQl9OwoJCXJldHVybiAoYXdhaXQgc3IuXygiY21zQXV0aG9yRmluZCIsIG51bGwsIG8pKTsKCX0KfQ==",
-	"__keys": ["page"],
-	"__trMap": []
-}
