@@ -1,0 +1,52 @@
+{
+	"Id": "0195a248ca1a738d8264dc909d126773",
+	"active": null,
+	"alwaysGenerate": null,
+	"body": "dW5kZWZpbmVk",
+	"date": "undefined",
+	"description": "dW5kZWZpbmVk",
+	"footer": "dW5kZWZpbmVk",
+	"imageSource": "undefined",
+	"code": "index",
+	"preScript": "dW5kZWZpbmVk",
+	"public": null,
+	"script": "d2luZG93LkluZGV4Q29tcG9uZW50ID0gY2xhc3MgZXh0ZW5kcyBERm9ybS5JbmRleENvbXBvbmVudCB7fQ==",
+	"title": "dW5kZWZpbmVk",
+	"folder": {
+		"Id": "132b112b65530f645400aa40f5f3293b30f3c44e",
+		"code": "d",
+		"order": null,
+		"date": "2025-03-17T04:07:15.122Z",
+		"name": "undefined",
+		"remark": "dW5kZWZpbmVk",
+		"folder": {
+			"Id": "a47c39c011a0704dd5ab4cda652517112a725fe8",
+			"code": "templates",
+			"order": null,
+			"date": "2025-03-17T04:07:16.008Z",
+			"name": "undefined",
+			"remark": "dW5kZWZpbmVk",
+			"folder": {
+				"Id": "0de47483c4a797013c1e448a8e8edffeacdcdf24",
+				"code": "emsweb",
+				"order": null,
+				"date": "2025-03-17T04:07:16.922Z",
+				"name": "undefined",
+				"remark": "dW5kZWZpbmVk",
+				"folder": null,
+				"__keys": ["code", "folder"],
+				"active": true,
+				"enabled": true
+			},
+			"__keys": ["code", "folder"],
+			"active": true,
+			"enabled": true
+		},
+		"__keys": ["code", "folder"],
+		"active": true,
+		"enabled": true
+	},
+	"author": null,
+	"__keys": ["code", "folder"],
+	"__trMap": []
+}
