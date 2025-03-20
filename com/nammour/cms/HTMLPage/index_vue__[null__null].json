@@ -1,0 +1,30 @@
+{
+	"Id": "76733235a3a7fa0241a2578f6d63a855eb516e18",
+	"alwaysGenerate": null,
+	"body": "wrXDqy0=",
+	"date": "null",
+	"description": "dW5kZWZpbmVk",
+	"footer": "dW5kZWZpbmVk",
+	"code": "index_vue",
+	"imageSource": "undefined",
+	"preScript": "dW5kZWZpbmVk",
+	"public": null,
+	"script": "dW5kZWZpbmVk",
+	"title": "dW5kZWZpbmVk",
+	"folder": {
+		"Id": "0195b24831287495aff4e89ba9798ce5",
+		"code": "null",
+		"order": null,
+		"date": "2025-03-20T06:40:30.505Z",
+		"name": "undefined",
+		"remark": "dW5kZWZpbmVk",
+		"folder": null,
+		"__keys": ["code", "folder"],
+		"active": true,
+		"enabled": true
+	},
+	"author": null,
+	"__keys": ["code", "folder"],
+	"active": true,
+	"__trMap": []
+}
