@@ -1,0 +1,35 @@
+{
+	"Id": "0195c8e188bf76bc83330a061ce2dc6e",
+	"code": "d",
+	"order": null,
+	"date": "2025-03-24T15:59:38.687Z",
+	"name": "undefined",
+	"remark": "dW5kZWZpbmVk",
+	"folder": {
+		"Id": "0195c8e18ab1765b93f92337b7fe07d5",
+		"code": "templates",
+		"order": null,
+		"date": "2025-03-24T15:59:39.185Z",
+		"name": "undefined",
+		"remark": "dW5kZWZpbmVk",
+		"folder": {
+			"Id": "0195c8e18c9874cc9e72d6bfc6c3fa4c",
+			"code": "ems-new",
+			"order": null,
+			"date": "2025-03-24T15:59:39.672Z",
+			"name": "undefined",
+			"remark": "dW5kZWZpbmVk",
+			"folder": null,
+			"__keys": ["code", "folder"],
+			"active": true,
+			"enabled": true
+		},
+		"__keys": ["code", "folder"],
+		"active": true,
+		"enabled": true
+	},
+	"__keys": ["code", "folder"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
