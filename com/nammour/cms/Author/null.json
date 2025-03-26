@@ -1,0 +1,14 @@
+{
+	"Id": "2e58fcb26e57a3009473ca36a25bf8a2f62efd74",
+	"active": null,
+	"enabled": null,
+	"admin": null,
+	"email": "undefined",
+	"firstName": "undefined",
+	"lastName": "undefined",
+	"password": "undefined",
+	"username": "undefined",
+	"ToString": "dW5kZWZpbmVkIHVuZGVmaW5lZA==",
+	"__keys": ["username"],
+	"__trMap": []
+}
