@@ -1,0 +1,35 @@
+{
+	"Id": "0195de01912075ecb19eb7913ddf1b7a",
+	"code": "d",
+	"order": null,
+	"date": "2025-03-28T18:26:39.520Z",
+	"name": "undefined",
+	"remark": "dW5kZWZpbmVk",
+	"folder": {
+		"Id": "0195de01931074afa856a6008f91cfe8",
+		"code": "templates",
+		"order": null,
+		"date": "2025-03-28T18:26:40.017Z",
+		"name": "undefined",
+		"remark": "dW5kZWZpbmVk",
+		"folder": {
+			"Id": "41d6a922007f99342484ed94de2f03a52d5aebb9",
+			"code": "platformmanager",
+			"order": null,
+			"date": "2025-03-28T18:26:41.529Z",
+			"name": "undefined",
+			"remark": "dW5kZWZpbmVk",
+			"folder": null,
+			"__keys": ["code", "folder"],
+			"active": true,
+			"enabled": true
+		},
+		"__keys": ["code", "folder"],
+		"active": true,
+		"enabled": true
+	},
+	"__keys": ["code", "folder"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
