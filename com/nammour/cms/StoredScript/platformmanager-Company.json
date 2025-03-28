@@ -1,0 +1,18 @@
+{
+	"Id": "0195ddfe0dd3777fbcfdba7dd3043d88",
+	"after": null,
+	"async": null,
+	"before": null,
+	"date": "undefined",
+	"name": "platformmanager-Company",
+	"order": null,
+	"remark": "dW5kZWZpbmVk",
+	"script": "d2luZG93LmNvbXBhbnkgPSB7DQoJIkNvZGUiOiAiZW1zIiwNCgkiU2NvcGUiOiAiZW1zd2ViIiwNCgkiUmVzcG9uc2l2ZSI6IHRydWUsDQoJIlJlcXVpcmVkIjogWyJEeW5hRm9ybSIsICJWdWVKUyIsICJTUUxKUyJdLA0KCSJOYW1lIjogIkVudGVycHJpc2UgTWFuYWdlbWVudCBTeXN0ZW0iLA0KCSJsaWJyYXJ5IjogIkVudGVycHJpc2VNYW5hZ2VyIg0KfQ==",
+	"Name": "cGxhdGZvcm1tYW5hZ2VyLUNvbXBhbnk=",
+	"Script": "d2luZG93LmNvbXBhbnkgPSB7DQoJIkNvZGUiOiAiZW1zIiwNCgkiU2NvcGUiOiAiZW1zd2ViIiwNCgkiUmVzcG9uc2l2ZSI6IHRydWUsDQoJIlJlcXVpcmVkIjogWyJEeW5hRm9ybSIsICJWdWVKUyIsICJTUUxKUyJdLA0KCSJOYW1lIjogIkVudGVycHJpc2UgTWFuYWdlbWVudCBTeXN0ZW0iLA0KCSJsaWJyYXJ5IjogIkVudGVycHJpc2VNYW5hZ2VyIg0KfQ==",
+	"storedMethod": null,
+	"__keys": ["name"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
