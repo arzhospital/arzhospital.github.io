@@ -1,0 +1,18 @@
+{
+	"Id": "0195dab978617312966ac6e8fd56973e",
+	"after": null,
+	"async": null,
+	"before": null,
+	"date": "undefined",
+	"name": "Platform Manager",
+	"order": null,
+	"remark": "dW5kZWZpbmVk",
+	"script": "W3sKCU5hbWU6ICJQbGF0Zm9ybSIsCglUb29sczogewoJCScqJzogWydTcWxEQicsICdHaXRIdWInXSwKCQknXyonOiBbJ0dpdEh1YiddLAoJfSwKCUNvbmZpZzogewoJCVBsYXRmb3JtOiB7CgkJCSd1blJlY3Vyc2UudmFsaWRpdHknOiA5OTk5OTk5OSwKCQl9LAoJfSwKCURlYnVnOiB7CgkJY3JpdGljYWw6ICcqJywKCQllcnJvcjogJyonLAoJCXdhcm46ICcqJywKCQlpbmZvOiAnKi5fbG9nLCouaW5pdCwqLl9sb2FkVG9vbHMnLAoJfSwKCUVudGl0eU1ldGhvZHM6IFt7CgkJVmFsaWRhdG9yczogW3sKCQkJQ29kZTogIjAxIiwKCQkJU2NyaXB0OiBgdHlwZW9mKGdsb2JhbCkhPT0ndW5kZWZpbmVkJ2AsCgkJCUVycm9yOiAiTm90IHJ1bm5pbmcgaW4gYSBicm93c2VyIiwKCQl9XSwKCQlOYW1lOiAnaW5pdCcsCgkJU2NyaXB0OiBgCgkJYAoJfV0sCglFbnRpdHlBdHRyaWJ1dGVzOiBbewoJCU5hbWU6ICJfX0JBU0VfXyIsCgl9XSwKfV0=",
+	"Name": "UGxhdGZvcm0gTWFuYWdlcg==",
+	"Script": "W3sKCU5hbWU6ICJQbGF0Zm9ybSIsCglUb29sczogewoJCScqJzogWydTcWxEQicsICdHaXRIdWInXSwKCQknXyonOiBbJ0dpdEh1YiddLAoJfSwKCUNvbmZpZzogewoJCVBsYXRmb3JtOiB7CgkJCSd1blJlY3Vyc2UudmFsaWRpdHknOiA5OTk5OTk5OSwKCQl9LAoJfSwKCURlYnVnOiB7CgkJY3JpdGljYWw6ICcqJywKCQllcnJvcjogJyonLAoJCXdhcm46ICcqJywKCQlpbmZvOiAnKi5fbG9nLCouaW5pdCwqLl9sb2FkVG9vbHMnLAoJfSwKCUVudGl0eU1ldGhvZHM6IFt7CgkJVmFsaWRhdG9yczogW3sKCQkJQ29kZTogIjAxIiwKCQkJU2NyaXB0OiBgdHlwZW9mKGdsb2JhbCkhPT0ndW5kZWZpbmVkJ2AsCgkJCUVycm9yOiAiTm90IHJ1bm5pbmcgaW4gYSBicm93c2VyIiwKCQl9XSwKCQlOYW1lOiAnaW5pdCcsCgkJU2NyaXB0OiBgCgkJYAoJfV0sCglFbnRpdHlBdHRyaWJ1dGVzOiBbewoJCU5hbWU6ICJfX0JBU0VfXyIsCgl9XSwKfV0=",
+	"storedMethod": null,
+	"__keys": ["name"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
