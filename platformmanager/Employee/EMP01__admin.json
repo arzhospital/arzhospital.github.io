@@ -1,0 +1,14 @@
+{
+	"Id": "0195e6dd30c0714aadb5501b1bcfb634",
+	"code": "EMP01",
+	"order": null,
+	"date": "2025-03-30T11:43:30.496Z",
+	"name": "System Administrator",
+	"remark": "dW5kZWZpbmVk",
+	"username": "admin",
+	"password": "admin",
+	"__keys": ["code", "username"],
+	"active": true,
+	"enabled": true,
+	"__trMap": []
+}
