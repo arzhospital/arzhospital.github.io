@@ -1,22 +1,21 @@
 {
-	"Id": "813431eb6f0d5c599099ac2fcde6e25cf15c9479",
+	"Id": "ebb3f2cdad9bd987709383854e0f0ee246d1bf9d",
 	"code": "apiserver_esptest_master",
+	"order": null,
 	"date": "2025-01-31T15:29:36.521Z",
+	"name": "undefined",
+	"remark": "dW5kZWZpbmVk",
 	"address": "null",
-	"online": "2025-01-31T15:29:36.014Z",
-	"type": {
-		"Id": "f92eaa3939368eb9334c167d9265d1e4fed191f3",
-		"date": "2025-01-31T15:29:36.741Z",
-		"name": "Browser",
-		"__keys": ["name"],
-		"active": true,
-		"enabled": true,
-		"dynamic": true
-	},
+	"online": "2025-04-07T08:36:42.543Z",
+	"secure": null,
+	"backup": null,
+	"parent": null,
+	"group": null,
+	"context": null,
+	"type": "Browser",
 	"__keys": ["code"],
 	"active": true,
 	"enabled": true,
 	"port": 3000,
-	"secure": false,
 	"__trMap": []
 }
