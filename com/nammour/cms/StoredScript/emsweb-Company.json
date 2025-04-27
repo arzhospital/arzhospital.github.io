@@ -1,5 +1,5 @@
 {
-	"Id": "e35b23a47982d912b5205fcc3265f6ea998a3e84",
+	"Id": "e596827d017c0af95fe1e7ac8925c8cd1a791ba2",
 	"after": null,
 	"async": null,
 	"before": null,
@@ -8,8 +8,6 @@
 	"order": null,
 	"remark": "dW5kZWZpbmVk",
 	"script": "d2luZG93LmNvbXBhbnkgPSB7DQoJIkNvZGUiOiAiZW1zIiwNCgkiU2NvcGUiOiAiZW1zd2ViIiwNCgkiUmVzcG9uc2l2ZSI6IHRydWUsDQoJIlJlcXVpcmVkIjogWyJEeW5hRm9ybSIsICJWdWVKUyIsICJTUUxKUyIsICJFeGNlbEpTIiwgImZhc3RYTUwiXSwNCgkiTmFtZSI6ICJFbnRlcnByaXNlIE1hbmFnZW1lbnQgU3lzdGVtIiwNCgkibGlicmFyeSI6ICJFbnRlcnByaXNlTWFuYWdlciINCn0=",
-	"Name": "emsweb-Company",
-	"Script": "",
 	"storedMethod": null,
 	"__keys": ["name"],
 	"active": true,
