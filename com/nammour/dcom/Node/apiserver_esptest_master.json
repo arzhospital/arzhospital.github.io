@@ -1,17 +1,17 @@
 {
-	"Id": "9503edbfe6f391af2c0484b155c3c10fe61957c7",
+	"Id": "3629b6df44c70440cd89b49473738d700ed98fd4",
 	"code": "apiserver_esptest_master",
 	"date": "2025-05-26T23:04:31.588Z",
 	"remark": "dW5kZWZpbmVk",
 	"online": "2025-05-26T23:04:30.098Z",
 	"type": {
 		"__keys": ["name"],
-		"Id": "1112576d0ccd3094d317031a4e72fd6a3f8bc128",
+		"Id": "81214e2182c3f808237a798b98ab2a069532cc3d",
 		"__reused": 2,
 		"name": "Browser"
 	},
 	"__keys": ["code"],
-	"active": true,
+	"active": false,
 	"enabled": true,
 	"address": null,
 	"port": 3000,
