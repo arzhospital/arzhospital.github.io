@@ -1,0 +1,20 @@
+{
+	"Id": "019716f3b5a67659a9aeb12df61b1adb",
+	"code": "019716f335aa72dbbfd4ddc0ea438d34",
+	"date": "2025-05-28T12:52:07.494Z",
+	"remark": "dW5kZWZpbmVk",
+	"online": "2025-05-28T12:52:07.391Z",
+	"type": {
+		"__keys": ["name"],
+		"Id": "f828fe60c546196e54559e3091fcac4276977d51",
+		"__reused": 2,
+		"name": "Browser"
+	},
+	"__keys": ["code"],
+	"active": false,
+	"enabled": true,
+	"address": null,
+	"port": 3000,
+	"secure": false,
+	"__trMap": []
+}
