@@ -1,0 +1,20 @@
+{
+	"Id": "01971d36646b71688b2c8270b2fa6b0d",
+	"code": "apiserver/esptest_master",
+	"date": "2025-05-29T18:02:42.821Z",
+	"remark": "dW5kZWZpbmVk",
+	"online": "2025-05-29T18:02:42.674Z",
+	"type": {
+		"__keys": ["name"],
+		"Id": "533546280cfaef79132cd0d3e32a65882ff210c9",
+		"__reused": 2,
+		"name": "Browser"
+	},
+	"__keys": ["code"],
+	"active": false,
+	"enabled": true,
+	"address": null,
+	"port": 3000,
+	"secure": false,
+	"__trMap": []
+}
